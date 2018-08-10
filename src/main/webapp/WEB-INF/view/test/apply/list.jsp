@@ -1,0 +1,215 @@
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://"
+			+ request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
+%>
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<base href="<%=basePath%>" />
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>测试单列表</title>
+    	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
+	</head>
+	<body>
+	    <!--header start-->
+	    <header id="header">
+	    	<%@ include file="/WEB-INF/view/comm/main_header.jsp" %>
+	    	<%@ include file="/WEB-INF/view/comm/sub_header.jsp" %>
+	    </header>
+	    <!--header end-->
+		<main id="main" class="in">
+			<div class="container">
+				<!--mainMenu start-->
+				<div id="mainMenu" class="clearfix">
+					<div class="btn-toolbar pull-left">
+						<a href="test/apply/index?type=0" class="btn btn-link ${prm.type == 0 ? 'btn-active-text':''}">
+							<span class="text">所有</span>
+							<c:if test="${prm.type == 0}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="test/apply/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
+							<span class="text">待测试</span>
+							<c:if test="${prm.type == 1}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="test/apply/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+							<span class="text">测试中</span>
+							<c:if test="${prm.type == 2}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="test/apply/index?type=3" class="btn btn-link ${prm.type == 3 ? 'btn-active-text':''}">
+							<span class="text">已测试</span>
+							<c:if test="${prm.type == 3}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="test/apply/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
+							<span class="text">驳回</span>
+							<c:if test="${prm.type == 4}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
+					</div>
+					<!--btn-toolbar start-->
+					<div class="btn-toolbar pull-right">
+						<a href="test/apply/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 提测试单</a>
+					</div>
+					<!--btn-toolbar end-->
+				</div>
+				<!--mainMenu end-->
+				<div id="mainContent" class="main-row fade in">
+					<!--main-col start-->
+					<div class="main-col">
+						<div class="cell load-indicator ${prm.type == 10 ? 'show':''}" id="queryBox">
+							<form method="post" action="test/apply/index?type=10" id="searchForm" class="search-form">
+								<table class="table table-condensed table-form" id="task-search">
+									<tbody>
+										<tr>
+											<td style="width:360px">
+												<select data-placeholder="请选择任务" class="form-control chosen chosen-select" name="task_id" id="task_id">
+													<option value=""></option>
+													<c:forEach items="${tasks}" var="task" varStatus="sta">
+														<option value="${task.id}" ${task.id==prm.task_id?'selected="selected"':''}>${task.task_name }</option>
+													</c:forEach>
+												</select>
+											</td>
+											<td style="width:500px">
+												<input type="text" name="search" id="search" value="${prm.search}" class="form-control searchInput" placeholder="请输入要查询的测试申请单内容">
+											</td>
+										</tr>
+										<tr>
+											<td colspan="8" class="text-center form-actions">
+												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
+						<form class="main-table table-task skip-iframe-modal" method="post"
+							id="projectTaskForm" data-ride="table">
+							<!--table-responsive start-->
+							<div class="table-responsive">
+								<table class="table has-sort-head" id="taskList"
+									data-fixed-left-width="550" data-fixed-right-width="160">
+									<thead>
+										<tr>
+											<th data-flex="false" data-width="90px" style="width:150px" class="c-id text-center" title="ID">
+												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+											</th>
+											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri" title="测试名称">
+												<a  href="${pageList.desAction}&orderColumn=t.task_name&orderByValue=${prm.orderColumn=='t.task_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">测试名称</a>
+											</th>
+											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="状态">
+												<a href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+											</th>
+											<th data-flex="false" data-width="50px" style="width:200px" class="c-pri text-center" title="申请人">
+												<a  href="${pageList.desAction}&orderColumn=apply_name&orderByValue=${prm.orderColumn=='apply_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='apply_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请人</a>
+											</th>
+											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="申请时间">
+												<a href="${pageList.desAction}&orderColumn=apply_time&orderByValue=${prm.orderColumn=='apply_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='apply_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请时间</a>
+											</th>
+											<%-- <th data-flex="false" data-width="50px" style="width: auto" class="c-pri" title="测试内容">
+												<a href="${pageList.desAction}&orderColumn=test_content&orderByValue=${prm.orderColumn=='test_content'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='test_content'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">测试内容</a>
+											</th> --%>
+											<th data-flex="false" data-width="auto" style="width: auto" class="c-pri" title="驳回原因">
+												<a href="${pageList.desAction}&orderColumn=dismissal&orderByValue=${prm.orderColumn=='dismissal'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='dismissal'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">驳回原因</a>
+											</th>
+											<th data-flex="false" data-width="200px" style="width:200px"
+												class="c-actions text-center" title="操作">操作</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:forEach items="${pageList.pageResult}" var="apply" varStatus="sta">
+										<tr>
+											<td class="c-id cell-id text-center">${apply.id}</td>
+											<td class="c-pri text-left"><a href="test/apply/detail?id=${apply.id}">${apply.task_name}</a></td>
+											<td class="c-pri text-center">
+												<c:if test="${apply.state == 1}">
+													<span class="status-wait"><span class="label label-dot"></span> 待测试</span>
+												</c:if>
+												<c:if test="${apply.state == 2}">
+													<span class="status-doing"><span class="label label-dot"></span> 测试中</span>
+												</c:if>
+												<c:if test="${apply.state == 3}">
+													<span class="status-done"><span class="label label-dot"></span> 已测试</span>
+												</c:if>
+												<c:if test="${apply.state == 4}">
+													<span class="status-delayed"><span class="label label-dot"></span> 已驳回</span>
+												</c:if>
+											</td>
+											<td class="c-pri text-center">${apply.apply_name}</td>
+											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${apply.apply_time}" pattern="yyyy-MM-dd" /></td>
+											<td class="c-assignedTo has-btn text-left">${apply.dismissal}</td>
+											<td class="c-actions text-center">
+												<c:if test="${apply.state > 0}">
+													<a href="test/apply/toEdit?id=${apply.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+													<a href="test/apply/toDismissal?id=${apply.id}" class="btn" title="驳回"><i class="icon icon-reply-all"></i></a>
+													<a href="test/apply/toReceive?id=${apply.id}" class="btn" title="领取"><i class='icon-task-start icon-play'></i></a>
+													<a href="test/bug/toAdd?id=${apply.task_id}" class="btn" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
+												</c:if>
+												<c:if test="${apply.state == 0}">--</c:if>
+											</td>
+										</tr>
+										</c:forEach>
+									</tbody>
+								</table>
+							</div>
+							<!--table-responsive end-->
+							<!--table-footer start-->
+							<div class="table-footer" style="left: 0px; bottom: 0px;">
+								<!--pager srtart-->
+								<ul class="pager">
+								</ul>
+								<!--pager end-->
+							</div>
+							<!--table-footer end-->
+						</form>
+					</div>
+					<!--main-col end-->
+				</div>
+			</div>
+			<script></script>
+		</main>
+    	<%@ include file="/WEB-INF/view/team/need/div.jsp" %>
+    	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
+	</body>
+<script>
+	$('.pager').pager({
+	    page: ${pageList.currentPage},
+	    recTotal: ${pageList.totalCounts},
+	    recPerPage: ${pageList.pageSize},
+	    pageSizeOptions: [10, 20, 30, 50, 100],
+	    lang: 'zh_cn',
+	    linkCreator: "test/apply/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
+	});
+
+	$("#bysearchTab").click(function(){
+		if($(this).hasClass("querybox-opened")){
+			$(this).removeClass("querybox-opened")
+			$("#queryBox").removeClass("show")
+		}else{
+			$(this).addClass("querybox-opened")
+			$("#queryBox").addClass("show")
+		}
+	});
+</script>
+</html>

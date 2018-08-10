@@ -1,0 +1,457 @@
+package com.zzidc.team.entity;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+/**
+ * TaskNeed entity. @author MyEclipse Persistence Tools
+ */
+@Entity
+@Table(name = "task_need")
+public class TaskNeed implements java.io.Serializable {
+
+	// Fields
+
+	private Integer id;
+	private Integer projectId;
+	private String needName;
+	private Integer memberId;
+	private String memberName;
+	private Integer createId;
+	private String createName;
+	private Integer srcId;
+	private String srcRemark;
+	private Integer level;
+	private Date startDate;
+	private Date endDate;
+	private Date planEndDate;
+	private String needRemark;
+	private String checkRemark;
+	private Short stage;
+	private Integer assignedId;
+	private String assignedName;
+	private Timestamp assignedTime;
+	private Integer changedId;
+	private String changedName;
+	private Timestamp changedTime;
+	private Short changedCount;
+	private Integer closedId;
+	private String closedName;
+	private Timestamp closedTime;
+	private String closedReason;
+	private Integer checkedId;
+	private String checkedName;
+	private Timestamp checkedTime;
+	private Short resolved;
+	private Integer parentId;
+	private String link;
+	private Short full;
+	private Timestamp createTime;
+	private Timestamp updateTime;
+	private Short state;
+
+	// Constructors
+
+	/** default constructor */
+	public TaskNeed() {
+	}
+
+	/** full constructor */
+	public TaskNeed(Integer projectId, String needName, Integer memberId,
+			String memberName, Integer createId, String createName,
+			Integer srcId, String srcRemark, Integer level, Date startDate,
+			Date endDate, Date planEndDate, String needRemark,
+			String checkRemark, Short stage, Integer assignedId,
+			String assignedName, Timestamp assignedTime, Integer changedId,
+			String changedName, Timestamp changedTime, Short changedCount,
+			Integer closedId, String closedName, Timestamp closedTime,
+			String closedReason, Integer checkedId, String checkedName,
+			Timestamp checkedTime, Short resolved, Integer parentId,
+			String link, Short full, Timestamp createTime,
+			Timestamp updateTime, Short state) {
+		this.projectId = projectId;
+		this.needName = needName;
+		this.memberId = memberId;
+		this.memberName = memberName;
+		this.createId = createId;
+		this.createName = createName;
+		this.srcId = srcId;
+		this.srcRemark = srcRemark;
+		this.level = level;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.planEndDate = planEndDate;
+		this.needRemark = needRemark;
+		this.checkRemark = checkRemark;
+		this.stage = stage;
+		this.assignedId = assignedId;
+		this.assignedName = assignedName;
+		this.assignedTime = assignedTime;
+		this.changedId = changedId;
+		this.changedName = changedName;
+		this.changedTime = changedTime;
+		this.changedCount = changedCount;
+		this.closedId = closedId;
+		this.closedName = closedName;
+		this.closedTime = closedTime;
+		this.closedReason = closedReason;
+		this.checkedId = checkedId;
+		this.checkedName = checkedName;
+		this.checkedTime = checkedTime;
+		this.resolved = resolved;
+		this.parentId = parentId;
+		this.link = link;
+		this.full = full;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.state = state;
+	}
+
+	// Property accessors
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
+	public Integer getId() {
+		return this.id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	@Column(name = "project_id")
+	public Integer getProjectId() {
+		return this.projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+
+	@Column(name = "need_name", length = 64)
+	public String getNeedName() {
+		return this.needName;
+	}
+
+	public void setNeedName(String needName) {
+		this.needName = needName;
+	}
+
+	@Column(name = "member_id")
+	public Integer getMemberId() {
+		return this.memberId;
+	}
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+	@Column(name = "member_name", length = 64)
+	public String getMemberName() {
+		return this.memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+	@Column(name = "create_id")
+	public Integer getCreateId() {
+		return this.createId;
+	}
+
+	public void setCreateId(Integer createId) {
+		this.createId = createId;
+	}
+
+	@Column(name = "create_name", length = 32)
+	public String getCreateName() {
+		return this.createName;
+	}
+
+	public void setCreateName(String createName) {
+		this.createName = createName;
+	}
+
+	@Column(name = "src_id")
+	public Integer getSrcId() {
+		return this.srcId;
+	}
+
+	public void setSrcId(Integer srcId) {
+		this.srcId = srcId;
+	}
+
+	@Column(name = "src_remark", length = 100)
+	public String getSrcRemark() {
+		return this.srcRemark;
+	}
+
+	public void setSrcRemark(String srcRemark) {
+		this.srcRemark = srcRemark;
+	}
+
+	@Column(name = "level")
+	public Integer getLevel() {
+		return this.level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "start_date", length = 10)
+	public Date getStartDate() {
+		return this.startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "end_date", length = 10)
+	public Date getEndDate() {
+		return this.endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "plan_end_date", length = 10)
+	public Date getPlanEndDate() {
+		return this.planEndDate;
+	}
+
+	public void setPlanEndDate(Date planEndDate) {
+		this.planEndDate = planEndDate;
+	}
+
+	@Column(name = "need_remark", length = 65535)
+	public String getNeedRemark() {
+		return this.needRemark;
+	}
+
+	public void setNeedRemark(String needRemark) {
+		this.needRemark = needRemark;
+	}
+
+	@Column(name = "check_remark", length = 65535)
+	public String getCheckRemark() {
+		return this.checkRemark;
+	}
+
+	public void setCheckRemark(String checkRemark) {
+		this.checkRemark = checkRemark;
+	}
+
+	@Column(name = "stage")
+	public Short getStage() {
+		return this.stage;
+	}
+
+	public void setStage(Short stage) {
+		this.stage = stage;
+	}
+
+	@Column(name = "assigned_id")
+	public Integer getAssignedId() {
+		return this.assignedId;
+	}
+
+	public void setAssignedId(Integer assignedId) {
+		this.assignedId = assignedId;
+	}
+
+	@Column(name = "assigned_name", length = 16)
+	public String getAssignedName() {
+		return this.assignedName;
+	}
+
+	public void setAssignedName(String assignedName) {
+		this.assignedName = assignedName;
+	}
+
+	@Column(name = "assigned_time", length = 19)
+	public Timestamp getAssignedTime() {
+		return this.assignedTime;
+	}
+
+	public void setAssignedTime(Timestamp assignedTime) {
+		this.assignedTime = assignedTime;
+	}
+
+	@Column(name = "changed_id")
+	public Integer getChangedId() {
+		return this.changedId;
+	}
+
+	public void setChangedId(Integer changedId) {
+		this.changedId = changedId;
+	}
+
+	@Column(name = "changed_name", length = 16)
+	public String getChangedName() {
+		return this.changedName;
+	}
+
+	public void setChangedName(String changedName) {
+		this.changedName = changedName;
+	}
+
+	@Column(name = "changed_time", length = 19)
+	public Timestamp getChangedTime() {
+		return this.changedTime;
+	}
+
+	public void setChangedTime(Timestamp changedTime) {
+		this.changedTime = changedTime;
+	}
+
+	@Column(name = "changed_count")
+	public Short getChangedCount() {
+		return this.changedCount;
+	}
+
+	public void setChangedCount(Short changedCount) {
+		this.changedCount = changedCount;
+	}
+
+	@Column(name = "closed_id")
+	public Integer getClosedId() {
+		return this.closedId;
+	}
+
+	public void setClosedId(Integer closedId) {
+		this.closedId = closedId;
+	}
+
+	@Column(name = "closed_name", length = 16)
+	public String getClosedName() {
+		return this.closedName;
+	}
+
+	public void setClosedName(String closedName) {
+		this.closedName = closedName;
+	}
+
+	@Column(name = "closed_time", length = 19)
+	public Timestamp getClosedTime() {
+		return this.closedTime;
+	}
+
+	public void setClosedTime(Timestamp closedTime) {
+		this.closedTime = closedTime;
+	}
+
+	@Column(name = "closed_reason", length = 16)
+	public String getClosedReason() {
+		return this.closedReason;
+	}
+
+	public void setClosedReason(String closedReason) {
+		this.closedReason = closedReason;
+	}
+
+	@Column(name = "checked_id")
+	public Integer getCheckedId() {
+		return this.checkedId;
+	}
+
+	public void setCheckedId(Integer checkedId) {
+		this.checkedId = checkedId;
+	}
+
+	@Column(name = "checked_name", length = 16)
+	public String getCheckedName() {
+		return this.checkedName;
+	}
+
+	public void setCheckedName(String checkedName) {
+		this.checkedName = checkedName;
+	}
+
+	@Column(name = "checked_time", length = 19)
+	public Timestamp getCheckedTime() {
+		return this.checkedTime;
+	}
+
+	public void setCheckedTime(Timestamp checkedTime) {
+		this.checkedTime = checkedTime;
+	}
+
+	@Column(name = "resolved")
+	public Short getResolved() {
+		return this.resolved;
+	}
+
+	public void setResolved(Short resolved) {
+		this.resolved = resolved;
+	}
+
+	@Column(name = "parent_id")
+	public Integer getParentId() {
+		return this.parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	@Column(name = "link")
+	public String getLink() {
+		return this.link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	@Column(name = "full")
+	public Short getFull() {
+		return this.full;
+	}
+
+	public void setFull(Short full) {
+		this.full = full;
+	}
+
+	@Column(name = "create_time", length = 19)
+	public Timestamp getCreateTime() {
+		return this.createTime;
+	}
+
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+
+	@Column(name = "update_time", length = 19)
+	public Timestamp getUpdateTime() {
+		return this.updateTime;
+	}
+
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
+	}
+
+	@Column(name = "state")
+	public Short getState() {
+		return this.state;
+	}
+
+	public void setState(Short state) {
+		this.state = state;
+	}
+
+}

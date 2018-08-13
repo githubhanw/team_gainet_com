@@ -110,8 +110,8 @@ public class TestBugService extends GiantBaseService {
 				String MemberState="";//人员类型条件
 				if (!StringUtils.isEmpty(MemberState = conditionPage.getQueryCondition().get("memberState"))) {//人员类型条件
 					if ("0".equals(MemberState)) {//创建者
-						sql += "AND tb.cerater_id=:member ";
-						countSql += "AND tb.cerater_id=:member ";
+						sql += "AND tb.creater_id=:member ";
+						countSql += "AND tb.creater_id=:member ";
 						conditionMap.put("member", Member);
 					}else if("1".equals(MemberState)) {
 						sql += "AND tb.developer_id=:member ";
@@ -141,17 +141,17 @@ public class TestBugService extends GiantBaseService {
 					sql += "AND tb.solvestatus=3";
 					countSql += "AND tb.solvestatus=3";
 				} else if ("5".equals(temp)) {// 由我创建
-					sql += "AND tb.cerater_id=" + memberId;
-					countSql += "AND tb.cerater_id=" + memberId;
+					sql += "AND tb.creater_id=" + memberId;
+					countSql += "AND tb.creater_id=" + memberId;
 				} else if ("6".equals(temp)) {// 待我处理
-					sql += "AND tb.solvestatus=0 AND tb.solver_id=" + memberId;
-					countSql += "AND tb.solvestatus=0 AND tb.solver_id=" + memberId;
+					sql += "AND tb.solvestatus=0 AND tb.developer_id=" + memberId;
+					countSql += "AND tb.solvestatus=0 AND tb.developer_id=" + memberId;
 				} else if ("7".equals(temp)) {// 由我处理
 					sql += "AND tb.solvestatus>0 AND tb.solver_id=" + memberId;
 					countSql += "AND tb.solvestatus>0 AND tb.solver_id=" + memberId;
 				} else if ("8".equals(temp)) {// 待我验证
-					sql += "AND tb.solvestatus=0 AND tb.cerater_id=" + memberId;
-					countSql += "AND tb.solvestatus=0 AND tb.cerater_id=" + memberId;
+					sql += "AND tb.solvestatus=0 AND tb.creater_id=" + memberId;
+					countSql += "AND tb.solvestatus=0 AND tb.creater_id=" + memberId;
 				}
 			}
 		}

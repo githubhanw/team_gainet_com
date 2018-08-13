@@ -30,32 +30,43 @@
 				<!--mainMenu start-->
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<a href="my/bug?type=6" class="btn btn-link ${prm.type == 6 ? 'btn-active-text':''}">
-							<span class="text">待我处理</span>
-							<c:if test="${prm.type == 6}">
+						<a href="test/bug/index?type=0" class="btn btn-link ${prm.type == 0 ? 'btn-active-text':''}">
+							<span class="text">所有</span>
+							<c:if test="${prm.type == 0}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="my/bug?type=8" class="btn btn-link ${prm.type == 8 ? 'btn-active-text':''}">
-							<span class="text">待我验证</span>
-							<c:if test="${prm.type == 8}">
+						<a href="test/bug/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
+							<span class="text">待处理</span>
+							<c:if test="${prm.type == 1}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="my/bug?type=5" class="btn btn-link ${prm.type == 5 ? 'btn-active-text':''}">
-							<span class="text">由我创建</span>
-							<c:if test="${prm.type == 5}">
+						<a href="test/bug/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+							<span class="text">待验证</span>
+							<c:if test="${prm.type == 2}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="my/bug?type=7" class="btn btn-link ${prm.type == 7 ? 'btn-active-text':''}">
-							<span class="text">由我处理</span>
-							<c:if test="${prm.type == 7}">
+						<a href="test/bug/index?type=3" class="btn btn-link ${prm.type == 3 ? 'btn-active-text':''}">
+							<span class="text">已验证</span>
+							<c:if test="${prm.type == 3}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="test/bug/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
+							<span class="text">已删除</span>
+							<c:if test="${prm.type == 4}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
+					<!--btn-toolbar start-->
+					<div class="btn-toolbar pull-right">
+						<a href="test/bug/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 提Bug</a>
+					</div>
+					<!--btn-toolbar end-->
 				</div>
 				<!--mainMenu end-->
 				<div id="mainContent" class="main-row fade in">
@@ -225,9 +236,10 @@
 											<td class="c-pri text-center">${bug.solver}</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${bug.solvetime}" pattern="yyyy-MM-dd" /></td>									
 											<td class="c-actions text-center">
-												<a href="my/bug/toSolve?id=${bug.id}" class="btn" title="解决"><i class='icon-task-finish icon-checked'></i></a>
-												<a href="my/bug/toVali?id=${bug.id}" class="btn" title="验证"><i class="icon-story-review icon-glasses"></i></a>
-												<a href="my/bug/toEdit?id=${bug.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+												<a href="test/bug/toSolve?id=${bug.id}" class="btn" title="解决"><i class='icon-task-finish icon-checked'></i></a>
+												<a href="test/bug/toVali?id=${bug.id}" class="btn" title="验证"><i class="icon-story-review icon-glasses"></i></a>
+												<a href="test/bug/toEdit?id=${bug.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+												<a href="test/bug/toDelete?id=${bug.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</td>
 										</tr>
 										</c:forEach>
@@ -269,7 +281,7 @@
 	    recPerPage: ${pageList.pageSize},
 	    pageSizeOptions: [10, 20, 30, 50, 100],
 	    lang: 'zh_cn',
-	    linkCreator: "my/bug?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
+	    linkCreator: "test/bug/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
 	});
 </script>
 </html>

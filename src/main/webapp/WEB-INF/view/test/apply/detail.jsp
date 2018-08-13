@@ -257,20 +257,3 @@
 		<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 </html>
-<script>
-	$("#submit").click(function() {
-		var projectResultName = encodeURI(encodeURI($("#name").val()));
-		var projectId = $("#projectId").val();
-		$.ajaxSettings.async = false;
-		$.ajax({
-			type : "POST",
-			url : "declaration/result/addOrUpd?r=" + Math.random(),
-			data : $("form").serialize(),
-			dataType : "json",
-			success : function(data) {
-				alert(data.message);
-			}
-		})
-		$.ajaxSettings.async = true;
-	});
-</script>

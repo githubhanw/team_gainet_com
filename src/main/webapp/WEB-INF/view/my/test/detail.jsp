@@ -246,7 +246,7 @@
 							<i class="icon-goback icon-back"></i> 返回
 						</a>
 						<div class="divider"></div>
-						<a href="test/apply/toEdit?id=${entity.id}" class="btn btn-link " title="编辑">
+						<a href="my/test/toEdit?id=${entity.id}" class="btn btn-link " title="编辑">
 							<i class="icon-common-edit icon-edit"></i>
 						</a>
 					</div>
@@ -257,20 +257,3 @@
 		<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 </html>
-<script>
-	$("#submit").click(function() {
-		var projectResultName = encodeURI(encodeURI($("#name").val()));
-		var projectId = $("#projectId").val();
-		$.ajaxSettings.async = false;
-		$.ajax({
-			type : "POST",
-			url : "declaration/result/addOrUpd?r=" + Math.random(),
-			data : $("form").serialize(),
-			dataType : "json",
-			success : function(data) {
-				alert(data.message);
-			}
-		})
-		$.ajaxSettings.async = true;
-	});
-</script>

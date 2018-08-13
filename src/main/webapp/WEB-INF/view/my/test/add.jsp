@@ -88,9 +88,9 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="test/apply/index" class="btn">返回测试单列表</a>
-								<c:if test="${entity.id==null}"><a href="test/apply/toAdd" class="btn">继续建测试单</a></c:if>
-								<%-- <c:if test="${entity.id > 0}"><a href="test/apply/toAdd?id=${entity.id}" class="btn">继续建测试单</a></c:if> --%>
+								<a href="my/test" class="btn">返回测试单列表</a>
+								<c:if test="${entity.id==null}"><a href="my/test/toAdd" class="btn">继续建测试单</a></c:if>
+								<%-- <c:if test="${entity.id > 0}"><a href="my/test/toAdd?id=${entity.id}" class="btn">继续建测试单</a></c:if> --%>
 							</div>
 						</div>
 					</div>
@@ -119,7 +119,7 @@
 UMEditor("test_content");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"test/apply/addOrUpdate?r=" + Math.random(),data:$("form").serialize() + "&test_content=" + UM.getEditor('test_content').getContent(),dataType:"json",success:function(data){
+	$.ajax({type:"POST",url:"my/test/addOrUpdate?r=" + Math.random(),data:$("form").serialize() + "&test_content=" + UM.getEditor('test_content').getContent(),dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

@@ -133,7 +133,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="test/apply/index" class="btn">返回测试单列表</a>
+								<a href="my/test" class="btn">返回测试单列表</a>
 							</div>
 						</div>
 					</div>
@@ -163,7 +163,7 @@
 	$("#submit").click(function(){
 		debugger;
 		$.ajaxSettings.async = false;
-		$.ajax({type:"POST",url:"test/apply/receive?r=" + Math.random(),data:$("form").serialize() + "&remark=" + UM.getEditor('remark').getContent(),dataType:"json",success:function(data){
+		$.ajax({type:"POST",url:"my/test/receive?r=" + Math.random(),data:$("form").serialize() + "&remark=" + UM.getEditor('remark').getContent(),dataType:"json",success:function(data){
 			if(data.code == 0){
 				$("#msg").text(data.message);
 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

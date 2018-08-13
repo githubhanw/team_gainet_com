@@ -69,8 +69,8 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="test/apply/index" class="btn">返回测试单列表</a>
-								<a href="test/apply/detail" class="btn">测试单详情</a>
+								<a href="my/test" class="btn">返回测试单列表</a>
+								<a href="my/test/detail" class="btn">测试单详情</a>
 							</div>
 						</div>
 					</div>
@@ -100,7 +100,7 @@ UMEditor("comment");
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"test/apply/dismissal?r=" + Math.random(),data:"id=" + $("#id").val() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
+	$.ajax({type:"POST",url:"my/test/dismissal?r=" + Math.random(),data:"id=" + $("#id").val() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
 		/* if(data.code == 0){
 			window.location.href = "team/need/index";
 		}else{

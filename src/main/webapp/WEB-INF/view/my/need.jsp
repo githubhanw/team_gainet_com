@@ -137,7 +137,7 @@
 												<c:if test="${need.parent_id > 0 && prm.type != 1 && prm.type != 2}">
 													<span class="label label-badge label-light">子</span>
 												</c:if>
-												<a href="team/need/detail?id=${need.id}" data-toggle="tooltip" data-placement="top" title="${need.need_name}">
+												<a href="my/need/detail?id=${need.id}" data-toggle="tooltip" data-placement="top" title="${need.need_name}">
 													${need.need_name}
 												</a>
 												<c:if test="${need.full == 0}">
@@ -149,7 +149,7 @@
 											</td>
 											<td class="c-name text-left">${need.member_name}</td>
 											<td class="c-name text-left">
-												<a href="team/need/toAssign?id=${need.id}" class="btn btn-icon-left btn-sm">
+												<a href="my/need/toAssign?id=${need.id}" class="btn btn-icon-left btn-sm">
 													<c:if test="${need.assigned_name == '' || need.assigned_name == null}">
 														<i class="icon icon-hand-right"></i>
 														<span class="text-primary">未指派</span>
@@ -175,19 +175,19 @@
 											<td class="c-actions text-right">
 												<c:if test="${need.state > 0}">
 													<c:if test="${need.state == 1 || need.state == 2}">
-														<a href="team/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
-														<a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
+														<a href="my/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
+														<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
 														<c:if test="${need.full == 1}">
-															<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
+															<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
 														</c:if>
 														<c:if test="${need.full == 1}">
-															<a href="team/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
+															<a href="my/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if>
 														<%-- <c:if test="${need.parent_id>0 || need.full == 0}">
 															<a class="disabled btn" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if> --%>
 														<c:if test="${(need.parent_id == null || need.parent_id == '') && need.full == 1}">
-															<a href="team/need/toBatchAdd?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="分解需求"><i class='icon-task-batchCreate icon-branch'></i></a>
+															<a href="my/need/toBatchAdd?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="分解需求"><i class='icon-task-batchCreate icon-branch'></i></a>
 														</c:if>
 														<%-- <c:if test="${need.parent_id>0 || need.full == 0}">
 															<a class="disabled btn" title="分解需求"><i class='icon-task-batchCreate icon-branch'></i></a>
@@ -224,7 +224,6 @@
 			</div>
 			<script></script>
 		</main>
-    	<%@ include file="/WEB-INF/view/team/need/div.jsp" %>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 </html>

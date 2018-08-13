@@ -39,10 +39,10 @@
 		<nav id="subNavbar" ${m=='my'?'':'style="display:none"'}>
 			<ul class="nav nav-default" style="max-width: 1491px; left: 0px; position: relative;">
 				<li class="dropdown dropdown-hover ${m=='my' && s==''?'active':'' }"><a href="my">首页</a></li>
-				<li class="dropdown dropdown-hover ${m=='my' && s=='task'?'active':'' }"><a href="my/task">任务</a></li>
-				<li class="dropdown dropdown-hover ${m=='my' && s=='bug'?'active':'' }"><a href="my/bug">Bug</a></li>
-				<li class="dropdown dropdown-hover ${m=='my' && s=='test'?'active':'' }"><a href="my/test">测试</a></li>
-				<li class="dropdown dropdown-hover ${m=='my' && s=='need'?'active':'' }"><a href="my/need">需求</a></li>
+				<li class="dropdown dropdown-hover ${m=='my' && s=='task'?'active':'' }"><a href="my/task">我的任务</a></li>
+				<li class="dropdown dropdown-hover ${m=='my' && s=='bug'?'active':'' }"><a href="my/bug">我的Bug</a></li>
+				<li class="dropdown dropdown-hover ${m=='my' && s=='test'?'active':'' }"><a href="my/test">我的测试</a></li>
+				<li class="dropdown dropdown-hover ${m=='my' && s=='need'?'active':'' }"><a href="my/need">我的需求</a></li>
 			</ul>
 		</nav>
 		<nav id="subNavbar" ${m=='project' || m=='need' || m=='task' || m=='apply' || m=='bug'?'':'style="display:none"'}>

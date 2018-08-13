@@ -15,6 +15,7 @@ public enum LogMethod {
 	DISMISSAL("驳回"),
 	RECEIVE("领取"),
 	RESOLVED("分解"),
+	PERFECT("完善"),
 	CHANGE("变更"),
 	CLOSE("关闭"),
 	ACTIVE("激活"),

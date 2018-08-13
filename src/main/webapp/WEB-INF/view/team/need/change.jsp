@@ -33,7 +33,7 @@
 							<h2>
 								<span class="label label-id">${n.id}</span>
 								<a href="team/need/index">${n.needName}</a>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 变更</small>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; ${n.full == 0?'完善':'变更'}</small>
 							</h2>
 						</div>
 						<table class="table table-form">

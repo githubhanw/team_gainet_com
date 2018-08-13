@@ -103,7 +103,7 @@
 												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">未解决Bug</a>
 											</th> --%>
-											<th data-flex="false" data-width="160px" style="width: 260px"
+											<th data-flex="false" data-width="160px" style="width: 330px"
 												class="c-actions text-center" title="操作">操作</th>
 										</tr>
 									</thead>
@@ -126,6 +126,7 @@
 													<a href="team/project/toAdd?id=${project.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
 													<a href="javascript:void(0)" onclick="del(${project.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
 													<a href="team/need/toAdd?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i> 提需求</a>
+													<a href="team/need/toBatchAdd?project_id=${project.id}" class="btn" title="批量提需求"><i class="icon icon-plus"></i> 批量提需求</a>
 												</c:if>
 												<c:if test="${project.state != '1'}">--</c:if>
 											</td>
@@ -163,13 +164,15 @@
 	    linkCreator: "team/project/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
 	});
 	function del(id){
-		$.ajaxSettings.async = false;
-		$.getJSON("team/project/del?id=" + id + "&r=" + Math.random(), function(data) {
-			alert(data.message);
-			if(data.code == 0){
-				window.location.reload();
-			}
-		});
-		$.ajaxSettings.async = true;
+		if(confirm("确认删除？")){
+			$.ajaxSettings.async = false;
+			$.getJSON("team/project/del?id=" + id + "&r=" + Math.random(), function(data) {
+				alert(data.message);
+				if(data.code == 0){
+					window.location.reload();
+				}
+			});
+			$.ajaxSettings.async = true;
+		}
 	}
 </script>

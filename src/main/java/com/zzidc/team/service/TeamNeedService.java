@@ -309,6 +309,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setChangedId(0);
 		need.setChangedName("");
 		need.setChangedTime(null);
+		need.setChangedCount((short) 0);
 		//关闭人
 		need.setClosedId(0);
 		need.setClosedName("");
@@ -385,6 +386,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setChangedId(0);
 		need.setChangedName("");
 		need.setChangedTime(null);
+		need.setChangedCount((short) 0);
 		//关闭人
 		need.setClosedId(0);
 		need.setClosedName("");
@@ -509,19 +511,27 @@ public class TeamNeedService extends GiantBaseService{
 			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.CHANGE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			TaskNeed oldT = new TaskNeed();
 			BeanUtils.copyProperties(need, oldT);
-			
-			need.setChangedId(super.getMemberId());
-			need.setChangedName(super.getMemberName());
-			need.setChangedTime(new Timestamp(System.currentTimeMillis()));
+			if (need.getFull() == 1) {
+				need.setChangedId(super.getMemberId());
+				need.setChangedName(super.getMemberName());
+				need.setChangedTime(new Timestamp(System.currentTimeMillis()));
+				if(need.getChangedCount() == null || need.getChangedCount() < 1) {
+					need.setChangedCount((short) 1);
+				}else {
+					need.setChangedCount((short) (need.getChangedCount() + 1));
+				}
+				need.setState((short) 2);
+			} else {
+				need.setFull((short) 1);
+				pmLog.setMethod(LogMethod.PERFECT);
+			}
 			need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 			need.setCheckRemark(GiantUtil.stringOf(mvm.get("check_remark")));
 			need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
-			need.setFull((short) 1);
-			need.setState((short) 2);
 			need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 			boolean b = super.dao.saveUpdateOrDelete(need, null);
 			if(b) {
-				pmLog.add(need.getId(), oldT, need, new String[]{"check_remark","need_remark"},"changed_name","need_name");
+				pmLog.add(need.getId(), oldT, need, new String[]{"check_remark","need_remark"},"changed_name","need_name","state","changed_count","check_remark","need_remark");
 				this.log(pmLog);
 			}
 			return b;

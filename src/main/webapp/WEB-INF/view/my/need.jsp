@@ -61,6 +61,10 @@
 							</c:if>
 						</a>
 					</div>
+					<div class="btn-toolbar pull-right">
+						<a href="team/need/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>
+						<a href="team/need/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 提需求</a>
+					</div>
 				</div>
 				<!--mainMenu end-->
 				<div id="mainContent" class="main-row fade in">

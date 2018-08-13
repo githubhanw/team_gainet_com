@@ -33,6 +33,9 @@
 						<div class="divider"></div>
 						<div class="page-title">
 							<span class="label label-id">${needM.id}</span> <span class="text" title="${needM.need_name}">${needM.need_name}</span>
+							<c:if test="${needM.full == 0}">
+								<span class="label label-warning" title="不能创建任务，不能分解">不完整需求</span>
+							</c:if>
 						</div>
 					</div>
 				</div>
@@ -316,7 +319,7 @@
 					</nav>
 					<div class="btn-toolbar">
 						<a href="${u}" id="back" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="返回"><i class="icon-goback icon-back"></i> 返回</a>
-						<a href="team/need/toChange?id=${needM.id}" class="btn btn-link" title="变更"><i class="icon-story-change icon-fork"></i> 变更</a>
+						<a href="team/need/toChange?id=${needM.id}" class="btn btn-link" title="${needM.full == 0?'完善':'变更'}"><i class="icon-story-change icon-fork"></i> ${needM.full == 0?'完善':'变更'}</a>
 						<c:if test="${needM.state != 3}">
 							<a href="team/need/toClose?id=${needM.id}" class="btn btn-link" title="关闭"><i class='icon-task-close icon-off'></i> 关闭</a>
 						</c:if>

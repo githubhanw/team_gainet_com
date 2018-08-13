@@ -471,6 +471,37 @@ public class TeamNeedService extends GiantBaseService{
 		return flag;
 				
 	}
+	
+	/**
+	 * [是否能进行指派操作] <br>
+	 * <pre>
+	 * 只有需求方和创建者能指派
+	 * </pre>
+	 * @author likai <br>
+	 * @date 2018年8月13日 下午5:16:50 <br>
+	 * @param mvm
+	 * @return <br>
+	 */
+	public boolean isCanAssign(Map<String, String> mvm) {
+		boolean b = false;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			// 当前用户是否为创建者
+			b = this.isCurrentMember(need.getCreateId());
+			// 当前用户是否为需求方
+			b = b && this.isCurrentMember(need.getMemberId());
+			if(b) {
+				// 是否已经指派
+				Integer assignedId = need.getAssignedId();
+				if(assignedId != null && need.getAssignedId() > 0) {
+					b = b && false;
+				}
+			}
+			return b;
+		}
+		return b;
+	}
 
 	/**
 	 * 指派给
@@ -497,6 +528,30 @@ public class TeamNeedService extends GiantBaseService{
 			return b;
 		}
 		return false;
+	}
+	
+	/**
+	 * [是否能进行指派操作] <br>
+	 * <pre>
+	 * 只有需求方和创建者能指派
+	 * </pre>
+	 * @author likai <br>
+	 * @date 2018年8月13日 下午5:16:50 <br>
+	 * @param mvm
+	 * @return <br>
+	 */
+	public boolean isCanOperation(Map<String, String> mvm) {
+		boolean b = false;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			// 当前用户是否为创建者
+			b = this.isCurrentMember(need.getCreateId());
+			// 当前用户是否为需求方
+			b = b && this.isCurrentMember(need.getMemberId());
+			return b;
+		}
+		return b;
 	}
 
 	/**

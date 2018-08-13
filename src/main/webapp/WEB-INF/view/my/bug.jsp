@@ -62,7 +62,7 @@
 					<!--main-col start-->
 					<div class="main-col">
 						<div class="cell load-indicator ${prm.type == 10 ? 'show':''}" id="queryBox">
-							<form method="post" action="test/bug/index?type=10" id="searchForm" class="search-form">
+							<form method="post" action="my/bug?type=10" id="searchForm" class="search-form">
 								<table class="table table-condensed table-form" id="task-search">
 									<tbody>
 										<tr>

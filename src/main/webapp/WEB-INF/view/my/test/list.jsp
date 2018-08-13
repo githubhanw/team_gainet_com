@@ -42,12 +42,38 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a class="btn btn-link querybox-toggle ${prm.type == 11 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 				</div>
 				<!--mainMenu end-->
 				<div id="mainContent" class="main-row fade in">
 					<!--main-col start-->
 					<div class="main-col">
+						<div class="cell load-indicator ${prm.type == 11 ? 'show':''}" id="queryBox">
+							<form method="post" action="my/test?type=11" id="searchForm" class="search-form">
+								<table class="table table-condensed table-form" id="task-search">
+									<tbody>
+										<tr>
+											<td style="width:500px">
+												<input type="text" name="search" id="search" value="${prm.search}" class="form-control searchInput" placeholder="请输入要查询的测试申请单内容">
+											</td>
+											<td style="width:360px">
+												<select data-placeholder="请选择状态" class="form-control chosen chosen-select" name="state" id="state">
+													<option value="1" ${prm.state == 1 ? 'selected="selected"' : ''}>待测试</option>
+													<option value="2" ${prm.state == 2 ? 'selected="selected"' : ''}>测试中</option>
+													<option value="3" ${prm.state == 3 ? 'selected="selected"' : ''}>已测试</option>
+													<option value="4" ${prm.state == 4 ? 'selected="selected"' : ''}>驳回</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="8" class="text-center form-actions">
+												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
 						<form class="main-table table-task skip-iframe-modal" method="post"
 							id="projectTaskForm" data-ride="table">
 							<!--table-responsive start-->
@@ -151,6 +177,16 @@
 	    pageSizeOptions: [10, 20, 30, 50, 100],
 	    lang: 'zh_cn',
 	    linkCreator: "my/test?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
+	});
+
+	$("#bysearchTab").click(function(){
+		if($(this).hasClass("querybox-opened")){
+			$(this).removeClass("querybox-opened")
+			$("#queryBox").removeClass("show")
+		}else{
+			$(this).addClass("querybox-opened")
+			$("#queryBox").addClass("show")
+		}
 	});
 </script>
 </html>

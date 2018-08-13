@@ -50,35 +50,51 @@ public class TestApplyService extends GiantBaseService {
 		String countSql = "SELECT COUNT(0) from test_apply ta left join task t on t.id = ta.task_id where 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";
-			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
-				sql += "AND t.task_name LIKE :search ";
-				countSql += "AND t.task_name LIKE :search ";
-				conditionMap.put("search", temp + "%");
-			}
-			int taskId = GiantUtil.intOf(conditionPage.getQueryCondition().get("task_id"), 0);
-			if (taskId > 0) {
-				sql += "AND t.id = :taskId ";
-				countSql += "AND t.id = :taskId ";
-				conditionMap.put("taskId", taskId);
-			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
 				if ("0".equals(temp)) {//全部
 					// 不做过滤
 				} else if ("1".equals(temp)) {//待测试
 					sql += "AND ta.state = 1";
 					countSql += "AND ta.state = 1";
-				} else if ("2".equals(temp)) {//所有
+				} else if ("2".equals(temp)) {//测试中
 					sql += "AND ta.state = 2";
 					countSql += "AND ta.state = 2";
-				} else if ("3".equals(temp)) {//已关闭
+				} else if ("3".equals(temp)) {//已测试
 					sql += "AND ta.state = 3";
 					countSql += "AND ta.state = 3";
-				} else if ("4".equals(temp)) {//激活
+				} else if ("4".equals(temp)) {//驳回
 					sql += "AND ta.state = 4";
 					countSql += "AND ta.state = 4";
 				} else if ("5".equals(temp)) {//由我提测
 					sql += "AND ta.apply_id = " + memberId;
 					countSql += "AND ta.apply_id = " + memberId;
+				} else if ("10".equals(temp)) {//由我提测的搜索
+					if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
+						sql += "AND t.task_name LIKE :search ";
+						countSql += "AND t.task_name LIKE :search ";
+						conditionMap.put("search", temp + "%");
+					}
+					// 如果状态不存在时，默认状态为待测试（1）
+					int state = GiantUtil.intOf(conditionPage.getQueryCondition().get("state"), 1);
+					if (state > 0) {
+						sql += "AND ta.state = :state ";
+						countSql += "AND ta.state = :state ";
+						conditionMap.put("state", state);
+					}
+				} else if ("11".equals(temp)) {//由我提测的搜索
+					if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
+						sql += "AND t.task_name LIKE :search ";
+						countSql += "AND t.task_name LIKE :search ";
+						conditionMap.put("search", temp + "%");
+					}
+					// 如果状态不存在时，默认状态为待测试（1）
+					int state = GiantUtil.intOf(conditionPage.getQueryCondition().get("state"), 1);
+					if (state > 0) {
+						sql += "AND (ta.state = :state OR ta.apply_id = :memberId) ";
+						countSql += "AND (ta.state = :state OR ta.apply_id = :memberId) ";
+						conditionMap.put("state", state);
+						conditionMap.put("memberId", memberId);
+					}
 				}
 			}
 			

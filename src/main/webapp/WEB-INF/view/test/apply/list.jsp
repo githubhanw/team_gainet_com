@@ -77,16 +77,16 @@
 								<table class="table table-condensed table-form" id="task-search">
 									<tbody>
 										<tr>
-											<td style="width:360px">
-												<select data-placeholder="请选择任务" class="form-control chosen chosen-select" name="task_id" id="task_id">
-													<option value=""></option>
-													<c:forEach items="${tasks}" var="task" varStatus="sta">
-														<option value="${task.id}" ${task.id==prm.task_id?'selected="selected"':''}>${task.task_name }</option>
-													</c:forEach>
-												</select>
-											</td>
 											<td style="width:500px">
 												<input type="text" name="search" id="search" value="${prm.search}" class="form-control searchInput" placeholder="请输入要查询的测试申请单内容">
+											</td>
+											<td style="width:360px">
+												<select data-placeholder="请选择状态" class="form-control chosen chosen-select" name="state" id="state">
+													<option value="1" ${prm.state == 1 ? 'selected="selected"' : ''}>待测试</option>
+													<option value="2" ${prm.state == 2 ? 'selected="selected"' : ''}>测试中</option>
+													<option value="3" ${prm.state == 3 ? 'selected="selected"' : ''}>已测试</option>
+													<option value="4" ${prm.state == 4 ? 'selected="selected"' : ''}>驳回</option>
+												</select>
 											</td>
 										</tr>
 										<tr>

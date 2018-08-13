@@ -319,14 +319,4 @@
 		</main>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
-<script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "my/bug?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
-</script>
 </html>

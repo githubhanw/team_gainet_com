@@ -13,7 +13,7 @@
 				</button>
 				<h4 class="modal-title">
 					<span class="label label-id">${n.id}</span>
-					<a href="team/need/index">${n.needName}</a>
+					<a href="my/need">${n.needName}</a>
 					<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 关闭</small>
 				</h4>
 			</div>

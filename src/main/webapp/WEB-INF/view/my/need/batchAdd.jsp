@@ -33,7 +33,7 @@
 							<c:if test="${n.id == null}">批量创建</c:if>
 							<c:if test="${n.id != null}">
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/index">${n.needName}</a>
+								<a href="my/need">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 批量建子需求</small>
 							</c:if>
 						</h2>
@@ -143,10 +143,10 @@
 								<strong><span id="msg">成功</span> ，您现在可以进行以下操作：</strong>
 							</p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建需求</a> <a
+								<a href="my/need/toAdd" class="btn">继续创建需求</a> <a
 									href="team/task/toAdd" class="btn">创建任务</a> <a
 									href="team/task/toAdd" class="btn">批量创建任务</a> <a
-									href="team/need/index" class="btn">返回需求列表</a>
+									href="my/need/index" class="btn">返回需求列表</a>
 							</div>
 						</div>
 					</div>
@@ -185,7 +185,7 @@ $("#submit").click(function(){
 				$($("select[name='src_id']").get(i)).removeAttr("disabled");
 				$($("input[name='member_id']").get(i)).removeAttr("disabled");
 			}
-			$.ajax({type:"POST",url:"team/need/batchAdd?r=" + Math.random(),data:$("#addForm" + i).serialize(),dataType:"json",success:function(data){
+			$.ajax({type:"POST",url:"my/need/batchAdd?r=" + Math.random(),data:$("#addForm" + i).serialize(),dataType:"json",success:function(data){
 				if(data.code == 0){
 					$("#msg" + i).css("color", "blue");
 					$("#msg" + i).text('成功');

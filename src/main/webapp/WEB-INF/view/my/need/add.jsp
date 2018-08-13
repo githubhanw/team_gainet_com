@@ -164,10 +164,10 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建需求</a> <a
+								<a href="my/need/toAdd" class="btn">继续创建需求</a> <a
 									href="team/task/toAdd" class="btn">建任务</a> <a
 									href="team/task/toAdd" class="btn">批量建任务</a> <a
-									href="team/need/index" class="btn">返回需求列表</a>
+									href="my/need/index" class="btn">返回需求列表</a>
 							</div>
 						</div>
 					</div>
@@ -198,7 +198,7 @@ UMEditor("need_remark");
 UMEditor("check_remark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/need/add?r=" + Math.random(),data:$("form").serialize() + "&need_remark=" + UM.getEditor('need_remark').getContent() + "&check_remark=" + UM.getEditor('check_remark').getContent()
+	$.ajax({type:"POST",url:"my/need/add?r=" + Math.random(),data:$("form").serialize() + "&need_remark=" + UM.getEditor('need_remark').getContent() + "&check_remark=" + UM.getEditor('check_remark').getContent()
 			,dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);

@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/index">${n.needName}</a>
+								<a href="my/need">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 变更</small>
 							</h2>
 						</div>
@@ -81,10 +81,10 @@ UMEditor("need_remark");
 UMEditor("check_remark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/need/change?r=" + Math.random(),data:$("form").serialize() + "&need_remark=" + UM.getEditor('need_remark').getContent() + "&check_remark=" + UM.getEditor('check_remark').getContent(),
+	$.ajax({type:"POST",url:"my/need/change?r=" + Math.random(),data:$("form").serialize() + "&need_remark=" + UM.getEditor('need_remark').getContent() + "&check_remark=" + UM.getEditor('check_remark').getContent(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
-			window.location.href = "team/need/index";
+			window.location.href = "my/need";
 		}else{
 			alert(data.message);
 		}

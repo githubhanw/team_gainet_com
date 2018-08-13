@@ -33,7 +33,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
+								<a href="my/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 编辑</small>
 							</h2>
 						</div>
@@ -220,10 +220,10 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toEdit?id=${n.id}" class="btn">继续编辑需求</a>
+								<a href="my/need/toEdit?id=${n.id}" class="btn">继续编辑需求</a>
 								<a href="team/task/toAdd" class="btn">建任务</a>
 								<a href="team/task/toBatchAdd" class="btn">批量建任务</a>
-								<a href="team/need/index" class="btn">返回需求列表</a>
+								<a href="my/need" class="btn">返回需求列表</a>
 							</div>
 						</div>
 					</div>
@@ -253,7 +253,7 @@
 UMEditor("comment");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/need/edit?r=" + Math.random(),data:$("form").serialize() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
+	$.ajax({type:"POST",url:"my/need/edit?r=" + Math.random(),data:$("form").serialize() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

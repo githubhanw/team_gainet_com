@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/index">${n.needName}</a>
+								<a href="my/need">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 接收</small>
 							</h2>
 						</div>
@@ -114,7 +114,7 @@
 UMEditor("comment");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/need/open?r=" + Math.random(),data:$("form").serialize() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
+	$.ajax({type:"POST",url:"my/need/open?r=" + Math.random(),data:$("form").serialize() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

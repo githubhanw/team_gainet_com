@@ -283,7 +283,7 @@
 														<a href="my/task/toHandover?id=${task.id}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="任务交接"><i class="icon icon-exchange"></i></a>
 													</c:if>
 													<c:if test="${task.state == 4 && task.task_type != 2}">
-														<a href="my/apply/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon icon-plus"></i></a>
+														<a href="my/test/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon icon-plus"></i></a>
 													</c:if>
 													<%-- 任务状态为待接收、进行中时，且不为延期审核中 --%>
 													<c:if test="${task.state < 3 && task.delay != 1 && task.resolved == 0}">

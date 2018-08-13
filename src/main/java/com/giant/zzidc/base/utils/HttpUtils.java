@@ -44,8 +44,6 @@ public class HttpUtils {
 		/**
 	     * 
 	     * [发送GET请求] <br>
-	     * @author XiaYu <br>
-	     * @date 2017-1-11 下午07:06:01 <br>
 	     * @param url
 	     * @param param
 	     * @return <br>
@@ -91,8 +89,6 @@ public class HttpUtils {
 	    /**
 	     * 
 	     * [发送PUT请求] <br>
-	     * @author XiaYu <br>
-	     * @date 2017-1-11 下午07:05:14 <br>
 	     * @param url
 	     * @param param
 	     * @return <br>
@@ -142,8 +138,6 @@ public class HttpUtils {
 		/**
 		 * 
 		 * [发送DELETE请求] <br>
-		 * @author XiaYu <br>
-		 * @date 2017-1-11 下午07:05:28 <br>
 		 * @param url
 		 * @param param
 		 * @return <br>
@@ -189,16 +183,67 @@ public class HttpUtils {
 	        }
 	        return result;
 	    }
+
 	    /**
-	     * 
 	     * [发送POST请求] <br>
-	     * @author XiaYu <br>
-	     * @date 2017-1-11 下午07:05:45 <br>
 	     * @param url
 	     * @param param
-	     * @return <br>
+	     * @return
 	     */
 	    public static String sendPost(String url, String param) {
+	        String result = "";
+	        HttpClient client = null;
+	        HttpPost post = new HttpPost(url);
+	        post.setHeader("content-type","application/json; charset=UTF-8");
+	        try {
+	        	if(url.startsWith("https")){
+	        		SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
+	        			public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+	        				return true;
+	        			}
+	        		}).build();
+	        		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
+	        		client= HttpClients.custom().setSSLSocketFactory(sslsf).build();
+	        	}else{
+	        		client = new DefaultHttpClient();
+	        	}
+	        	HttpEntity entity = new StringEntity(param,"UTF-8");
+	        	post.setEntity(entity); 
+
+	        	HttpResponse response = client.execute(post);
+	        	if (response == null){
+	    			result="408";
+	    			return result;
+	    		}
+	    		if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK){
+	    			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+	    		}else if(response.getStatusLine().getStatusCode()==HttpStatus.SC_CREATED){
+	    			result = EntityUtils.toString(response.getEntity(),"UTF-8");
+	    			if(result.length()==0){
+	    				result=response.getStatusLine().getStatusCode()+"";
+	    			}
+	    		}else{
+	    			result=response.getStatusLine().getStatusCode()+"";
+	    		}	
+	        } catch (Exception e) {
+	        	result="503";
+	            return result;
+	        }
+	        //使用finally块来关闭输出流、输入流
+	        finally{
+	        	post.releaseConnection();
+	        }
+	        return result;
+	    } 
+	    
+	    /**
+	     * 
+	     * @param param
+	     * @return
+	     */
+	    public static String weiXinSendPost(String param) {
+	    	String url="http://192.168.66.162:8080/restful_mczzidc_com/api/weixin/template/messageSend";
+	    	//String url="http://mcapi.zzidc.com:60023/api/weixin/template/messageSend";
 	        String result = "";
 	        HttpClient client = null;
 	        HttpPost post = new HttpPost(url);

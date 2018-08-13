@@ -204,12 +204,23 @@ public class TestBugService extends GiantBaseService {
 		if(b) {
 			this.log(pmLog);
 			//微信提醒
+			//微信提醒
 			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
 			Date date = new Date();
 			String time = form.format(date);
 			if (GiantUtils.isEmpty(developer)) {
 				
 			}else {
+				String bugrank = "0".equals(t.getBugrank().toString()) ? "A" : "1".equals(t.getBugrank().toString()) ? "B" : "2".equals(t.getBugrank().toString()) ? "C" :"" ;
+				String bugfen = "0".equals(t.getBugrank().toString()) ? "正常" : "1".equals(t.getBugrank().toString()) ? "线上BUG" : "2".equals(t.getBugrank().toString()) ? "线下BUG" :"" ;
+				String bugtype = "0".equals(t.getBugrank().toString()) ? "功能类" :
+								 "1".equals(t.getBugrank().toString()) ? "安全类" : 
+								 "2".equals(t.getBugrank().toString()) ? "界面类" : 
+								 "3".equals(t.getBugrank().toString()) ? "信息类" : 
+								 "4".equals(t.getBugrank().toString()) ? "数据类" : 
+								 "5".equals(t.getBugrank().toString()) ? "流程类" : 
+								 "6".equals(t.getBugrank().toString()) ? "需求问题" :"" ;
+				
 				String openid = developer.getNewOpenid();//"o-GQDj8vVvfH2715yROC1aqY4YM0";
 				String first = "你好,收到一个【BUG处理】提醒";
 				String keyword1 = "处理BUG";
@@ -218,12 +229,12 @@ public class TestBugService extends GiantBaseService {
 				String remark = "总任务标题："+task.getTaskName()+
 						"\\n总任务领取ID："+task.getId()+
 						"\\nBUG创建人："+t.getCreater()+
-						"\\nBUG等级："+t.getBugrank()+
-						"\\nBUG分类："+t.getBugfen()+
-						"\\nBUG类型："+t.getBugtype();//自定义通知，以换行符隔开 \n
+						"\\nBUG等级："+bugrank+
+						"\\nBUG分类："+bugfen+
+						"\\nBUG类型："+bugtype;//自定义通知，以换行符隔开 \n
 				String str=sendWeChatUtil(openid,first,keyword1,keyword2,keyword3,remark);
 				String a1 = JSONObject.fromObject(str).toString();
-				HttpUtils.sendPost(url, a1);
+				HttpUtils.weiXinSendPost(a1);
 			}
 		}
 		return b;

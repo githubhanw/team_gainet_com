@@ -369,7 +369,6 @@ public class TeamTaskService extends GiantBaseService {
 		boolean b =  super.dao.saveUpdateOrDelete(task, null);
 		PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ADD, task.getId(), task.toString(), null);
 		if(b) {
-			this.log(pmLog);
 			//微信提醒
 			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
 			Date date = new Date();
@@ -385,7 +384,7 @@ public class TeamTaskService extends GiantBaseService {
 				String remark = "总任务标题："+task.getTaskName()+"\\n总任务领取ID："+task.getId()+"\\n总任务负责人："+task.getMemberName()+"\\n总任务开始时间："+task.getStartDate()+"\\n总任务结束时间："+task.getPlanEndDate();//自定义通知，以换行符隔开 \n
 				String str=sendWeChatUtil(openid,first,keyword1,keyword2,keyword3,remark);
 				String a1 = JSONObject.fromObject(str).toString();
-				HttpUtils.sendPost(url, a1);
+				HttpUtils.weiXinSendPost(a1);
 			}
 		}
 		return b;
@@ -728,7 +727,7 @@ public class TeamTaskService extends GiantBaseService {
 					String remark = "总任务标题："+t.getTaskName()+"\\n总任务领取ID："+t.getId()+"\\n总任务负责人："+t.getMemberName()+"\\n总任务开始时间："+t.getStartDate()+"\\n总任务结束时间："+t.getPlanEndDate();//自定义通知，以换行符隔开 \n
 					String str=sendWeChatUtil(openid,first,keyword1,keyword2,keyword3,remark);
 					String a1 = JSONObject.fromObject(str).toString();
-					HttpUtils.sendPost(url, a1);
+					HttpUtils.weiXinSendPost(a1);
 				}
 			}
 			return b;

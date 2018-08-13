@@ -305,11 +305,8 @@
 													<c:if test="${task.state == 1 && task.resolved == 0}">
 														<a href="team/task/toOpen?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
 													</c:if>
-													<%-- <c:if test="${task.state == 1 && task.resolved == 1}">
-														<a class="disabled btn" title="接收任务"><i class='icon-task-start icon-play'></i></a>
-													</c:if> --%>
-													<%-- 任务状态为已完成和已取消时 --%>
-													<c:if test="${task.state == 4 || task.state == 6}">
+													<%-- 任务状态为待接收和进行中时 --%>
+													<c:if test="${task.state == 1 || task.state == 2}">
 														<a href="team/task/toClose?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭任务"><i class='icon-task-close icon-off'></i></a>
 													</c:if>
 													<%-- 任务状态为进行中，且不为延期审核中，且是未分解任务 --%>
@@ -325,35 +322,28 @@
 														<a href="team/task/toFinishCheck?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="完成审核"><i class="icon-story-review icon-glasses"></i></a>
 													</c:if>
 													<c:if test="${task.state == 1 || task.state == 2}">
-														<a href="team/task/toHandover?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="任务交接"><i class="icon-story-review icon-exchange"></i></a>
+														<a href="team/task/toHandover?id=${task.id}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="任务交接"><i class="icon-story-review icon-exchange"></i></a>
 													</c:if>
-													<c:if test="${task.state == 4}">
+													<c:if test="${task.state == 4 && task.task_type != 2}">
 														<a href="test/apply/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon-story-review icon-plus"></i></a>
 													</c:if>
 													<%-- 任务状态为待接收、进行中时，且不为延期审核中 --%>
 													<c:if test="${task.state < 3 && task.delay != 1 && task.resolved == 0}">
 														<a href="team/task/toChange?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="变更任务"><i class="icon-story-change icon-fork"></i></a>
 													</c:if>
-													<%-- <c:if test="${task.state > 2 || task.delay == 1 || task.resolved != 0}">
-														<a class="disabled btn" title="变更"><i class="icon-story-change icon-fork"></i></a>
-													</c:if> --%>
 													<%-- 任务状态为进行中，且未进行过延期，且是未分解任务 --%>
 													<c:if test="${task.state == 2 && task.delay == 0 && task.resolved == 0}">
 														<a href="team/task/toDelay?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="延期任务"><i class='icon-task-recordEstimate icon-time'></i></a>
 													</c:if>
-													<%-- <c:if test="${task.state != 2 || task.delay != 0 || task.resolved != 0}">
-														<a class="disabled btn" title="延期"><i class='icon-task-recordEstimate icon-time'></i></a>
-													</c:if> --%>
 													<%-- 状态不为完成审核中，且不为延期审核中 --%>
-													<c:if test="${task.state != 3 && task.delay != 1}">
+													<c:if test="${task.state < 3 && task.delay != 1}">
 														<c:if test="${task.parent_id == null || task.parent_id == ''}">
 															<a href="team/task/toBatchAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="分解任务"><i class='icon-task-batchCreate icon-branch'></i></a>
 														</c:if>
 													</c:if>
-													<%-- <c:if test="${task.state == 3 || task.delay == 1 || task.parent_id > 0}">
-														<a class="disabled btn" title="分解任务"><i class='icon-task-batchCreate icon-branch'></i></a>
-													</c:if> --%>
-													<a href="test/bug/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
+													<c:if test="${task.state == 4 && task.task_type == 2}">
+														<a href="test/bug/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
+													</c:if>
 												</c:if>
 												<c:if test="${task.deleted == '1'}">--</c:if>
 											</td>
@@ -414,11 +404,8 @@
 																<c:if test="${subTask.state == 1 && subTask.resolved == 0}">
 																	<a href="team/task/toOpen?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
 																</c:if>
-																<%-- <c:if test="${subTask.state == 1 && subTask.resolved == 1}">
-																	<a class="disabled btn" title="接收"><i class='icon-task-start icon-play'></i></a>
-																</c:if> --%>
-																<%-- 任务状态为已完成和已取消时 --%>
-																<c:if test="${subTask.state == 4 || subTask.state == 6}">
+																<%-- 任务状态为待接收和进行中时 --%>
+																<c:if test="${subTask.state == 1 || subTask.state == 2}">
 																	<a href="team/task/toClose?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭任务"><i class='icon-task-close icon-off'></i></a>
 																</c:if>
 																<%-- 任务状态为进行中，且不为延期审核中，且是未分解任务 --%>
@@ -436,27 +423,20 @@
 																<c:if test="${subTask.state == 1 || subTask.state == 2}">
 																	<a href="team/task/toHandover?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="任务交接"><i class="icon-story-review icon-exchange"></i></a>
 																</c:if>
-																<c:if test="${subTask.state == 4}">
+																<c:if test="${subTask.state == 4 && task.task_type != 2}">
 																	<a href="test/apply/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon-story-review icon-plus"></i></a>
 																</c:if>
-																
 																<%-- 任务状态为待接收、进行中时，且不为延期审核中 --%>
-																<c:if test="${subTask.state < 3 && subTask.delay != 1}">
+																<c:if test="${subTask.state < 3 && subTask.delay != 1 && subTask.resolved == 0}">
 																	<a href="team/task/toChange?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="变更任务"><i class="icon-story-change icon-fork"></i></a>
 																</c:if>
-																<%-- <c:if test="${subTask.state > 2 || subTask.delay == 1}">
-																	<a class="disabled btn" title="变更任务"><i class="icon-story-change icon-fork"></i></a>
-																</c:if> --%>
 																<%-- 任务状态为进行中，且未进行过延期，且是未分解任务 --%>
 																<c:if test="${subTask.state == 2 && subTask.delay == 0 && subTask.resolved == 0}">
 																	<a href="team/task/toDelay?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="延期任务"><i class='icon-task-recordEstimate icon-time'></i></a>
 																</c:if>
-																<%-- <c:if test="${subTask.state != 2 || subTask.delay != 0 || subTask.resolved != 0}">
-																	<a class="disabled btn" title="延期任务"><i class='icon-task-recordEstimate icon-time'></i></a>
-																</c:if> --%>
-																<%-- 状态不为完成审核中，且不为延期审核中 --%>
-																<!-- <a class="disabled btn" title="分解任务"><i class='icon-task-batchCreate icon-branch'></i></a> -->
-																<a href="test/bug/toAdd?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
+																<c:if test="${subTask.state == 4 && subTask.task_type == 2}">
+																	<a href="test/bug/toAdd?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
+																</c:if>
 															</c:if>
 															<c:if test="${subTask.deleted == '1'}">--</c:if>
 														</td>

@@ -1122,7 +1122,7 @@ public class GiantUtils {
 		 	String r = " 微信调用接口发送参数:"+map+",结果：";
 			try {
 				//String url="http://idcsupport_api.zzidc.com:60022/restful/support/support/sendWeChat";
-				String url="http://192.168.103.156:8080/restful_mczzidc_com/api/weixin/template/messageSend";
+				String url="http://mcapi.zzidc.com:60023/api/weixin/template/messageSend";
 					Map<String, String> m = new HashMap<String, String>();
 					m.put("appKey","JTG+/C296UYV/jWHufm2lg==");
 					m.put("first",map.get("first"));

@@ -93,10 +93,10 @@
 						<a class="btn btn-link querybox-toggle ${prm.type == 12 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 					<!--btn-toolbar start-->
-					<div class="btn-toolbar pull-right">
+					<!-- <div class="btn-toolbar pull-right">
 						<a href="team/need/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>
 						<a href="team/need/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 提需求</a>
-					</div>
+					</div> -->
 					<!--btn-toolbar end-->
 				</div>
 				<!--mainMenu end-->
@@ -258,7 +258,7 @@
 												</c:if>
 											</td>
 											<td class="text-left">
-												<a href="team/project/detail?id=${need.project_id}" data-toggle="tooltip" data-placement="top" title="${need.project_name}">${need.project_name}</a>
+												${need.project_name}
 											</td>
 											<td class="c-name text-left">${need.member_name}</td>
 											<td class="c-name text-left">
@@ -297,7 +297,7 @@
 														<%-- <c:if test="${need.parent_id>0 || need.full == 0}">
 															<a class="disabled btn" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if> --%>
-														<c:if test="${(need.parent_id == null || need.parent_id == '') && need.full == 1}">
+														<c:if test="${need.full == 1}">
 															<a href="team/need/toBatchAdd?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="分解需求"><i class='icon-task-batchCreate icon-branch'></i></a>
 														</c:if>
 														<%-- <c:if test="${need.parent_id>0 || need.full == 0}">
@@ -330,7 +330,7 @@
 															</c:if>
 														</td>
 														<td class="text-left">
-															<a href="team/project/detail?id=${subNeed.project_id}" data-toggle="tooltip" data-placement="top" title="${subNeed.project_name}">${subNeed.project_name}</a>
+															${subNeed.project_name}
 														</td>
 														<td class="c-name text-left">${subNeed.member_name}</td>
 														<td class="c-name text-left">
@@ -360,10 +360,10 @@
 														<td class="c-actions text-right">
 															<c:if test="${subNeed.state > 0}">
 																<c:if test="${subNeed.state == 1 || subNeed.state == 2}">
-																	<a href="team/need/toChange?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
+																	<a href="team/need/toChange?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${subNeed.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
 																	<a href="team/need/toClose?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
 																	<a href="team/need/toCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
-																	<c:if test="${(subNeed.parent_id == null || subNeed.parent_id == '') && subNeed.full == 1}">
+																	<c:if test="${subNeed.full == 1}">
 																		<a href="team/task/toBatchAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 																	</c:if>
 																	<%-- <c:if test="${subNeed.parent_id>0 || subNeed.full == 0}">

@@ -48,14 +48,14 @@
 								<tr>
 									<th>需求描述</th>
 									<td class="required">
-										<div id="need_remark" name="need_remark"></div>
+										<div id="need_remark" name="need_remark">${n.needRemark}</div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 								</tr>
 								<tr>
 									<th>验收标准</th>
 									<td class="required">
-										<div id="check_remark" name="check_remark"></div>
+										<div id="check_remark" name="check_remark">${n.checkRemark}</div>
 										<input type="hidden" name="id" value="${n.id}"/>
 									</td>
 									<td></td>

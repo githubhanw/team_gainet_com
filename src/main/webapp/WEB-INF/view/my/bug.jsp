@@ -73,8 +73,8 @@
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri" title="bug标题">
-												<a  href="${pageList.desAction}&orderColumn=t.bugdes&orderByValue=${prm.orderColumn=='t.bugdes'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.bugdes'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">bug标题</a>
+												<a  href="${pageList.desAction}&orderColumn=bugdes&orderByValue=${prm.orderColumn=='bugdes'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='bugdes'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">bug标题</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:80px" class="c-name text-center" title="任务ID">
 												<a  href="${pageList.desAction}&orderColumn=task_name&orderByValue=${prm.orderColumn=='task_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"

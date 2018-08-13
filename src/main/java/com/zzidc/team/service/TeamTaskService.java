@@ -32,7 +32,7 @@ import net.sf.json.JSONObject;
 @Service("teamTaskService")
 public class TeamTaskService extends GiantBaseService {
 	//String url="http://idcsupport_api.zzidc.com:60022/restful/support/support/sendWeChat";
-	String url="http://192.168.103.156:8080/restful_mczzidc_com/api/weixin/template/messageSend";
+	String url="http://mcapi.zzidc.com:60023/api/weixin/template/messageSend";
 
 	public GiantPager getPageList(GiantPager conditionPage) {
 		if (conditionPage == null) {
@@ -163,8 +163,8 @@ public class TeamTaskService extends GiantBaseService {
 					sql += "AND t.assigned_id=" + memberId;
 					countSql += "AND t.assigned_id=" + memberId;
 				} else if ("9".equals(temp)) {// 状态：已延期
-					sql += "AND t.delay=1";
-					countSql += "AND t.delay=1";
+					sql += "AND t.delay>0";
+					countSql += "AND t.delay>0";
 				} else if ("10".equals(temp)) {// 状态：我完成
 					sql += "AND t.state=4 AND t.finished_id=" + memberId;
 					countSql += "AND t.state=4 AND t.finished_id=" + memberId;
@@ -177,12 +177,12 @@ public class TeamTaskService extends GiantBaseService {
 				} else if ("13".equals(temp)) {// 状态：待我审核
 					sql += "AND (t.delayed_review_id=" + memberId +" OR (t.state=3 AND t.checked_id=" + memberId + "))";
 					countSql += "AND (t.delayed_review_id=" + memberId +" OR (t.state=3 AND t.checked_id=" + memberId + "))";
-				} else if ("14".equals(temp)) {// 状态：已逾期（我的）
+				} else if ("19".equals(temp)) {// 状态：已逾期（我的）
 					sql += "AND t.overdue=1 AND t.assigned_id=" + memberId;
 					countSql += "AND t.overdue=1 AND t.assigned_id=" + memberId;
 				} else if ("15".equals(temp)) {// 状态：已延期（我的）
-					sql += "AND t.delay=1 AND t.assigned_id=" + memberId;
-					countSql += "AND t.delay=1 AND t.assigned_id=" + memberId;
+					sql += "AND t.delay>0 AND t.assigned_id=" + memberId;
+					countSql += "AND t.delay>0 AND t.assigned_id=" + memberId;
 				} else if ("16".equals(temp)) {// 状态：今日任务（已接收）
 					sql += "AND t.real_start_date=CURDATE() AND t.assigned_id=" + memberId;
 					countSql += "AND t.real_start_date=CURDATE() AND t.assigned_id=" + memberId;
@@ -783,7 +783,7 @@ public class TeamTaskService extends GiantBaseService {
 				BeanUtils.copyProperties(t, oldTask);
 				t.setState((short) 2);
 				t.setCheckedNum((t.getCheckedNum()==null?0:t.getCheckedNum())+1);
-				t.setCheckedReason(mvm.get("checked_reason").toString());
+				t.setCheckedReason(String.valueOf(mvm.get("checked_reason")));
 				t.setCheckedTime(new Timestamp(System.currentTimeMillis()));
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				boolean b = super.dao.saveUpdateOrDelete(t, null);

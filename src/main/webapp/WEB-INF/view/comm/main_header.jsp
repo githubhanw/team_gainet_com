@@ -4,7 +4,7 @@
 	<div class="container">
 		<hrgroup id="heading">
 			<h1 id="companyname" title="景安任务管理系统">
-				<a href="/"><img src="static/jingan.png"></a>
+				<a href=""><img src="static/jingan.png"></a>
 			</h1>
 		</hrgroup>
 		<!--navbar start-->

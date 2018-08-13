@@ -227,7 +227,6 @@
 											<td class="c-actions text-center">
 												<a href="my/bug/toSolve?id=${bug.id}" class="btn" title="解决"><i class='icon-task-finish icon-checked'></i></a>
 												<a href="my/bug/toVali?id=${bug.id}" class="btn" title="验证"><i class="icon-story-review icon-glasses"></i></a>
-												<a href="my/bug/toEdit?id=${bug.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 											</td>
 										</tr>
 										</c:forEach>

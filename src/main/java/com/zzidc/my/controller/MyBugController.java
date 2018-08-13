@@ -52,7 +52,6 @@ public class MyBugController extends GiantBaseController {
 		model.addAttribute("task", testBugService.getFinishedTasksByMember());
 		model.addAttribute("members", testBugService.getAllMember());
 		publicResult(model);
-		model.addAttribute("s", "add");//子模块
 		return "my/bug/add";
 	}
 	

@@ -167,6 +167,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getMemberId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 		}
 		model.addAttribute("need_id", mvm.get("need_id"));
@@ -222,6 +225,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getMemberId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 		}
 		publicResult(model);
@@ -260,6 +266,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getMemberId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 		}
 		publicResult(model);
@@ -469,6 +478,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getAssignedId())) {
+				return "nopower";
+			}
 			model.addAttribute("members", teamTaskService.getAllMember());
 			model.addAttribute("t", t);
 		}
@@ -515,6 +527,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getCheckedId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 		}
 		publicResult(model);
@@ -622,6 +637,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getAssignedId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 		}
 		publicResult(model);
@@ -666,6 +684,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getDelayedReviewId())) {
+				return "nopower";
+			}
 			model.addAttribute("members", teamTaskService.getAllMember());
 			model.addAttribute("t", t);
 		}
@@ -708,6 +729,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(!teamTaskService.isCurrentMember(t.getAssignedId())) {
+				return "nopower";
+			}
 			model.addAttribute("members", teamTaskService.getAllMember());
 			model.addAttribute("t", t);
 		}

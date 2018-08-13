@@ -431,8 +431,6 @@
 						<c:if test="${taskM.state != 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
 							<a href='my/task/toBatchAdd?id=${taskM.id}' class='btn btn-link ' ><i class='icon-task-batchCreate icon-branch'></i> 分解</a>
 						</c:if>
-						<a href="my/task/toEdit?id=${taskM.id}" class="btn btn-link"><i class="icon-common-edit icon-edit"></i> 编辑</a>
-						<a href="javascript:void(0)" onclick="del(${taskM.id})" class="btn btn-link"><i class="icon-common-delete icon-trash"></i> 删除</a>
 					</div>
 				</div>
 				<!--mainActions end-->

@@ -98,6 +98,7 @@ public class Authentication {
 			if (number == null || "".equals(number) || giantBaseService == null)
 				return null;
 			Map<String, Object> prm = new HashMap<String, Object>();
+			// 	TODO 用户有多个角色时，需要修改此sql
 			String sql = "SELECT p.url FROM member_config cnf, role_privilege rp, privilege p "
 					+ "WHERE cnf.role_ids=rp.role_id AND rp.privilege_id=p.id AND cnf.number=:number";
 			prm.put("number", number);

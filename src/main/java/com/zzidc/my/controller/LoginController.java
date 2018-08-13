@@ -19,6 +19,7 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.filter.Authentication;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.my.service.LoginService;
+import com.zzidc.team.entity.MemberConfig;
 
 import net.sf.json.JSONObject;
 
@@ -68,6 +69,10 @@ public class LoginController extends GiantBaseController {
 		session.setAttribute("memberName", String.valueOf(memberInfo.get("NAME")));
 		session.setAttribute("loginName", String.valueOf(memberInfo.get("USERNAME")));
 		session.setAttribute("memberId", Integer.parseInt(String.valueOf(memberInfo.get("id"))));
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("number", memberInfo.get("NUMBER").toString());
+		MemberConfig mc = (MemberConfig) loginService.getEntityByHQL("MemberConfig", map);
+		session.setAttribute("roleIds", mc.getRoleIds());
 		//设置权限 暂无
 		session.setAttribute("power", Authentication.getPowerList(memberInfo.get("NUMBER").toString(), loginService));
 		json.put("result", "success");

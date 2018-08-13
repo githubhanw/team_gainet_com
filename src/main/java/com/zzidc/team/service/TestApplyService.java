@@ -135,6 +135,29 @@ public class TestApplyService extends GiantBaseService {
 	}
 
 	/**
+	 * [验证测试申请单的状态] <br>
+	 * <pre>
+	 * 只有待测试的申请单才能驳回
+	 * </pre>
+	 * @author likai <br>
+	 * @date 2018年7月29日 下午3:37:42 <br>
+	 * @param mvm
+	 * @param state
+	 * @return <br>
+	 */
+	public boolean checkState(Map<String, String> mvm, int state) {
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			TestApply testApply = (TestApply) super.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(testApply != null) {
+				if(state == testApply.getState()) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * [驳回] <br>
 	 * 
 	 * @author likai <br>

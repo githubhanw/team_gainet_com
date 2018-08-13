@@ -163,6 +163,13 @@ public class MyTestController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
+		// 只有待测试的申请单才能驳回
+		if(!testApplyService.checkState(mvm, 1)) {
+			json.put("code",1);
+			json.put("message", "只有待测试的测试单才能驳回");
+			resultresponse(response,json);
+			return;
+		}
 		boolean flag = testApplyService.dismissal(mvm);
 		if(flag){
 			json.put("code",0);
@@ -242,6 +249,13 @@ public class MyTestController extends GiantBaseController {
 				mvm.get("start_date") == null || mvm.get("end_date") == null || mvm.get("need_id") == null){
 			json.put("code",1);
 			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		// 只有待测试的申请单才能领取
+		if(!testApplyService.checkState(mvm, 1)) {
+			json.put("code",1);
+			json.put("message", "只有待测试的测试单才能驳回");
 			resultresponse(response,json);
 			return;
 		}

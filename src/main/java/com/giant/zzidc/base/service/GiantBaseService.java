@@ -97,6 +97,19 @@ public class GiantBaseService {
 	}
 
 	/**
+	 * 是否当前登录
+	 * @param memberId	所判断的员工编号
+	 * @return
+	 */
+	public boolean isCurrentMember(Integer memberId) {
+		if (getMemberId() - memberId == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
 	 * [描述信息]获取微信开发者账号信息
 	 * @author HeFuHua
 	 * @date 2014-5-4 上午10:32:49

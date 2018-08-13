@@ -43,9 +43,9 @@
 							<thead>
 								<tr>
 									<th class="w-30px col-id">ID</th>
-									<th class="w-150px col-plan">所属项目</th>
-									<th class="w-130px">需求来源</th>
-									<th class="w-130px">需求方</th>
+									<th class="w-150px col-plan required">所属项目</th>
+									<th class="w-130px required">需求来源</th>
+									<th class="w-130px required">需求方</th>
 									<th class="col-name has-btn required">需求名称</th>
 									<th class="w-150px">指派给</th>
 									<th class="w-120px col-estimate">开始时间</th>
@@ -178,6 +178,7 @@ $("input[name='need_name']").focus(function(){
 })
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	var flag = true;
 	for(var i=0;i<10;i++){
 		if(!!$($("input[name='need_name']").get(i)).val()){
 			if(!!$("#id").val()){
@@ -192,6 +193,7 @@ $("#submit").click(function(){
 				}else{
 					$("#msg" + i).css("color", "red");
 					$("#msg" + i).text('失败');
+					flag = false;
 				}
 			}})
 			if(!!$("#id").val()){
@@ -200,6 +202,9 @@ $("#submit").click(function(){
 				$($("input[name='member_id']").get(i)).attr("disabled", "disabled");
 			}
 		}
+	}
+	if(flag){
+		window.location.href="my/need";
 	}
 	$.ajaxSettings.async = true;
 });

@@ -62,8 +62,8 @@
 						</a>
 					</div>
 					<div class="btn-toolbar pull-right">
-						<a href="team/need/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>
-						<a href="team/need/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 提需求</a>
+						<a href="my/need/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>
+						<a href="my/need/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 提需求</a>
 					</div>
 				</div>
 				<!--mainMenu end-->
@@ -177,7 +177,9 @@
 													<c:if test="${need.state == 1 || need.state == 2}">
 														<a href="team/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
 														<a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
-														<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
+														<c:if test="${need.full == 1}">
+															<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
+														</c:if>
 														<c:if test="${need.full == 1}">
 															<a href="team/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if>

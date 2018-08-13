@@ -356,7 +356,6 @@ public class TeamNeedService extends GiantBaseService{
 	 * 批量添加、分解需求信息
 	 */
 	public Integer batchAdd(Map<String, String> mvm) {
-		System.out.println("service 打印日志id：" + mvm.get("logId"));
 		TaskNeed need = new TaskNeed();
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());

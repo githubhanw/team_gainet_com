@@ -178,6 +178,7 @@ $("input[name='need_name']").focus(function(){
 })
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	var flag = true;
 	for(var i=0;i<10;i++){
 		if(!!$($("input[name='need_name']").get(i)).val()){
 			if(!!$("#id").val()){
@@ -192,6 +193,7 @@ $("#submit").click(function(){
 				}else{
 					$("#msg" + i).css("color", "red");
 					$("#msg" + i).text('失败');
+					flag = false;
 				}
 			}})
 			if(!!$("#id").val()){
@@ -200,6 +202,9 @@ $("#submit").click(function(){
 				$($("input[name='member_id']").get(i)).attr("disabled", "disabled");
 			}
 		}
+	}
+	if(flag){
+		window.location.href="team/need/index";
 	}
 	$.ajaxSettings.async = true;
 });

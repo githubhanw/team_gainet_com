@@ -167,7 +167,7 @@ public class MyController extends GiantBaseController {
 		model.addAttribute("prm", mvm);
 		publicResult(model);
 		model.addAttribute("s", "test");//子模块
-		return "my/test";
+		return "my/test/list";
 	}
 
 	/**
@@ -204,7 +204,7 @@ public class MyController extends GiantBaseController {
 		model.addAttribute("prm", mvm);
 		publicResult(model);
 		model.addAttribute("s", "need");//子模块
-		return "my/need";
+		return "my/need/list";
 	}
 
 }

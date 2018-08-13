@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -107,6 +108,29 @@ public class GiantBaseService {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * 当前用户是否为测试负责人
+	 * @param 
+	 * @return
+	 */
+	public boolean isTestLeaderMember() {
+		if(getSession() == null || getSession().getAttribute("roleIds") == null) {
+			return false;
+		}
+		int memberId = getMemberId();
+		if(memberId == 0) {
+			return false;
+		}
+		String roleIds = String.valueOf(getSession().getAttribute("roleIds"));
+		if(roleIds == null || roleIds.trim().length() == 0) {
+			return false;
+		}
+		String[] roleIdArray = roleIds.split(",");
+		List<String> roleIdList = Arrays.asList(roleIdArray);
+		// 角色Id为5的是测试负责人
+		return roleIdList.contains("5");
 	}
 	
 	/**

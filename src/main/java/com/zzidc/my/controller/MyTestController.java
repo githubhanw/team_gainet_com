@@ -130,6 +130,10 @@ public class MyTestController extends GiantBaseController {
 	 */
 	@RequestMapping("/toDismissal")
 	public String toDismissal(@RequestParam Map<String, String> mvm, Model model) {
+		// 只有测试负责人能驳回
+		if(!testApplyService.isTestLeaderMember()) {
+			return "nopower";
+		}
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -146,6 +150,13 @@ public class MyTestController extends GiantBaseController {
 	public void dismissal(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		// mvm eg :{r=0.29616789999172366, comment=, id=25}
 		JSONObject json=new JSONObject();
+		// 只有测试负责人能领取
+		if(!testApplyService.isTestLeaderMember()) {
+			json.put("code",1);
+			json.put("message", "不能驳回该测试单");
+			resultresponse(response,json);
+			return;
+		}
 		if(GiantUtil.isEmpty(mvm.get("id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
@@ -190,6 +201,10 @@ public class MyTestController extends GiantBaseController {
 	 */
 	@RequestMapping("/toReceive")
 	public String toReceive(@RequestParam Map<String, String> mvm, Model model) {
+		// 只有测试负责人能领取
+		if(!testApplyService.isTestLeaderMember()) {
+			return "nopower";
+		}
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			TestApply apply = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(apply != null) {
@@ -216,6 +231,13 @@ public class MyTestController extends GiantBaseController {
 	@RequestMapping("/receive")
 	public void receive(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
+		// 只有测试负责人能领取
+		if(!testApplyService.isTestLeaderMember()) {
+			json.put("code",1);
+			json.put("message", "不能领取该测试单");
+			resultresponse(response,json);
+			return;
+		}
 		if(GiantUtil.isEmpty(mvm.get("id")) || mvm.get("task_name") == null || mvm.get("assigned_id") == null || mvm.get("task_type") == null || 
 				mvm.get("start_date") == null || mvm.get("end_date") == null || mvm.get("need_id") == null){
 			json.put("code",1);
@@ -231,7 +253,7 @@ public class MyTestController extends GiantBaseController {
 		}else{
 			json.put("code",1);
 			json.put("message", "操作失败");
-		}
+		} 
 		resultresponse(response,json);
 	}
 }

@@ -68,6 +68,19 @@ public class TestApplyService extends GiantBaseService {
 				} else if ("5".equals(temp)) {//由我提测
 					sql += "AND ta.apply_id = " + memberId;
 					countSql += "AND ta.apply_id = " + memberId;
+				} else if ("10".equals(temp)) {//由我提测的搜索
+					if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
+						sql += "AND t.task_name LIKE :search ";
+						countSql += "AND t.task_name LIKE :search ";
+						conditionMap.put("search", temp + "%");
+					}
+					// 如果状态不存在时，默认状态为待测试（1）
+					int state = GiantUtil.intOf(conditionPage.getQueryCondition().get("state"), 1);
+					if (state > 0) {
+						sql += "AND ta.state = :state ";
+						countSql += "AND ta.state = :state ";
+						conditionMap.put("state", state);
+					}
 				} else if ("11".equals(temp)) {//由我提测的搜索
 					if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
 						sql += "AND t.task_name LIKE :search ";

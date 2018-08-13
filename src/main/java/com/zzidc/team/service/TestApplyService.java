@@ -138,6 +138,7 @@ public class TestApplyService extends GiantBaseService {
 	 * [验证测试申请单的状态] <br>
 	 * <pre>
 	 * 只有待测试的申请单才能驳回
+	 * 只有待测试的申请单才能领取
 	 * </pre>
 	 * @author likai <br>
 	 * @date 2018年7月29日 下午3:37:42 <br>

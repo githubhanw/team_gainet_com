@@ -242,8 +242,8 @@ public class HttpUtils {
 	     * @return
 	     */
 	    public static String weiXinSendPost(String param) {
-	    	String url="http://192.168.66.162:8080/restful_mczzidc_com/api/weixin/template/messageSend";
-	    	//String url="http://mcapi.zzidc.com:60023/api/weixin/template/messageSend";
+//	    	String url="http://192.168.66.162:8080/restful_mczzidc_com/api/weixin/template/messageSend";
+	    	String url="http://mcapi.zzidc.com:60023/api/weixin/template/messageSend";
 	        String result = "";
 	        HttpClient client = null;
 	        HttpPost post = new HttpPost(url);

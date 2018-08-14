@@ -72,7 +72,9 @@ public class LoginController extends GiantBaseController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("number", memberInfo.get("NUMBER").toString());
 		MemberConfig mc = (MemberConfig) loginService.getEntityByHQL("MemberConfig", map);
-		session.setAttribute("roleIds", mc.getRoleIds());
+		if(mc != null) {
+			session.setAttribute("roleIds", mc.getRoleIds());
+		}
 		//设置权限 暂无
 		session.setAttribute("power", Authentication.getPowerList(memberInfo.get("NUMBER").toString(), loginService));
 		json.put("result", "success");

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.declaration.service.ProjectResultService;
 import com.zzidc.team.entity.DeclarationProjectResult;
 
@@ -111,9 +112,9 @@ public class ProjectResultController extends GiantBaseController {
 	@RequestMapping("/addOrUpd")
 	public void addOrUpd(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(mvm.get("type") == null || mvm.get("company") == null || mvm.get("agent") == null || mvm.get("state") == null || 
-				mvm.get("registration_number") == null || mvm.get("project_id") == null || mvm.get("project_result_name") == null || 
-				mvm.get("member_name") == null || mvm.get("apply_date") == null){
+		if(GiantUtils.isEmpty(mvm.get("type")) || GiantUtils.isEmpty(mvm.get("company")) || GiantUtils.isEmpty(mvm.get("agent")) || GiantUtils.isEmpty(mvm.get("state")) || 
+				GiantUtils.isEmpty(mvm.get("registration_number")) || GiantUtils.isEmpty(mvm.get("project_id")) || GiantUtils.isEmpty(mvm.get("project_result_name")) || 
+				GiantUtils.isEmpty(mvm.get("member_name")) || GiantUtils.isEmpty(mvm.get("apply_date"))){
 			json.put("code",1);
 			json.put("message", "参数不完整！！");
 			resultresponse(response,json);

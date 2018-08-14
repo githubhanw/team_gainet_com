@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.declaration.service.ProjectService;
 import com.zzidc.team.entity.DeclarationProject;
 
@@ -115,8 +116,8 @@ public class ProjectController extends GiantBaseController {
 	@RequestMapping("/addOrUpd")
 	public void addOrUpd(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(mvm.get("declaration_number") == null || mvm.get("company") == null || mvm.get("stage") == null || 
-				mvm.get("project_name") == null || mvm.get("start_date") == null || mvm.get("end_date") == null){
+		if(GiantUtils.isEmpty(mvm.get("declaration_number"))|| GiantUtils.isEmpty(mvm.get("company")) || GiantUtils.isEmpty(mvm.get("stage")) || 
+				GiantUtils.isEmpty(mvm.get("project_name")) || GiantUtils.isEmpty(mvm.get("start_date")) || GiantUtils.isEmpty(mvm.get("end_date"))){
 			json.put("code",1);
 			json.put("message", "编号不正确，不能跟踪");
 			resultresponse(response,json);

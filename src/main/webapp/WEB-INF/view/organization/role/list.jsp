@@ -42,7 +42,7 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
+						<a class="btn btn-link querybox-toggle querybox-opened" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
@@ -54,7 +54,7 @@
 				<div id="mainContent" class="main-row fade in">
 					<!--main-col start-->
 					<div class="main-col">
-						<div class="cell load-indicator ${prm.type == 10 ? 'show':''}" id="queryBox">
+						<div class="cell load-indicator show" id="queryBox">
 							<form method="post" action="organization/role/index?type=10" id="searchForm" class="search-form">
 								<table class="table table-condensed table-form" id="task-search">
 									<tbody>
@@ -62,10 +62,9 @@
 											<td style="width:500px">
 												<input type="text" name="search" id="search" value="${prm.search}" class="form-control searchInput" placeholder="请输入要查询的角色名称">
 											</td>
-										</tr>
-										<tr>
-											<td colspan="8" class="text-center form-actions">
+											<td>
 												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
+											</td>
 										</tr>
 									</tbody>
 								</table>

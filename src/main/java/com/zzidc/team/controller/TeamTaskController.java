@@ -131,8 +131,8 @@ public class TeamTaskController extends GiantBaseController {
 	@RequestMapping("/add")
 	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(mvm.get("task_name") == null || mvm.get("assigned_id") == null || mvm.get("task_type") == null || 
-				mvm.get("start_date") == null || mvm.get("end_date") == null || mvm.get("need_id") == null){
+		if(GiantUtil.isEmpty(mvm.get("task_name")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("task_type")) || 
+				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date")) || GiantUtil.isEmpty(mvm.get("need_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

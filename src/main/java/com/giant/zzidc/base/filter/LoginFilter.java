@@ -34,7 +34,7 @@ public class LoginFilter implements Filter {
 			arg2.doFilter(arg0, arg1);
 			return;
 		}
-		if("/toLogin".equals(request.getServletPath()) || "/login".equals(request.getServletPath())) {
+		if("/toLogin".equals(request.getServletPath()) || "/login".equals(request.getServletPath()) || "".equals(request.getServletPath()) || "/my".equals(request.getServletPath())) {
 			arg2.doFilter(arg0, arg1);
 			return;
 		}

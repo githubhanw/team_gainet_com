@@ -55,7 +55,7 @@ public class LoginController extends GiantBaseController {
 		Map<String, Object> prm = new HashMap<String, Object>();
 		prm.put("username", username);
 		prm.put("password", new SimpleHash("SHA-1",password).toString());
-		String sql = "select * from member where USERNAME=:username and PASSWORD=:password and STATUS=0";
+		String sql = "select * from member where (USERNAME=:username or PHONE=:username or NUMBER=:username) and PASSWORD=:password and STATUS=0";
 		List<Map<String, Object>> memberInfoList = loginService.dao.getMapListBySQL(sql, prm);
 		if (memberInfoList == null || memberInfoList.size() != 1) {
 			json.put("result", "usererror");

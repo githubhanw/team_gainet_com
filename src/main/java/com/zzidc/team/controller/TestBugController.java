@@ -308,10 +308,10 @@ public class TestBugController extends GiantBaseController {
 	public void vali(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
 		TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
-		if(t.getTaskid() == null || t.getTasktype() == null || t.getTaskdes() == null || t.getBugproject() == null || 
-				t.getBugrank() == null || t.getBugfen() == null || t.getBugtype() == null || t.getSolver() == null ||
-				t.getBugdes() == null || t.getCreater() == null ||t.getDeveloper() == null || t.getSolution() == null ||
-				t.getMark() == null ||t.getKaifamark() == null || t.getCreatetime() == null || t.getSolvetime() == null){
+		if(GiantUtil.isEmpty(t.getTaskid()) || GiantUtil.isEmpty(t.getTasktype()) || GiantUtil.isEmpty(t.getTaskdes()) || GiantUtil.isEmpty(t.getBugproject()) || 
+				GiantUtil.isEmpty(t.getBugrank()) || GiantUtil.isEmpty(t.getBugfen()) || GiantUtil.isEmpty(t.getBugtype()) || GiantUtil.isEmpty(t.getSolver()) ||
+				GiantUtil.isEmpty(t.getBugdes()) || GiantUtil.isEmpty(t.getCreater()) ||GiantUtil.isEmpty(t.getDeveloper()) || GiantUtil.isEmpty(t.getSolution()) ||
+				GiantUtil.isEmpty(t.getMark()) || GiantUtil.isEmpty(t.getKaifamark()) || GiantUtil.isEmpty(t.getCreatetime()) || GiantUtil.isEmpty(t.getSolvetime())){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

@@ -2,7 +2,7 @@
 <!--mainHeader start-->
 <div id="mainHeader">
 	<div class="container">
-		<hrgroup id="heading">
+		<hrgroup id="heading" style="top:10px">
 			<h1 id="companyname" title="景安任务管理系统">
 				<a href=""><img src="static/jingan.png"></a>
 			</h1>

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.giant.zzidc.base.action.GiantBaseController;
+import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.Task;
 import com.zzidc.team.service.TeamTaskService;
@@ -26,12 +27,50 @@ import net.sf.json.JSONObject;
 public class MyTaskController extends GiantBaseController {
 	@Autowired
 	private TeamTaskService teamTaskService;
+	private GiantPager conditionPage = null;
 	private String requestURL = "my/task";
 
 	public void publicResult(Model model) {
 		model.addAttribute("m", "my");//模块
 		model.addAttribute("s", "task");//子模块
 		model.addAttribute("u", requestURL);//请求地址
+	}
+
+	/**
+	 * 任务列表
+	 */
+	@RequestMapping("/index")
+	public String list(@RequestParam Map<String, String> mvm, Model model) {
+		if(conditionPage == null){
+			conditionPage = new GiantPager();
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
+			mvm.put("orderColumn", "t.state");
+			mvm.put("orderByValue", "ASC");
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
+			mvm.put("type", "1");
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
+			mvm.put("search", "");
+		}
+		Map<String, String> queryCondition = conditionPage.getQueryCondition();
+		//查询条件封装
+		queryCondition.clear();
+		queryCondition.putAll(mvm);
+		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
+		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
+		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
+		pageList = teamTaskService.getPageList(conditionPage);
+		requestURL = "my/task?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		pageList.setDesAction(requestURL);
+		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
+			teamTaskService.getSubTaskList(pageList.getPageResult(), mvm.get("type"), mvm.get("orderColumn"), mvm.get("orderByValue"));
+		}
+		model.addAttribute("pageList", pageList);
+		model.addAttribute("prm", mvm);
+		publicResult(model);
+		return "my/task";
 	}
 
 	/**
@@ -92,8 +131,8 @@ public class MyTaskController extends GiantBaseController {
 	@RequestMapping("/add")
 	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(mvm.get("task_name") == null || mvm.get("assigned_id") == null || mvm.get("task_type") == null || 
-				mvm.get("start_date") == null || mvm.get("end_date") == null || mvm.get("need_id") == null){
+		if(GiantUtil.isEmpty(mvm.get("task_name")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("task_type")) || 
+				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date")) || GiantUtil.isEmpty(mvm.get("need_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

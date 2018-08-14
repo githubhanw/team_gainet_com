@@ -190,31 +190,31 @@
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="team/task/index?type=16">
+												<a href="my/task?type=16">
 													<div class="tile-title">今日任务</div>
 													<div class="tile-amount">${taskCount.today > 0 ? taskCount.today : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="team/task/index?type=18">
+												<a href="my/task?type=18">
 													<div class="tile-title">未接收任务</div>
 													<div class="tile-amount">${taskCount.noopen > 0 ? taskCount.noopen : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="team/task/index?type=17">
+												<a href="my/task?type=17">
 													<div class="tile-title">昨日任务</div>
 													<div class="tile-amount">${taskCount.yesteday > 0 ? taskCount.yesteday : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="team/task/index?type=15">
+												<a href="my/task?type=15">
 													<div class="tile-title">延期任务</div>
 													<div class="tile-amount"><span class="label label-warning" style="padding:.2em .6em;font-size:30px;">${taskCount.delay > 0 ? taskCount.delay : 0}</span></div>
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="team/task/index?type=19">
+												<a href="my/task?type=19">
 													<div class="tile-title">逾期任务</div>
 													<div class="tile-amount"><span class="label label-danger" style="padding:.2em .6em;font-size:30px;">${taskCount.overdue > 0 ? taskCount.overdue : 0}</span></div>
 												</a>

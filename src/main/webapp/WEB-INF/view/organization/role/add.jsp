@@ -48,6 +48,19 @@
 										<input type="hidden" name="id" value="${entity.id}"/>
 									<td></td>
 								</tr>
+								<c:if test="${entity.id > 0}">
+								<tr>
+									<th>状态</th>
+									<td>
+										<select class="form-control chosen chosen-select" name="status" id="status">
+											<option value="1">选择状态</option>
+											<option ${entity.status=='1'?'selected="selected"':'' } value="1">正常</option>
+											<option ${entity.status=='0'?'selected="selected"':'' } value="0">禁用</option>
+										</select>
+									</td>
+									<td></td>
+								</tr>
+								</c:if>
 								<tr>
 									<th>角色描述</th>
 									<td>

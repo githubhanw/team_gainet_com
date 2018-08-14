@@ -45,6 +45,13 @@ public class OrganizationRoleService extends GiantBaseService{
 				conditionMap.put("search", "%" + temp + "%");
 			}
 		}
+		String temp = "";
+		if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+			if ("1".equals(temp)) {//正常
+				sql += "AND status=1";
+				countSql += "AND status=1";
+			}
+		}
 		// 字段倒叙或升序排列 {search=, type=0, orderColumn=id, orderByValue=DESC}
 		if (conditionPage.getOrderColumn() != null && !"".equals(conditionPage.getOrderColumn())) {
 			sql += " ORDER BY " + conditionPage.getOrderColumn()
@@ -71,6 +78,7 @@ public class OrganizationRoleService extends GiantBaseService{
 			if(role == null) {
 				return false;
 			}
+			role.setStatus((short) GiantUtil.intOf(mvm.get("status"), 1));
 		} else {
 			role = new Role();
 			role.setCreateTime(new Timestamp(System.currentTimeMillis()));

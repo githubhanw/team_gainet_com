@@ -23,6 +23,7 @@ import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Task;
+import com.zzidc.team.entity.TestApply;
 
 import net.sf.json.JSONObject;
 
@@ -766,7 +767,18 @@ public class TeamTaskService extends GiantBaseService {
 					pmLog.add(t.getId(), oldTask, t, new String[] {"checked_reason"}, "state", "checked_num", "checked_reason", "finished_name", "real_end_date");
 					this.log(pmLog);
 				}
+				//更新任务的父任务状态
 				this.updateParentTaskState(GiantUtil.intOf(mvm.get("id"), 0));
+				if (t.getTaskType() == 2) {
+					//修改测试单状态为：已测试
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("taskId", t.getDeveloperTaskId());
+					TestApply test = (TestApply) super.getEntityByHQL("TestApply", map);
+					if (test != null) {
+						test.setState((short) 3);
+						super.dao.saveUpdateOrDelete(test, null);
+					}
+				}
 				return b;
 			}
 		}

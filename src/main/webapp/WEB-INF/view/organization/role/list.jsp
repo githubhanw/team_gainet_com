@@ -36,11 +36,17 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a href="organization/role/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
+							<span class="text">正常</span>
+							<c:if test="${prm.type == 1}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
-						<a href="organization/role/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i>新建</a>
+						<a href="organization/role/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 新建</a>
 					</div>
 					<!--btn-toolbar end-->
 				</div>
@@ -110,7 +116,7 @@
 											<td class="c-pri text-center"><fmt:formatDate value="${user.update_time}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
 											<td class="c-pri text-center">
 												<c:if test="${user.status == 1}">正常</c:if>
-												<c:if test="${user.status == 0}">禁用</c:if>
+												<c:if test="${user.status == 0}"><span class="text-red">禁用</span></c:if>
 											</td>
 											<td class="c-actions text-center">
 												<a href="organization/role/toEdit?id=${user.id}" class="btn" title="修改">修改</a>

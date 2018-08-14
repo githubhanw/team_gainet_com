@@ -141,7 +141,7 @@
 											<td class="c-pri text-center">${user.phone}</td>
 											<td class="c-pri text-center">${user.email}</td>
 											<td class="c-pri text-center">${user.sex}</td>
-											<td class="c-pri text-center">${user.status==0?'正常':'已离职'}</td>
+											<td class="c-pri text-center">${user.status==0?'正常':'<span class="text-red">已离职</span>'}</td>
 											<td class="c-pri text-center">${user.oldDptName}</td>
 											<td class="c-pri text-center">${user.dptName}</td>
 											<td class="c-pri text-center">${user.roleName}</td>

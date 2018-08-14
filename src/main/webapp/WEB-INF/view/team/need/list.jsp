@@ -262,16 +262,15 @@
 											</td>
 											<td class="c-name text-left">${need.member_name}</td>
 											<td class="c-name text-left">
-												<a href="team/need/toAssign?id=${need.id}" class="btn btn-icon-left btn-sm">
-													<c:if test="${need.assigned_name == '' || need.assigned_name == null}">
+												<c:if test="${need.assigned_name == '' || need.assigned_name == null}">
+													<a href="team/need/toAssign?id=${need.id}" class="btn btn-icon-left btn-sm">
 														<i class="icon icon-hand-right"></i>
 														<span class="text-primary">未指派</span>
-													</c:if>
-													<c:if test="${need.assigned_name != ''}">
-														<i class="icon icon-hand-right"></i>
-														<span class="text-red">${need.assigned_name}</span>
-													</c:if>
-												</a>
+													</a>
+												</c:if>
+												<c:if test="${need.assigned_name != ''}">
+													<span class="text-red">${need.assigned_name}</span>
+												</c:if>
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.start_date}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.end_date}" pattern="yyyy-MM-dd" /></td>

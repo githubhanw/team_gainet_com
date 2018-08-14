@@ -29,7 +29,7 @@
 			<div class="container">
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<span class="btn btn-link btn-active-text"><span class="text">部门结构</span></span>
+						<span class="btn btn-link btn-active-text"><span class="text">团队结构</span></span>
 					</div>
 				</div>
 				<div id="mainContent" class="main-row">
@@ -42,7 +42,7 @@
 								<ul class="tree tree-lines tree-angles" data-ride="tree">
 									<c:if test="${departmentTree != null}">
 										<c:forEach items="${departmentTree}" var="item">
-											<li class="has-list">
+											<li class="has-list open in">
 												<c:if test="${item.childrens != null}">
 													<i class="list-toggle icon"></i>
 													<a href="organization/department/index?id=${item.id}">${item.name}</a>
@@ -65,7 +65,7 @@
 					<div class="main-col col-8">
 					    <div class="panel">
 					      <!-- <div class="panel-heading">
-					        <div class="panel-title">下级部门</div>
+					        <div class="panel-title">下级团队</div>
 					      </div> -->
 					      <div class="panel-body">
 					       <!--  <div class="main-header">
@@ -93,10 +93,10 @@
 										<td></td>
 									</tr>
 									<tr>
-										<th>部门</th>
+										<th>所属团队</th>
 										<td class="required">
-											<select data-placeholder="选择部门" class="form-control chosen-select" name="parent_id" id="parent_id">
-												<option value=""></option>
+											<select data-placeholder="选择团队" class="form-control chosen-select" name="parent_id" id="parent_id">
+												<option value="0">无</option>
 												<c:forEach items="${departments}" var="p" varStatus="sta">
 													<option value="${p.id}" ${p.id==entity.parentId?'selected="selected"':''}>${p.name}</option>
 												</c:forEach>

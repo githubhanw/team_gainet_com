@@ -406,10 +406,10 @@
 						<c:if test="${taskM.assigned_name == '' || taskM.assigned_name == null}">
 							<a href='team/task/toAssign?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-assignTo icon-hand-right'></i> 指派</a>
 						</c:if>
-						<c:if test="${taskM.state == 4 || taskM.state == 6}">
+						<c:if test="${taskM.state == 1 || taskM.state == 2}">
 							<a href='team/task/toClose?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-close icon-off'></i> 关闭</a>
 						</c:if>
-						<c:if test="${taskM.state == 6 || taskM.state == 7}">
+						<c:if test="${taskM.state == 7}">
 							<a href='team/task/toActive?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-activate icon-magic'></i> 激活</a>
 						</c:if>
 						<c:if test="${taskM.state == 2 && taskM.delay == 0 && taskM.resolved == 0}">
@@ -424,11 +424,11 @@
 						<c:if test="${taskM.state == 2 && taskM.delay != 1 && taskM.resolved == 0}">
 							<a href='team/task/toFinish?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-finish icon-checked'></i> 完成</a>
 						</c:if>
-						<c:if test="${taskM.state != 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
+						<c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
 							<a href='team/task/toRelevance?id=${taskM.id}' class='btn btn-link ' ><i class='icon icon-sitemap'></i> 关联</a>
 						</c:if>
 						<div class="divider"></div>
-						<c:if test="${taskM.state != 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
+						<c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
 							<a href='team/task/toBatchAdd?id=${taskM.id}' class='btn btn-link ' ><i class='icon-task-batchCreate icon-branch'></i> 分解</a>
 						</c:if>
 						<a href="team/task/toEdit?id=${taskM.id}" class="btn btn-link"><i class="icon-common-edit icon-edit"></i> 编辑</a>

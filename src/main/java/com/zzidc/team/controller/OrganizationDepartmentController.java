@@ -63,7 +63,7 @@ public class OrganizationDepartmentController extends GiantBaseController {
 	public void addOrUpdate(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
 		if(GiantUtil.isEmpty(mvm.get("name"))
-				|| GiantUtil.intOf(mvm.get("parent_id"), 0) == 0
+				|| GiantUtil.intOf(mvm.get("parent_id"), -1) == -1
 //				|| GiantUtil.intOf(mvm.get("leader_id"), 0) == 0
 				|| GiantUtil.intOf(mvm.get("sort"), -1) == -1){
 			json.put("code",1);

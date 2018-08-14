@@ -26,7 +26,7 @@ import net.sf.json.JSONObject;
 public class MyTaskController extends GiantBaseController {
 	@Autowired
 	private TeamTaskService teamTaskService;
-	private String requestURL = "my/task/index";
+	private String requestURL = "my/task";
 
 	public void publicResult(Model model) {
 		model.addAttribute("m", "my");//模块

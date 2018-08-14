@@ -316,7 +316,10 @@
 					</nav>
 					<div class="btn-toolbar">
 						<a href="${u}" id="back" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="返回"><i class="icon-goback icon-back"></i> 返回</a>
-						<a href="my/need/toChange?id=${needM.id}" class="btn btn-link" title="变更"><i class="icon-story-change icon-fork"></i> 变更</a>
+						<div class="divider"></div>
+						<c:if test="${needM.state == 1 || needM.state == 2}">
+							<a href="my/need/toChange?id=${needM.id}" class="btn btn-link" title="${needM.full == 0?'完善':'变更'}"><i class="icon-story-change icon-fork"></i> ${needM.full == 0?'完善':'变更'}</a>
+						</c:if>
 						<c:if test="${needM.state != 3}">
 							<a href="my/need/toClose?id=${needM.id}" class="btn btn-link" title="关闭"><i class='icon-task-close icon-off'></i> 关闭</a>
 						</c:if>
@@ -324,27 +327,19 @@
 							<a href="my/need/toActive?id=${needM.id}" class="btn btn-link" title="激活">激活</a>
 						</c:if>
 						<c:if test="${needM.state == 1 || needM.state == 2}">
-							<a href="my/need/toCheck?id=${needM.id}" class="btn btn-link" title="验收"><i class="icon-story-review icon-glasses"></i> 验收</a>
 							<c:if test="needM.full == 1">
+								<a href="my/need/toCheck?id=${needM.id}" class="btn btn-link" title="验收"><i class="icon-story-review icon-glasses"></i> 验收</a>
 								<a href="team/task/toAdd?need_id=${needM.id}" class="btn btn-link" title="批量建任务"><i class="icon icon-plus"></i> 批量建任务</a>
 							</c:if>
 						</c:if>
 						<c:if test="${needM.parent_id == null || needM.parent_id == ''}">
 							<a href="my/need/toRelevance?id=${needM.id}" class="btn btn-link" title="关联"><i class='icon icon-sitemap'></i> 关联</a>
 						</c:if>
-						<div class="divider"></div>
 						<c:if test="${needM.parent_id == null || needM.parent_id == ''}">
 							<c:if test="needM.full == 1">
 								<a href="my/need/toBatchAdd?id=${needM.id}" class="btn btn-link" title="分解需求"><i class='icon-task-batchCreate icon-branch'></i> 分解</a>
 							</c:if>
 						</c:if>
-						<c:if test="${needM.parent_id>0}">
-							<c:if test="needM.full == 1">
-								<a class="disabled btn" title="分解需求"><i class='icon-task-batchCreate icon-branch'></i> 分解</a>
-							</c:if>
-						</c:if>
-						<a href="my/need/toEdit?id=${needM.id}" class="btn btn-link" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
-						<a href="javascript:void(0)" onclick="del(${taskM.id})" class="btn btn-link" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
 					</div>
 				</div>
 				<!--mainActions end-->

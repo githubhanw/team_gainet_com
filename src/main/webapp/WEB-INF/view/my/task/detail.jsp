@@ -400,16 +400,17 @@
 					</nav>
 					<div class="btn-toolbar">
 						<a href="${u}" id="back" class="btn btn-link"><i class="icon-goback icon-back"></i> 返回</a>
+						<div class="divider"></div>
 						<c:if test="${taskM.state == 1 && taskM.resolved == 0}">
 							<a href='my/task/toOpen?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-start icon-play'></i> 接收</a>
 						</c:if>
 						<c:if test="${taskM.assigned_name == '' || taskM.assigned_name == null}">
 							<a href='my/task/toAssign?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-assignTo icon-hand-right'></i> 指派</a>
 						</c:if>
-						<c:if test="${taskM.state == 4 || taskM.state == 6}">
+						<c:if test="${taskM.state == 1 || taskM.state == 2}">
 							<a href='my/task/toClose?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-close icon-off'></i> 关闭</a>
 						</c:if>
-						<c:if test="${taskM.state == 6 || taskM.state == 7}">
+						<c:if test="${taskM.state == 7}">
 							<a href='my/task/toActive?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-activate icon-magic'></i> 激活</a>
 						</c:if>
 						<c:if test="${taskM.state == 2 && taskM.delay == 0 && taskM.resolved == 0}">
@@ -424,11 +425,10 @@
 						<c:if test="${taskM.state == 2 && taskM.delay != 1 && taskM.resolved == 0}">
 							<a href='my/task/toFinish?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-finish icon-checked'></i> 完成</a>
 						</c:if>
-						<c:if test="${taskM.state != 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
+						<c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
 							<a href='my/task/toRelevance?id=${taskM.id}' class='btn btn-link ' ><i class='icon icon-sitemap'></i> 关联</a>
 						</c:if>
-						<div class="divider"></div>
-						<c:if test="${taskM.state != 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
+						<c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
 							<a href='my/task/toBatchAdd?id=${taskM.id}' class='btn btn-link ' ><i class='icon-task-batchCreate icon-branch'></i> 分解</a>
 						</c:if>
 					</div>

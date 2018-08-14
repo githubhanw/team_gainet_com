@@ -60,6 +60,7 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 					<div class="btn-toolbar pull-right">
 						<a href="my/need/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>
@@ -70,6 +71,86 @@
 				<div id="mainContent" class="main-row fade in">
 					<!--main-col start-->
 					<div class="main-col">
+						<div class="cell load-indicator ${prm.type == 12 ? 'show':''}" id="queryBox">
+							<form method="post" action="my/need?type=12" id="searchForm" class="search-form">
+								<table class="table table-condensed table-form" id="task-search">
+									<tbody>
+										<tr>
+											<td class="w-200px">
+												<select class="form-control chosen chosen-select" name="needType" id="needType">
+													<option ${prm.needType=='1'?'selected="selected"':'' } value="1">需求名称</option>
+													<option ${prm.needType=='2'?'selected="selected"':'' } value="2">需求描述</option>
+												</select>
+											</td>
+											<td>
+												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="选择后请输入要查询的需求名称 或 需求描述">
+											</td>
+											<td class="w-200px">
+												<select class="form-control chosen chosen-select" name="state" id="state">
+													<option value="">请选择状态</option>
+													<option ${prm.state=='1'?'selected="selected"':'' } value="1">激活</option>
+													<option ${prm.state=='3'?'selected="selected"':'' } value="3">已关闭</option>
+													<option ${prm.state=='2'?'selected="selected"':'' } value="2">已变更</option>
+													<option ${prm.state=='0'?'selected="selected"':'' } value="0">已删除</option>
+												</select>
+											</td>
+											<td class="w-200px">
+												<select class="form-control chosen chosen-select" name="srcId" id="srcId">
+													<option value="">请选择需求来源</option>
+													<option ${prm.srcId=='1'?'selected="selected"':'' } value="1">产品经理</option>
+													<option ${prm.srcId=='2'?'selected="selected"':'' } value="2">市场</option>
+													<option ${prm.srcId=='3'?'selected="selected"':'' } value="3">客户</option>
+													<option ${prm.srcId=='4'?'selected="selected"':'' } value="4">客服</option>
+													<option ${prm.srcId=='5'?'selected="selected"':'' } value="5">技术支持</option>
+													<option ${prm.srcId=='6'?'selected="selected"':'' } value="6">开发人员</option>
+													<option ${prm.srcId=='7'?'selected="selected"':'' } value="7">测试人员</option>
+													<option ${prm.srcId=='8'?'selected="selected"':'' } value="8">Bug</option>
+													<option ${prm.srcId=='9'?'selected="selected"':'' } value="9">其他</option>
+												</select>
+											</td>
+											<td class="w-200px">
+												<select class="form-control chosen chosen-select" name="level" id="level">
+													<option value="">请选择优先级</option>
+													<option ${prm.level=='1'?'selected="selected"':'' } value="1">紧急重要</option>
+													<option ${prm.level=='2'?'selected="selected"':'' } value="2">紧急不重要</option>
+													<option ${prm.level=='3'?'selected="selected"':'' } value="3">不紧急重要</option>
+													<option ${prm.level=='4'?'selected="selected"':'' } value="4">不紧急不重要</option>
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td class="w-200px">
+												<select class="form-control chosen chosen-select" name="memberType" id="memberType">
+													<option ${prm.memberType=='1'?'selected="selected"':'' } value="1">指派人</option>
+													<option ${prm.memberType=='2'?'selected="selected"':'' } value="2">关闭人</option>
+													<option ${prm.memberType=='3'?'selected="selected"':'' } value="3">需求方</option>
+												</select>
+											</td>
+											<td>
+												<input type="text" name="memberSearch" id="memberSearch" value="${prm.memberSearch}" class="form-control  searchInput" placeholder="选择后请输入要查询的指派人 或 关闭人 或 需求方">
+											</td>
+											<td class="w-200px">
+												<select class="form-control chosen chosen-select" name="dateType" id="dateType">
+													<option value="">请选择日期</option>
+													<option ${prm.dateType=='1'?'selected="selected"':'' } value="1">开始日期</option>
+													<option ${prm.dateType=='2'?'selected="selected"':'' } value="2">结束日期</option>
+												</select>
+											</td>
+											<td class="w-200px">
+												<input type="text" name="start_date" id="start_date" valve="${prm.start_date}" class="form-control form-date" placeholder="开始" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											</td>
+											<td class="w-200px">
+												<input type="text" name="end_date" id="end_date" valve="${prm.end_date}" class="form-control form-date" placeholder="结束" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											</td>
+										</tr>
+										<tr>
+											<td colspan="5" class="text-center form-actions">
+												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
 						<form class="main-table table-task skip-iframe-modal" method="post"
 							id="projectTaskForm" data-ride="table">
 							<!--table-responsive start-->
@@ -227,6 +308,15 @@
 	</body>
 </html>
 <script>
+	$("#bysearchTab").click(function(){
+		if($(this).hasClass("querybox-opened")){
+			$(this).removeClass("querybox-opened")
+			$("#queryBox").removeClass("show")
+		}else{
+			$(this).addClass("querybox-opened")
+			$("#queryBox").addClass("show")
+		}
+	});
 	$('.pager').pager({
 	    page: ${pageList.currentPage},
 	    recTotal: ${pageList.totalCounts},

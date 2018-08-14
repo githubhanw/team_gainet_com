@@ -122,6 +122,7 @@ public class MyController extends GiantBaseController {
 		}
 		Map<String, String> queryCondition = conditionPage.getQueryCondition();
 		//查询条件封装
+		queryCondition.clear();
 		queryCondition.putAll(mvm);
 		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
@@ -129,6 +130,7 @@ public class MyController extends GiantBaseController {
 		pageList = testBugService.getPageList(conditionPage);
 		requestURL = "my/bug?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
 		pageList.setDesAction(requestURL);
+		model.addAttribute("members", testBugService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);
 		publicResult(model);
@@ -156,6 +158,7 @@ public class MyController extends GiantBaseController {
 		}
 		Map<String, String> queryCondition = conditionPage.getQueryCondition();
 		//查询条件封装
+		queryCondition.clear();
 		queryCondition.putAll(mvm);
 		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
@@ -163,6 +166,7 @@ public class MyController extends GiantBaseController {
 		pageList = testApplyService.getPageList(conditionPage);
 		requestURL = "my/test?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
 		pageList.setDesAction(requestURL);
+		model.addAttribute("members", testApplyService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);
 		publicResult(model);
@@ -190,6 +194,7 @@ public class MyController extends GiantBaseController {
 		}
 		Map<String, String> queryCondition = conditionPage.getQueryCondition();
 		//查询条件封装
+		queryCondition.clear();
 		queryCondition.putAll(mvm);
 		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
@@ -200,6 +205,7 @@ public class MyController extends GiantBaseController {
 		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
 		}
+		model.addAttribute("members", teamNeedService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);
 		publicResult(model);

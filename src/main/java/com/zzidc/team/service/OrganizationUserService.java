@@ -84,6 +84,15 @@ public class OrganizationUserService extends GiantBaseService {
 					break;
 				}
 			}
+			String temp = "";
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+				if ("0".equals(temp)) {// 所有
+					
+				} else if ("1".equals(temp)) {// 正常
+					sql += " AND m.STATUS!=1 ";
+					countSql += "AND m.STATUS!=1 ";
+				}
+			}
 		}
 		// 字段倒叙或升序排列 {search=, type=0, orderColumn=id, orderByValue=DESC}
 		if (conditionPage.getOrderColumn() != null && !"".equals(conditionPage.getOrderColumn())) {

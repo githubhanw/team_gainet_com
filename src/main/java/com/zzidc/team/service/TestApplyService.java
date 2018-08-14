@@ -97,6 +97,21 @@ public class TestApplyService extends GiantBaseService {
 					}
 				}
 			}
+
+			String Createtime="";//开始时间
+			if (!StringUtils.isEmpty(Createtime = conditionPage.getQueryCondition().get("createtime"))) {
+				sql += "AND ta.apply_time>:createtime ";
+				countSql += "AND ta.apply_time>:createtime ";
+				conditionMap.put("createtime", Createtime+" 00:00:00");
+			}
+			
+			String Endtime="";//结束时间
+			if (!StringUtils.isEmpty(Endtime = conditionPage.getQueryCondition().get("endtime"))) {
+				sql += "AND ta.apply_time<:endtime ";
+				countSql += "AND ta.apply_time<:endtime ";
+				conditionMap.put("endtime", Endtime+" 23:59:59");
+			}
+			
 			
 		}
 		// 字段倒叙或升序排列 {search=, type=0, orderColumn=id, orderByValue=DESC}

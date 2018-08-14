@@ -36,6 +36,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a href="organization/user/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
+							<span class="text">正常</span>
+							<c:if test="${prm.type == 1}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 					<!--btn-toolbar start-->

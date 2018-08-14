@@ -88,6 +88,12 @@
 													<option value="4" ${prm.state == 4 ? 'selected="selected"' : ''}>驳回</option>
 												</select>
 											</td>
+											<td class="w-140px">
+												<input type="text" name="createtime" id="createtime" valve="${prm.createtime}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+											</td>
+											<td class="w-140px">
+												<input type="text" name="endtime" id="endtime" valve="${prm.endtime}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+											</td>
 										</tr>
 										<tr>
 											<td colspan="8" class="text-center form-actions">

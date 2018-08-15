@@ -81,19 +81,15 @@ public class Authentication {
 	 */
 	@SuppressWarnings("unchecked")
 	public static boolean hasAuthPath(HttpSession session, String path) {
-		boolean b = false;
 		try {
-			System.out.println(path);
 			List<String> list = (List<String>) session.getAttribute("power");
 			if (list==null || list.size()==0)
 				return false;
-			System.out.println(list.toString());
-			b = list.contains(path);
-			System.out.println(b);
+			return list.contains(path);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return b;
+		return false;
 	}
 
 	/** 加载权限列表 */

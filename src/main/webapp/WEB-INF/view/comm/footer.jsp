@@ -30,10 +30,11 @@ $(".form-date-limit").datetimepicker({
     autoclose: 1,
     todayHighlight: 1,
     startView: 2,
-    minView: 2,
+    minView: 1,
     forceParse: 0,
+    showMeridian: 1,
     startDate:new Date(new Date()-1000 * 60 * 60 * 24 * 2),
-    format: "yyyy-mm-dd"
+    format: "yyyy-mm-dd hh:00"
 });
 //普通
 $(".form-date").datetimepicker({
@@ -43,9 +44,10 @@ $(".form-date").datetimepicker({
     autoclose: 1,
     todayHighlight: 1,
     startView: 2,
-    minView: 2,
+    minView: 1,
     forceParse: 0,
-    format: "yyyy-mm-dd"
+    showMeridian: 1,
+    format: "yyyy-mm-dd hh:00"
 });
 $('.chosen-select').chosen({
 	disable_search_threshold: 10,

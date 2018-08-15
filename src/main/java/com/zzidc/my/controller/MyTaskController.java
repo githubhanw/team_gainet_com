@@ -45,8 +45,8 @@ public class MyTaskController extends GiantBaseController {
 			conditionPage = new GiantPager();
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "t.state");
-			mvm.put("orderByValue", "ASC");
+			mvm.put("orderColumn", "t.update_time");
+			mvm.put("orderByValue", "DESC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
@@ -131,8 +131,8 @@ public class MyTaskController extends GiantBaseController {
 	@RequestMapping("/add")
 	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("task_name")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("task_type")) || 
-				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date")) || GiantUtil.isEmpty(mvm.get("need_id"))){
+		if(GiantUtil.isEmpty(mvm.get("task_name")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || 
+				GiantUtil.isEmpty(mvm.get("task_type")) || GiantUtil.isEmpty(mvm.get("need_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);
@@ -390,7 +390,7 @@ public class MyTaskController extends GiantBaseController {
 			model.addAttribute("t", t);
 		}
 		publicResult(model);
-		return "team/task/open";
+		return "my/task/open";
 	}
 
 	/**
@@ -536,7 +536,7 @@ public class MyTaskController extends GiantBaseController {
 	@RequestMapping("/finish")
 	public void finish(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("id"))){
+		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("checkedid"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

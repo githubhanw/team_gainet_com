@@ -438,13 +438,10 @@ public class TeamTaskService extends GiantBaseService {
 			task.setFinishedTime(Timestamp.valueOf(GiantUtil.stringOf(mvm.get("finished_time"))));
 		} catch (Exception e) {
 		}
-		member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("canceled_id"), 0));
-		task.setCanceledId(member == null ? 0 : member.getId());
-		task.setCanceledName(member == null ? "" : member.getName());
-		try {
-			task.setCanceledTime(Timestamp.valueOf(GiantUtil.stringOf(mvm.get("canceled_time"))));
-		} catch (Exception e) {
-		}
+		member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("checked_id"), 0));
+		task.setCheckedId(member == null ? 0 : member.getId());
+		task.setCheckedName(member == null ? "" : member.getName());
+		
 		member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("closed_id"), 0));
 		task.setClosedId(member == null ? 0 : member.getId());
 		task.setClosedName(member == null ? "" : member.getName());

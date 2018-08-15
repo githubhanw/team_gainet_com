@@ -174,6 +174,7 @@
 									</div>
 								</div>
 							</c:if>
+							<c:if test="${logList != null}">
 	                        <div class="detail histories" id="actionbox" data-textdiff="文本格式" data-original="原始格式">
 	                            <div class="detail-title">
 									历史记录
@@ -211,6 +212,7 @@
 	                                </ol>
 	                            </div>
 	                        </div>
+	                        </c:if>
 						</div>
 					</div>
 					<div class="side-col col-4">

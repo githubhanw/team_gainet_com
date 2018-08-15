@@ -247,21 +247,14 @@
 													</td>
 												</tr>
 												<tr>
-													<th>由谁取消</th>
+													<th>由谁验收</th>
 													<td>
-														<select data-placeholder="请选择取消人" class="form-control chosen-select" name="canceled_id" id="canceled_id">
+														<select data-placeholder="请选择验收人" class="form-control chosen-select" name="checked_id" id="checked_id">
 															<option value=""></option>
 															<c:forEach items="${members}" var="member" varStatus="sta">
-																<option value="${member.id}" ${member.id==t.canceledId?'selected="selected"':''}>${member.name}</option>
+																<option value="${member.id}" ${member.id==t.checkedId?'selected="selected"':''}>${member.name}</option>
 															</c:forEach>
 														</select>
-													</td>
-												</tr>
-												<tr>
-													<th>取消时间</th>
-													<td>
-														<input type="text" name="canceled_date" id="canceled_date" value="<fmt:formatDate value="${t.canceledTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
-															class="form-control form-date" placeholder="取消时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 												<tr>

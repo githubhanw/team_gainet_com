@@ -224,6 +224,7 @@
 									</div>
 								</div>
 							</c:if>
+							<c:if test="${logList != null}">
 	                        <div class="detail histories" id="actionbox" data-textdiff="文本格式" data-original="原始格式">
 	                            <div class="detail-title">
 									历史记录
@@ -261,6 +262,7 @@
 	                                </ol>
 	                            </div>
 	                        </div>
+	                        </c:if>
 						</div>
 					</div>
 					<div class="side-col col-4">
@@ -285,7 +287,7 @@
 											<tr>
 												<th>任务类型</th>
 												<td>
-													${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}
+													${taskM.task_type==1?'开发':taskM.task_type==2?'测试':taskM.task_type==3?'设计':taskM.task_type==4?'前端':taskM.task_type==5?'维护':taskM.task_type==6?'需求':taskM.task_type==7?'研究':taskM.task_type==8?'讨论':taskM.task_type==9?'运维':taskM.task_type==10?'事务':'其他'}
 												</td>
 											</tr>
 											<tr>
@@ -364,12 +366,19 @@
 												</td>
 											</tr>
 											<tr>
-												<th>由谁取消</th>
+												<th>由谁验收</th>
 												<td>
-													<c:if test="${taskM.canceled_name != null && taskM.canceled_name != ''}">
-														${taskM.canceled_name } 于 <fmt:formatDate value="${taskM.canceled_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+													<c:if test="${taskM.checked_name != null && taskM.checked_name != ''}">
+														${taskM.checked_name }
+														<c:if test="${taskM.checked_time != null}">
+															于 <fmt:formatDate value="${taskM.checked_time}" pattern="yyyy-MM-dd HH:mm:ss"/>
+														</c:if>
 													</c:if>
 												</td>
+											</tr>
+											<tr>
+												<th>验收结果</th>
+												<td>${taskM.checked_reason }</td>
 											</tr>
 											<tr>
 												<th>由谁关闭</th>

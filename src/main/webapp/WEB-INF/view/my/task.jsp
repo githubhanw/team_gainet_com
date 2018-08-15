@@ -230,7 +230,7 @@
 											<td class="text-left">
 												<a href="my/need/detail?id=${task.need_id}" data-toggle="tooltip" data-placement="top" title="${task.need_name}">${task.need_name}</a>
 											</td>
-											<td class="c-pri text-center">${task.task_type == 1 ? '设计' : task.task_type == 2 ? '开发' : task.task_type == 3 ? '测试' : task.task_type == 4 ? '研究' : task.task_type == 5 ? '讨论' : task.task_type == 6 ? '界面' : task.task_type == 7 ? '事务' : '其他'}</td>
+											<td class="c-pri text-center">${task.task_type==1?'开发':task.task_type==2?'测试':task.task_type==3?'设计':task.task_type==4?'前端':task.task_type==5?'维护':task.task_type==6?'需求':task.task_type==7?'研究':task.task_type==8?'讨论':task.task_type==9?'运维':task.task_type==10?'事务':'其他'}</td>
 											<td class="c-pri text-center">
 												<span class="${task.state == 1 ? 'status-wait' : task.state == 2 ? 'status-doing' : task.state == 3 ? 'status-pause' : task.state == 4 ? 'status-done' : task.state == 7 ? 'status-closed' : 'status-cancel'}">
 													<span class="label label-dot"></span>

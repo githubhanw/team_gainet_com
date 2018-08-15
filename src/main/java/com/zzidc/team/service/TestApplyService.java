@@ -294,14 +294,14 @@ public class TestApplyService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		try {
-			task.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
-		} catch (ParseException e) {
-			task.setStartDate(new Date());
+			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")));
+		} catch (Exception e) {
+			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {
-			task.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
-		} catch (ParseException e) {
-			task.setEndDate(new Date());
+			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")));
+		} catch (Exception e) {
+			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
 		task.setMemberId(super.getMemberId());
 		task.setMemberName(super.getMemberName());

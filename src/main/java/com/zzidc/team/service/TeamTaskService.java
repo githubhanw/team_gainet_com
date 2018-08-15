@@ -32,8 +32,6 @@ import net.sf.json.JSONObject;
  */
 @Service("teamTaskService")
 public class TeamTaskService extends GiantBaseService {
-	//String url="http://idcsupport_api.zzidc.com:60022/restful/support/support/sendWeChat";
-	String url="http://mcapi.zzidc.com:60023/api/weixin/template/messageSend";
 
 	public GiantPager getPageList(GiantPager conditionPage) {
 		if (conditionPage == null) {
@@ -336,14 +334,14 @@ public class TeamTaskService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		try {
-			task.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
-		} catch (ParseException e) {
-			task.setStartDate(new Date());
+			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")));
+		} catch (Exception e) {
+			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {
-			task.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
-		} catch (ParseException e) {
-			task.setEndDate(new Date());
+			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")));
+		} catch (Exception e) {
+			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
 		task.setMemberId(super.getMemberId());
 		task.setMemberName(super.getMemberName());
@@ -421,14 +419,14 @@ public class TeamTaskService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 
 		try {
-			task.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
-		} catch (ParseException e) {
-			task.setStartDate(new Date());
+			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")));
+		} catch (Exception e) {
+			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {
-			task.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
-		} catch (ParseException e) {
-			task.setEndDate(new Date());
+			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")));
+		} catch (Exception e) {
+			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
 		task.setDelay((short) GiantUtil.intOf(mvm.get("delay"), 0));
 		task.setOverdue((short) GiantUtil.intOf(mvm.get("overdue"), 0));
@@ -617,11 +615,11 @@ public class TeamTaskService extends GiantBaseService {
 			t.setOpenedName("");
 			t.setOpenedTime(null);
 			try {
-				t.setPlanEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("plan_end_date")));
-			} catch (ParseException e) {
-				t.setPlanEndDate(new Date());
+				t.setPlanEndDate(Timestamp.valueOf(mvm.get("plan_end_date")));
+			} catch (Exception e) {
+				t.setPlanEndDate(new Timestamp(System.currentTimeMillis()));
 			}
-			t.setRealStartDate(new Date());
+			t.setRealStartDate(new Timestamp(System.currentTimeMillis()));
 			t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 			boolean b = super.dao.saveUpdateOrDelete(t, null);
 			if(b) {
@@ -760,7 +758,7 @@ public class TeamTaskService extends GiantBaseService {
 				t.setFinishedId(t.getAssignedId());
 				t.setFinishedName(t.getAssignedName());
 				t.setFinishedTime(new Timestamp(System.currentTimeMillis()));
-				t.setRealEndDate(new Date());
+				t.setRealEndDate(new Timestamp(System.currentTimeMillis()));
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				boolean b = super.dao.saveUpdateOrDelete(t, null);
 				if(b) {
@@ -1004,7 +1002,7 @@ public class TeamTaskService extends GiantBaseService {
 				BeanUtils.copyProperties(t, oldTask);
 				t.setDelay((short) 2);
 				Date temp = t.getPlanEndDate();
-				t.setPlanEndDate(t.getDelayedDate());
+				t.setPlanEndDate(Timestamp.valueOf(t.getDelayedDate().toString()));
 				t.setDelayedDate(temp);
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				boolean b = super.dao.saveUpdateOrDelete(t, null);

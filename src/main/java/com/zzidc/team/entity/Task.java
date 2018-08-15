@@ -20,10 +20,6 @@ public class Task implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * serialVersionUID long
-	 */
-	private static final long serialVersionUID = 7905906335482455386L;
 	private Integer id;
 	private Integer projectId;
 	private Integer needId;
@@ -31,11 +27,11 @@ public class Task implements java.io.Serializable {
 	private Integer taskType;
 	private Integer level;
 	private String remark;
-	private Date startDate;
-	private Date endDate;
-	private Date planEndDate;
-	private Date realStartDate;
-	private Date realEndDate;
+	private Timestamp startDate;
+	private Timestamp endDate;
+	private Timestamp planEndDate;
+	private Timestamp realStartDate;
+	private Timestamp realEndDate;
 	private Integer memberId;
 	private String memberName;
 	private Integer openedId;
@@ -80,6 +76,7 @@ public class Task implements java.io.Serializable {
 	private Short overdue;
 	private Short deleted;
 	private Integer developerTaskId;
+	private Short full;
 
 	// Constructors
 
@@ -89,23 +86,24 @@ public class Task implements java.io.Serializable {
 
 	/** full constructor */
 	public Task(Integer projectId, Integer needId, String taskName,
-			Integer taskType, Integer level, String remark, Date startDate,
-			Date endDate, Date planEndDate, Date realStartDate,
-			Date realEndDate, Integer memberId, String memberName,
-			Integer openedId, String openedName, Timestamp openedTime,
-			Integer handoverId, String handoverName, String handoverInfo,
-			Integer handoverState, Timestamp handoverTime, Integer assignedId,
-			String assignedName, Timestamp assignedTime, Integer delayedId,
-			String delayedName, Timestamp delayedTime, Date delayedDate,
-			Integer delayedReviewId, Integer canceledId, String canceledName,
-			Timestamp canceledTime, Integer closedId, String closedName,
-			Timestamp closedTime, String closedReason, Integer checkedId,
-			String checkedName, Integer checkedNum, String checkedReason,
-			Timestamp checkedTime, Integer finishedId, String finishedName,
-			Timestamp finishedTime, Integer percent, Short resolved,
-			Integer parentId, String link, Timestamp createTime,
-			Timestamp updateTime, Short state, Short delay, Short overdue,
-			Short deleted, Integer developerTaskId) {
+			Integer taskType, Integer level, String remark,
+			Timestamp startDate, Timestamp endDate, Timestamp planEndDate,
+			Timestamp realStartDate, Timestamp realEndDate, Integer memberId,
+			String memberName, Integer openedId, String openedName,
+			Timestamp openedTime, Integer handoverId, String handoverName,
+			String handoverInfo, Integer handoverState, Timestamp handoverTime,
+			Integer assignedId, String assignedName, Timestamp assignedTime,
+			Integer delayedId, String delayedName, Timestamp delayedTime,
+			Date delayedDate, Integer delayedReviewId, Integer canceledId,
+			String canceledName, Timestamp canceledTime, Integer closedId,
+			String closedName, Timestamp closedTime, String closedReason,
+			Integer checkedId, String checkedName, Integer checkedNum,
+			String checkedReason, Timestamp checkedTime, Integer finishedId,
+			String finishedName, Timestamp finishedTime, Integer percent,
+			Short resolved, Integer parentId, String link,
+			Timestamp createTime, Timestamp updateTime, Short state,
+			Short delay, Short overdue, Short deleted, Integer developerTaskId,
+			Short full) {
 		this.projectId = projectId;
 		this.needId = needId;
 		this.taskName = taskName;
@@ -161,6 +159,7 @@ public class Task implements java.io.Serializable {
 		this.overdue = overdue;
 		this.deleted = deleted;
 		this.developerTaskId = developerTaskId;
+		this.full = full;
 	}
 
 	// Property accessors
@@ -193,7 +192,7 @@ public class Task implements java.io.Serializable {
 		this.needId = needId;
 	}
 
-	@Column(name = "task_name", length = 64)
+	@Column(name = "task_name")
 	public String getTaskName() {
 		return this.taskName;
 	}
@@ -229,53 +228,48 @@ public class Task implements java.io.Serializable {
 		this.remark = remark;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "start_date", length = 10)
-	public Date getStartDate() {
+	@Column(name = "start_date", length = 19)
+	public Timestamp getStartDate() {
 		return this.startDate;
 	}
 
-	public void setStartDate(Date startDate) {
+	public void setStartDate(Timestamp startDate) {
 		this.startDate = startDate;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "end_date", length = 10)
-	public Date getEndDate() {
+	@Column(name = "end_date", length = 19)
+	public Timestamp getEndDate() {
 		return this.endDate;
 	}
 
-	public void setEndDate(Date endDate) {
+	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "plan_end_date", length = 10)
-	public Date getPlanEndDate() {
+	@Column(name = "plan_end_date", length = 19)
+	public Timestamp getPlanEndDate() {
 		return this.planEndDate;
 	}
 
-	public void setPlanEndDate(Date planEndDate) {
+	public void setPlanEndDate(Timestamp planEndDate) {
 		this.planEndDate = planEndDate;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "real_start_date", length = 10)
-	public Date getRealStartDate() {
+	@Column(name = "real_start_date", length = 19)
+	public Timestamp getRealStartDate() {
 		return this.realStartDate;
 	}
 
-	public void setRealStartDate(Date realStartDate) {
+	public void setRealStartDate(Timestamp realStartDate) {
 		this.realStartDate = realStartDate;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@Column(name = "real_end_date", length = 10)
-	public Date getRealEndDate() {
+	@Column(name = "real_end_date", length = 19)
+	public Timestamp getRealEndDate() {
 		return this.realEndDate;
 	}
 
-	public void setRealEndDate(Date realEndDate) {
+	public void setRealEndDate(Timestamp realEndDate) {
 		this.realEndDate = realEndDate;
 	}
 
@@ -342,7 +336,7 @@ public class Task implements java.io.Serializable {
 		this.handoverName = handoverName;
 	}
 
-	@Column(name = "handover_info", length = 200)
+	@Column(name = "handover_info", length = 65535)
 	public String getHandoverInfo() {
 		return this.handoverInfo;
 	}
@@ -676,26 +670,13 @@ public class Task implements java.io.Serializable {
 		this.developerTaskId = developerTaskId;
 	}
 
-	@Override
-	public String toString() {
-		return "Task [id=" + id + ", projectId=" + projectId + ", needId=" + needId + ", taskName=" + taskName
-				+ ", taskType=" + taskType + ", level=" + level + ", remark=" + remark + ", startDate=" + startDate
-				+ ", endDate=" + endDate + ", planEndDate=" + planEndDate + ", realStartDate=" + realStartDate
-				+ ", realEndDate=" + realEndDate + ", memberId=" + memberId + ", memberName=" + memberName
-				+ ", openedId=" + openedId + ", openedName=" + openedName + ", openedTime=" + openedTime
-				+ ", handoverId=" + handoverId + ", handoverName=" + handoverName + ", handoverInfo=" + handoverInfo
-				+ ", handoverState=" + handoverState + ", handoverTime=" + handoverTime + ", assignedId=" + assignedId
-				+ ", assignedName=" + assignedName + ", assignedTime=" + assignedTime + ", delayedId=" + delayedId
-				+ ", delayedName=" + delayedName + ", delayedTime=" + delayedTime + ", delayedDate=" + delayedDate
-				+ ", delayedReviewId=" + delayedReviewId + ", canceledId=" + canceledId + ", canceledName="
-				+ canceledName + ", canceledTime=" + canceledTime + ", closedId=" + closedId + ", closedName="
-				+ closedName + ", closedTime=" + closedTime + ", closedReason=" + closedReason + ", checkedId="
-				+ checkedId + ", checkedName=" + checkedName + ", checkedNum=" + checkedNum + ", checkedReason="
-				+ checkedReason + ", checkedTime=" + checkedTime + ", finishedId=" + finishedId + ", finishedName="
-				+ finishedName + ", finishedTime=" + finishedTime + ", percent=" + percent + ", resolved=" + resolved
-				+ ", parentId=" + parentId + ", link=" + link + ", createTime=" + createTime + ", updateTime="
-				+ updateTime + ", state=" + state + ", delay=" + delay + ", overdue=" + overdue + ", deleted=" + deleted
-				+ ", developerTaskId=" + developerTaskId + "]";
+	@Column(name = "full")
+	public Short getFull() {
+		return this.full;
+	}
+
+	public void setFull(Short full) {
+		this.full = full;
 	}
 
 }

@@ -187,14 +187,14 @@
 												<tr>
 													<th class="w-80px">开始日期</th>
 													<td>
-														<input type="text" name="start_date" id="start_date" value="<fmt:formatDate value="${t.startDate}" pattern="yyyy-MM-dd"/>" 
+														<input type="text" name="start_date" id="start_date" value="<fmt:formatDate value="${t.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
 															class="form-control form-date-limit" placeholder="任务开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
 													<th>结束日期</th>
 													<td>
-														<input type="text" name="end_date" id="end_date" value="<fmt:formatDate value="${t.endDate}" pattern="yyyy-MM-dd"/>" 
+														<input type="text" name="end_date" id="end_date" value="<fmt:formatDate value="${t.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
 															class="form-control form-date" placeholder="任务结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
@@ -242,7 +242,7 @@
 												<tr>
 													<th>完成时间</th>
 													<td>
-														<input type="text" name="real_end_date" id="real_end_date" value="<fmt:formatDate value="${t.realEndDate}" pattern="yyyy-MM-dd"/>" 
+														<input type="text" name="real_end_date" id="real_end_date" value="<fmt:formatDate value="${t.realEndDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
 															class="form-control form-date" placeholder="完成时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
@@ -260,7 +260,7 @@
 												<tr>
 													<th>取消时间</th>
 													<td>
-														<input type="text" name="canceled_date" id="canceled_date" value="<fmt:formatDate value="${t.canceledTime}" pattern="yyyy-MM-dd"/>" 
+														<input type="text" name="canceled_date" id="canceled_date" value="<fmt:formatDate value="${t.canceledTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
 															class="form-control form-date" placeholder="取消时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
@@ -288,7 +288,7 @@
 												<tr>
 													<th>关闭时间</th>
 													<td>
-														<input type="text" name="closed_time" id="closed_time" value="<fmt:formatDate value="${t.closedTime}" pattern="yyyy-MM-dd"/>" 
+														<input type="text" name="closed_time" id="closed_time" value="<fmt:formatDate value="${t.closedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
 															class="form-control form-date" placeholder="关闭时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>

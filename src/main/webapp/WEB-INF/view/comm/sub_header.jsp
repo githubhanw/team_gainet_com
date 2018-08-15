@@ -43,6 +43,7 @@
 				<li class="dropdown dropdown-hover ${m=='my' && s=='bug'?'active':'' }"><a href="my/bug">我的Bug</a></li>
 				<li class="dropdown dropdown-hover ${m=='my' && s=='test'?'active':'' }"><a href="my/test">我的测试</a></li>
 				<li class="dropdown dropdown-hover ${m=='my' && s=='need'?'active':'' }"><a href="my/need">我的需求</a></li>
+				<li class="dropdown dropdown-hover ${m=='my' && s=='auth'?'active':'' }"><a href="my/auth">我的权限</a></li>
 			</ul>
 		</nav>
 		<nav id="subNavbar" ${m=='project' || m=='need' || m=='task' || m=='apply' || m=='bug'?'':'style="display:none"'}>

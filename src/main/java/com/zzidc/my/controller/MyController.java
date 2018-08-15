@@ -12,6 +12,8 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.my.service.MyService;
+import com.zzidc.team.entity.Role;
+import com.zzidc.team.service.OrganizationRoleService;
 import com.zzidc.team.service.TeamNeedService;
 import com.zzidc.team.service.TeamTaskService;
 import com.zzidc.team.service.TestApplyService;
@@ -33,6 +35,8 @@ public class MyController extends GiantBaseController {
 	private TestApplyService testApplyService;
 	@Autowired
 	private TeamNeedService teamNeedService;
+	@Autowired
+	private OrganizationRoleService organizationRoleService;
 	private GiantPager conditionPage = null;
 	private String requestURL = "my/task";
 
@@ -211,6 +215,20 @@ public class MyController extends GiantBaseController {
 		publicResult(model);
 		model.addAttribute("s", "need");//子模块
 		return "my/need";
+	}
+	
+	/**
+	 * 跳转到权限页面
+	 */
+	@RequestMapping("/auth")
+	public String toAuth(@RequestParam Map<String, String> mvm, Model model) {
+		//获取对象
+		Role n = (Role) organizationRoleService.getEntityByPrimaryKey(new Role(), Integer.parseInt(super.getSession().getAttribute("roleIds").toString()));
+		model.addAttribute("entity", n);
+		model.addAttribute("allPrivileges", organizationRoleService.getAllPrivileges());
+		publicResult(model);
+		model.addAttribute("s", "auth");//子模块
+		return "my/auth";
 	}
 
 }

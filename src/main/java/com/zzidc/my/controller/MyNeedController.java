@@ -288,7 +288,7 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			if(teamNeedService.isCanOperation(mvm)) {
+			if(!teamNeedService.isCanOperation(mvm)) {
 				return "nopower";
 			}
 			model.addAttribute("n", n);
@@ -310,7 +310,7 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		if(teamNeedService.isCanOperation(mvm)) {
+		if(!teamNeedService.isCanOperation(mvm)) {
 			json.put("code",1);
 			json.put("message", "不能对该需求进行变更操作");
 			return;
@@ -335,7 +335,7 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			if(teamNeedService.isCanOperation(mvm)) {
+			if(!teamNeedService.isCanOperation(mvm)) {
 				return "nopower";
 			}
 			model.addAttribute("n", n);
@@ -358,7 +358,7 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		if(teamNeedService.isCanOperation(mvm)) {
+		if(!teamNeedService.isCanOperation(mvm)) {
 			json.put("code",1);
 			json.put("message", "不能对该需求进行验收操作");
 			return;
@@ -383,7 +383,7 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			if(teamNeedService.isCanOperation(mvm)) {
+			if(!teamNeedService.isCanOperation(mvm)) {
 				return "nopower";
 			}
 			model.addAttribute("n", n);
@@ -407,7 +407,7 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		if(teamNeedService.isCanOperation(mvm)) {
+		if(!teamNeedService.isCanOperation(mvm)) {
 			json.put("code",1);
 			json.put("message", "不能对该需求进行关联操作");
 			return;
@@ -432,7 +432,7 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			if(teamNeedService.isCanOperation(mvm)) {
+			if(!teamNeedService.isCanOperation(mvm)) {
 				return "nopower";
 			}
 			model.addAttribute("n", n);
@@ -453,7 +453,7 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		if(teamNeedService.isCanOperation(mvm)) {
+		if(!teamNeedService.isCanOperation(mvm)) {
 			json.put("code",1);
 			json.put("message", "不能对该需求进行关闭操作");
 			return;

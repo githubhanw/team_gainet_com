@@ -45,8 +45,7 @@
     <import resource="classpath:/spring-config.xml" />
     
 	<bean id="loginFilter" class="com.giant.zzidc.base.filter.LoginFilter" >
-		<property name="baseUrl" value="http://192.168.66.161:8887/team_gainet_com/"></property>
-		<!-- <property name="baseUrl" value="http://team.gainet.com/"></property> -->
+		<property name="baseUrl" value="http://team.gainet.com/"></property>
 	</bean>
     
 	<bean id="viewResolver"

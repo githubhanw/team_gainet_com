@@ -521,9 +521,18 @@ public class TeamTaskController extends GiantBaseController {
 	@RequestMapping("/finish")
 	public void finish(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("id"))){
+		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("checkedid"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		String checkedid = mvm.get("checkedid")+"";
+		Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+		String task_assignedid = task.getAssignedId()+"";
+		if(checkedid.equals(task_assignedid)){
+			json.put("code",2);
+			json.put("message", "审核人不可以是自己哦!");
 			resultresponse(response,json);
 			return;
 		}

@@ -542,6 +542,15 @@ public class MyTaskController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
+		String checkedid = mvm.get("checkedid")+"";
+		Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+		String task_assignedid = task.getAssignedId()+"";
+		if(checkedid.equals(task_assignedid)){
+			json.put("code",2);
+			json.put("message", "审核人不可以是自己哦!");
+			resultresponse(response,json);
+			return;
+		}
 		boolean flag = teamTaskService.finish(mvm);
 		if(flag){
 			json.put("code",0);

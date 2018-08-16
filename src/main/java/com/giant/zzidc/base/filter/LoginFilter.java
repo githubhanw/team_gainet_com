@@ -34,7 +34,16 @@ public class LoginFilter implements Filter {
 			arg2.doFilter(arg0, arg1);
 			return;
 		}
-		if("/toLogin".equals(request.getServletPath()) || "/login".equals(request.getServletPath()) || "".equals(request.getServletPath()) || "/my".equals(request.getServletPath())) {
+		String path = "";
+		
+		try {
+			path = request.getServletPath().replaceFirst("/", "");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if("/toLogin".equals(request.getServletPath()) || "/login".equals(request.getServletPath()) || "".equals(request.getServletPath()) || 
+				"/my".equals(request.getServletPath()) || "my/getOpenId".equals(path)) {
 			arg2.doFilter(arg0, arg1);
 			return;
 		}

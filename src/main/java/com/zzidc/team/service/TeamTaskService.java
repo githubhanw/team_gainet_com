@@ -377,7 +377,7 @@ public class TeamTaskService extends GiantBaseService {
 			String end_date = sdf.format(task.getEndDate());
 			Date date = new Date();
 			String time = form.format(date);
-			if (GiantUtils.isEmpty(member)) {
+			if (GiantUtils.isEmpty(member) || GiantUtils.isEmpty(member.getNewOpenid())) {
 				
 			}else {
 				String openid = member.getNewOpenid();//"o-GQDj8vVvfH2715yROC1aqY4YM0";
@@ -720,7 +720,7 @@ public class TeamTaskService extends GiantBaseService {
 				String end_date = sdf.format(t.getEndDate());
 				Date date = new Date();
 				String time = form.format(date);
-				if (GiantUtils.isEmpty(check)) {
+				if (GiantUtils.isEmpty(check) || GiantUtils.isEmpty(check.getNewOpenid())) {
 					
 				}else {
 					String openid = check.getNewOpenid().toString();//"o-GQDj8vVvfH2715yROC1aqY4YM0";

@@ -207,7 +207,7 @@ public class TestBugService extends GiantBaseService {
 			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
 			Date date = new Date();
 			String time = form.format(date);
-			if (GiantUtils.isEmpty(developer)) {
+			if (GiantUtils.isEmpty(developer) || GiantUtils.isEmpty(developer.getNewOpenid())) {
 				
 			}else {
 				String bugrank = "0".equals(t.getBugrank().toString()) ? "A" : "1".equals(t.getBugrank().toString()) ? "B" : "2".equals(t.getBugrank().toString()) ? "C" :"" ;

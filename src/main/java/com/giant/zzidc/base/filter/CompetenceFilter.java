@@ -100,6 +100,9 @@ public class CompetenceFilter implements Filter {
 	 */
 	private boolean isHasPower(HttpSession session, String path) {
 		try {
+			if("my/getOpenId".equals(path)) {//微信接口不拦截
+				return true;
+			}
 			return Authentication.hasAuthPath(session, path);
 		} catch (Exception e) {
 			e.printStackTrace();

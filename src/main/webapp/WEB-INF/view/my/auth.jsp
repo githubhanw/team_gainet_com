@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>授权</title>
+		<title>我的权限</title>
 		<style>
 			.table-bymodule select.form-control {height:250px}
 			.group-item {display:block; width:220px; float:left; font-size: 14px}
@@ -41,7 +41,7 @@
 								<input type="hidden" value="${entity.id}" id="id" name="id">
 								<span class="label label-id">${entity.id}</span>
 								<a href="organization/role/index">${entity.name}</a>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 授权</small>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 我的权限</small>
 							</h2>
 						</div>
 						<table class="table table-hover table-striped table-bordered" id="privList">

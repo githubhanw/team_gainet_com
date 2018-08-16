@@ -204,7 +204,6 @@ public class TestBugService extends GiantBaseService {
 		if(b) {
 			this.log(pmLog);
 			//微信提醒
-			//微信提醒
 			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
 			Date date = new Date();
 			String time = form.format(date);

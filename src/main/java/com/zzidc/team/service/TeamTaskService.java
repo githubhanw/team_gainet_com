@@ -334,12 +334,14 @@ public class TeamTaskService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		try {
-			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")));
+			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")+":00"));
+			System.out.println(mvm.get("start_date")+":00");
 		} catch (Exception e) {
 			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {
-			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")));
+			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")+":00"));
+			System.out.println(mvm.get("end_date")+":00");
 		} catch (Exception e) {
 			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
@@ -370,6 +372,9 @@ public class TeamTaskService extends GiantBaseService {
 		if(b) {
 			//微信提醒
 			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String start_date = sdf.format(task.getStartDate());
+			String end_date = sdf.format(task.getEndDate());
 			Date date = new Date();
 			String time = form.format(date);
 			if (GiantUtils.isEmpty(member)) {
@@ -380,7 +385,7 @@ public class TeamTaskService extends GiantBaseService {
 				String keyword1 = "任务领取";
 				String keyword2 = this.getMemberName();
 				String keyword3 = time;
-				String remark = "总任务标题："+task.getTaskName()+"\\n总任务领取ID："+task.getId()+"\\n总任务负责人："+task.getMemberName()+"\\n总任务开始时间："+task.getStartDate()+"\\n总任务结束时间："+task.getPlanEndDate();//自定义通知，以换行符隔开 \n
+				String remark = "总任务标题："+task.getTaskName()+"\\n总任务领取ID："+task.getId()+"\\n总任务负责人："+task.getMemberName()+"\\n总任务开始时间："+start_date+"\\n总任务结束时间："+end_date;//自定义通知，以换行符隔开 \n
 				String str=sendWeChatUtil(openid,first,keyword1,keyword2,keyword3,remark);
 				String a1 = JSONObject.fromObject(str).toString();
 				HttpUtils.weiXinSendPost(a1);
@@ -419,12 +424,12 @@ public class TeamTaskService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 
 		try {
-			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")));
+			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")+":00"));
 		} catch (Exception e) {
 			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {
-			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")));
+			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")+":00"));
 		} catch (Exception e) {
 			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
@@ -612,7 +617,7 @@ public class TeamTaskService extends GiantBaseService {
 			t.setOpenedName("");
 			t.setOpenedTime(null);
 			try {
-				t.setPlanEndDate(Timestamp.valueOf(mvm.get("plan_end_date")));
+				t.setPlanEndDate(Timestamp.valueOf(mvm.get("plan_end_date")+":00"));
 			} catch (Exception e) {
 				t.setPlanEndDate(new Timestamp(System.currentTimeMillis()));
 			}
@@ -710,6 +715,9 @@ public class TeamTaskService extends GiantBaseService {
 				this.log(pmLog);
 				//微信提醒
 				SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String start_date = sdf.format(t.getStartDate());
+				String end_date = sdf.format(t.getEndDate());
 				Date date = new Date();
 				String time = form.format(date);
 				if (GiantUtils.isEmpty(check)) {
@@ -720,7 +728,7 @@ public class TeamTaskService extends GiantBaseService {
 					String keyword1 = "任务审核";
 					String keyword2 = this.getMemberName();
 					String keyword3 = time;
-					String remark = "总任务标题："+t.getTaskName()+"\\n总任务领取ID："+t.getId()+"\\n总任务负责人："+t.getMemberName()+"\\n总任务开始时间："+t.getStartDate()+"\\n总任务结束时间："+t.getPlanEndDate();//自定义通知，以换行符隔开 \n
+					String remark = "总任务标题："+t.getTaskName()+"\\n总任务领取ID："+t.getId()+"\\n总任务负责人："+t.getMemberName()+"\\n总任务开始时间："+start_date+"\\n总任务结束时间："+end_date;//自定义通知，以换行符隔开 \n
 					String str=sendWeChatUtil(openid,first,keyword1,keyword2,keyword3,remark);
 					String a1 = JSONObject.fromObject(str).toString();
 					HttpUtils.weiXinSendPost(a1);

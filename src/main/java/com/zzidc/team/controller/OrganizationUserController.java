@@ -18,6 +18,7 @@ import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.MemberConfig;
 import com.zzidc.team.service.OrganizationDepartmentService;
 import com.zzidc.team.service.OrganizationUserService;
+import com.zzidc.team.task.SyncUser;
 
 import net.sf.json.JSONObject;
 
@@ -73,6 +74,7 @@ public class OrganizationUserController extends GiantBaseController {
 		requestURL = "organization/user/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
 		pageList.setDesAction(requestURL);
 		model.addAttribute("pageList", pageList);
+		model.addAttribute("sync", SyncUser.sync);
 		model.addAttribute("prm", mvm);
 		publicResult(model);
 		return "organization/user/list";
@@ -130,10 +132,14 @@ public class OrganizationUserController extends GiantBaseController {
 	@RequestMapping("/sync")
 	public void sync(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		boolean flag = organizationUserService.config(mvm);
+		if(SyncUser.sync) {
+			json.put("code", 0);
+			json.put("message", "同步中");
+		}
+		boolean flag = organizationUserService.sync();
 		if(flag){
 			json.put("code",0);
-			json.put("message", "操作成功");
+			json.put("message", "同步中");
 		}else{
 			json.put("code",1);
 			json.put("message", "操作失败");

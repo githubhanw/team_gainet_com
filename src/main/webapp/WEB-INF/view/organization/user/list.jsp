@@ -46,7 +46,10 @@
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
-						<a href="organization/user/sync" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><!-- <i class="icon icon-plus"></i> -->同步用户信息</a>
+						<a href="javascript:;" id="sync" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><!-- <i class="icon icon-plus"></i> -->
+							<c:if test="${sync}">同步中</c:if>
+							<c:if test="${sync == false}">同步用户信息</c:if>
+						</a>
 					</div>
 					<!--btn-toolbar end-->
 				</div>
@@ -175,6 +178,22 @@
 			</div>
 			<script></script>
 		</main>
+		<div class="modal fade" id="errModal">
+			<div class="modal-dialog" style="width:300px">
+				<div class="modal-content">
+					<div class="modal-body">
+						<div style="margin:0 auto;">
+							<button type="button" class="close" data-dismiss="modal">
+								<span aria-hidden="true">×</span><span class="sr-only">关闭</span>
+							</button>
+							<p>
+								<span id="errMsg"></span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 </html>
@@ -196,5 +215,20 @@
 			$(this).addClass("querybox-opened")
 			$("#queryBox").addClass("show")
 		}
+	});
+	$("#sync").click(function(){
+		if($("#sync").text().trim() == '同步中') {
+			return;
+		}
+		$.ajaxSettings.async = false;
+		$.ajax({type:"POST",url:"organization/user/sync?r=" + Math.random(),dataType:"json",success:function(data){
+			if(data.code == 0){
+				$("#sync").text(data.message);
+			}else{
+				$("#errMsg").text(data.message);
+				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+			}
+		}})
+		$.ajaxSettings.async = true;
 	});
 </script>

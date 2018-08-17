@@ -1,23 +1,33 @@
 package com.zzidc.my.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.giant.zzidc.base.utils.GiantUtils;
+import com.giant.zzidc.base.utils.ResultInfo;
 import com.zzidc.my.service.MyService;
+import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Role;
 import com.zzidc.team.service.OrganizationRoleService;
 import com.zzidc.team.service.TeamNeedService;
 import com.zzidc.team.service.TeamTaskService;
 import com.zzidc.team.service.TestApplyService;
 import com.zzidc.team.service.TestBugService;
+
+import net.sf.json.JSONObject;
 
 /**
  * 我的地盘
@@ -230,5 +240,88 @@ public class MyController extends GiantBaseController {
 		model.addAttribute("s", "auth");//子模块
 		return "my/auth";
 	}
+	
+	/**
+	 * 绑定微信
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/weixin")
+	public String toWeixin(Model model){
+		int adminid=myService.getMemberId();//当前登录人ID
+		Member login = (Member)teamNeedService.getEntityByPrimaryKey(new Member(),adminid);
+		System.out.println("adminid="+adminid+" login="+login);
+		if (GiantUtil.isEmpty(login.getNewOpenid())) {//未绑定微信
+			try {
+				model.addAttribute("bindUrl", URLEncoder.encode("http://m.zzidc.com/wx/toGetWxOpenid.action?userId="+adminid+"&redirectUrl=http://team.gainet.com/my/getOpenId", "utf-8"));
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+		}else{
+			model.addAttribute("bdwx","yes");
+		}
+		return "my/weixin";
+	}
+	
+	/**
+	 * 更新openID
+	 */
+	@RequestMapping("/getOpenId")
+	public String getOpenId(@RequestParam Map<String, String> mvm, Model model) {
+		int userId =0;
+		if (GiantUtils.isEmpty(mvm.get("userId"))) {
+			userId =Integer.parseInt(super.getSession().getAttribute("roleIds").toString());//当前登录人ID
+		}else {
+			userId = Integer.valueOf(mvm.get("userId").toString());
+			userId =myService.getMemberId();//当前登录人ID
+		}
+		String openId = mvm.get("openId").toString();
+		openId =openId.replaceAll(" ","+" );
+		boolean a = myService.updateOpenId(openId,userId);
+		System.out.println(" ****************userId ="+userId+" ****************openID ="+openId+" ****************是否更新openID:"+a);
+		return "my/weixin";
+	}
+
+	/**
+	 * 解除微信绑定
+	 */
+	@RequestMapping("/unbindwx")
+	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		Member login = (Member)teamNeedService.getEntityByPrimaryKey(new Member(),myService.getMemberId());
+		JSONObject json=new JSONObject();
+		if(login==null){
+			json.put("code",1);
+			json.put("message", "会员信息不存在");
+			resultresponse(response,json);
+			return;
+		}
+		if(GiantUtils.isEmpty(login.getNewOpenid())){
+			json.put("code",1);
+			json.put("message", "未绑定微信");
+			resultresponse(response,json);
+			return;
+		}
+		
+		boolean flag = myService.unbindwx(login);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "解除微信绑定成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "解除微信绑定失败");
+		}
+		resultresponse(response,json);
+	}
+	/**
+	 * 检查微信绑定状态
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/checkbindwx")
+	public @ResponseBody ResultInfo checkbindwx(Model model){
+		Member login = (Member)teamNeedService.getEntityByPrimaryKey(new Member(),myService.getMemberId());
+		return myService.checkbindwx(login);
+	}
+
 
 }

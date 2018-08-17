@@ -6,6 +6,10 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.giant.zzidc.base.service.GiantBaseService;
+import com.giant.zzidc.base.utils.GiantUtils;
+import com.giant.zzidc.base.utils.PlusCut;
+import com.giant.zzidc.base.utils.ResultInfo;
+import com.zzidc.team.entity.Member;
 
 /**
  * [说明/描述]
@@ -62,4 +66,37 @@ public class MyService extends GiantBaseService{
 		}
 		return null;
 	}
+	
+	/**
+	 * 设置openID
+	 */
+	public boolean updateOpenId(String openId,int adminid){
+		openId = PlusCut.getInstance().cut(openId);//解密
+		Member login = (Member)dao.getEntityByPrimaryKey(new Member(),adminid);
+		login.setNewOpenid(openId);
+		return super.dao.saveUpdateOrDelete(login, null);
+	}
+	
+	/**
+	 * 解绑微信
+	 */
+	public boolean unbindwx(Member login) {
+		login.setNewOpenid("");
+		boolean b=super.dao.saveUpdateOrDelete(login, null);
+		return  b;
+	}
+
+	/**
+	 * 检查微信绑定状态
+	 */
+	public ResultInfo checkbindwx(Member login) {
+		if(login == null){
+			return new ResultInfo(1, "获取会员信息失败");
+		}
+		if(!GiantUtils.isEmpty(login.getNewOpenid())){//已绑定微信
+			return new ResultInfo(0,"绑定成功");
+		}
+		return new ResultInfo(2, "未绑定微信");
+	}
+
 }

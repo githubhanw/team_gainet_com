@@ -17,6 +17,7 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.giant.zzidc.base.utils.PropertyUtils;
 import com.giant.zzidc.base.utils.ResultInfo;
 import com.zzidc.my.service.MyService;
 import com.zzidc.team.entity.Member;
@@ -253,7 +254,9 @@ public class MyController extends GiantBaseController {
 		System.out.println("adminid="+adminid+" login="+login);
 		if (GiantUtil.isEmpty(login.getNewOpenid())) {//未绑定微信
 			try {
-				model.addAttribute("bindUrl", URLEncoder.encode("http://m.zzidc.com/wx/toGetWxOpenid.action?userId="+adminid+"&redirectUrl=http://team.gainet.com/my/getOpenId", "utf-8"));
+				String getOpenIdInterface = PropertyUtils.readProperty("config.properties", "WEIXIN_OPENID_INTERFACE");//手机站接口提供openID
+				String getOpenIdThisUrl = PropertyUtils.readProperty("config.properties", "WEIXIN_OPENID_THISURL");//回调路径
+				model.addAttribute("bindUrl", URLEncoder.encode(getOpenIdInterface+"?userId="+adminid+"&redirectUrl="+getOpenIdThisUrl, "utf-8"));
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}

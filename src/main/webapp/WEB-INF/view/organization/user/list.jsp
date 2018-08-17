@@ -45,10 +45,9 @@
 						<a class="btn btn-link querybox-toggle querybox-opened" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 					<!--btn-toolbar start-->
-					<!-- <div class="btn-toolbar pull-right">
-						<a href="team/task/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i>批量创建</a>
-						<a href="team/task/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i>建任务</a>
-					</div> -->
+					<div class="btn-toolbar pull-right">
+						<a href="organization/user/sync" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><!-- <i class="icon icon-plus"></i> -->同步用户信息</a>
+					</div>
 					<!--btn-toolbar end-->
 				</div>
 				<!--mainMenu end-->

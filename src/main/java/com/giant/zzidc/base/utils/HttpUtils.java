@@ -48,10 +48,9 @@ public class HttpUtils {
 	     * @param param
 	     * @return <br>
 	     */
-	    public static String sendGet(String url, String param) {
+	    public static String sendGet(String url) {
 	        String result = "";
 	        HttpClient client = null;
-	        url = url+"?"+param;
 	        HttpGet get = new HttpGet(url);
 	        get.setHeader("content-type","application/json;charset=UTF-8");
 	        try {

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.giant.zzidc.base.utils.PropertyUtils;
+
 public class LoginFilter implements Filter {
 	private Logger logger = Logger.getLogger(LoginFilter.class);
 	private String baseUrl;
@@ -66,10 +68,6 @@ public class LoginFilter implements Filter {
 
 	public void init(FilterConfig arg0) throws ServletException {
 		logger.info("初始化过滤器...");
-//		pushApplicatinIp(arg0);
-	}
-
-	public void setBaseUrl(String baseUrl) {
-		this.baseUrl = baseUrl;
+		this.baseUrl = PropertyUtils.readProperty("config.properties", "BASE_URL");
 	}
 }

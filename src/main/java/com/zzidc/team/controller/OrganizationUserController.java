@@ -124,4 +124,21 @@ public class OrganizationUserController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 
+	/**
+	 * 同步
+	 */
+	@RequestMapping("/sync")
+	public void sync(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		boolean flag = organizationUserService.config(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+
 }

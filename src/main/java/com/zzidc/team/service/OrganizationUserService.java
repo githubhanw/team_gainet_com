@@ -19,6 +19,12 @@ import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.giant.zzidc.base.utils.HttpUtils;
+import com.giant.zzidc.base.utils.PropertyUtils;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.MemberConfig;
 
@@ -137,5 +143,71 @@ public class OrganizationUserService extends GiantBaseService {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * [同步] <br>
+	 * 
+	 * @author likai <br>
+	 * @date 2018年7月31日 下午2:29:19 <br>
+	 * @return <br>
+	 */
+	public void sync() {
+		String url = PropertyUtils.readProperty("config.properties", "OA_GET_USERINFO");
+		String result = HttpUtils.sendGet(url);
+		JsonElement e = new JsonParser().parse(result);
+		if(e instanceof JsonObject) {
+			JsonObject ret = e.getAsJsonObject();
+			if(ret.has("code") && ret.get("code").getAsInt() == 0) {
+				JsonArray userInfos = ret.has("userinfo") ? new JsonArray() : ret.get("userinfo").getAsJsonArray();
+				if(!userInfos.isJsonNull() && userInfos.size() > 0) {
+					for(int i=0; i<userInfos.size(); i++) {
+						JsonObject userInfo = userInfos.get(i).getAsJsonObject();
+						syncUser(userInfo);
+					}
+				}
+			}
+		}
+	}
+	
+	private void syncUser(JsonObject userInfo) {
+		try {
+			String number = userInfo.get("NUMBER").getAsString();
+			String name = userInfo.get("NAME").getAsString();
+			String phone = userInfo.get("PHONE").getAsString();
+			String sex = userInfo.get("SEX").getAsString();
+			String username = userInfo.get("USERNAME").getAsString();
+			String status = userInfo.get("STATUS").getAsString();
+			String password = userInfo.get("PASSWORD").getAsString();
+			String deptID = userInfo.get("deptID").getAsString();
+			Map<String, Object> conditionMap = new HashMap<String, Object>();
+			conditionMap.put("number", number);
+			Member member = new Member();
+			Object obj = this.getEntityByHQL("Member", conditionMap);
+			if(obj != null) {
+				member = (Member) obj;
+			} else {
+				member.setNumber(number);
+				member.setName(name);
+			}
+			member.setPhone(phone);
+			member.setSex(sex);
+			member.setUsername(username);
+			member.setStatus(status);
+			member.setPassword(password);
+			member.setDeptId(deptID);
+			this.saveUpdateOrDelete(member, null);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		try {
+			JsonElement e = new JsonParser().parse("");
+			System.out.println(e instanceof JsonObject);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

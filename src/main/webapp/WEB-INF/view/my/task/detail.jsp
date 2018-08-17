@@ -318,23 +318,23 @@
 										<tbody>
 											<tr>
 												<th>初始开始</th>
-												<td>${taskM.start_date}</td>
+												<td><fmt:formatDate value="${taskM.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 											<tr>
 												<th>实际开始</th>
-												<td>${taskM.real_start_date}</td>
+												<td><fmt:formatDate value="${taskM.real_start_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 											<tr>
 												<th>初始结束</th>
-												<td>${taskM.end_date}</td>
+												<td><fmt:formatDate value="${taskM.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 											<tr>
 												<th>计划结束</th>
 												<td>
-													${taskM.plan_end_date}
+													<fmt:formatDate value="${taskM.plan_end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 													<c:if test="${taskM.delay==2}">
 														<span style="color:red">已延期</span>
-														原结束时间：${taskM.delayed_date}
+														原结束时间：<fmt:formatDate value="${taskM.delayed_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
 													</c:if>
 												</td>
 											</tr>

@@ -5,7 +5,7 @@
 	session.setAttribute("appPath", path);
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <title>登录</title>
 <meta charset="UTF-8" />

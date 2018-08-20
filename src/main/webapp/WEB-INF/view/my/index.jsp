@@ -250,7 +250,7 @@
 								<table class="table table-borderless">
 									<thead>
 										<tr class="text-middle">
-											<th style="width: 110px;"><span class="flowchart-title">角色</span></th>
+											<th style="width: 120px;"><span class="flowchart-title">角色</span></th>
 											<th><div>
 													<span class="flowchart-step bg-secondary">1</span>
 												</div></th>
@@ -278,7 +278,7 @@
 											<td></td>
 										</tr>
 										<tr class="text-middle">
-											<th>产品经理</th>
+											<th>产品经理 / 需求方</th>
 											<td>创建需求</td>
 											<td>验收需求</td>
 											<td>分配任务</td>
@@ -294,7 +294,7 @@
 											<td></td>
 										</tr>
 										<tr class="text-middle">
-											<th>研发人员</th>
+											<th>DevOps</th>
 											<td>撰写用例</td>
 											<td>执行用例</td>
 											<td>领取任务和Bug</td>

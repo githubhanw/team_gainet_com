@@ -58,7 +58,7 @@
 										<select data-placeholder="请选择被指派人员" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}</option>
+												<option value="${member.id}">${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 									</td>
@@ -70,7 +70,7 @@
 										<select data-placeholder="请选需求方" class="form-control chosen-select" name="member_id" id="member_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}</option>
+												<option value="${member.id}">${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 									</td>

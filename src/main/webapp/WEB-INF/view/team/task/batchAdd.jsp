@@ -46,7 +46,7 @@
 									<th class="w-150px col-plan">所属需求</th>
 									<th class="w-100px required">任务类型</th>
 									<th class="col-name has-btn required">任务名称</th>
-									<th class="w-120px">指派给</th>
+									<th class="w-180px">指派给</th>
 									<th class="w-120px col-estimate">开始时间</th>
 									<th class="w-120px col-review">结束时间</th>
 									<th class="w-120px">任务描述</th>
@@ -91,7 +91,7 @@
 												<select data-placeholder="指派给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 													<option value=""></option>
 													<c:forEach items="${members}" var="member" varStatus="sta">
-														<option value="${member.id}">${member.name}</option>
+														<option value="${member.id}">${member.name}(${member.number})</option>
 													</c:forEach>
 												</select>
 											</td>

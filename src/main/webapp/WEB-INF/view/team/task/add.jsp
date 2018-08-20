@@ -59,7 +59,7 @@
 										<select data-placeholder="指派给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}</option>
+												<option value="${member.id}">${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 									</td>

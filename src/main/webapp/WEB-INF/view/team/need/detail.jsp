@@ -346,7 +346,7 @@
 							</c:if>
 						</c:if>
 						<a href="team/need/toEdit?id=${needM.id}" class="btn btn-link" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
-						<a href="javascript:void(0)" onclick="del(${taskM.id})" class="btn btn-link" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
+						<a href="javascript:void(0)" onclick="del(${needM.id})" class="btn btn-link" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
 					</div>
 				</div>
 				<!--mainActions end-->

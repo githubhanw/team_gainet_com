@@ -130,7 +130,7 @@
 														<select data-placeholder="指派给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 															<option value=""></option>
 															<c:forEach items="${members}" var="member" varStatus="sta">
-																<option value="${member.id}" ${member.id==t.assignedId?'selected="selected"':''}>${member.name}</option>
+																<option value="${member.id}" ${member.id==t.assignedId?'selected="selected"':''}>${member.name}(${member.number})</option>
 															</c:forEach>
 														</select>
 													</td>
@@ -234,7 +234,7 @@
 														<%-- <select data-placeholder="指派给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 															<option value=""></option>
 															<c:forEach items="${members}" var="member" varStatus="sta">
-																<option value="${member.id}" ${member.id==t.assignedId?'selected="selected"':''}>${member.name}</option>
+																<option value="${member.id}" ${member.id==t.assignedId?'selected="selected"':''}>${member.name}(${member.number})</option>
 															</c:forEach>
 														</select> --%>
 													</td>
@@ -252,7 +252,7 @@
 														<select data-placeholder="请选择验收人" class="form-control chosen-select" name="checked_id" id="checked_id">
 															<option value=""></option>
 															<c:forEach items="${members}" var="member" varStatus="sta">
-																<option value="${member.id}" ${member.id==t.checkedId?'selected="selected"':''}>${member.name}</option>
+																<option value="${member.id}" ${member.id==t.checkedId?'selected="selected"':''}>${member.name}(${member.number})</option>
 															</c:forEach>
 														</select>
 													</td>
@@ -263,7 +263,7 @@
 														<select data-placeholder="请选择关闭人" class="form-control chosen-select" name="closed_id" id="closed_id">
 															<option value=""></option>
 															<c:forEach items="${members}" var="member" varStatus="sta">
-																<option value="${member.id}" ${member.id==t.closedId?'selected="selected"':''}>${member.name}</option>
+																<option value="${member.id}" ${member.id==t.closedId?'selected="selected"':''}>${member.name}(${member.number})</option>
 															</c:forEach>
 														</select>
 													</td>

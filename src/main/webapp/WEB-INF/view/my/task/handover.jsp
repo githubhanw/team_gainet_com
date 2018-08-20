@@ -92,7 +92,7 @@
 										<select data-placeholder="请选择交接人" class="form-control chosen-select" name="handover_id" id="handover_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}</option>
+												<option value="${member.id}">${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 									</td>

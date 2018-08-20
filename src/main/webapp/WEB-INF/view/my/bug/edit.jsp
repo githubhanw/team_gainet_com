@@ -99,7 +99,7 @@
 										<select data-placeholder="请选择创建者" class="form-control chosen-select" name="creater_id" id="creater_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}" ${member.id==t.createrId?'selected="selected"':''}>${member.name}</option>
+												<option value="${member.id}" ${member.id==t.createrId?'selected="selected"':''}>${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 									</td>
@@ -111,7 +111,7 @@
 										<select data-placeholder="请选择开发者" class="form-control chosen-select" name="developer_id" id="developer_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}" ${member.id==t.developerId?'selected="selected"':''}>${member.name}</option>
+												<option value="${member.id}" ${member.id==t.developerId?'selected="selected"':''}>${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 									</td>

@@ -423,15 +423,30 @@ public class TeamTaskService extends GiantBaseService {
 		task.setDeleted((short) GiantUtil.intOf(mvm.get("deleted"), 0));
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 
-		try {
+		try {//初始开始日期
 			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")+":00"));
 		} catch (Exception e) {
 			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
-		try {
+		try {//实际开始
+			task.setRealStartDate(Timestamp.valueOf(mvm.get("real_start_date")+":00"));
+		} catch (Exception e) {
+			task.setRealStartDate(new Timestamp(System.currentTimeMillis()));
+		}
+		try {//初始结束
 			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")+":00"));
 		} catch (Exception e) {
 			task.setEndDate(new Timestamp(System.currentTimeMillis()));
+		}
+		try {//计划结束
+			task.setPlanEndDate(Timestamp.valueOf(mvm.get("plan_end_date")+":00"));
+		} catch (Exception e) {
+			task.setPlanEndDate(new Timestamp(System.currentTimeMillis()));
+		}
+		try {//实际结束
+			task.setRealEndDate(Timestamp.valueOf(mvm.get("real_end_date")+":00"));
+		} catch (Exception e) {
+			task.setRealEndDate(new Timestamp(System.currentTimeMillis()));
 		}
 		task.setDelay((short) GiantUtil.intOf(mvm.get("delay"), 0));
 		task.setOverdue((short) GiantUtil.intOf(mvm.get("overdue"), 0));

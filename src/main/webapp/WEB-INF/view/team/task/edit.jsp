@@ -194,17 +194,38 @@
 										<table class="table table-form">
 											<tbody>
 												<tr>
-													<th class="w-80px">开始日期</th>
+													<th class="w-80px">初始开始</th>
 													<td>
 														<input type="text" name="start_date" id="start_date" value="<fmt:formatDate value="${t.startDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
-															class="form-control form-date-limit" placeholder="任务开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+															class="form-control form-date-limit" placeholder="任务初始开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
-													<th>结束日期</th>
+													<th class="w-80px">实际开始</th>
+													<td>
+														<input type="text" name="real_start_date" id="start_date" value="<fmt:formatDate value="${t.realStartDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
+															class="form-control form-date-limit" placeholder="任务实际开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<th class="w-80px">初始结束</th>
 													<td>
 														<input type="text" name="end_date" id="end_date" value="<fmt:formatDate value="${t.endDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
-															class="form-control form-date" placeholder="任务结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+															class="form-control form-date-limit" placeholder="任务初始结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<th class="w-80px">计划结束</th>
+													<td>
+														<input type="text" name="plan_end_date" id="start_date" value="<fmt:formatDate value="${t.planEndDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
+															class="form-control form-date-limit" placeholder="任务计划结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<th>实际结束</th>
+													<td>
+														<input type="text" name="real_end_date" id="end_date" value="<fmt:formatDate value="${t.realEndDate}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
+															class="form-control form-date" placeholder="任务实际结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 												<tr>

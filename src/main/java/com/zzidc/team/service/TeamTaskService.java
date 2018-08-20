@@ -411,7 +411,6 @@ public class TeamTaskService extends GiantBaseService {
 		BeanUtils.copyProperties(task, oldTask);
 		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
 		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
-
 		task.setNeedId(GiantUtil.intOf(mvm.get("need_id"), 0));
 		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
 		task.setAssignedId(member == null ? 0 : member.getId());
@@ -421,6 +420,7 @@ public class TeamTaskService extends GiantBaseService {
 		}
 		task.setTaskType(GiantUtil.intOf(mvm.get("task_type"), 0));
 		task.setState((short) GiantUtil.intOf(mvm.get("state"), 0));
+		task.setDeleted((short) GiantUtil.intOf(mvm.get("deleted"), 0));
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 
 		try {

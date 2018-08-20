@@ -167,6 +167,15 @@
 													</td>
 												</tr>
 												<tr>
+													<th>删除状态</th>
+													<td>
+														<select class="form-control chosen chosen-select" name="deleted" id="deleted">
+															<option ${t.deleted=='0'?'selected="selected"':'' } value="0">未删除</option>
+															<option ${t.deleted=='1'?'selected="selected"':'' } value="1">已删除</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
 													<th>优先级</th>
 													<td>
 														<select class="form-control chosen chosen-select"  name="level" id="level">

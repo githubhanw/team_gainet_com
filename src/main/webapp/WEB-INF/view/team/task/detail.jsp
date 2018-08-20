@@ -297,6 +297,12 @@
 												</td>
 											</tr>
 											<tr>
+												<th>删除状态</th>
+												<td>
+													${taskM.deleted == 0 ? '未删除' : taskM.deleted == 1 ? '<span style="color: red;">已删除</span>' : '未知' }
+												</td>
+											</tr>
+											<tr>
 												<th>优先级</th>
 												<td>
 													<c:if test="${taskM.level=='1'}">紧急重要</c:if>

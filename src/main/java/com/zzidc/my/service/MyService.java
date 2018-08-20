@@ -47,7 +47,12 @@ public class MyService extends GiantBaseService{
 	 * 获取测试统计数据
 	 */
 	public Map<String, Object> getTestCount(){
-		String sql = "SELECT count(0) 'count' FROM test_apply WHERE state=1 OR apply_id=" + super.getMemberId();
+		String sql ="";
+		if (super.getRoleIds() != null && (super.getRoleIds() == 9 || super.getRoleIds() == 5)) {
+			sql = "SELECT count(0) 'count' FROM test_apply WHERE state=1";
+		}else {
+			sql = "SELECT count(0) 'count' FROM test_apply WHERE apply_id=" + super.getMemberId();
+		}
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);
@@ -59,7 +64,7 @@ public class MyService extends GiantBaseService{
 	 * 获取需求统计数据
 	 */
 	public Map<String, Object> getNeedCount(){
-		String sql = "SELECT count(0) 'count' FROM task_need WHERE assigned_id=" + super.getMemberId();
+		String sql = "SELECT count(0) 'count' FROM task_need WHERE 1=1 AND state!=0 AND assigned_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);

@@ -167,6 +167,16 @@ public class MyController extends GiantBaseController {
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
+			try {
+				int juese =Integer.parseInt(super.getSession().getAttribute("roleIds").toString());
+				if (juese == 5 || juese == 9) {
+					
+				} else {
+					mvm.put("type", "5");
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
 			mvm.put("search", "");
@@ -273,10 +283,10 @@ public class MyController extends GiantBaseController {
 	public String getOpenId(@RequestParam Map<String, String> mvm, Model model) {
 		int userId =0;
 		if (GiantUtils.isEmpty(mvm.get("userId"))) {
-			userId =Integer.parseInt(super.getSession().getAttribute("roleIds").toString());//当前登录人ID
+			//userId =Integer.parseInt(super.getSession().getAttribute("roleIds").toString());
+			userId =myService.getMemberId();//当前登录人ID
 		}else {
 			userId = Integer.valueOf(mvm.get("userId").toString());
-			userId =myService.getMemberId();//当前登录人ID
 		}
 		String openId = mvm.get("openId").toString();
 		openId =openId.replaceAll(" ","+" );

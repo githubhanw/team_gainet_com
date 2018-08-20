@@ -96,6 +96,19 @@ public class GiantBaseService {
 		}
 		return Integer.parseInt(String.valueOf(getSession().getAttribute("memberId")));
 	}
+	
+
+	/**
+	 * 获取登录角色
+	 * @return
+	 */
+	public Integer getRoleIds() {
+		if(getSession() == null || getSession().getAttribute("memberId") == null) {
+			return 0;
+		}
+		return Integer.parseInt(String.valueOf(getSession().getAttribute("roleIds")));
+	}
+
 
 	/**
 	 * 是否当前登录

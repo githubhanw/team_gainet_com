@@ -476,7 +476,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ASSIGN, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ASSIGN, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			
@@ -506,7 +506,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.CHANGE, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.CHANGE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			t.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
@@ -533,7 +533,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.CLOSE, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.CLOSE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			t.setClosedId(super.getMemberId());
@@ -570,7 +570,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ACTIVE, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ACTIVE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			t.setState((short) 2);
@@ -609,7 +609,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.OPEN, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.OPEN, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			t.setState((short) 2);
@@ -646,7 +646,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.PAUSE, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.PAUSE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			t.setState((short) 5);
@@ -671,7 +671,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.CANCEL, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.CANCEL, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			t.setCanceledId(super.getMemberId());
@@ -701,7 +701,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.FINISH, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.FINISH, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			Member check = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("checkedid"), 0));
@@ -752,7 +752,7 @@ public class TeamTaskService extends GiantBaseService {
 				if(t == null) {
 					return false;
 				}
-				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.FINISHCHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.FINISHCHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 				Task oldTask = new Task();
 				BeanUtils.copyProperties(t, oldTask);
 				t.setState((short) 4);
@@ -792,7 +792,7 @@ public class TeamTaskService extends GiantBaseService {
 				if(t == null) {
 					return false;
 				}
-				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.FINISHCHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.FINISHCHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 				Task oldTask = new Task();
 				BeanUtils.copyProperties(t, oldTask);
 				t.setState((short) 2);
@@ -937,7 +937,7 @@ public class TeamTaskService extends GiantBaseService {
 //			}
 			Task task = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(task != null) {
-				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.RELEVANCE, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.RELEVANCE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 				Task oldTask = new Task();
 				BeanUtils.copyProperties(task, oldTask);
 				task.setLink(GiantUtil.stringOf(mvm.get("needs")));
@@ -967,7 +967,7 @@ public class TeamTaskService extends GiantBaseService {
 		if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
 			Task task = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
 			if (task != null) {
-				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.DELAY, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.DELAY, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 				Task oldTask = new Task();
 				BeanUtils.copyProperties(task, oldTask);
 				try {
@@ -1002,7 +1002,7 @@ public class TeamTaskService extends GiantBaseService {
 			t = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
 			if (t.getDelayedDate() != null && t.getDelayedId() != null && t.getDelayedName() != null && t.getDelayedReviewId() != null
 					&& t.getDelayedTime() != null) {
-				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.DELAYCHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.DELAYCHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 				Task oldTask = new Task();
 				BeanUtils.copyProperties(t, oldTask);
 				t.setDelay((short) 2);
@@ -1034,7 +1034,7 @@ public class TeamTaskService extends GiantBaseService {
 			if(t == null) {
 				return false;
 			}
-			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.HANDOVER, mvm.toString(), GiantUtil.stringOf(mvm.get("content")));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.HANDOVER, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			Task oldTask = new Task();
 			BeanUtils.copyProperties(t, oldTask);
 			t.setHandoverId(t.getAssignedId());

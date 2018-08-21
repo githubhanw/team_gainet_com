@@ -21,8 +21,8 @@ public class MyService extends GiantBaseService{
 	 * 获取任务统计数据
 	 */
 	public Map<String, Object> getTaskCount(){
-		String sql = "SELECT count(0) 'count',SUM(IF(real_start_date=CURDATE(),1,0)) 'today',SUM(IF(state=1,1,0)) 'noopen', "
-				+ "SUM(IF(real_start_date=DATE_SUB(curdate(),INTERVAL 1 DAY),1,0)) 'yesteday',SUM(IF(delay>0,1,0)) 'delay',"
+		String sql = "SELECT count(0) 'count',SUM(IF(DATE(real_start_date)=CURDATE(),1,0)) 'today',SUM(IF(state=1,1,0)) 'noopen', "
+				+ "SUM(IF(DATE(real_start_date)=DATE_SUB(curdate(),INTERVAL 1 DAY),1,0)) 'yesteday',SUM(IF(delay>0,1,0)) 'delay',"
 				+ "SUM(IF(overdue=1,1,0)) 'overdue' FROM `task` WHERE deleted=0 AND assigned_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {

@@ -434,7 +434,7 @@
 							<a href="team/task/toDelayCheck?id=${taskM.id}" class="btn btn-link"><i class="icon-story-review icon-glasses"></i> 延期审核</a>
 						</c:if>
 						<c:if test="${taskM.state == 3}">
-							<a href="team/task/toDelayCheck?id=${taskM.id}" class="btn btn-link"><i class="icon-story-review icon-glasses"></i> 完成审核</a>
+							<a href="team/task/toFinishCheck?id=${taskM.id}" class="btn btn-link"><i class="icon-story-review icon-glasses"></i> 完成审核</a>
 						</c:if>
 						<c:if test="${taskM.state == 2 && taskM.delay != 1 && taskM.resolved == 0}">
 							<a href='team/task/toFinish?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-finish icon-checked'></i> 完成</a>

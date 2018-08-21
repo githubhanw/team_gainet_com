@@ -82,6 +82,7 @@ public class MyTestController extends GiantBaseController {
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		publicResult(model);
+		model.addAttribute("task_id", mvm.get("id").toString());
 		model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
 		return "my/test/add";
 	}

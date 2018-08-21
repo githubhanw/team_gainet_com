@@ -225,7 +225,7 @@
 											</th>
 											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="需求名称">
 												<a  href="${pageList.desAction}&orderColumn=tn.need_name&orderByValue=${prm.orderColumn=='tn.need_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='tn.need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求名称</a>
+														class="${prm.orderColumn=='tn.need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="任务类型">
 												<a  href="${pageList.desAction}&orderColumn=t.task_type&orderByValue=${prm.orderColumn=='t.task_type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
@@ -235,13 +235,13 @@
 												<a  href="${pageList.desAction}&orderColumn=t.state&orderByValue=${prm.orderColumn=='t.state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='t.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
+											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="创建者">
+												<a  href="${pageList.desAction}&orderColumn=t.member_id&orderByValue=${prm.orderColumn=='t.member_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='t.member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建者</a>
+											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="指派给">
 												<a  href="${pageList.desAction}&orderColumn=t.assigned_name&orderByValue=${prm.orderColumn=='t.assigned_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='t.assigned_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">指派给</a>
-											</th>
-											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="完成者">
-												<a  href="${pageList.desAction}&orderColumn=t.finished_name&orderByValue=${prm.orderColumn=='t.finished_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.finished_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">完成者</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="计划结束时间">
 												<a  href="${pageList.desAction}&orderColumn=t.plan_end_date&orderByValue=${prm.orderColumn=='t.plan_end_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
@@ -285,6 +285,7 @@
 													<span class="label label-danger" title="任务已逾期">逾</span>
 												</c:if>
 											</td>
+											<td class="c-pri text-left">${task.member_name}</td>
 											<td class="c-name text-left">
 												<c:if test="${task.assigned_name == '' || task.assigned_name == null}">
 													<a href="team/task/toAssign?id=${task.id}" class="btn btn-icon-left btn-sm">
@@ -296,7 +297,6 @@
 													<span class="text-red">${task.assigned_name}</span>
 												</c:if>
 											</td>
-											<td class="c-pri text-left">${task.finished_name}</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${task.plan_end_date}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${task.real_end_date}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-actions text-right">

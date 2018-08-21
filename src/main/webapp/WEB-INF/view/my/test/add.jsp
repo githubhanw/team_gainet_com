@@ -46,7 +46,7 @@
 									<td class="required" style="width:60%">
 										<select class="form-control input-product-code" name="task_id" id="task_id">
 											<c:forEach items="${tasks}" var="task" varStatus="sta">
-												<option value="${task.id}" ${task.id==entity.taskId?'selected="selected"':''}>${task.task_name }</option>
+												<option value="${task.id}" ${task.id==task_id?'selected="selected"':''}>${task.task_name }</option>
 											</c:forEach>
 										</select>
 										<input type="hidden" name="id" value="${entity.id}"/>

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.entity.TaskProject;
@@ -84,7 +85,12 @@ public class TestApplyController extends GiantBaseController {
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		publicResult(model);
-		model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
+		if (GiantUtils.isEmpty(mvm.get("id").toString())) {
+			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
+		}else {
+			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
+			model.addAttribute("task_id", mvm.get("id").toString());
+		}
 		return "test/apply/add";
 	}
 

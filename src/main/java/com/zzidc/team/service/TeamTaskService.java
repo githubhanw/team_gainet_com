@@ -183,11 +183,11 @@ public class TeamTaskService extends GiantBaseService {
 					sql += "AND t.delay>0 AND t.assigned_id=" + memberId;
 					countSql += "AND t.delay>0 AND t.assigned_id=" + memberId;
 				} else if ("16".equals(temp)) {// 状态：今日任务（已接收）
-					sql += "AND t.real_start_date=CURDATE() AND t.assigned_id=" + memberId;
-					countSql += "AND t.real_start_date=CURDATE() AND t.assigned_id=" + memberId;
+					sql += "AND DATE(t.real_start_date)=CURDATE() AND t.assigned_id=" + memberId;
+					countSql += "AND DATE(t.real_start_date)=CURDATE() AND t.assigned_id=" + memberId;
 				} else if ("17".equals(temp)) {// 状态：昨日任务
-					sql += "AND t.real_start_date=DATE_SUB(curdate(),INTERVAL 1 DAY) AND t.assigned_id=" + memberId;
-					countSql += "AND t.real_start_date=DATE_SUB(curdate(),INTERVAL 1 DAY) AND t.assigned_id=" + memberId;
+					sql += "AND DATE(t.real_start_date)=DATE_SUB(curdate(),INTERVAL 1 DAY) AND t.assigned_id=" + memberId;
+					countSql += "AND DATE(t.real_start_date)=DATE_SUB(curdate(),INTERVAL 1 DAY) AND t.assigned_id=" + memberId;
 				} else if ("18".equals(temp)) {// 状态：未接收任务
 					sql += "AND t.state=1 AND t.assigned_id=" + memberId;
 					countSql += "AND t.state=1 AND t.assigned_id=" + memberId;

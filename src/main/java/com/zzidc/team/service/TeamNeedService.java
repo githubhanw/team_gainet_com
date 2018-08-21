@@ -794,8 +794,8 @@ public class TeamNeedService extends GiantBaseService{
 //			n.setOpenedName("");
 //			n.setOpenedTime(null);
 			try {
-				n.setPlanEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("plan_end_date")));
-			} catch (ParseException e) {
+				n.setPlanEndDate(super.returnTime(mvm.get("plan_end_date")));
+			} catch (Exception e) {
 				n.setPlanEndDate(new Date());
 			}
 			n.setUpdateTime(new Timestamp(System.currentTimeMillis()));

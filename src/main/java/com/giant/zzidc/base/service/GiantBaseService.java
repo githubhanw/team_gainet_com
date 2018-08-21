@@ -8,9 +8,12 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URL;
 import java.net.UnknownHostException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -1096,5 +1099,24 @@ public class GiantBaseService {
     	p.put("data", d);
     	String a = p.toString();
 		return value;
+	}
+
+	/**
+	 * 返回timestamp类型的时间
+	 * @param time String类型时间
+	 * @return
+	 */
+	public Timestamp returnTime(String time) {
+		Timestamp ts = null;
+		Date date = new Date();  
+        //注意format的格式要与日期String的格式相匹配  
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");  
+        try {  
+            date = sdf.parse(time);  
+            ts = new Timestamp(date.getTime());
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+		return ts;
 	}
 }

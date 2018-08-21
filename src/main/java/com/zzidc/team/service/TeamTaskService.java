@@ -632,7 +632,7 @@ public class TeamTaskService extends GiantBaseService {
 			t.setOpenedName("");
 			t.setOpenedTime(null);
 			try {
-				t.setPlanEndDate(Timestamp.valueOf(mvm.get("plan_end_date")+":00"));
+				t.setPlanEndDate(super.returnTime(mvm.get("plan_end_date")));
 			} catch (Exception e) {
 				t.setPlanEndDate(new Timestamp(System.currentTimeMillis()));
 			}

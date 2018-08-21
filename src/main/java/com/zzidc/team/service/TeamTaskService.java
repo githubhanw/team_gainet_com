@@ -343,14 +343,12 @@ public class TeamTaskService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		try {
-			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")+":00"));
-			System.out.println(mvm.get("start_date")+":00");
+			task.setStartDate(super.returnTime(mvm.get("start_date")));
 		} catch (Exception e) {
 			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {
-			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")+":00"));
-			System.out.println(mvm.get("end_date")+":00");
+			task.setEndDate(super.returnTime(mvm.get("end_date")));
 		} catch (Exception e) {
 			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
@@ -433,27 +431,27 @@ public class TeamTaskService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 
 		try {//初始开始日期
-			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")+":00"));
+			task.setStartDate(super.returnTime(mvm.get("start_date")));
 		} catch (Exception e) {
 			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {//实际开始
-			task.setRealStartDate(Timestamp.valueOf(mvm.get("real_start_date")+":00"));
+			task.setRealStartDate(super.returnTime(mvm.get("real_start_date")));
 		} catch (Exception e) {
 			task.setRealStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {//初始结束
-			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")+":00"));
+			task.setEndDate(super.returnTime(mvm.get("end_date")));
 		} catch (Exception e) {
 			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {//计划结束
-			task.setPlanEndDate(Timestamp.valueOf(mvm.get("plan_end_date")+":00"));
+			task.setPlanEndDate(super.returnTime(mvm.get("plan_end_date")));
 		} catch (Exception e) {
 			task.setPlanEndDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {//实际结束
-			task.setRealEndDate(Timestamp.valueOf(mvm.get("real_end_date")+":00"));
+			task.setRealEndDate(super.returnTime(mvm.get("real_end_date")));
 		} catch (Exception e) {
 			task.setRealEndDate(new Timestamp(System.currentTimeMillis()));
 		}
@@ -464,7 +462,7 @@ public class TeamTaskService extends GiantBaseService {
 		task.setFinishedId(member == null ? 0 : member.getId());
 		task.setFinishedName(member == null ? "" : member.getName());
 		try {
-			task.setFinishedTime(Timestamp.valueOf(GiantUtil.stringOf(mvm.get("finished_time"))));
+			task.setFinishedTime(super.returnTime(mvm.get("finished_time")));
 		} catch (Exception e) {
 		}
 		member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("checked_id"), 0));
@@ -475,7 +473,7 @@ public class TeamTaskService extends GiantBaseService {
 		task.setClosedId(member == null ? 0 : member.getId());
 		task.setClosedName(member == null ? "" : member.getName());
 		try {
-			task.setClosedTime(Timestamp.valueOf(GiantUtil.stringOf(mvm.get("closed_time"))));
+			task.setClosedTime(super.returnTime(mvm.get("closed_time")));
 		} catch (Exception e) {
 		}
 		task.setClosedReason(GiantUtil.stringOf(mvm.get("closed_reason")));

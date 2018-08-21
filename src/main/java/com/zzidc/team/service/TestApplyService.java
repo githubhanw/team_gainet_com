@@ -102,14 +102,14 @@ public class TestApplyService extends GiantBaseService {
 			if (!StringUtils.isEmpty(Createtime = conditionPage.getQueryCondition().get("createtime"))) {
 				sql += "AND ta.apply_time>:createtime ";
 				countSql += "AND ta.apply_time>:createtime ";
-				conditionMap.put("createtime", Createtime+" 00:00:00");
+				conditionMap.put("createtime", super.returnTime(Createtime));
 			}
 			
 			String Endtime="";//结束时间
 			if (!StringUtils.isEmpty(Endtime = conditionPage.getQueryCondition().get("endtime"))) {
 				sql += "AND ta.apply_time<:endtime ";
 				countSql += "AND ta.apply_time<:endtime ";
-				conditionMap.put("endtime", Endtime+" 23:59:59");
+				conditionMap.put("endtime", super.returnTime(Endtime));
 			}
 			
 			
@@ -294,12 +294,12 @@ public class TestApplyService extends GiantBaseService {
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		try {
-			task.setStartDate(Timestamp.valueOf(mvm.get("start_date")+":00"));
+			task.setStartDate(super.returnTime(mvm.get("start_date")));
 		} catch (Exception e) {
 			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
 		try {
-			task.setEndDate(Timestamp.valueOf(mvm.get("end_date")+":00"));
+			task.setEndDate(super.returnTime(mvm.get("end_date")));
 		} catch (Exception e) {
 			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}

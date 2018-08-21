@@ -32,9 +32,6 @@ import net.sf.json.JSONObject;
 @Service("testBugService")
 public class TestBugService extends GiantBaseService {
 	
-	//String url="http://idcsupport_api.zzidc.com:60022/restful/support/support/sendWeChat";
-		String url="http://mcapi.zzidc.com:60023/api/weixin/template/messageSend";
-		
 	/**
 	 * Bug列表
 	 * @param conditionPage
@@ -95,14 +92,15 @@ public class TestBugService extends GiantBaseService {
 			if (!StringUtils.isEmpty(Createtime = conditionPage.getQueryCondition().get("createtime"))) {
 				sql += "AND tb.createtime>:createtime ";
 				countSql += "AND tb.createtime>:createtime ";
-				conditionMap.put("createtime", "'"+Createtime+" 00:00:00'");
+				System.out.println(super.returnTime(Createtime));
+				conditionMap.put("createtime", super.returnTime(Createtime));
 			}
 			
 			String Endtime="";//结束时间
 			if (!StringUtils.isEmpty(Endtime = conditionPage.getQueryCondition().get("endtime"))) {
 				sql += "AND tb.createtime<:endtime ";
 				countSql += "AND tb.createtime<:endtime ";
-				conditionMap.put("endtime", "'"+Endtime+" 23:59:59'");
+				conditionMap.put("endtime", super.returnTime(Endtime));
 			}
 			
 			String Member="";//人员类型

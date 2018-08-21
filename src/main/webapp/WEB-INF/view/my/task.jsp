@@ -74,12 +74,12 @@
 										<tr>
 											<td class="w-200px">
 												<select class="form-control chosen chosen-select" name="searchType" id="searchType">
-													<option ${prm.searchType=='1'?'selected="selected"':'' } value="1">任务名称</option>
+													<option ${prm.searchType=='1'?'selected="selected"':'' } value="1">任务名称/ID</option>
 													<option ${prm.searchType=='2'?'selected="selected"':'' } value="2">任务描述</option>
 												</select>
 											</td>
 											<td>
-												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="选择后请输入要查询的任务名称 或 任务描述">
+												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="选择后请输入要查询的任务名称/ID 或 任务描述">
 											</td>
 											<td class="w-180px">
 												<select class="form-control chosen chosen-select" name="delay" id="delay">

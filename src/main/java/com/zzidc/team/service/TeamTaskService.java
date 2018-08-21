@@ -53,9 +53,18 @@ public class TeamTaskService extends GiantBaseService {
 				String searchType = "";
 				if (!StringUtils.isEmpty(searchType = conditionPage.getQueryCondition().get("searchType"))) {
 					if ("1".equals(searchType)) {//任务名称
-						sql += "AND t.task_name LIKE :search ";
-						countSql += "AND t.task_name LIKE :search ";
-						conditionMap.put("search", "%" + temp + "%");
+						try {
+							// 如果成功则为编号
+							Integer.parseInt(temp);	
+							sql += "AND t.id = :search ";
+							countSql += "AND t.id = :search ";
+							conditionMap.put("search", temp);
+						} catch (Exception e) {
+							// 名称条件
+							sql += "AND t.task_name LIKE :search ";
+							countSql += "AND t.task_name LIKE :search ";
+							conditionMap.put("search", "%" + temp + "%");
+						}
 					} else if("2".equals(searchType)) {//任务描述
 						sql += "AND t.remark LIKE :search ";
 						countSql += "AND t.remark LIKE :search ";

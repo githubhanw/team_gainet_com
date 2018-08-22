@@ -173,6 +173,9 @@ public class TeamTaskService extends GiantBaseService {
 				} else if ("9".equals(temp)) {// 状态：已延期
 					sql += "AND t.delay>0";
 					countSql += "AND t.delay>0";
+				} else if ("19".equals(temp)) {// 状态：已逾期
+					sql += "AND t.overdue=1";
+					countSql += "AND t.overdue=1";
 				} else if ("10".equals(temp)) {// 状态：我完成
 					sql += "AND t.state=4 AND t.finished_id=" + memberId;
 					countSql += "AND t.state=4 AND t.finished_id=" + memberId;

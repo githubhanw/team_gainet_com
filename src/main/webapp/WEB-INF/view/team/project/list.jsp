@@ -83,6 +83,10 @@
 												<a  href="${pageList.desAction}&orderColumn=member_id&orderByValue=${prm.orderColumn=='member_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目负责人</a>
 											</th>
+											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="备注">
+												<a  href="${pageList.desAction}&orderColumn=remark&orderByValue=${prm.orderColumn=='remark'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">备注</a>
+											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="状态">
 												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
@@ -115,6 +119,7 @@
 											<td class="c-pri text-left">${project.project_name}</td>
 											<td class="c-name text-left">${project.company}</td>
 											<td class="c-pri text-left">${project.member_name}</td>
+											<td class="c-pri text-left">${project.remark}</td>
 											<td class="c-assignedTo has-btn text-center">
 												${project.state == 1 ? '正常' : '已删除'}
 											</td>

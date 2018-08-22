@@ -74,7 +74,7 @@
 								<tr>
 									<th>备注</th>
 									<td>
-										<div id="remark" name="remark"></div>
+										<div id="remark" name="remark">${p.remark}</div>
 										<input type="hidden" name="id" value="${p.id}"/>
 									</td>
 									<td></td>

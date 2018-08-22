@@ -90,8 +90,8 @@ public class MyController extends GiantBaseController {
 			conditionPage = new GiantPager();
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "t.state");
-			mvm.put("orderByValue", "ASC");
+			mvm.put("orderColumn", "t.update_time");
+			mvm.put("orderByValue", "DESC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "8");

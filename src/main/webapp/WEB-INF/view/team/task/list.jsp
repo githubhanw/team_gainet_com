@@ -273,7 +273,7 @@
 												<c:if test="${task.parent_id > 0 && prm.type != 1 && prm.type != 2}">
 													<span class="label label-badge label-light">子</span>
 												</c:if>
-												<a href="team/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.task_name}">${task.task_name}</a>
+												<a href="team/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.task_name}">${task.need_id}</a>
 											</td>
 											<td class="text-left">
 												<a href="team/need/detail?id=${task.need_id}" data-toggle="tooltip" data-placement="top" title="${task.need_name}">${task.need_id}</a>
@@ -373,7 +373,7 @@
 															</a>
 														</td>
 														<td class="text-left">
-															<a href="team/need/detail?id=${subTask.need_id}" data-toggle="tooltip" data-placement="top" title="${subTask.need_name}">${subTask.need_name}</a>
+															<a href="team/need/detail?id=${subTask.need_id}" data-toggle="tooltip" data-placement="top" title="${subTask.need_name}">${subTask.need_id}</a>
 														</td>
 														<td class="c-pri text-center">${subTask.task_type==1?'开发':subTask.task_type==2?'测试':subTask.task_type==3?'设计':subTask.task_type==4?'前端':subTask.task_type==5?'维护':subTask.task_type==6?'需求':subTask.task_type==7?'研究':subTask.task_type==8?'讨论':subTask.task_type==9?'运维':subTask.task_type==10?'事务':'其他'}</td>
 														<td class="c-pri text-center">

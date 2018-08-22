@@ -224,8 +224,8 @@
 														class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="需求名称">
-												<a  href="${pageList.desAction}&orderColumn=tn.need_name&orderByValue=${prm.orderColumn=='tn.need_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='tn.need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求ID</a>
+												<a  href="${pageList.desAction}&orderColumn=tn.need_id&orderByValue=${prm.orderColumn=='tn.need_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='tn.need_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="任务类型">
 												<a  href="${pageList.desAction}&orderColumn=t.task_type&orderByValue=${prm.orderColumn=='t.task_type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
@@ -270,7 +270,7 @@
 												<a href="team/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.task_name}">${task.task_name}</a>
 											</td>
 											<td class="text-left">
-												<a href="team/need/detail?id=${task.need_id}" data-toggle="tooltip" data-placement="top" title="${task.need_name}">${task.need_name}</a>
+												<a href="team/need/detail?id=${task.need_id}" data-toggle="tooltip" data-placement="top" title="${task.need_name}">${task.need_id}</a>
 											</td>
 											<td class="c-pri text-center">${task.task_type==1?'开发':task.task_type==2?'测试':task.task_type==3?'设计':task.task_type==4?'前端':task.task_type==5?'维护':task.task_type==6?'需求':task.task_type==7?'研究':task.task_type==8?'讨论':task.task_type==9?'运维':task.task_type==10?'事务':'其他'}</td>
 											<td class="c-pri text-center">

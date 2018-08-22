@@ -48,6 +48,7 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
@@ -59,6 +60,59 @@
 				<div id="mainContent" class="main-row fade in">
 					<!--main-col start-->
 					<div class="main-col">
+						<div class="cell load-indicator ${prm.type == 10 ? 'show':''}" id="queryBox">
+							<form method="post" action="team/project/index?type=10" id="searchForm" class="search-form">
+								<table class="table table-condensed table-form" id="task-search">
+									<tbody>
+										<tr>
+											<td style="width:150px">
+												<select class="form-control chosen chosen-select" name="searchType" id="searchType">
+													<option ${prm.searchType=='1'?'selected="selected"':'' } value="1">项目名称/ID</option>
+													<option ${prm.searchType=='2'?'selected="selected"':'' } value="2">项目备注</option>
+												</select>
+											</td>
+											<td style="width:500px">
+												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="选择后请输入要查询的项目名称/ID 或 备注">
+											</td>
+											<td style="width:150px">
+												<select class="form-control chosen chosen-select" name="company" id="company">
+													<option value="">公司</option>
+													<option ${prm.company=='景安'?'selected="selected"':'' } value="景安">景安</option>
+													<option ${prm.company=='快云'?'selected="selected"':'' } value="快云">快云</option>
+													<option ${prm.company=='大数据'?'selected="selected"':'' } value="大数据">大数据</option>
+												</select>
+											</td>
+											<td style="width:250px">
+												<select data-placeholder="请选择项目负责人" class="form-control chosen-select" name="member_id" id="member_id">
+													<option value=""></option>
+													<c:forEach items="${members}" var="member" varStatus="sta">
+														<option value="${member.id}">${member.name}(${member.number})</option>
+													</c:forEach>
+												</select>
+											</td>
+											<td style="width:100px">
+												<select class="form-control chosen chosen-select" name="state" id="state">
+													<option value="">状态</option>
+													<option ${prm.bugrank=='0'?'selected="selected"':'' } value="0">无效</option>
+													<option ${prm.bugrank=='1'?'selected="selected"':'' } value="1">正常</option>
+												</select>
+											</td>
+											
+											<td class="w-160px">
+												<input type="text" name="createtime" id="createtime" valve="${prm.createtime}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+											</td>
+											<td class="w-160px">
+												<input type="text" name="endtime" id="endtime" valve="${prm.endtime}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+											</td>
+										</tr>
+										<tr>
+											<td colspan="8" class="text-center form-actions">
+												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
+										</tr>
+									</tbody>
+								</table>
+							</form>
+						</div>
 						<form class="main-table table-task skip-iframe-modal" method="post"
 							id="projectTaskForm" data-ride="table">
 							<!--table-responsive start-->
@@ -160,6 +214,15 @@
 	</body>
 </html>
 <script>
+	$("#bysearchTab").click(function(){
+		if($(this).hasClass("querybox-opened")){
+			$(this).removeClass("querybox-opened")
+			$("#queryBox").removeClass("show")
+		}else{
+			$(this).addClass("querybox-opened")
+			$("#queryBox").addClass("show")
+		}
+	});
 	$('.pager').pager({
 	    page: ${pageList.currentPage},
 	    recTotal: ${pageList.totalCounts},

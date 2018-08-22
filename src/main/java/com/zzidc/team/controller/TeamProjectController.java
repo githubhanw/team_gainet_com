@@ -63,6 +63,7 @@ public class TeamProjectController extends GiantBaseController {
 		pageList = teamProjectService.getPageList(conditionPage);
 		requestURL = "team/project/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
 		pageList.setDesAction(requestURL);
+		model.addAttribute("members", teamProjectService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);
 		publicResult(model);

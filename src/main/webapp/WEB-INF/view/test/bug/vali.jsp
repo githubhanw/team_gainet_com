@@ -46,11 +46,6 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>任务描述:</th>
-									<td>${t.taskdes}<input type="hidden" name="id" value="${t.id}"/></td>
-									<td></td>
-								</tr>
-								<tr>
 									<th>BUG标题:</th>
 									<td class="required">${t.bugdes}</td>
 									<td></td>

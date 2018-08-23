@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>提BUG</title>
+		<title>绑定微信</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -46,7 +46,7 @@
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">解绑</button>
-										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
+										<a href="my/" class="btn btn-back btn btn-wide">返回我的地盘</a>
 									</td>
 								</tr>
 							</tbody>

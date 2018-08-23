@@ -85,7 +85,7 @@ public class TestApplyController extends GiantBaseController {
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		publicResult(model);
-		if (GiantUtils.isEmpty(mvm.get("id").toString())) {
+		if (GiantUtils.isEmpty(mvm.get("id"))) {
 			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
 		}else {
 			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));

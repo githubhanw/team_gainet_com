@@ -273,7 +273,7 @@
 												<c:if test="${task.parent_id > 0 && prm.type != 1 && prm.type != 2}">
 													<span class="label label-badge label-light">子</span>
 												</c:if>
-												<a href="team/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.task_name}">${task.need_id}</a>
+												<a href="team/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.task_name}">${task.task_name}</a>
 											</td>
 											<td class="text-left">
 												<a href="team/need/detail?id=${task.need_id}" data-toggle="tooltip" data-placement="top" title="${task.need_name}">${task.need_id}</a>

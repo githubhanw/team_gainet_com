@@ -218,44 +218,34 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 70px" class="c-id text-center" title="ID">
-												<a href="${pageList.desAction}&orderColumn=t.id&orderByValue=${prm.orderColumn=='t.id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.id');">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="P">
-												<a  href="${pageList.desAction}&orderColumn=t.level&orderByValue=${prm.orderColumn=='t.level'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.level'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">优先级</a>
+											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="优先级">
+												<a href="javascript:void(0)" onclick="pageOrder('t.level');">优先级</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="任务名称">
-												<a  href="${pageList.desAction}&orderColumn=t.task_name&orderByValue=${prm.orderColumn=='t.task_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务名称</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.task_name');">任务名称</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="需求名称">
-												<a  href="${pageList.desAction}&orderColumn=tn.need_id&orderByValue=${prm.orderColumn=='tn.need_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='tn.need_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求ID</a>
+											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="需求ID">
+												<a href="javascript:void(0)" onclick="pageOrder('t.need_id');">需求ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="任务类型">
-												<a  href="${pageList.desAction}&orderColumn=t.task_type&orderByValue=${prm.orderColumn=='t.task_type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.task_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务类型</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.task_type');">任务类型</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:125px" class="c-name text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=t.state&orderByValue=${prm.orderColumn=='t.state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.state');">状态</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="创建者">
-												<a  href="${pageList.desAction}&orderColumn=t.member_id&orderByValue=${prm.orderColumn=='t.member_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建者</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.member_id');">创建者</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="指派给">
-												<a  href="${pageList.desAction}&orderColumn=t.assigned_name&orderByValue=${prm.orderColumn=='t.assigned_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.assigned_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">指派给</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.assigned_name');">指派给</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="计划结束时间">
-												<a  href="${pageList.desAction}&orderColumn=t.plan_end_date&orderByValue=${prm.orderColumn=='t.plan_end_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.plan_end_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">计划结束</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.plan_end_date');">计划结束时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="实际结束时间">
-												<a  href="${pageList.desAction}&orderColumn=t.real_end_date&orderByValue=${prm.orderColumn=='t.real_end_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.real_end_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">实际结束</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.real_end_date');">实际结束时间</a>
 											</th>
 											<th data-flex="false" data-width="360px" style="width:260px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -455,15 +445,15 @@
 								</table>
 							</div>
 							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!-- <ul class="pager"></ul> -->
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -474,14 +464,6 @@
 	</body>
 </html>
 <script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "team/task/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
 	$("#bysearchTab").click(function(){
 		if($(this).hasClass("querybox-opened")){
 			$(this).removeClass("querybox-opened")

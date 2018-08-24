@@ -92,6 +92,7 @@ public class MyController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "t.update_time");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "8");
@@ -106,7 +107,7 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = teamTaskService.getPageList(conditionPage);
-		requestURL = "my/task?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "my/task";
 		pageList.setDesAction(requestURL);
 		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
 			teamTaskService.getSubTaskList(pageList.getPageResult(), mvm.get("type"), mvm.get("orderColumn"), mvm.get("orderByValue"));

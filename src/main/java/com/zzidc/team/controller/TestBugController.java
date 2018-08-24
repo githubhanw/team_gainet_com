@@ -153,10 +153,10 @@ public class TestBugController extends GiantBaseController {
 		boolean flag = testBugService.add(mvm);
 		if(flag){
 			json.put("code",0);
-			json.put("message", "添加/修改成功");
+			json.put("message", "添加BUG成功");
 		}else{
 			json.put("code",1);
-			json.put("message", "添加/修改失败");
+			json.put("message", "添加BUG失败");
 		}
 		resultresponse(response,json);
 	}
@@ -197,10 +197,10 @@ public class TestBugController extends GiantBaseController {
 		boolean flag = testBugService.edit(mvm);
 		if(flag){
 			json.put("code",0);
-			json.put("message", "添加/修改成功");
+			json.put("message", "编辑成功");
 		}else{
 			json.put("code",1);
-			json.put("message", "添加/修改失败");
+			json.put("message", "编辑失败");
 		}
 		resultresponse(response,json);
 	}

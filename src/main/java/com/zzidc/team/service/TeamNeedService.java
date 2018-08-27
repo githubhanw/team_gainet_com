@@ -463,9 +463,43 @@ public class TeamNeedService extends GiantBaseService{
 			c.add(Calendar.DATE, 1);
 			need.setEndDate(c.getTime());
 		}
+		
+		//项目的一生信息修改
+		if (!GiantUtils.isEmpty(mvm.get("checked_time"))) {//验收时间
+			try {//实际结束
+				need.setCheckedTime(super.returnTime(mvm.get("checked_time")));
+				need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			} catch (Exception e) {
+				need.setCheckedTime(new Timestamp(System.currentTimeMillis()));
+				need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			}
+		}
+		if (!GiantUtils.isEmpty(mvm.get("checked_id"))) {//验收人
+			Member check = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("checked_id"), 0));
+			need.setCheckedId(check == null ? 0 : check.getId());
+			need.setCheckedName(check == null ? "" : check.getName());
+		}
+		if (!GiantUtils.isEmpty(mvm.get("closed_id"))) {//关闭人
+			Member close = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("closed_id"), 0));
+			need.setClosedId(close == null ? 0 : close.getId());
+			need.setClosedName(close == null ? "" : close.getName());
+		}
+		if (!GiantUtils.isEmpty(mvm.get("closed_time"))) {//关闭时间
+			try {//关闭时间
+				need.setClosedTime(super.returnTime(mvm.get("closed_time")));
+				need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			} catch (Exception e) {
+				need.setClosedTime(new Timestamp(System.currentTimeMillis()));
+				need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			}
+		}
+		if (!GiantUtils.isEmpty(mvm.get("closed_reason"))) {//关闭原因
+			need.setClosedReason(mvm.get("closed_reason"));
+		}
+		
 		need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		boolean flag = super.dao.saveUpdateOrDelete(need, null);
-		pmLog.add(oldNeed, need, "member_name", "assigned_name", "project_id", "src_id", "level", "start_date", "end_date");
+		pmLog.add(oldNeed, need, "member_name", "assigned_name", "project_id", "src_id", "level", "start_date", "end_date", "checked_time", "closed_time", "checked_name", "closed_name", "closed_reason");
 		pmLog.setObjectId(need.getId());
 		this.log(pmLog);
 		return flag;

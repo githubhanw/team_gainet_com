@@ -251,6 +251,12 @@
 												</td>
 											</tr>
 											<tr>
+												<th>当前阶段</th>
+												<td>
+													${needM.stage == 1 ? '待验收' : needM.stage == 2 ? '验收完成' : needM.stage == 3 ? '验收不通过' : '未知'}
+												</td>
+											</tr>
+											<tr>
 												<th>开始日期</th>
 												<td>${needM.start_date}</td>
 											</tr>
@@ -265,13 +271,13 @@
 						</div>
 						<div class="cell">
 							<details class="detail" open="">
-								<summary class="detail-title">项目的一生</summary>
+								<summary class="detail-title">需求的一生</summary>
 								<div class="detail-content">
 									<table class="table table-data">
 										<tbody>
 											<tr>
 												<th>由谁创建</th>
-												<td>${needM.member_name } 于 <fmt:formatDate value="${needM.create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+												<td>${needM.create_name } 于 <fmt:formatDate value="${needM.create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 											<tr>
 												<th>指派给</th>

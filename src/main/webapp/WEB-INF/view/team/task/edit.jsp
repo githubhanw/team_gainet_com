@@ -260,6 +260,7 @@
 												<tr>
 													<th>由谁完成</th>
 													<td>
+													<input type="hidden" name="finished_id" id="finished_id" value="${t.finishedId}">
 														同指派给
 														<%-- <select data-placeholder="指派给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 															<option value=""></option>

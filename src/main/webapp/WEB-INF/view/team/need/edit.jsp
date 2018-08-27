@@ -192,8 +192,71 @@
 										<table class="table table-form">
 											<tbody>
 												<tr>
-													<th class="w-70px">由谁创建</th>
-													<td>A:admin</td>
+													<th class="w-80px">由谁创建</th>
+													<td>${n.createName}</td>
+												</tr>
+												<tr>
+													<th>由谁完成</th>
+													<td>
+														同指派给
+														<%-- <select data-placeholder="指派给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
+															<option value=""></option>
+															<c:forEach items="${members}" var="member" varStatus="sta">
+																<option value="${member.id}" ${member.id==t.assignedId?'selected="selected"':''}>${member.name}(${member.number})</option>
+															</c:forEach>
+														</select> --%>
+													</td>
+												</tr>
+												<tr>
+													<th>完成时间</th>
+													<td>
+														<input type="text" name="checked_time" id="checked_time" value="<fmt:formatDate value="${n.checkedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
+															class="form-control form-date" placeholder="(验收时间)" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<th>由谁验收</th>
+													<td>
+														<select data-placeholder="请选择验收人" class="form-control chosen-select" name="checked_id" id="checked_id">
+															<option value=""></option>
+															<c:forEach items="${members}" var="member" varStatus="sta">
+																<option value="${member.id}" ${member.id==n.checkedId?'selected="selected"':''}>${member.name}(${member.number})</option>
+															</c:forEach>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th>由谁关闭</th>
+													<td>
+														<select data-placeholder="请选择关闭人" class="form-control chosen-select" name="closed_id" id="closed_id">
+															<option value=""></option>
+															<c:forEach items="${members}" var="member" varStatus="sta">
+																<option value="${member.id}" ${member.id==n.closedId?'selected="selected"':''}>${member.name}(${member.number})</option>
+															</c:forEach>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th>关闭原因</th>
+													<td>
+														<select class="form-control chosen chosen-select"  name="closed_reason" id="closed_reason">
+															<option value=""></option>
+															<option ${n.closedReason=='已完成'?'selected="selected"':'' } value="已完成">已完成</option>
+															<option ${n.closedReason=='已细分'?'selected="selected"':'' } value="已细分">已细分</option>
+															<option ${n.closedReason=='重复'?'selected="selected"':'' } value="重复">重复</option>
+															<option ${n.closedReason=='延期'?'selected="selected"':'' } value="延期">延期</option>
+															<option ${n.closedReason=='不做'?'selected="selected"':'' } value="不做">不做</option>
+															<option ${n.closedReason=='已取消'?'selected="selected"':'' } value="已取消">已取消</option>
+															<option ${n.closedReason=='设计如此'?'selected="selected"':'' } value="设计如此">设计如此</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th>关闭时间</th>
+													<td>
+														<input type="text" name="closed_time" id="closed_time" value="<fmt:formatDate value="${n.closedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>" 
+															class="form-control form-date" placeholder="关闭时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+													</td>
 												</tr>
 											</tbody>
 										</table>

@@ -37,7 +37,7 @@ public class TestBugController extends GiantBaseController {
 	private String requestURL = "test/apply/index";
 	
 	public void publicResult(Model model) {
-		model.addAttribute("m", "bug");//模块
+		model.addAttribute("m", "apply");//模块
 		model.addAttribute("s", "bug");//子模块
 		model.addAttribute("u", requestURL);//请求地址
 	}

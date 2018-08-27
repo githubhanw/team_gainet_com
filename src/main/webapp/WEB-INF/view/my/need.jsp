@@ -60,7 +60,11 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
+						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
+							<c:if test="${prm.type == 10}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 					</div>
 					<div class="btn-toolbar pull-right">
 						<a href="my/need/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>

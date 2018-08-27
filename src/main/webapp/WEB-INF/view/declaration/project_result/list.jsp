@@ -90,7 +90,11 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
+						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
+							<c:if test="${prm.type == 10}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<!-- <input type="text"/> --> 
 					</div>
 					<!--btn-toolbar start-->

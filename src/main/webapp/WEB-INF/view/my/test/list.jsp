@@ -42,7 +42,11 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 11 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索</a>
+						<a class="btn btn-link querybox-toggle ${prm.type == 11 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
+							<c:if test="${prm.type == 11}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 					</div>
 				</div>
 				<!--mainMenu end-->

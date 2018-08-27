@@ -545,10 +545,11 @@ public class TeamNeedService extends GiantBaseService{
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			// 当前用户是否为创建者
-			b = this.isCurrentMember(need.getCreateId());
+//			// 当前用户是否为创建者
+//			b = this.isCurrentMember(need.getCreateId());
+			
 			// 当前用户是否为需求方
-			b = b && this.isCurrentMember(need.getMemberId());
+			b = this.isCurrentMember(need.getMemberId());
 			return b;
 		}
 		return b;
@@ -663,7 +664,7 @@ public class TeamNeedService extends GiantBaseService{
 			//获取对象
 			need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(need != null) {
-				PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ACTIVE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+				PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.CHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 				TaskNeed oldT = new TaskNeed();
 				BeanUtils.copyProperties(need, oldT);
 				

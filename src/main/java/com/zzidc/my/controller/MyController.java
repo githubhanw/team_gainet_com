@@ -71,11 +71,17 @@ public class MyController extends GiantBaseController {
 		Map<String, Object> testCount = myService.getTestCount();
 		//需求
 		Map<String, Object> needCount = myService.getNeedCount();
+		//待我审核任务
+		Map<String, Object> checkedMineTask = myService.getCheckedMineTask();
+		//待我验收需求
+		Map<String, Object> checkedMineNeed = myService.getCheckedMineNeed();
 
 		model.addAttribute("taskCount", taskCount);
 		model.addAttribute("bugCount", bugCount);
 		model.addAttribute("testCount", testCount);
 		model.addAttribute("needCount", needCount);
+		model.addAttribute("checkedMineTask", checkedMineTask);
+		model.addAttribute("checkedMineNeed", checkedMineNeed);
 		publicResult(model);
 		model.addAttribute("s", "");//子模块
 		return "my/index";

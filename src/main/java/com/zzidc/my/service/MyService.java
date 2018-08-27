@@ -73,6 +73,31 @@ public class MyService extends GiantBaseService{
 	}
 	
 	/**
+	 * 获取待我审核任务
+	 */
+	public Map<String, Object> getCheckedMineTask(){
+		String sql = "SELECT count(0) 'count' FROM task t LEFT JOIN task_need tn ON t.need_id=tn.id "
+				+ "WHERE 1=1 AND t.deleted=0 AND (t.delayed_review_id="+super.getMemberId()+" OR (t.state=3 AND t.checked_id="+super.getMemberId()+"))";
+		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+	
+	/**
+	 * 获取待我验收需求
+	 */
+	public Map<String, Object> getCheckedMineNeed(){
+		String sql = "SELECT COUNT(0) 'count' FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tn.state!=0 AND tn.member_id="+super.getMemberId();
+		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+	
+	/**
 	 * 设置openID
 	 */
 	public boolean updateOpenId(String openId,int adminid){

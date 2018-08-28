@@ -26,6 +26,7 @@ public enum LogMethod {
 	RELEVANCE("关联"),
 	DELAY("延期"),
 	DELAYCHECK("延期审核"),
+	CHECK("验收"),
 	HANDOVER("交接");
 	
 	private LogMethod(String value) {

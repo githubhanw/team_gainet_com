@@ -96,10 +96,10 @@
 												</select>
 											</td>
 											<td class="overflow: visible">
-												<input type="text" name="start_date" class="form-control form-date-limit" placeholder="默认今天"/>
+												<input type="text" name="start_date" id="start_date" class="form-control form-date-limit" placeholder="默认今天"/>
 											</td>
 											<td class="overflow: visible">
-												<input type="text" name="end_date" class="form-control form-date-limit" placeholder="默认明天"/>
+												<input type="text" name="end_date" id="end_date" class="form-control form-date-limit" placeholder="默认明天"/>
 											</td>
 											<td style="overflow: visible">
 												<textarea name="remark" class="form-control title-import"></textarea>

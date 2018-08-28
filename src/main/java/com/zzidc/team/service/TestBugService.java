@@ -92,15 +92,14 @@ public class TestBugService extends GiantBaseService {
 			if (!StringUtils.isEmpty(Createtime = conditionPage.getQueryCondition().get("createtime"))) {
 				sql += "AND tb.createtime>:createtime ";
 				countSql += "AND tb.createtime>:createtime ";
-				System.out.println(super.returnTime(Createtime));
-				conditionMap.put("createtime", super.returnTime(Createtime));
+				conditionMap.put("createtime", Createtime);
 			}
 			
 			String Endtime="";//结束时间
 			if (!StringUtils.isEmpty(Endtime = conditionPage.getQueryCondition().get("endtime"))) {
 				sql += "AND tb.createtime<:endtime ";
 				countSql += "AND tb.createtime<:endtime ";
-				conditionMap.put("endtime", super.returnTime(Endtime));
+				conditionMap.put("endtime", Endtime);
 			}
 			
 			String Member="";//人员类型
@@ -148,8 +147,8 @@ public class TestBugService extends GiantBaseService {
 					sql += "AND tb.solvestatus>0 AND tb.solver_id=" + memberId;
 					countSql += "AND tb.solvestatus>0 AND tb.solver_id=" + memberId;
 				} else if ("8".equals(temp)) {// 待我验证
-					sql += "AND tb.solvestatus=0 AND tb.creater_id=" + memberId;
-					countSql += "AND tb.solvestatus=0 AND tb.creater_id=" + memberId;
+					sql += "AND tb.solvestatus=1 AND tb.creater_id=" + memberId;
+					countSql += "AND tb.solvestatus=1 AND tb.creater_id=" + memberId;
 				}
 			}
 		}

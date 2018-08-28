@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -353,7 +354,12 @@ public class TeamTaskService extends GiantBaseService {
 		try {
 			task.setEndDate(super.returnTime(mvm.get("end_date")));
 		} catch (Exception e) {
-			task.setEndDate(new Timestamp(System.currentTimeMillis()));
+			Date date = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.DAY_OF_MONTH, +1);//+1今天的时间加一天
+			date = calendar.getTime();
+			task.setEndDate(new Timestamp(date.getTime()));
 		}
 		task.setMemberId(super.getMemberId());
 		task.setMemberName(super.getMemberName());

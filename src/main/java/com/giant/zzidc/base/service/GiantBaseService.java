@@ -1106,7 +1106,7 @@ public class GiantBaseService {
 	 * @param time String类型时间
 	 * @return
 	 */
-	public Timestamp returnTime(String time) {
+	public Timestamp returnTime(String time)throws Exception {
 		Timestamp ts = null;
 		Date date = new Date();  
         //注意format的格式要与日期String的格式相匹配  
@@ -1115,7 +1115,7 @@ public class GiantBaseService {
             date = sdf.parse(time);  
             ts = new Timestamp(date.getTime());
         } catch (Exception e) {  
-            e.printStackTrace();  
+            throw e;  
         }  
 		return ts;
 	}

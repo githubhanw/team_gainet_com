@@ -102,14 +102,14 @@ public class TestApplyService extends GiantBaseService {
 			if (!StringUtils.isEmpty(Createtime = conditionPage.getQueryCondition().get("createtime"))) {
 				sql += "AND ta.apply_time>:createtime ";
 				countSql += "AND ta.apply_time>:createtime ";
-				conditionMap.put("createtime", super.returnTime(Createtime));
+				conditionMap.put("createtime", Createtime);
 			}
 			
 			String Endtime="";//结束时间
 			if (!StringUtils.isEmpty(Endtime = conditionPage.getQueryCondition().get("endtime"))) {
 				sql += "AND ta.apply_time<:endtime ";
 				countSql += "AND ta.apply_time<:endtime ";
-				conditionMap.put("endtime", super.returnTime(Endtime));
+				conditionMap.put("endtime", Endtime);
 			}
 			
 			

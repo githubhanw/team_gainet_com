@@ -130,6 +130,9 @@ public class MyBugController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (testBugService.isCurrentMember(t.getDeveloperId()) || testBugService.isCurrentMember(t.getSolverId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 		}
 		publicResult(model);
@@ -155,10 +158,10 @@ public class MyBugController extends GiantBaseController {
 		boolean flag = testBugService.vali(mvm);
 		if(flag){
 			json.put("code",0);
-			json.put("message", "添加/修改成功");
+			json.put("message", "验证成功");
 		}else{
 			json.put("code",1);
-			json.put("message", "添加/修改失败");
+			json.put("message", "验证失败");
 		}
 		resultresponse(response,json);
 	}
@@ -202,10 +205,10 @@ public class MyBugController extends GiantBaseController {
 		boolean flag = testBugService.edit(mvm);
 		if(flag){
 			json.put("code",0);
-			json.put("message", "添加/修改成功");
+			json.put("message", "编辑成功");
 		}else{
 			json.put("code",1);
-			json.put("message", "添加/修改失败");
+			json.put("message", "编辑失败");
 		}
 		resultresponse(response,json);
 	}

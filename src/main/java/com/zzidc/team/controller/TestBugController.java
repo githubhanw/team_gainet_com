@@ -294,6 +294,9 @@ public class TestBugController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (testBugService.isCurrentMember(t.getDeveloperId()) || testBugService.isCurrentMember(t.getSolverId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 		}
 		publicResult(model);

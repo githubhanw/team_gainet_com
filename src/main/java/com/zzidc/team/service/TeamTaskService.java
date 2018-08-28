@@ -653,7 +653,9 @@ public class TeamTaskService extends GiantBaseService {
 				pmLog.add(t.getId(), oldTask, t, "opend_name", "state", "plan_end_date", "real_start_date");
 				this.log(pmLog);
 			}
-			this.updateParentTaskState(GiantUtil.intOf(mvm.get("id"), 0));
+			if(t.getTaskType() != 2) {
+				this.updateParentTaskState(GiantUtil.intOf(mvm.get("id"), 0));
+			}
 			
 			return b;
 		}

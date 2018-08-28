@@ -366,7 +366,7 @@
 												</td>
 											</tr>
 											<tr>
-												<th>由谁验收</th>
+												<th>由谁审核</th>
 												<td>
 													<c:if test="${taskM.checked_name != null && taskM.checked_name != ''}">
 														${taskM.checked_name }
@@ -377,7 +377,7 @@
 												</td>
 											</tr>
 											<tr>
-												<th>验收结果</th>
+												<th>审核结果</th>
 												<td>${taskM.checked_reason }</td>
 											</tr>
 											<tr>

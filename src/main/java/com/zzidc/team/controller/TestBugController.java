@@ -266,7 +266,7 @@ public class TestBugController extends GiantBaseController {
 	@RequestMapping("/solve")
 	public void solve(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("solver_id"))){
+		if(GiantUtil.isEmpty(mvm.get("solver_id")) || GiantUtil.isEmpty(mvm.get("kaifamark"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

@@ -89,9 +89,6 @@ public class MyBugController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
-			if (!testBugService.isCurrentMember(t.getDeveloperId())) {
-				return "nopower";
-			}
 			model.addAttribute("members", testBugService.getAllMember());
 			model.addAttribute("t", t);
 		}
@@ -105,7 +102,7 @@ public class MyBugController extends GiantBaseController {
 	@RequestMapping("/solve")
 	public void solve(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("solver_id"))){
+		if(GiantUtil.isEmpty(mvm.get("solver_id")) || GiantUtil.isEmpty(mvm.get("kaifamark"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

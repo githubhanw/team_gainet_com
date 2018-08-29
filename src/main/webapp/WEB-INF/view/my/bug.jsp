@@ -54,7 +54,7 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="my/bug?type=4" class="btn btn-link ${prm.type == 7 ? 'btn-active-text':''}">
+						<a href="my/bug?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
 							<span class="text">已删除</span>
 							<c:if test="${prm.type == 4}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>

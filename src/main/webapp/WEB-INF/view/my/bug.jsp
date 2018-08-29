@@ -229,8 +229,15 @@
 											<td class="c-pri text-center">${bug.solver}</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${bug.solvetime}" pattern="yyyy-MM-dd" /></td>									
 											<td class="c-actions text-center">
+											<c:if test="${bug.solvestatus==0}">
 												<a href="my/bug/toSolve?id=${bug.id}" class="btn" title="解决"><i class='icon-task-finish icon-checked'></i></a>
+											</c:if>
+											<c:if test="${bug.solvestatus==1}">
 												<a href="my/bug/toVali?id=${bug.id}" class="btn" title="验证"><i class="icon-story-review icon-glasses"></i></a>
+											</c:if>
+											<c:if test="${bug.solvestatus==2}">
+												无操作
+											</c:if>
 											</td>
 										</tr>
 										</c:forEach>

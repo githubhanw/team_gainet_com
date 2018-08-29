@@ -138,7 +138,7 @@
 														<c:if test="${item.level=='4'}">不紧急不重要</c:if>
 													</td>
 													<td>${item.end_date}</td>
-													<td>${item.member_name}</td>
+													<td>${item.assigned_name}</td>
 													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>

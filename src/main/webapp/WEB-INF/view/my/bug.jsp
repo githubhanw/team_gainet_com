@@ -54,6 +54,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a href="my/bug?type=4" class="btn btn-link ${prm.type == 7 ? 'btn-active-text':''}">
+							<span class="text">已删除</span>
+							<c:if test="${prm.type == 4}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
 							<c:if test="${prm.type == 10}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
@@ -235,7 +241,7 @@
 											<c:if test="${bug.solvestatus==1}">
 												<a href="my/bug/toVali?id=${bug.id}" class="btn" title="验证"><i class="icon-story-review icon-glasses"></i></a>
 											</c:if>
-											<c:if test="${bug.solvestatus==2}">
+											<c:if test="${bug.solvestatus!=0 && bug.solvestatus!=1}">
 												无操作
 											</c:if>
 											</td>

@@ -246,8 +246,15 @@
 											<c:if test="${bug.solvestatus==1}">
 												<a href="test/bug/toVali?id=${bug.id}" class="btn" title="验证"><i class="icon-story-review icon-glasses"></i></a>
 											</c:if>
+											<c:if test="${bug.solvestatus==0 || bug.solvestatus==1}">
 												<a href="test/bug/toEdit?id=${bug.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+											</c:if>
+											<c:if test="${bug.solvestatus!=3}">
 												<a href="test/bug/toDelete?id=${bug.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
+											</c:if>
+											<c:if test="${bug.solvestatus==3}">
+												无操作
+											</c:if>
 											</td>
 										</tr>
 										</c:forEach>

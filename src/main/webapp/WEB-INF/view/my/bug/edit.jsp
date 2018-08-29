@@ -38,7 +38,7 @@
 								<tr>
 									<th>任务名称</th>
 									<td class="required">
-										<select class="form-control input-product-code" name="task_id" id="task_id">
+										<select class="form-control input-product-code" name="taskid" id="taskid">
 											<c:forEach items="${task}" var="task" varStatus="sta">
 												<option value="${task.id}" ${task.id==taskId?'selected="selected"':''}>【任务ID:${task.id}】${task.task_name}</option>
 											</c:forEach>

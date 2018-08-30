@@ -741,6 +741,7 @@ public class TeamTaskService extends GiantBaseService {
 			t.setCheckedId(check == null ? 0 : check.getId());
 			t.setCheckedName(check == null ? "" : check.getName());
 			t.setState((short) 3);
+			t.setRealEndDate(new Timestamp(System.currentTimeMillis()));
 			t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 			boolean b = super.dao.saveUpdateOrDelete(t, null);
 			if(b) {
@@ -793,10 +794,13 @@ public class TeamTaskService extends GiantBaseService {
 				t.setCheckedReason(mvm.get("checked_reason").toString());
 				t.setCheckedTime(new Timestamp(System.currentTimeMillis()));
 				
+				t.setFinishedId(t.getAssignedId());
+				t.setFinishedName(t.getAssignedName());
+				t.setFinishedTime(new Timestamp(System.currentTimeMillis()));
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				boolean b = super.dao.saveUpdateOrDelete(t, null);
 				if(b) {
-					pmLog.add(t.getId(), oldTask, t, new String[] {"checked_reason"}, "state", "checked_num", "checked_reason");
+					pmLog.add(t.getId(), oldTask, t, new String[] {"checked_reason"}, "state", "checked_num", "checked_reason", "finished_name", "real_end_date");
 					this.log(pmLog);
 				}
 				//更新任务的父任务状态
@@ -828,6 +832,7 @@ public class TeamTaskService extends GiantBaseService {
 				t.setCheckedNum((t.getCheckedNum()==null?0:t.getCheckedNum())+1);
 				t.setCheckedReason(String.valueOf(mvm.get("checked_reason")));
 				t.setCheckedTime(new Timestamp(System.currentTimeMillis()));
+				t.setRealEndDate(null);
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				boolean b = super.dao.saveUpdateOrDelete(t, null);
 				if(b) {

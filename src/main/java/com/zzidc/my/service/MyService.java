@@ -35,7 +35,7 @@ public class MyService extends GiantBaseService{
 	 * 获取Bug统计数据
 	 */
 	public Map<String, Object> getBugCount(){
-		String sql = "SELECT count(0) 'count' FROM test_bug WHERE developer_id=" + super.getMemberId() + " OR solver_id=" + super.getMemberId();
+		String sql = "SELECT count(0) 'count' FROM test_bug WHERE solvestatus=0 AND developer_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);

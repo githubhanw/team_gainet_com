@@ -49,6 +49,7 @@
 								<tr>
 									<th>备注</th>
 									<td>
+										<input type="hidden" name="comment">
 										<div id="comment"></div>
 										<input type="hidden" name="id" value="${n.id}"/>
 									</td>
@@ -109,10 +110,11 @@
 	</body>
 	<script>
 	UMEditor("comment");
-	
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
-		$.ajax({type:"POST",url:"team/need/check?r=" + Math.random(),data:$("form").serialize() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
+		$("input[name='comment']").val(UM.getEditor('comment').getContent());
+		$.ajax({type:"POST",url:"team/need/check?r=" + Math.random(),data:$("form").serialize(),
+				dataType:"json",success:function(data){
 			if(data.code == 0){
 				$("#msg").text(data.message);
 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

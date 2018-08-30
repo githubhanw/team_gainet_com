@@ -61,8 +61,9 @@
 								</tr>
 								<tr>
 									<th>描述</th>
-									<td colspan="2">
-										<div name="kaifamark" id="kaifamark"></div>
+									<td class="required">
+										<input type="hidden" name="kaifafamark">
+										<div id="kaifamark"></div>
 										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 								</tr>
@@ -124,7 +125,10 @@
 UMEditor("kaifamark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"test/bug/solve?r=" + Math.random(),data:$("form").serialize() + "&kaifamark=" + UM.getEditor('kaifamark').getContent(),dataType:"json",success:function(data){
+	var a = UM.getEditor('kaifamark').getContent();
+	$("input[name='kaifamark']").val(UM.getEditor('kaifamark').getContent());
+	$.ajax({type:"POST",url:"test/bug/solve?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

@@ -48,14 +48,16 @@
 								<tr>
 									<th>任务描述</th>
 									<td class="required">
-										<div id="remark" name="remark">${t.remark}</div>
+										<input type="hidden" name="remark">
+										<div id="remark">${t.remark}</div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 								</tr>
 								<tr>
 									<th>备注</th>
 									<td>
-										<div id="comment" name="comment"></div>
+										<input type="hidden" name="comment">
+										<div id="comment"></div>
 										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 									<td></td>
@@ -81,8 +83,9 @@ UMEditor("remark");
 UMEditor("comment");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/task/change?r=" + Math.random(),
-			data:$("form").serialize() + "&remark=" + UM.getEditor('remark').getContent() + "&comment=" + UM.getEditor('comment').getContent(),
+	$("input[name='remark']").val(UM.getEditor('remark').getContent());
+	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"team/task/change?r=" + Math.random(),data:$("form").serialize()
 			dataType:"json",success:function(data){
 		if(data.code == 0){
 			window.location.href = "team/task/index";

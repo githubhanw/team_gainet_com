@@ -74,7 +74,8 @@
 								<tr>
 									<th>备注</th>
 									<td>
-										<div id="remark" name="remark">${p.remark}</div>
+										<input type="hidden" name="remark">
+										<div id="remark">${p.remark}</div>
 										<input type="hidden" name="id" value="${p.id}"/>
 									</td>
 									<td></td>
@@ -140,7 +141,9 @@
 UMEditor("remark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/project/addOrUpd?r=" + Math.random(),data:$("form").serialize() + "&remark=" + UM.getEditor('remark').getContent(),dataType:"json",success:function(data){
+	$("input[name='remark']").val(UM.getEditor('remark').getContent());
+	$.ajax({type:"POST",url:"team/project/addOrUpd?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

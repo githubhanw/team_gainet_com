@@ -101,7 +101,8 @@
 								<tr>
 									<th>已完成内容</th>
 									<td>
-										<div id="handover_info" name="handover_info"></div>
+										<input type="hidden" name="handover_info">
+										<div id="handover_info"></div>
 										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 									<td></td>
@@ -165,7 +166,9 @@
 UMEditor("handover_info");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/task/handover?r=" + Math.random(),data:$("form").serialize() + "&handover_info=" + UM.getEditor('handover_info').getContent(),dataType:"json",success:function(data){
+	$("input[name='handover_info']").val(UM.getEditor('handover_info').getContent());
+	$.ajax({type:"POST",url:"team/task/handover?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

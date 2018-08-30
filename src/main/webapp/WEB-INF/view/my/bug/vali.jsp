@@ -160,7 +160,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="test/bug/index" class="btn">返回BUG列表</a>
+								<a href="my/bug" class="btn">返回BUG列表</a>
 							</div>
 						</div>
 					</div>
@@ -189,7 +189,8 @@
 <script>
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/bug/vali?r=" + Math.random(),data:$("form").serialize(),dataType:"json",success:function(data){
+	$.ajax({type:"POST",url:"my/bug/vali?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

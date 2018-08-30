@@ -124,7 +124,8 @@
 								<tr>
 									<th>BUG描述</th>
 									<td>
-										<div id="mark" name="mark">${t.mark }</div>
+										<input type="hidden" name="mark">
+										<div id="mark">${t.mark }</div>
 									</td>
 									<td></td>
 								</tr>
@@ -156,8 +157,8 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="test/bug/toAdd" class="btn">继续提BUG</a>
-								<a href="test/bug/index" class="btn">返回BUG列表</a>
+								<a href="my/bug/toAdd" class="btn">继续提BUG</a>
+								<a href="my/bug" class="btn">返回BUG列表</a>
 							</div>
 						</div>
 					</div>
@@ -187,7 +188,9 @@
 UMEditor("mark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"test/bug/add?r=" + Math.random(),data:$("form").serialize() + "&mark=" + UM.getEditor('mark').getContent(),dataType:"json",success:function(data){
+	$("input[name='mark']").val(UM.getEditor('mark').getContent());
+	$.ajax({type:"POST",url:"test/bug/add?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

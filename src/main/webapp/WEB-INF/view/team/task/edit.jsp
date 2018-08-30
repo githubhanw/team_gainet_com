@@ -49,13 +49,15 @@
 									<div class="detail">
 										<div class="detail-title">任务描述</div>
 										<div class="detail-content form-group article-content">
-											<div id="remark" name="remark">${t.remark }</div>
+											<input type="hidden" name="remark">
+											<div id="remark">${t.remark }</div>
 										</div>
 									</div>
 									<div class="detail">
 										<div class="detail-title">备注</div>
 										<div class="detail-content form-group article-content">
-											<div id="comment" name="comment"></div>
+											<input type="hidden" name="comment">
+											<div id="comment"></div>
 										</div>
 									</div>
 									<div class="actions form-actions text-center">
@@ -375,7 +377,10 @@ UMEditor("remark");
 UMEditor("comment");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/task/edit?r=" + Math.random(),data:$("form").serialize() + "&remark=" + UM.getEditor('remark').getContent() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
+	$("input[name='remark']").val(UM.getEditor('remark').getContent());
+	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"team/task/edit?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

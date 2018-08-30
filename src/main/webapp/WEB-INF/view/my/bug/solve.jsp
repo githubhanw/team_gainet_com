@@ -62,7 +62,8 @@
 								<tr>
 									<th>描述</th>
 									<td colspan="2">
-										<div name="kaifamark" id="kaifamark"></div>
+										<input type="hidden" name="kaifamark">
+										<div id="kaifamark"></div>
 										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 								</tr>
@@ -94,7 +95,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="test/bug/index" class="btn">返回BUG列表</a>
+								<a href="my/bug" class="btn">返回BUG列表</a>
 							</div>
 						</div>
 					</div>
@@ -124,7 +125,9 @@
 UMEditor("kaifamark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/bug/solve?r=" + Math.random(),data:$("form").serialize() + "&kaifamark=" + UM.getEditor('kaifamark').getContent(),dataType:"json",success:function(data){
+	$("input[name='kaifamark']").val(UM.getEditor('kaifamark').getContent());
+	$.ajax({type:"POST",url:"my/bug/solve?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

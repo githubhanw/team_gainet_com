@@ -37,6 +37,7 @@
 								<tr>
 									<th>备注</th>
 									<td>
+										<input type="hidden" name="comment">
 										<div id="comment"></div>
 										<input type="hidden" name="id" id="id" value="${entity.id}"/>
 									</td>
@@ -100,7 +101,9 @@ UMEditor("comment");
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/test/dismissal?r=" + Math.random(),data:"id=" + $("#id").val() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
+	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"my/test/dismissal?r=" + Math.random(),data:"id=" + $("#id").val(),
+			dataType:"json",success:function(data){
 		/* if(data.code == 0){
 			window.location.href = "team/need/index";
 		}else{

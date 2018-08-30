@@ -38,6 +38,7 @@
 						</div>
 						<table class="table table-form">
 							<tbody>
+								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
 									<th>需求</th>
 									<td class="required">
@@ -62,11 +63,13 @@
 								<tr>
 									<th>备注</th>
 									<td>
+										<input type="hidden" name="comment">
 										<div id="comment"></div>
 										<input type="hidden" name="id" id="id" value="${n.id}"/>
 									</td>
 									<td></td>
 								</tr>
+								</form>
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
@@ -123,7 +126,9 @@
 	UMEditor("comment");
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
-		$.ajax({type:"POST",url:"team/need/relevance?r=" + Math.random(),data:"id=" + $("#id").val() + "&needs=" + ($("#needs").val() == null ? "" : $("#needs").val()) + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
+		$("input[name='comment']").val(UM.getEditor('comment').getContent());
+		$.ajax({type:"POST",url:"team/need/relevance?r=" + Math.random(),data:$("form").serialize(),
+				dataType:"json",success:function(data){
 			if(data.code == 0){
 				$("#msg").text(data.message);
 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

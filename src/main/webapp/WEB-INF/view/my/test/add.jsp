@@ -53,14 +53,15 @@
 									</td>
 									<td></td>
 								</tr>
-								</form>
 								<tr>
 									<th>测试内容</th>
 									<td>
+										<input type="hidden" name="test_content">
 										<div id="test_content">${entity.testContent }</div>
 									</td>
 									<td></td>
 								</tr>
+								</form>
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
@@ -119,7 +120,9 @@
 UMEditor("test_content");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/test/addOrUpdate?r=" + Math.random(),data:$("form").serialize() + "&test_content=" + UM.getEditor('test_content').getContent(),dataType:"json",success:function(data){
+	$("input[name='test_content']").val(UM.getEditor('test_content').getContent());
+	$.ajax({type:"POST",url:"my/test/addOrUpdate?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

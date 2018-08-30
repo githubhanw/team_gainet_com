@@ -124,7 +124,8 @@
 								<tr>
 									<th>需求描述</th>
 									<td class="required">
-										<div id="need_remark" name="need_remark"></div>
+										<input type="hidden" name="need_remark">
+										<div id="need_remark"></div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 									<td></td>
@@ -132,7 +133,8 @@
 								<tr>
 									<th>验收标准</th>
 									<td class="required">
-										<div id="check_remark" name="check_remark"></div>
+										<input type="hidden" name="check_remark">
+										<div id="check_remark"></div>
 									</td>
 									<td></td>
 								</tr>
@@ -198,8 +200,10 @@ UMEditor("need_remark");
 UMEditor("check_remark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/need/add?r=" + Math.random(),data:$("form").serialize() + "&need_remark=" + UM.getEditor('need_remark').getContent() + "&check_remark=" + UM.getEditor('check_remark').getContent()
-			,dataType:"json",success:function(data){
+	$("input[name='need_remark']").val(UM.getEditor('need_remark').getContent());
+	$("input[name='check_remark']").val(UM.getEditor('check_remark').getContent());
+	$.ajax({type:"POST",url:"my/need/add?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

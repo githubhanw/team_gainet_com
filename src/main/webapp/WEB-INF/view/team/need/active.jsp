@@ -117,7 +117,9 @@
 UMEditor("comment");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"team/need/active?r=" + Math.random(),data:$("form") + "&comment=" + UM.getEditor('comment').getContent().serialize(),dataType:"json",success:function(data){
+	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"team/need/active?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

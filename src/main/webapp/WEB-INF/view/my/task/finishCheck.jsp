@@ -47,7 +47,8 @@
 								<tr>
 									<th>审核备注</th>
 									<td colspan="2">
-										<div id="checked_reason" name="checked_reason"></div>
+										<input type="hidden" name="checked_reason">
+										<div id="checked_reason"></div>
 										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 								</tr>
@@ -123,7 +124,9 @@ function setStory(reason) {
 }
 $("#submit_yes").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/task/finishCheck?is=1&r=" + Math.random(),data:$("form").serialize() + "&checked_reason=" + UM.getEditor('checked_reason').getContent(),dataType:"json",success:function(data){
+	$("input[name='checked_reason']").val(UM.getEditor('checked_reason').getContent());
+	$.ajax({type:"POST",url:"my/task/finishCheck?is=1&r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
@@ -136,7 +139,9 @@ $("#submit_yes").click(function(){
 });
 $("#submit_no").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/task/finishCheck?is=0&r=" + Math.random(),data:$("form").serialize(),dataType:"json",success:function(data){
+	$("input[name='checked_reason']").val(UM.getEditor('checked_reason').getContent());
+	$.ajax({type:"POST",url:"my/task/finishCheck?is=0&r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

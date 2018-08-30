@@ -793,14 +793,10 @@ public class TeamTaskService extends GiantBaseService {
 				t.setCheckedReason(mvm.get("checked_reason").toString());
 				t.setCheckedTime(new Timestamp(System.currentTimeMillis()));
 				
-				t.setFinishedId(t.getAssignedId());
-				t.setFinishedName(t.getAssignedName());
-				t.setFinishedTime(new Timestamp(System.currentTimeMillis()));
-				t.setRealEndDate(new Timestamp(System.currentTimeMillis()));
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				boolean b = super.dao.saveUpdateOrDelete(t, null);
 				if(b) {
-					pmLog.add(t.getId(), oldTask, t, new String[] {"checked_reason"}, "state", "checked_num", "checked_reason", "finished_name", "real_end_date");
+					pmLog.add(t.getId(), oldTask, t, new String[] {"checked_reason"}, "state", "checked_num", "checked_reason");
 					this.log(pmLog);
 				}
 				//更新任务的父任务状态

@@ -42,12 +42,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="team/task/index?type=8" class="btn btn-link ${prm.type == 8 ? 'btn-active-text':''}">
+						<%-- <a href="team/task/index?type=8" class="btn btn-link ${prm.type == 8 ? 'btn-active-text':''}">
 							<span class="text">指派给我</span>
 							<c:if test="${prm.type == 8}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
-						</a>
+						</a> --%>
 						<a href="team/task/index?type=9" class="btn btn-link ${prm.type == 9 ? 'btn-active-text':''}">
 							<span class="text">已延期</span>
 							<c:if test="${prm.type == 9}">
@@ -72,12 +72,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="team/task/index?type=10" class="btn btn-link ${prm.type == 10 ? 'btn-active-text':''}">
+						<%-- <a href="team/task/index?type=10" class="btn btn-link ${prm.type == 10 ? 'btn-active-text':''}">
 							<span class="text">我完成</span>
 							<c:if test="${prm.type == 10}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
-						</a>
+						</a> --%>
 						<a href="team/task/index?type=5" class="btn btn-link ${prm.type == 5 ? 'btn-active-text':''}">
 							<span class="text">已完成</span>
 							<c:if test="${prm.type == 5}">
@@ -102,11 +102,17 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 14 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
+						<a class="btn btn-link querybox-toggle ${prm.type == 14 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 高级搜索
 							<c:if test="${prm.type == 14}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<div style="width:220px;float:right">
+							<form method="post" action="team/task/index?type=99" class="search-form">
+								<input type="text" name="nameOrId" value="${prm.nameOrId}" class="form-control searchInput" 
+									style="border:1px solid #999;height:34px" placeholder="输入 任务名称 或 ID，按 回车 查询">
+							</form>
+						</div>
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
@@ -200,10 +206,10 @@
 												</select>
 											</td>
 											<td class="w-160px">
-												<input type="text" name="start_date" id="start_date" valve="${prm.start_date}" class="form-control form-date" placeholder="开始" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												<input type="text" name="start_date" id="start_date" value="${prm.start_date}" class="form-control form-date" placeholder="开始" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 											<td class="w-160px">
-												<input type="text" name="end_date" id="end_date" valve="${prm.end_date}" class="form-control form-date" placeholder="结束" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												<input type="text" name="end_date" id="end_date" value="${prm.end_date}" class="form-control form-date" placeholder="结束" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 										</tr>
 										<tr>
@@ -222,34 +228,44 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 70px" class="c-id text-center" title="ID">
-												<a href="javascript:void(0)" onclick="pageOrder('t.id');">ID</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.id');" 
+													class="${prm.orderColumn=='t.id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="优先级">
-												<a href="javascript:void(0)" onclick="pageOrder('t.level');">优先级</a>
+											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="优先级">
+												<a href="javascript:void(0)" onclick="pageOrder('t.level');" 
+													class="${prm.orderColumn=='t.level'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">优先级</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="任务名称">
-												<a href="javascript:void(0)" onclick="pageOrder('t.task_name');">任务名称</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.task_name');" 
+													class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务名称</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="需求ID">
-												<a href="javascript:void(0)" onclick="pageOrder('t.need_id');">需求ID</a>
+											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="需求ID">
+												<a href="javascript:void(0)" onclick="pageOrder('t.need_id');" 
+													class="${prm.orderColumn=='t.need_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求ID</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="任务类型">
-												<a href="javascript:void(0)" onclick="pageOrder('t.task_type');">任务类型</a>
+											<th data-flex="false" data-width="auto" style="width:90px" class="c-name " title="任务类型">
+												<a href="javascript:void(0)" onclick="pageOrder('t.task_type');" 
+													class="${prm.orderColumn=='t.task_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务类型</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:125px" class="c-name text-center" title="状态">
-												<a href="javascript:void(0)" onclick="pageOrder('t.state');">状态</a>
+												<a href="javascript:void(0)" onclick="pageOrder('t.state');" 
+													class="${prm.orderColumn=='t.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="创建者">
-												<a href="javascript:void(0)" onclick="pageOrder('t.member_id');">创建者</a>
+											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="创建者">
+												<a href="javascript:void(0)" onclick="pageOrder('t.member_id');" 
+													class="${prm.orderColumn=='t.member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建者</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="指派给">
-												<a href="javascript:void(0)" onclick="pageOrder('t.assigned_name');">指派给</a>
+											<th data-flex="false" data-width="50px" style="width:85px" class="c-pri " title="指派给">
+												<a href="javascript:void(0)" onclick="pageOrder('t.assigned_name');" 
+													class="${prm.orderColumn=='t.assigned_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">指派给</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="计划结束时间">
-												<a href="javascript:void(0)" onclick="pageOrder('t.plan_end_date');">计划结束时间</a>
+											<th data-flex="false" data-width="auto" style="width:120px" class="c-name text-center" title="计划结束时间">
+												<a href="javascript:void(0)" onclick="pageOrder('t.plan_end_date');" 
+													class="${prm.orderColumn=='t.plan_end_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">计划结束时间</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="实际结束时间">
-												<a href="javascript:void(0)" onclick="pageOrder('t.real_end_date');">实际结束时间</a>
+											<th data-flex="false" data-width="auto" style="width:120px" class="c-name text-center" title="实际结束时间">
+												<a href="javascript:void(0)" onclick="pageOrder('t.real_end_date');" 
+													class="${prm.orderColumn=='t.real_end_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">实际结束时间</a>
 											</th>
 											<th data-flex="false" data-width="360px" style="width:260px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -285,8 +301,8 @@
 													<span class="label label-danger" title="任务已逾期">逾</span>
 												</c:if>
 											</td>
-											<td class="c-pri text-left">${task.member_name}</td>
-											<td class="c-name text-left">
+											<td class="c-pri text-center">${task.member_name}</td>
+											<td class="c-pri text-center">
 												<c:if test="${task.assigned_name == '' || task.assigned_name == null}">
 													<a href="team/task/toAssign?id=${task.id}" class="btn btn-icon-left btn-sm">
 														<i class="icon icon-hand-right"></i>
@@ -297,8 +313,8 @@
 													<span class="text-red">${task.assigned_name}</span>
 												</c:if>
 											</td>
-											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${task.plan_end_date}" pattern="yyyy-MM-dd" /></td>
-											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${task.real_end_date}" pattern="yyyy-MM-dd" /></td>
+											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${task.plan_end_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${task.real_end_date}" pattern="yyyy-MM-dd HH:mm" /></td>
 											<td class="c-actions text-right">
 												<c:if test="${task.deleted == '0'}">
 													<%-- 任务状态为待接收时，且是未分解任务 --%>
@@ -341,7 +357,7 @@
 															<a href="team/task/toBatchAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="分解任务"><i class='icon-task-batchCreate icon-branch'></i></a>
 														</c:if>
 													</c:if>
-													<c:if test="${task.state == 4 && task.task_type == 2}">
+													<c:if test="${(task.state == 2 || task.state == 3 || task.state == 4) && task.task_type == 2}">
 														<a href="test/bug/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
 													</c:if>
 												</c:if>
@@ -356,11 +372,11 @@
 														<td class="c-pri">${subTask.level == 1 ? '紧急重要' : subTask.level == 2 ? '紧急不重要' : subTask.level == 3 ? '不紧急重要' : '不紧急不重要'}</td>
 														<td class="text-left">
 															<a href="team/task/detail?id=${subTask.id}" data-toggle="tooltip" data-placement="top" title="${subTask.task_name}">
-																<c:if test="${subTask.task_type==3}">
+																<c:if test="${subTask.task_type==2}">
 																	<span class="label label-badge label-light">测</span>
 																	<span class="label label-id">${subTask.parent_id}</span>
 																</c:if>
-																<c:if test="${subTask.task_type!=3}">
+																<c:if test="${subTask.task_type!=2}">
 																	<span class="label label-badge label-light">子</span>
 																</c:if>
 																${subTask.task_name}
@@ -382,7 +398,8 @@
 																<span class="label label-danger" title="任务已逾期">逾</span>
 															</c:if>
 														</td>
-														<td class="c-name text-left">
+														<td class="c-pri text-center">${subTask.member_name}</td>
+														<td class="c-pri text-center">
 															<c:if test="${subTask.assigned_name == '' || subTask.assigned_name == null}">
 																<a href="team/task/toAssign?id=${subTask.id}" class="btn btn-icon-left btn-sm">
 																	<i class="icon icon-hand-right"></i>
@@ -393,11 +410,8 @@
 																<span class="text-red">${subTask.assigned_name}</span>
 															</c:if>
 														</td>
-														<td class="c-pri text-left">${subTask.finished_name}</td>
-														<%-- <td class="c-pri text-left">${subTask.percent}%</td> --%>
-														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subTask.plan_end_date}" pattern="yyyy-MM-dd" /></td>
-														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subTask.real_end_date}" pattern="yyyy-MM-dd" /></td>
-														<%-- <td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subTask.create_time}" pattern="yyyy-MM-dd" /></td> --%>
+														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subTask.plan_end_date}" pattern="yyyy-MM-dd HH:mm" /></td>
+														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subTask.real_end_date}" pattern="yyyy-MM-dd HH:mm" /></td>
 														<td class="c-actions text-right">
 															<c:if test="${subTask.deleted == '0'}">
 																<%-- 任务状态为待接收时，且是未分解任务 --%>
@@ -434,7 +448,7 @@
 																<c:if test="${subTask.state == 2 && subTask.delay == 0 && subTask.resolved == 0}">
 																	<a href="team/task/toDelay?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="延期任务"><i class='icon-task-recordEstimate icon-time'></i></a>
 																</c:if>
-																<c:if test="${subTask.state == 4 && subTask.task_type == 2}">
+																<c:if test="${(subTask.state == 2 || subTask.state == 3 || subTask.state == 4) && subTask.task_type == 2}">
 																	<a href="test/bug/toAdd?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
 																</c:if>
 															</c:if>

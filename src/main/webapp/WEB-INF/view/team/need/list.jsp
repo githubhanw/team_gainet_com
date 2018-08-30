@@ -42,7 +42,7 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="team/need/index?type=6" class="btn btn-link ${prm.type == 6 ? 'btn-active-text':''}">
+						<%-- <a href="team/need/index?type=6" class="btn btn-link ${prm.type == 6 ? 'btn-active-text':''}">
 							<span class="text">我创建</span>
 							<c:if test="${prm.type == 6}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
@@ -59,7 +59,7 @@
 							<c:if test="${prm.type == 8}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
-						</a>
+						</a> --%>
 						<a href="team/need/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
 							<span class="text">激活</span>
 							<c:if test="${prm.type == 4}">
@@ -73,13 +73,13 @@
 							</c:if>
 						</a>
 						<a href="team/need/index?type=3" class="btn btn-link ${prm.type == 3 ? 'btn-active-text':''}">
-							<span class="text">已关闭</span>
+							<span class="text">已验收</span>
 							<c:if test="${prm.type == 3}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a href="team/need/index?type=9" class="btn btn-link ${prm.type == 9 ? 'btn-active-text':''}">
-							<span class="text">待关闭</span>
+							<span class="text">待验收</span>
 							<c:if test="${prm.type == 9}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
@@ -90,11 +90,17 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 12 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
+						<a class="btn btn-link querybox-toggle ${prm.type == 12 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 高级搜索
 							<c:if test="${prm.type == 12}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<div style="width:220px;float:right">
+							<form method="post" action="team/need/index?type=99" class="search-form">
+								<input type="text" name="nameOrId" value="${prm.nameOrId}" class="form-control searchInput" 
+									style="border:1px solid #999;height:34px" placeholder="输入 需求名称 或 ID，按 回车 查询">
+							</form>
+						</div>
 					</div>
 					<!--btn-toolbar start-->
 					<!-- <div class="btn-toolbar pull-right">
@@ -173,10 +179,10 @@
 												</select>
 											</td>
 											<td class="w-200px">
-												<input type="text" name="start_date" id="start_date" valve="${prm.start_date}" class="form-control form-date" placeholder="开始" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												<input type="text" name="start_date" id="start_date" value="${prm.start_date}" class="form-control form-date" placeholder="开始" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 											<td class="w-200px">
-												<input type="text" name="end_date" id="end_date" valve="${prm.end_date}" class="form-control form-date" placeholder="结束" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												<input type="text" name="end_date" id="end_date" value="${prm.end_date}" class="form-control form-date" placeholder="结束" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 										</tr>
 										<tr>

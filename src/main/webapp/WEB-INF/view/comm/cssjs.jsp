@@ -22,7 +22,7 @@
     url(static/zui-1.8.1-dist/dist/fonts/zenicon.svg) format('svg')
 }
 
-.table-children {border-left: 2px solid #cbd0db; border-right: 2px solid #cbd0db;}
+.table-children {border-left:2px solid #cbd0db; border-right:2px solid #cbd0db;background:#fafafa}
 .table-children.table-child-top {border-top: 2px solid #cbd0db;}
 .table-children.table-child-bottom {border-bottom: 2px solid #cbd0db;}
 .table td.has-child > .task-toggle {color: #838a9d; position: relative; top: -1px;}

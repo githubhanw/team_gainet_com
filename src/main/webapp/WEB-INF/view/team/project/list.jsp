@@ -103,10 +103,10 @@
 											</td>
 											
 											<td class="w-160px">
-												<input type="text" name="createtime" id="createtime" valve="${prm.createtime}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+												<input type="text" name="createtime" id="createtime" value="${prm.createtime}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
 											</td>
 											<td class="w-160px">
-												<input type="text" name="endtime" id="endtime" valve="${prm.endtime}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+												<input type="text" name="endtime" id="endtime" value="${prm.endtime}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
 											</td>
 										</tr>
 										<tr>
@@ -129,15 +129,15 @@
 												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:300px" class="c-pri " title="项目名称">
+											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="项目名称">
 												<a  href="${pageList.desAction}&orderColumn=project_name&orderByValue=${prm.orderColumn=='project_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目名称</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="所属公司">
+											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="所属公司">
 												<a  href="${pageList.desAction}&orderColumn=company&orderByValue=${prm.orderColumn=='company'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属公司</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="项目负责人">
+											<th data-flex="false" data-width="50px" style="width:120px" class="c-pri " title="项目负责人">
 												<a  href="${pageList.desAction}&orderColumn=member_id&orderByValue=${prm.orderColumn=='member_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目负责人</a>
 											</th>
@@ -145,22 +145,22 @@
 												<a  href="${pageList.desAction}&orderColumn=remark&orderByValue=${prm.orderColumn=='remark'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">备注</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="状态">
+											<th data-flex="false" data-width="auto" style="width:60px" class="c-name text-center" title="状态">
 												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="项目创建时间">
+											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="项目创建时间">
 												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目创建时间</a>
 											</th>
-											<%-- <th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="未完成需求">
-												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">未完成需求</a>
+											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="需求数">
+												<a  href="${pageList.desAction}&orderColumn=needCount&orderByValue=${prm.orderColumn=='needCount'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='needCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求数</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="未完成任务">
-												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">未完成任务</a>
-											</th> --%>
+											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="任务数">
+												<a  href="${pageList.desAction}&orderColumn=taskCount&orderByValue=${prm.orderColumn=='taskCount'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='taskCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务数</a>
+											</th>
 											<%-- <th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="未解决Bug">
 												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">未解决Bug</a>
@@ -173,7 +173,6 @@
 										<c:forEach items="${pageList.pageResult}" var="project" varStatus="sta">
 										<tr>
 											<td class="c-id cell-id">${project.id}</td>
-											<%-- <td class="c-pri text-left"><a href="team/project/detail?id=${project.id}">${project.project_name}</a></td> --%>
 											<td class="c-pri text-left">${project.project_name}</td>
 											<td class="c-name text-left">${project.company}</td>
 											<td class="c-pri text-left">${project.member_name}</td>
@@ -181,9 +180,9 @@
 											<td class="c-assignedTo has-btn text-center">
 												${project.state == 1 ? '正常' : '已删除'}
 											</td>
-											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${project.create_time}" pattern="yyyy-MM-dd" /></td>
-											<!-- <td class="c-assignedTo has-btn text-center">1</td>
-											<td class="c-assignedTo has-btn text-center">1</td> -->
+											<td class="c-pri text-center"><fmt:formatDate value="${project.create_time}" pattern="yyyy-MM-dd" /></td>
+											<td class="c-pri text-center"><a href="team/need/index?type=96&project_id=${project.id}">${project.needCount}</a></td>
+											<td class="c-pri text-center"><a href="team/task/index?type=96&project_id=${project.id}">${project.taskCount}</a></td>
 											<td class="c-actions text-center">
 												<c:if test="${project.state == '1'}">
 													<a href="team/project/toAdd?id=${project.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>

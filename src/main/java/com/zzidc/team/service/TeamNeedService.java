@@ -45,14 +45,28 @@ public class TeamNeedService extends GiantBaseService{
 		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+				if ("98".equals(temp) || "97".equals(temp)) {//当前用户
+					sql += "AND (tn.member_id=:memberId OR tn.create_id=:memberId OR tn.assigned_id=:memberId OR tn.checked_id=:memberId) ";
+					countSql += "AND (tn.member_id=:memberId OR tn.create_id=:memberId OR tn.assigned_id=:memberId OR tn.checked_id=:memberId) ";
+					conditionMap.put("memberId", memberId);
+				}
+			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("nameOrId"))) {
+				sql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
+				countSql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
+				conditionMap.put("id", temp);
+				conditionMap.put("name", "%" + temp + "%");
+			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
 				temp = temp.trim();
 				String needType = "";
 				if (!StringUtils.isEmpty(needType = conditionPage.getQueryCondition().get("needType"))) {
-					if ("1".equals(needType)) {//需求名称
-						sql += "AND tn.need_name LIKE :search ";
-						countSql += "AND tn.need_name LIKE :search ";
-						conditionMap.put("search", "%" + temp + "%");
+					if ("1".equals(needType)) {//需求名称 / ID
+						sql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
+						countSql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
+						conditionMap.put("id", temp);
+						conditionMap.put("name", "%" + temp + "%");
 					} else if("2".equals(needType)) {//需求描述
 						sql += "AND tn.need_remark LIKE :search ";
 						countSql += "AND tn.need_remark LIKE :search ";
@@ -75,6 +89,16 @@ public class TeamNeedService extends GiantBaseService{
 						countSql += "AND tn.member_name=:memberSearch ";
 					}
 					conditionMap.put("memberSearch", temp);
+				}
+			}
+			String temp1 = "";
+			if (!StringUtils.isEmpty(temp1 = conditionPage.getQueryCondition().get("project_id"))) {
+				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+					if ("96".equals(temp)) {// 所属项目
+						sql += "AND tn.project_id=:project_id ";
+						countSql += "AND tn.project_id=:project_id ";
+						conditionMap.put("project_id", temp1);
+					}
 				}
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("state"))) {
@@ -135,9 +159,9 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("2".equals(temp)) {//所有
 					sql += "AND tn.parent_id=0";
 					countSql += "AND tn.parent_id=0";
-				} else if ("3".equals(temp)) {//已关闭
-					sql += "AND tn.state=3";
-					countSql += "AND tn.state=3";
+				} else if ("3".equals(temp)) {//已验收
+					sql += "AND tn.stage=2";
+					countSql += "AND tn.stage=2";
 				} else if ("4".equals(temp)) {//激活
 					sql += "AND tn.state=1";
 					countSql += "AND tn.state=1";
@@ -153,15 +177,18 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("8".equals(temp)) {//由我关闭
 					sql += "AND tn.closed_id=" + memberId;
 					countSql += "AND tn.closed_id=" + memberId;
-				} else if ("9".equals(temp)) {//待关闭
-					sql += "AND tn.state in (1,2)";
-					countSql += "AND tn.state in (1,2)";
+				} else if ("9".equals(temp)) {//待验收
+					sql += "AND tn.stage=1";
+					countSql += "AND tn.stage=1";
 				} else if ("10".equals(temp)) {//由我验收
 					sql += "AND tn.checked_id=" + memberId;
 					countSql += "AND tn.checked_id=" + memberId;
 				} else if ("11".equals(temp)) {//需求方是我
 					sql += "AND tn.member_id=" + memberId;
 					countSql += "AND tn.member_id=" + memberId;
+				} else if ("13".equals(temp)) {//待我验收
+					sql += "AND tn.stage=1 AND tn.member_id=" + memberId;
+					countSql += "AND tn.stage=1 AND tn.member_id=" + memberId;
 				}
 			}
 		}

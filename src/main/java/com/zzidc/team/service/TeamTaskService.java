@@ -24,6 +24,7 @@ import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Task;
+import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.entity.TestApply;
 
 import net.sf.json.JSONObject;
@@ -49,23 +50,30 @@ public class TeamTaskService extends GiantBaseService {
 		String countSql = "SELECT count(0) FROM task t LEFT JOIN task_need tn ON t.need_id=tn.id WHERE 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+				if ("98".equals(temp) || "97".equals(temp)) {//当前用户
+					sql += "AND (t.member_id=:memberId OR t.opened_id=:memberId OR t.assigned_id=:memberId OR t.delayed_id=:memberId OR "
+							+ "t.delayed_review_id=:memberId OR t.closed_id=:memberId OR t.checked_id=:memberId OR t.finished_id=:memberId) ";
+					countSql += "AND (t.member_id=:memberId OR t.opened_id=:memberId OR t.assigned_id=:memberId OR t.delayed_id=:memberId OR "
+							+ "t.delayed_review_id=:memberId OR t.closed_id=:memberId OR t.checked_id=:memberId OR t.finished_id=:memberId) ";
+					conditionMap.put("memberId", memberId);
+				}
+			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("nameOrId"))) {
+				sql += "AND (t.id=:id OR t.task_name LIKE :name) ";
+				countSql += "AND (t.id=:id OR t.task_name LIKE :name) ";
+				conditionMap.put("id", temp);
+				conditionMap.put("name", "%" + temp + "%");
+			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
 				temp = temp.trim();
 				String searchType = "";
 				if (!StringUtils.isEmpty(searchType = conditionPage.getQueryCondition().get("searchType"))) {
 					if ("1".equals(searchType)) {//任务名称
-						try {
-							// 如果成功则为编号
-							Integer.parseInt(temp);	
-							sql += "AND t.id = :search ";
-							countSql += "AND t.id = :search ";
-							conditionMap.put("search", temp);
-						} catch (Exception e) {
-							// 名称条件
-							sql += "AND t.task_name LIKE :search ";
-							countSql += "AND t.task_name LIKE :search ";
-							conditionMap.put("search", "%" + temp + "%");
-						}
+						sql += "AND (t.id=:id OR t.task_name LIKE :name) ";
+						countSql += "AND (t.id=:id OR t.task_name LIKE :name) ";
+						conditionMap.put("id", temp);
+						conditionMap.put("name", "%" + temp + "%");
 					} else if("2".equals(searchType)) {//任务描述
 						sql += "AND t.remark LIKE :search ";
 						countSql += "AND t.remark LIKE :search ";
@@ -111,6 +119,25 @@ public class TeamTaskService extends GiantBaseService {
 						countSql += "AND t.real_end_date<:end_date ";
 					}
 					conditionMap.put("end_date", temp);
+				}
+			}
+			String temp1 = "";
+			if (!StringUtils.isEmpty(temp1 = conditionPage.getQueryCondition().get("project_id"))) {
+				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+					if ("96".equals(temp)) {// 所属项目
+						sql += "AND t.project_id=:project_id ";
+						countSql += "AND t.project_id=:project_id ";
+						conditionMap.put("project_id", temp1);
+					}
+				}
+			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("need_id"))) {
+				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+					if ("95".equals(temp)) {// 所属需求
+						sql += "AND t.need_id=:need_id ";
+						countSql += "AND t.need_id=:need_id ";
+						conditionMap.put("need_id", temp);
+					}
 				}
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("state"))) {
@@ -341,7 +368,9 @@ public class TeamTaskService extends GiantBaseService {
 				this.log(pmLog);
 			}
 		}
-		task.setNeedId(GiantUtil.intOf(mvm.get("need_id"), 0));
+		TaskNeed need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("need_id"), 0));
+		task.setNeedId(need == null ? GiantUtil.intOf(mvm.get("need_id"), 0) : need.getId());
+		task.setProjectId(need == null ? 0 : need.getProjectId());
 		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
 		task.setTaskType(GiantUtil.intOf(mvm.get("task_type"), 0));
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
@@ -384,7 +413,6 @@ public class TeamTaskService extends GiantBaseService {
 		task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		
 		boolean b =  super.dao.saveUpdateOrDelete(task, null);
-		PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ADD, task.getId(), task.toString(), null);
 		if(b) {
 			//微信提醒
 			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");

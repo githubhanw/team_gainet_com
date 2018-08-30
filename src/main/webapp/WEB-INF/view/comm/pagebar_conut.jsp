@@ -21,12 +21,11 @@
 <style>
 	.share-menu a {
 	    color: rgb(3, 108, 180);
-	    padding: 2px 4px;
+	    padding: 5px 12px;
 	    border-width: 1px;
 	    border-style: solid;
 	    border-color: rgb(238, 238, 238);
 	    border-image: initial;
-	    margin: 2px 3px;
 	    text-decoration: none;
 	}
 	.share-menu a:hover {
@@ -43,9 +42,16 @@
 	    border-style: solid;
 	    border-color: rgb(3, 108, 180);
 	    border-image: initial;
-	    padding: 2px 4px;
-	    margin: 2px 3px;
+	    padding: 5px 12px;
 	    background: rgb(3, 108, 180);
+	}
+	.share-menu .disabled {
+	    padding: 5px 12px;
+	    border-width: 1px;
+	    border-style: solid;
+	    border-color: rgb(238, 238, 238);
+	    border-image: initial;
+	    text-decoration: none;
 	}
 </style>
 <div class="share-menu" style="height: 35px; line-height: 32px;text-align: left;width:100%;_width:auto;">
@@ -147,7 +153,7 @@
 			&nbsp;&nbsp;&nbsp;
 			<td colspan="2"> 每页展示：
 				<c:if test="${ pageList.pageSize != null && pageList.pageSize != ''}">
-					<select id="pageSize_cite" name="pageSize" data="pageSize" onchange="meiYeSubmit()">
+					<select id="pageSize_cite" name="pageSize" data="pageSize" onchange="meiYeSubmit()" style="height:25px">
 						<option <c:if test="${pageList.pageSize==10 }">selected="selected"</c:if> value="10" >10条</option>
 						<option <c:if test="${pageList.pageSize==15 }">selected="selected"</c:if> value="15" >15条</option>
 						<option <c:if test="${pageList.pageSize==30 }">selected="selected"</c:if> value="30" >30条</option>

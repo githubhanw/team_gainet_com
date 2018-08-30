@@ -2,6 +2,8 @@ package com.zzidc.my.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -82,6 +84,7 @@ public class MyController extends GiantBaseController {
 		model.addAttribute("needCount", needCount);
 		model.addAttribute("checkedMineTask", checkedMineTask);
 		model.addAttribute("checkedMineNeed", checkedMineNeed);
+		model.addAttribute("today", new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
 		publicResult(model);
 		model.addAttribute("s", "");//子模块
 		return "my/index";

@@ -36,6 +36,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a href="my/need?type=13" class="btn btn-link ${prm.type == 13 ? 'btn-active-text':''}">
+							<span class="text">待我验收</span>
+							<c:if test="${prm.type == 13}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<a href="my/need?type=6" class="btn btn-link ${prm.type == 6 ? 'btn-active-text':''}">
 							<span class="text">由我创建</span>
 							<c:if test="${prm.type == 6}">
@@ -60,11 +66,17 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 12 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
-							<c:if test="${prm.type == 12}">
+						<a class="btn btn-link querybox-toggle ${prm.type == 97 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 高级搜索
+							<c:if test="${prm.type == 97}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<div style="width:220px;float:right">
+							<form method="post" action="my/need?type=98" class="search-form">
+								<input type="text" name="nameOrId" value="${prm.nameOrId}" class="form-control searchInput" 
+									style="border:1px solid #999;height:34px" placeholder="输入 需求名称 或 ID，按 回车 查询">
+							</form>
+						</div>
 					</div>
 					<div class="btn-toolbar pull-right">
 						<a href="my/need/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>
@@ -75,8 +87,8 @@
 				<div id="mainContent" class="main-row fade in">
 					<!--main-col start-->
 					<div class="main-col">
-						<div class="cell load-indicator ${prm.type == 12 ? 'show':''}" id="queryBox">
-							<form method="post" action="my/need?type=12" id="searchForm" class="search-form">
+						<div class="cell load-indicator ${prm.type == 97 ? 'show':''}" id="queryBox">
+							<form method="post" action="my/need?type=97" id="searchForm" class="search-form">
 								<table class="table table-condensed table-form" id="task-search">
 									<tbody>
 										<tr>
@@ -141,10 +153,10 @@
 												</select>
 											</td>
 											<td class="w-200px">
-												<input type="text" name="start_date" id="start_date" valve="${prm.start_date}" class="form-control form-date" placeholder="开始" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												<input type="text" name="start_date" id="start_date" value="${prm.start_date}" class="form-control form-date" placeholder="开始" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 											<td class="w-200px">
-												<input type="text" name="end_date" id="end_date" valve="${prm.end_date}" class="form-control form-date" placeholder="结束" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												<input type="text" name="end_date" id="end_date" value="${prm.end_date}" class="form-control form-date" placeholder="结束" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 										</tr>
 										<tr>

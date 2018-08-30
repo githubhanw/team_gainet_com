@@ -26,7 +26,8 @@ public class TeamProjectService extends GiantBaseService{
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT p.*,m.`name` 'member_name' FROM task_project p LEFT JOIN member m ON p.member_id=m.id WHERE 1=1 ";
+		String sql = "SELECT p.*,m.`name` 'member_name',(SELECT count(0) FROM task_need tn WHERE tn.project_id=p.id AND state!=0) needCount, " + 
+				"(SELECT count(0) FROM task t WHERE t.project_id=p.id AND deleted=0) taskCount FROM task_project p LEFT JOIN member m ON p.member_id=m.id WHERE 1=1 ";
 		String countSql = "SELECT count(0) FROM task_project p LEFT JOIN member m ON p.member_id=m.id WHERE 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";

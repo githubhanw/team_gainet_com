@@ -180,7 +180,7 @@
 								<div class="table-row">
 									<div class="col col-right">
 										<h4>
-											<small class="text-muted">2018年08月09日</small> 工作任务统计
+											<small class="text-muted">${today}</small> 工作任务统计
 										</h4>
 										<div class="row tiles" >
 											<div class="col tile" style="width:220px">
@@ -292,8 +292,8 @@
 										<tr class="text-middle">
 											<th>产品经理 / 需求方</th>
 											<td>创建需求</td>
+											<td>分配需求</td>
 											<td>验收需求</td>
-											<td>分配任务</td>
 											<td></td>
 											<td></td>
 										</tr>

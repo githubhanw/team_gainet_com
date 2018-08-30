@@ -101,7 +101,7 @@
 									<th>任务描述</th>
 									<td>
 										<input type="hidden" name="remark">
-										<div id="remark"></div>
+										<div id="remark">${t.testContent}</div>
 										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 									<td></td>

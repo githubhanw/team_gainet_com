@@ -29,7 +29,7 @@
 			<div class="container">
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<a href="${u}" class="btn btn-link"><i class="icon icon-back icon-sm"></i> 返回</a>
+						<a href="javascript:history.go(-1);" class="btn btn-link"><i class="icon icon-back icon-sm"></i> 返回</a>
 						<div class="divider"></div>
 						<div class="page-title">
 							<span class="label label-id">${taskM.id}</span> <span class="text">${taskM.task_name}</span>
@@ -100,7 +100,7 @@
 														<c:if test="${item.level=='4'}">不紧急不重要</c:if>
 													</td>
 													<td>${item.end_date}</td>
-													<td>${item.member_name}</td>
+													<td>${item.assigned_name}</td>
 													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
@@ -176,7 +176,7 @@
 														<c:if test="${item.level=='4'}">不紧急不重要</c:if>
 													</td>
 													<td>${item.end_date}</td>
-													<td>${item.member_name}</td>
+													<td>${item.assigned_name}</td>
 													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
@@ -214,7 +214,7 @@
 														<c:if test="${item.level=='4'}">不紧急不重要</c:if>
 													</td>
 													<td>${item.end_date}</td>
-													<td>${item.member_name}</td>
+													<td>${item.assigned_name}</td>
 													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
@@ -273,12 +273,8 @@
 									<table class="table table-data">
 										<tbody>
 											<tr class="nofixed">
-												<th>所属项目</th>
-												<td title="/">${taskM.need_name}</td>
-											</tr>
-											<tr class="nofixed">
 												<th>所属需求</th>
-												<td title="/">${taskM.need_name}</td>
+												<td title="${taskM.need_name}"><a href="${taskM.need_id}" target="_blank">${taskM.need_name}</a></td>
 											</tr>
 											<tr>
 												<th>指派给</th>
@@ -414,7 +410,7 @@
 					<nav class="container">
 					</nav>
 					<div class="btn-toolbar">
-						<a href="${u}" id="back" class="btn btn-link"><i class="icon-goback icon-back"></i> 返回</a>
+						<a href="javascript:history.go(-1);" id="back" class="btn btn-link"><i class="icon-goback icon-back"></i> 返回</a>
 						<c:if test="${taskM.state == 1 && taskM.resolved == 0}">
 							<a href='team/task/toOpen?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-start icon-play'></i> 接收</a>
 						</c:if>

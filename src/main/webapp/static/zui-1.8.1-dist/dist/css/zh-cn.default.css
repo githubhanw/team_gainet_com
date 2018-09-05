@@ -10017,6 +10017,8 @@ h2.detail-title .label,h2.detail-title .label-id {
     top:-1px
 }
 .detail-content {
+	word-break:break-all;
+	word-wrap:break-word;
     padding:5px 0 0 20px;
     margin-top:10px
 }

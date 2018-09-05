@@ -29,7 +29,7 @@
 			<div class="container">
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<a href="${u}" class="btn btn-link"><i class="icon icon-back icon-sm"></i> 返回</a>
+						<a href="javascript:history.go(-1);" class="btn btn-link"><i class="icon icon-back icon-sm"></i> 返回</a>
 						<div class="divider"></div>
 						<div class="page-title">
 							<span class="label label-id">${needM.id}</span> <span class="text" title="${needM.need_name}">${needM.need_name}</span>
@@ -91,7 +91,7 @@
 														<c:if test="${item.level=='4'}">不紧急不重要</c:if>
 													</td>
 													<td>${item.end_date}</td>
-													<td>${item.member_name}</td>
+													<td>${item.assigned_name}</td>
 													<td>${item.state == 1 ? '激活' : item.state == 2 ? '已变更' : item.state == 3 ? '已关闭' : item.state == 0 ? '已删除' : '未知'}</td>
 												</tr>
 												</c:forEach>
@@ -128,7 +128,7 @@
 														<c:if test="${item.level=='4'}">不紧急不重要</c:if>
 													</td>
 													<td>${item.end_date}</td>
-													<td>${item.member_name}</td>
+													<td>${item.assigned_name}</td>
 													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
@@ -165,7 +165,7 @@
 														<c:if test="${item.level=='4'}">不紧急不重要</c:if>
 													</td>
 													<td>${item.end_date}</td>
-													<td>${item.member_name}</td>
+													<td>${item.assigned_name}</td>
 													<td>${item.state == 1 ? '激活' : item.state == 2 ? '已变更' : item.state == 3 ? '已关闭' : item.state == 0 ? '已删除' : '未知'}</td>
 												</tr>
 												</c:forEach>
@@ -224,7 +224,7 @@
 										<tbody>
 											<tr class="nofixed">
 												<th>所属项目</th>
-												<td title="/">${needM.project_name}</td>
+												<td title="${needM.project_name}">${needM.project_name}</td>
 											</tr>
 											<tr>
 												<th>需求来源</th>
@@ -326,7 +326,7 @@
 					<nav class="container">
 					</nav>
 					<div class="btn-toolbar">
-						<a href="${u}" id="back" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="返回"><i class="icon-goback icon-back"></i> 返回</a>
+						<a href="javascript:history.go(-1);" id="back" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="返回"><i class="icon-goback icon-back"></i> 返回</a>
 						<c:if test="${needM.state == 1 || needM.state == 2}">
 							<a href="team/need/toChange?id=${needM.id}" class="btn btn-link" title="${needM.full == 0?'完善':'变更'}"><i class="icon-story-change icon-fork"></i> ${needM.full == 0?'完善':'变更'}</a>
 						</c:if>

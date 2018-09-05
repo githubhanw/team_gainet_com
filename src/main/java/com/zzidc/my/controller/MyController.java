@@ -51,12 +51,10 @@ public class MyController extends GiantBaseController {
 	@Autowired
 	private OrganizationRoleService organizationRoleService;
 	private GiantPager conditionPage = null;
-	private String requestURL = "my/task";
 
 	public void publicResult(Model model) {
 		model.addAttribute("m", "my");//模块
 		model.addAttribute("s", "task");//子模块
-		model.addAttribute("u", requestURL);//请求地址 
 	}
 	
 	/**
@@ -116,8 +114,6 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = teamTaskService.getPageList(conditionPage);
-		requestURL = "my/task";
-		pageList.setDesAction(requestURL);
 		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
 			teamTaskService.getSubTaskList(pageList.getPageResult(), mvm.get("type"), mvm.get("orderColumn"), mvm.get("orderByValue"));
 		}
@@ -153,8 +149,6 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = testBugService.getPageList(conditionPage);
-		requestURL = "my/bug?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
-		pageList.setDesAction(requestURL);
 		model.addAttribute("members", testBugService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);
@@ -199,8 +193,6 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = testApplyService.getPageList(conditionPage);
-		requestURL = "my/test?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
-		pageList.setDesAction(requestURL);
 		model.addAttribute("members", testApplyService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);
@@ -235,8 +227,6 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = teamNeedService.getPageList(conditionPage);
-		requestURL = "my/need?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
-		pageList.setDesAction(requestURL);
 		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
 		}
@@ -296,9 +286,9 @@ public class MyController extends GiantBaseController {
 			//userId =Integer.parseInt(super.getSession().getAttribute("roleIds").toString());
 			userId =myService.getMemberId();//当前登录人ID
 		}else {
-			userId = Integer.valueOf(mvm.get("userId").toString());
+			userId = Integer.valueOf(mvm.get("userId"));
 		}
-		String openId = mvm.get("openId").toString();
+		String openId = mvm.get("openId");
 		openId =openId.replaceAll(" ","+" );
 		boolean a = myService.updateOpenId(openId,userId);
 		System.out.println(" ****************userId ="+userId+" ****************openID ="+openId+" ****************是否更新openID:"+a);

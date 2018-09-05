@@ -77,7 +77,7 @@ public class MyService extends GiantBaseService{
 	 */
 	public Map<String, Object> getCheckedMineTask(){
 		String sql = "SELECT count(0) 'count' FROM task t LEFT JOIN task_need tn ON t.need_id=tn.id "
-				+ "WHERE 1=1 AND t.deleted=0 AND (t.delayed_review_id="+super.getMemberId()+" OR (t.state=3 AND t.checked_id="+super.getMemberId()+"))";
+				+ "WHERE 1=1 AND t.deleted=0 AND t.state=3 AND t.checked_id="+super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);

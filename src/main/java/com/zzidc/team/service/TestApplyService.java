@@ -1,9 +1,6 @@
 package com.zzidc.team.service;
 
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +43,7 @@ public class TestApplyService extends GiantBaseService {
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "select ta.id, ta.apply_id, ta.apply_name, ta.apply_time, ta.test_content, ta.state, ta.dismissal, ta.task_id, t.task_name from test_apply ta left join task t on t.id = ta.task_id where 1=1 ";
+		String sql = "SELECT ta.*,t.task_name,(SELECT tt.assigned_name FROM task tt WHERE tt.developer_task_id=ta.task_id) tester FROM test_apply ta LEFT JOIN task t ON t.id = ta.task_id WHERE 1=1 ";
 		String countSql = "SELECT COUNT(0) from test_apply ta left join task t on t.id = ta.task_id where 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";

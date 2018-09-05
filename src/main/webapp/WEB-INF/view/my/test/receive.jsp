@@ -38,6 +38,7 @@
 								<tr>
 									<th>任务名称</th>
 									<td class="required">
+										<input type="hidden" name="id" value="${t.id}"/>
 										<input type="text" readonly name="task_name" id="task_name" value="${taskName}" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
@@ -102,7 +103,6 @@
 									<td>
 										<input type="hidden" name="remark">
 										<div id="remark">${t.test_content}</div>
-										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 									<td></td>
 								</tr>

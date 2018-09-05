@@ -90,8 +90,6 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="my/test" class="btn">返回测试单列表</a>
-								<c:if test="${entity.id==null}"><a href="my/test/toAdd" class="btn">继续建测试单</a></c:if>
-								<%-- <c:if test="${entity.id > 0}"><a href="my/test/toAdd?id=${entity.id}" class="btn">继续建测试单</a></c:if> --%>
 							</div>
 						</div>
 					</div>

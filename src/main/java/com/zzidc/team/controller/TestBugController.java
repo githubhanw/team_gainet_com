@@ -17,7 +17,6 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
-import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TestBug;
 import com.zzidc.team.service.TestBugService;
 
@@ -126,7 +125,7 @@ public class TestBugController extends GiantBaseController {
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		if (GiantUtils.isEmpty(mvm.get("id"))) {
 		}else {
-			String taskId=mvm.get("id").toString();
+			String taskId=mvm.get("id");
 			model.addAttribute("taskId", taskId);
 		}
 		model.addAttribute("task", testBugService.getFinishedTasksByMember());
@@ -168,7 +167,7 @@ public class TestBugController extends GiantBaseController {
 	public String toEdit(@RequestParam Map<String, String> mvm, Model model) {
 		model.addAttribute("task", testBugService.getFinishedTasksByMember());
 		model.addAttribute("members", testBugService.getAllMember());
-		String taskId=mvm.get("id").toString();
+		String taskId=mvm.get("id");
 		model.addAttribute("taskId", taskId);
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象

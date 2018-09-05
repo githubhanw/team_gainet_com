@@ -89,7 +89,7 @@ public class TestApplyController extends GiantBaseController {
 			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
 		}else {
 			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
-			model.addAttribute("task_id", mvm.get("id").toString());
+			model.addAttribute("task_id", mvm.get("id"));
 		}
 		return "test/apply/add";
 	}

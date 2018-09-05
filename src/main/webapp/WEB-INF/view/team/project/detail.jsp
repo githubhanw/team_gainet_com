@@ -29,7 +29,7 @@
 			<div class="container">
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<a href="${u}" class="btn btn-link"><i class="icon icon-back icon-sm"></i> 返回</a>
+						<a href="javascript:history.go(-1);" class="btn btn-link"><i class="icon icon-back icon-sm"></i> 返回</a>
 						<div class="divider"></div>
 						<div class="page-title">
 							<span class="label label-id">${projectM.id}</span> <span class="text" style="color: #ffaf38">${projectM.project_name}</span>
@@ -268,7 +268,7 @@
 					<nav class="container">
 					</nav>
 					<div class="btn-toolbar">
-						<a href="${u}" id="back" class="btn" title="返回[快捷键:Alt+↑]">
+						<a href="javascript:history.go(-1);" id="back" class="btn" title="返回[快捷键:Alt+↑]">
 							<i class="icon-goback icon-back"></i> 返回
 						</a>
 						<div class="divider"></div>

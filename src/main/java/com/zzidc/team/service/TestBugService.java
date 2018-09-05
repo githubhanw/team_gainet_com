@@ -182,11 +182,11 @@ public class TestBugService extends GiantBaseService {
 		t.setTasktype(task.getTaskType().toString());
 		t.setProjectId(task.getProjectId());
 		t.setNeedId(task.getNeedId());
-		t.setBugproject(mvm.get("bugproject").toString());
+		t.setBugproject(mvm.get("bugproject"));
 		t.setBugrank(Integer.valueOf(mvm.get("bugrank")));
 		t.setBugfen(Integer.valueOf(mvm.get("bugfen")));
 		t.setBugtype(Integer.valueOf(mvm.get("bugtype")));
-		t.setBugdes(mvm.get("bugdes").toString());
+		t.setBugdes(mvm.get("bugdes"));
 		Member creater = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("creater_id"), 0));
 		t.setCreaterId(creater == null ? 0 : creater.getId());
 		t.setCreater(creater == null ? "" : creater.getName());
@@ -194,7 +194,7 @@ public class TestBugService extends GiantBaseService {
 		t.setDeveloperId(developer == null ? 0 : developer.getId());
 		t.setDeveloper(developer == null ? "" : developer.getName());
 		t.setSolvestatus(0);
-		t.setMark(mvm.get("mark").toString());
+		t.setMark(mvm.get("mark"));
 		t.setCreatetime(new Timestamp(System.currentTimeMillis()));
 		boolean b =  super.dao.saveUpdateOrDelete(t, null);
 		PMLog pmLog = new PMLog(LogModule.BUG, LogMethod.ADD, t.getId(), t.toString(), null);
@@ -259,12 +259,12 @@ public class TestBugService extends GiantBaseService {
 			//获取对象
 			t = (TestBug) super.dao.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
 			t.setTaskid(Integer.valueOf(mvm.get("taskid")));
-			t.setTasktype(mvm.get("tasktype").toString());
-			t.setBugproject(mvm.get("bugproject").toString());
+			t.setTasktype(mvm.get("tasktype"));
+			t.setBugproject(mvm.get("bugproject"));
 			t.setBugrank(Integer.valueOf(mvm.get("bugrank")));
 			t.setBugfen(Integer.valueOf(mvm.get("bugfen")));
 			t.setBugtype(Integer.valueOf(mvm.get("bugtype")));
-			t.setBugdes(mvm.get("bugdes").toString());
+			t.setBugdes(mvm.get("bugdes"));
 			Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("creater_id"), 0));
 			t.setCreaterId(member == null ? 0 : member.getId());
 			t.setCreater(member == null ? "" : member.getName());
@@ -272,7 +272,7 @@ public class TestBugService extends GiantBaseService {
 			t.setDeveloperId(member == null ? 0 : member.getId());
 			t.setDeveloper(member == null ? "" : member.getName());
 			t.setSolvestatus(0);
-			t.setMark(mvm.get("mark").toString());
+			t.setMark(mvm.get("mark"));
 			t.setCreatetime(new Timestamp(System.currentTimeMillis()));
 			return super.dao.saveUpdateOrDelete(t, null);
 		}
@@ -306,9 +306,9 @@ public class TestBugService extends GiantBaseService {
 			Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("solver_id"), 0));
 			t.setSolverId(member == null ? 0 : member.getId());
 			t.setSolver(member == null ? "" : member.getName());
-			t.setSolution(Integer.valueOf(mvm.get("solution").toString()));
+			t.setSolution(Integer.valueOf(mvm.get("solution")));
 			t.setSolvestatus(1);
-			t.setKaifamark(mvm.get("kaifamark").toString());
+			t.setKaifamark(mvm.get("kaifamark"));
 			t.setSolvetime(new Timestamp(System.currentTimeMillis()));
 			return super.dao.saveUpdateOrDelete(t, null);
 		}

@@ -46,7 +46,7 @@ public class MyBugController extends GiantBaseController {
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		if (GiantUtils.isEmpty(mvm.get("id"))) {
 		}else {
-			String taskId=mvm.get("id").toString();
+			String taskId=mvm.get("id");
 			model.addAttribute("taskId", taskId);
 		}
 		model.addAttribute("task", testBugService.getFinishedTasksByMember());
@@ -174,7 +174,7 @@ public class MyBugController extends GiantBaseController {
 	public String toEdit(@RequestParam Map<String, String> mvm, Model model) {
 		model.addAttribute("task", testBugService.getFinishedTasksByMember());
 		model.addAttribute("members", testBugService.getAllMember());
-		String taskId=mvm.get("id").toString();
+		String taskId=mvm.get("id");
 		model.addAttribute("taskId", taskId);
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象

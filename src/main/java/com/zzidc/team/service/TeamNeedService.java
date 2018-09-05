@@ -259,7 +259,7 @@ public class TeamNeedService extends GiantBaseService{
 	 */
 	public List<Map<String, Object>> getTaskList(Integer parentNeedId){
 		List<Map<String, Object>> subNeedList = new ArrayList<Map<String, Object>>();
-		String sql = "SELECT * FROM `task` WHERE deleted=0 AND need_id=" + parentNeedId + " ORDER BY state";
+		String sql = "SELECT * FROM `task` WHERE deleted=0 AND task_type!=2 AND need_id=" + parentNeedId + " ORDER BY state";
 		subNeedList = super.getMapListBySQL(sql, null);
 		return subNeedList;
 	}

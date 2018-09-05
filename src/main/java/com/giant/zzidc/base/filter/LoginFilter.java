@@ -43,15 +43,18 @@ public class LoginFilter implements Filter {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+		HttpServletResponse response = (HttpServletResponse) arg1;
+		HttpSession session = request.getSession();
+		Map<String, Object> memberSession = null; 
+		if(("/toLogin".equals(request.getServletPath()) || "/login".equals(request.getServletPath())) && (session.getAttribute("memberInfo") != null)) {
+			response.sendRedirect(baseUrl + "my");
+			return;
+		}
 		if("/toLogin".equals(request.getServletPath()) || "/login".equals(request.getServletPath()) || "".equals(request.getServletPath()) || 
 				"/my".equals(request.getServletPath()) || "my/getOpenId".equals(path)) {
 			arg2.doFilter(arg0, arg1);
 			return;
 		}
-		HttpServletResponse response = (HttpServletResponse) arg1;
-		HttpSession session = request.getSession();
-		Map<String, Object> memberSession = null; 
 		if (session.getAttribute("memberInfo") == null) {
 			response.sendRedirect(baseUrl + "toLogin");
 			return;

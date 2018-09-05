@@ -233,7 +233,13 @@
 													<a class="task-toggle" data-id="${task.id}"><i class="icon icon-caret-down"></i></a>
 												</c:if>
 												<c:if test="${task.parent_id > 0 && prm.type != 1 && prm.type != 2}">
-													<span class="label label-badge label-light">子</span>
+													<c:if test="${task.task_type==2}">
+														<span class="label label-badge label-light">测</span>
+														<span class="label label-id">${task.parent_id}</span>
+													</c:if>
+													<c:if test="${task.task_type!=2}">
+														<span class="label label-badge label-light">子</span>
+													</c:if>
 												</c:if>
 												<a href="my/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.task_name}">${task.task_name}</a>
 											</td>

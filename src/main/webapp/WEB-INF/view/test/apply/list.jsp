@@ -131,14 +131,11 @@
 												<a  href="${pageList.desAction}&orderColumn=apply_name&orderByValue=${prm.orderColumn=='apply_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='apply_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请人</a>
 											</th>
+											<th data-flex="false" data-width="50px" style="width:200px" class="c-pri text-center" title="测试人">测试人</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="申请时间">
 												<a href="${pageList.desAction}&orderColumn=apply_time&orderByValue=${prm.orderColumn=='apply_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='apply_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请时间</a>
 											</th>
-											<%-- <th data-flex="false" data-width="50px" style="width: auto" class="c-pri" title="测试内容">
-												<a href="${pageList.desAction}&orderColumn=test_content&orderByValue=${prm.orderColumn=='test_content'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='test_content'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">测试内容</a>
-											</th> --%>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-pri" title="驳回原因">
 												<a href="${pageList.desAction}&orderColumn=dismissal&orderByValue=${prm.orderColumn=='dismissal'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='dismissal'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">驳回原因</a>
@@ -167,6 +164,7 @@
 												</c:if>
 											</td>
 											<td class="c-pri text-center">${apply.apply_name}</td>
+											<td class="c-pri text-center">${apply.state>1 ? apply.tester : ''}</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${apply.apply_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-assignedTo has-btn text-left">${apply.dismissal}</td>
 											<td class="c-actions text-center">

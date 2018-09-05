@@ -64,8 +64,6 @@ public class CompetenceFilter implements Filter {
 				return;
 			}
 			HttpSession session = request.getSession();
-			long memberId = Long.parseLong(session.getAttribute("memberId")
-					.toString());
 			String path = "";
 			try {
 				path = request.getServletPath().replaceFirst("/", "");
@@ -78,7 +76,7 @@ public class CompetenceFilter implements Filter {
 				arg2.doFilter(arg0, arg1);
 				return;
 			} else {// 没有权限
-				logger.debug("管理员[" + memberId + "]没有[" +path+"]该路径权限");
+				logger.debug("管理员[" + String.valueOf(session.getAttribute("memberId")) + "]没有[" +path+"]该路径权限");
 				HttpServletResponse response = (HttpServletResponse) arg1;
 				response.sendRedirect(request.getContextPath()
 						+ "/nopower");

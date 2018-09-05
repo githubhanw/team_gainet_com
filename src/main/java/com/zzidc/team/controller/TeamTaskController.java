@@ -89,7 +89,7 @@ public class TeamTaskController extends GiantBaseController {
 			model.addAttribute("subTask", subTask);
 
 			//同需求任务
-			if ("3".equals(taskDetail.get("task_type"))) {//测试任务
+			if ("2".equals(taskDetail.get("task_type"))) {//测试任务
 				List<Map<String, Object>> needTask = teamTaskService.getRelationTaskList(null, GiantUtil.intOf(mvm.get("id"), 0), 2);
 				model.addAttribute("needTask", needTask);
 			} else {//非测试任务
@@ -97,7 +97,7 @@ public class TeamTaskController extends GiantBaseController {
 				model.addAttribute("needTask", needTask);
 			}
 			//非测试任务对应的测试任务
-			if (!"3".equals(taskDetail.get("task_type"))) {
+			if (!"2".equals(taskDetail.get("task_type"))) {
 				List<Map<String, Object>> testTask = teamTaskService.getRelationTaskList(null, GiantUtil.intOf(mvm.get("id"), 0), 2);
 				model.addAttribute("testTask", testTask);
 			}

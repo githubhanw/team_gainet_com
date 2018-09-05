@@ -466,31 +466,37 @@ public class TeamTaskService extends GiantBaseService {
 		task.setState((short) GiantUtil.intOf(mvm.get("state"), 0));
 		task.setDeleted((short) GiantUtil.intOf(mvm.get("deleted"), 0));
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
-
+		
 		try {//初始开始日期
 			task.setStartDate(super.returnTime(mvm.get("start_date")));
 		} catch (Exception e) {
 			task.setStartDate(new Timestamp(System.currentTimeMillis()));
 		}
-		try {//实际开始
-			task.setRealStartDate(super.returnTime(mvm.get("real_start_date")));
-		} catch (Exception e) {
-			task.setRealStartDate(new Timestamp(System.currentTimeMillis()));
+		if(!GiantUtil.isEmpty(mvm.get("real_start_date"))) {
+			try {//实际开始
+				task.setRealStartDate(super.returnTime(mvm.get("real_start_date")));
+			} catch (Exception e) {
+				task.setRealStartDate(new Timestamp(System.currentTimeMillis()));
+			}
 		}
 		try {//初始结束
 			task.setEndDate(super.returnTime(mvm.get("end_date")));
 		} catch (Exception e) {
 			task.setEndDate(new Timestamp(System.currentTimeMillis()));
 		}
-		try {//计划结束
-			task.setPlanEndDate(super.returnTime(mvm.get("plan_end_date")));
-		} catch (Exception e) {
-			task.setPlanEndDate(new Timestamp(System.currentTimeMillis()));
+		if(!GiantUtil.isEmpty(mvm.get("plan_end_date"))) {
+			try {//计划结束
+				task.setPlanEndDate(super.returnTime(mvm.get("plan_end_date")));
+			} catch (Exception e) {
+				task.setPlanEndDate(new Timestamp(System.currentTimeMillis()));
+			}
 		}
-		try {//实际结束
-			task.setRealEndDate(super.returnTime(mvm.get("real_end_date")));
-		} catch (Exception e) {
-			task.setRealEndDate(new Timestamp(System.currentTimeMillis()));
+		if(!GiantUtil.isEmpty(mvm.get("real_end_date"))) {
+			try {//实际结束
+				task.setRealEndDate(super.returnTime(mvm.get("real_end_date")));
+			} catch (Exception e) {
+				task.setRealEndDate(new Timestamp(System.currentTimeMillis()));
+			}
 		}
 		task.setDelay((short) GiantUtil.intOf(mvm.get("delay"), 0));
 		task.setOverdue((short) GiantUtil.intOf(mvm.get("overdue"), 0));
@@ -518,7 +524,8 @@ public class TeamTaskService extends GiantBaseService {
 		task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		boolean b = super.dao.saveUpdateOrDelete(task, null);
 		if(b) {
-			pmLog.add(task.getId(), oldTask, task, new String[] {"task_name", "remark", "closed_reason"}, "task_name", "remark", "need_id", "assigned_name", "task_type", "state", "level", "delay", "overdue", "finished_name", "canceled_name", "closed_name", "closed_reason");
+			pmLog.add(task.getId(), oldTask, task, new String[] {"task_name", "remark", "closed_reason"}, 
+					"task_name", "remark", "need_id", "assigned_name", "task_type", "state", "level", "delay", "overdue", "finished_name", "canceled_name", "closed_name", "closed_reason");
 			this.log(pmLog);
 		}
 		return b;
@@ -806,7 +813,7 @@ public class TeamTaskService extends GiantBaseService {
 	 */
 	public boolean finishCheck(Map<String, String> mvm) {
 		Task t = null;
-		String isPass = (mvm.get("is").toString())!=null? mvm.get("is").toString():"0";
+		String isPass = (mvm.get("is"))!=null? mvm.get("is"):"0";
 		if ("1".equals(isPass)) {//通过审核
 			if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
 				// 获取对象
@@ -819,7 +826,7 @@ public class TeamTaskService extends GiantBaseService {
 				BeanUtils.copyProperties(t, oldTask);
 				t.setState((short) 4);
 				t.setCheckedNum((t.getCheckedNum()==null?0:t.getCheckedNum())+1);
-				t.setCheckedReason(mvm.get("checked_reason").toString());
+				t.setCheckedReason(mvm.get("checked_reason"));
 				t.setCheckedTime(new Timestamp(System.currentTimeMillis()));
 				
 				t.setFinishedId(t.getAssignedId());
@@ -1101,7 +1108,7 @@ public class TeamTaskService extends GiantBaseService {
 			BeanUtils.copyProperties(t, oldTask);
 			t.setHandoverId(t.getAssignedId());
 			t.setHandoverName(t.getAssignedName());
-			t.setHandoverInfo(mvm.get("handover_info").toString());
+			t.setHandoverInfo(mvm.get("handover_info"));
 			t.setHandoverState(1);
 			t.setHandoverTime(new Timestamp(System.currentTimeMillis()));
 			

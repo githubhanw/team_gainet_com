@@ -57,6 +57,7 @@ public class TaskNeed implements java.io.Serializable {
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private Short state;
+	private Integer meetingId;
 
 	// Constructors
 
@@ -76,7 +77,7 @@ public class TaskNeed implements java.io.Serializable {
 			String closedReason, Integer checkedId, String checkedName,
 			Timestamp checkedTime, Short resolved, Integer parentId,
 			String link, Short full, Timestamp createTime,
-			Timestamp updateTime, Short state) {
+			Timestamp updateTime, Short state, Integer meetingId) {
 		this.projectId = projectId;
 		this.needName = needName;
 		this.memberId = memberId;
@@ -113,6 +114,7 @@ public class TaskNeed implements java.io.Serializable {
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.state = state;
+		this.meetingId = meetingId;
 	}
 
 	// Property accessors
@@ -452,6 +454,15 @@ public class TaskNeed implements java.io.Serializable {
 
 	public void setState(Short state) {
 		this.state = state;
+	}
+	
+	@Column(name = "meeting_id")
+	public Integer getMeetingId() {
+		return this.meetingId;
+	}
+
+	public void setMeetingId(Integer meetingId) {
+		this.meetingId = meetingId;
 	}
 
 }

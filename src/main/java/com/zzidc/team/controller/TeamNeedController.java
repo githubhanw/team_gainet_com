@@ -47,6 +47,7 @@ public class TeamNeedController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "tn.update_time");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
@@ -62,7 +63,7 @@ public class TeamNeedController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = teamNeedService.getPageList(conditionPage);
-		requestURL = "team/need/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "team/need/index";
 		pageList.setDesAction(requestURL);
 		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));

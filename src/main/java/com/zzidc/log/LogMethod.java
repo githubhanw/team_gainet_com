@@ -24,6 +24,7 @@ public enum LogMethod {
 	FINISH("完成"),
 	FINISHCHECK("完成审核"),
 	RELEVANCE("关联"),
+	RELATE("关联月会议"),
 	DELAY("延期"),
 	DELAYCHECK("延期审核"),
 	CHECK("验收"),

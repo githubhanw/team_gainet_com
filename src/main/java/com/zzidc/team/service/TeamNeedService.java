@@ -41,7 +41,7 @@ public class TeamNeedService extends GiantBaseService{
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT tn.*,tp.project_name FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 ";
+		String sql = "SELECT tn.*,tp.project_name,m.name meeting_name FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id LEFT JOIN month_meeting m ON tn.meeting_id=m.id WHERE 1=1 ";
 		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";
@@ -110,6 +110,11 @@ public class TeamNeedService extends GiantBaseService{
 				sql += "AND tn.src_id=:src_id ";
 				countSql += "AND tn.src_id=:src_id ";
 				conditionMap.put("src_id", temp);
+			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("meetingId"))) {
+				sql += "AND tn.meeting_id=:meeting_id ";
+				countSql += "AND tn.meeting_id=:meeting_id ";
+				conditionMap.put("meeting_id", temp);
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("level"))) {
 				sql += "AND tn.level=:level ";
@@ -787,7 +792,25 @@ public class TeamNeedService extends GiantBaseService{
 			return new ArrayList<Map<String, Object>>();
 		}
 	}
-	
+
+	/**
+	 * 获取可以关联的月会议记录
+	 * @return
+	 */
+	public List<Map<String, Object>> getCanRelateMeetings() {
+		String sql = "SELECT * FROM month_meeting WHERE state=1";
+		return super.getMapListBySQL(sql, null);
+	}
+
+	/**
+	 * 获取月会议记录
+	 * @return
+	 */
+	public List<Map<String, Object>> getRelateMeetings() {
+		String sql = "SELECT * FROM month_meeting";
+		return super.getMapListBySQL(sql, null);
+	}
+
 	/**
 	 * [关联] <br>
 	 * @author likai <br>
@@ -800,27 +823,6 @@ public class TeamNeedService extends GiantBaseService{
 			return false;
 		}
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
-//			String needs = GiantUtil.stringOf(mvm.get("needs"));
-//			String[] needIds = needs.split(",");
-//			Map<String, Object> conditionMap = new HashMap<String, Object>();
-//			StringBuffer sb = new StringBuffer();
-//			sb.append("select * from task_need where id in (");
-//			for(int i=0; i<needIds.length; i++) {
-//				sb.append(":id" + i + ",");
-//				conditionMap.put("id" + i, GiantUtil.intOf(needIds[i], 0));
-//			}
-//			String sql = sb.substring(0,  sb.length() - 1) + ")";
-//			List<Object> list = super.dao.getEntityListBySQL(sql, conditionMap, new TaskNeed());
-//			if(list != null && list.size() > 0) {
-//				List<TaskNeed> taskNeeds = new ArrayList<TaskNeed>();
-//				for(Object obj : list) {
-//					TaskNeed need = (TaskNeed) obj;
-//					need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
-//					need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-//					taskNeeds.add(need);
-//				}
-//				return super.dao.saveUpdateOrDelete(taskNeeds, null);
-//			}
 			TaskNeed taskNeed = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(taskNeed != null) {
 				PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.RELEVANCE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
@@ -832,6 +834,33 @@ public class TeamNeedService extends GiantBaseService{
 				boolean b = super.dao.saveOrUpdateOne(taskNeed);
 				if (b) {
 					pmLog.add(taskNeed.getId(), oldT, taskNeed,"link");
+					this.log(pmLog);
+				}
+				return b; 
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * 关联月会议
+	 */
+	public boolean relate(Map<String, String> mvm) {
+		if(!isCanRelevance(GiantUtil.intOf(mvm.get("id"), 0))) { 
+			return false;
+		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			TaskNeed taskNeed = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(taskNeed != null) {
+				PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.RELATE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+				TaskNeed oldT = new TaskNeed();
+				BeanUtils.copyProperties(taskNeed, oldT);
+				
+				taskNeed.setMeetingId(GiantUtil.intOf(mvm.get("meeting_id"), 0));
+				taskNeed.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				boolean b = super.dao.saveOrUpdateOne(taskNeed);
+				if (b) {
+					pmLog.add(taskNeed.getId(), oldT, taskNeed, "meeting_id");
 					this.log(pmLog);
 				}
 				return b; 

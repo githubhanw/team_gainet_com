@@ -36,6 +36,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a href="my/task?type=18" class="btn btn-link ${prm.type == 18 ? 'btn-active-text':''}">
+							<span class="text">待我接收</span>
+							<c:if test="${prm.type == 18}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<a href="my/task?type=13" class="btn btn-link ${prm.type == 13 ? 'btn-active-text':''}">
 							<span class="text">待我审核</span>
 							<c:if test="${prm.type == 13}">
@@ -54,9 +60,21 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="my/task?type=12" class="btn btn-link ${prm.type == 12 ? 'btn-active-text':''}">
-							<span class="text">由我关闭</span>
-							<c:if test="${prm.type == 12}">
+						<a href="my/task?type=20" class="btn btn-link ${prm.type == 20 ? 'btn-active-text':''}">
+							<span class="text">进行中</span>
+							<c:if test="${prm.type == 20}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="my/task?type=15" class="btn btn-link ${prm.type == 15 ? 'btn-active-text':''}">
+							<span class="text">已延期</span>
+							<c:if test="${prm.type == 15}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="my/task?type=14" class="btn btn-link ${prm.type == 14 ? 'btn-active-text':''}">
+							<span class="text">已逾期</span>
+							<c:if test="${prm.type == 14}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
@@ -242,6 +260,9 @@
 													</c:if>
 												</c:if>
 												<a href="my/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.task_name}">${task.task_name}</a>
+												<c:if test="${task.task_type==2 && task.developer!=null && task.developer!=''}">
+													<span class="label label-info" data-toggle="tooltip" data-placement="top" title="${task.developer}">开发：${task.developer}</span>
+												</c:if>
 											</td>
 											<td class="text-left">
 												<a href="my/need/detail?id=${task.need_id}" data-toggle="tooltip" data-placement="top" title="${task.need_name}">${task.need_id}</a>

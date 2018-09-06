@@ -42,24 +42,6 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<%-- <a href="team/need/index?type=6" class="btn btn-link ${prm.type == 6 ? 'btn-active-text':''}">
-							<span class="text">我创建</span>
-							<c:if test="${prm.type == 6}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a>
-						<a href="team/need/index?type=7" class="btn btn-link ${prm.type == 7 ? 'btn-active-text':''}">
-							<span class="text">指派给我</span>
-							<c:if test="${prm.type == 7}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a>
-						<a href="team/need/index?type=8" class="btn btn-link ${prm.type == 8 ? 'btn-active-text':''}">
-							<span class="text">我关闭</span>
-							<c:if test="${prm.type == 8}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a> --%>
 						<a href="team/need/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
 							<span class="text">激活</span>
 							<c:if test="${prm.type == 4}">
@@ -139,24 +121,17 @@
 											<td class="w-200px">
 												<select class="form-control chosen chosen-select" name="srcId" id="srcId">
 													<option value="">请选择需求来源</option>
-													<option ${prm.srcId=='1'?'selected="selected"':'' } value="1">产品经理</option>
-													<option ${prm.srcId=='2'?'selected="selected"':'' } value="2">市场</option>
-													<option ${prm.srcId=='3'?'selected="selected"':'' } value="3">客户</option>
-													<option ${prm.srcId=='4'?'selected="selected"':'' } value="4">客服</option>
-													<option ${prm.srcId=='5'?'selected="selected"':'' } value="5">技术支持</option>
-													<option ${prm.srcId=='6'?'selected="selected"':'' } value="6">开发人员</option>
-													<option ${prm.srcId=='7'?'selected="selected"':'' } value="7">测试人员</option>
-													<option ${prm.srcId=='8'?'selected="selected"':'' } value="8">Bug</option>
-													<option ${prm.srcId=='9'?'selected="selected"':'' } value="9">其他</option>
+													<c:forEach items="${needSrc}" var="src" varStatus="sta">
+														<option ${prm.srcId==src.id?'selected="selected"':'' } value="${src.id}">${src.need_src}</option>
+													</c:forEach>
 												</select>
 											</td>
 											<td class="w-200px">
-												<select class="form-control chosen chosen-select" name="level" id="level">
-													<option value="">请选择优先级</option>
-													<option ${prm.level=='1'?'selected="selected"':'' } value="1">紧急重要</option>
-													<option ${prm.level=='2'?'selected="selected"':'' } value="2">紧急不重要</option>
-													<option ${prm.level=='3'?'selected="selected"':'' } value="3">不紧急重要</option>
-													<option ${prm.level=='4'?'selected="selected"':'' } value="4">不紧急不重要</option>
+												<select class="form-control chosen chosen-select" name="meetingId" id="meetingId">
+													<option value="">请选择月会议</option>
+													<c:forEach items="${meetings}" var="src" varStatus="sta">
+														<option ${prm.meetingId==src.id?'selected="selected"':'' } value="${src.id}">${src.name}</option>
+													</c:forEach>
 												</select>
 											</td>
 										</tr>
@@ -201,47 +176,43 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width:90px" class="c-id text-center" title="ID">
-												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a href="javascript:void(0)" onclick="pageOrder('id');" 
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:110px" class="c-name " title="优先级">
-												<a  href="${pageList.desAction}&orderColumn=level&orderByValue=${prm.orderColumn=='level'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='level'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">优先级</a>
-											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="需求名称">
-												<a  href="${pageList.desAction}&orderColumn=need_name&orderByValue=${prm.orderColumn=='need_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a  href="javascript:void(0)" onclick="pageOrder('need_name');" 
 														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="所属项目">
-												<a href="${pageList.desAction}&orderColumn=tp.project_name&orderByValue=${prm.orderColumn=='tp.project_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a href="javascript:void(0)" onclick="pageOrder('tp.project_name');" 
 														class="${prm.orderColumn=='tp.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属项目</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="需求方">
-												<a  href="${pageList.desAction}&orderColumn=member_id&orderByValue=${prm.orderColumn=='member_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a  href="javascript:void(0)" onclick="pageOrder('member_id');" 
 														class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求方</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="指派给">
-												<a  href="${pageList.desAction}&orderColumn=assigned_name&orderByValue=${prm.orderColumn=='assigned_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a  href="javascript:void(0)" onclick="pageOrder('assigned_name');" 
 														class="${prm.orderColumn=='assigned_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">指派给</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="开始时间">
-												<a  href="${pageList.desAction}&orderColumn=start_date&orderByValue=${prm.orderColumn=='start_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a  href="javascript:void(0)" onclick="pageOrder('start_date');" 
 														class="${prm.orderColumn=='start_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">开始时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="结束时间">
-												<a  href="${pageList.desAction}&orderColumn=end_date&orderByValue=${prm.orderColumn=='end_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a  href="javascript:void(0)" onclick="pageOrder('end_date');" 
 														class="${prm.orderColumn=='end_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">结束时间</a>
 											</th>
+											<th data-flex="false" data-width="auto" style="width:120px" class="c-name text-center" title="验收时间">
+												<a  href="javascript:void(0)" onclick="pageOrder('checked_time');" 
+														class="${prm.orderColumn=='checked_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">验收时间</a>
+											</th>
 											<th data-flex="false" data-width="auto" style="width:90px" class="c-name text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a  href="javascript:void(0)" onclick="pageOrder('state');" 
 														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:80px" class="c-name text-center" title="阶段">
-												<a  href="${pageList.desAction}&orderColumn=stage&orderByValue=${prm.orderColumn=='stage'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='stage'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">阶段</a>
-											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="创建时间">
-												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+												<a  href="javascript:void(0)" onclick="pageOrder('create_time');" 
 														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建时间</a>
 											</th>
 											<th data-flex="false" data-width="300px" style="width:200px"
@@ -252,7 +223,6 @@
 										<c:forEach items="${pageList.pageResult}" var="need" varStatus="sta">
 										<tr>
 											<td class="c-id cell-id text-center">${need.id}</td>
-											<td class="c-pri text-left">${need.level == 1 ? '紧急重要' : need.level == 2 ? '紧急不重要' : need.level == 3 ? '不紧急重要' : '不紧急不重要'}</td>
 											<td class="text-left">
 												<c:if test="${need.resolved == 1 && (prm.type == 1 || prm.type == 2)}">
 													<a class="task-toggle" data-id="${need.id}"><i class="icon icon-caret-down"></i></a>
@@ -265,6 +235,9 @@
 												</a>
 												<c:if test="${need.full == 0}">
 													<span class="label label-warning" title="不能创建任务，不能分解">不完整需求</span>
+												</c:if>
+												<c:if test="${need.meeting_id > 0}">
+													<span class="label label-info" data-toggle="tooltip" data-placement="top" title="${need.meeting_name}">会</span>
 												</c:if>
 											</td>
 											<td class="text-left">
@@ -284,12 +257,7 @@
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.start_date}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.end_date}" pattern="yyyy-MM-dd" /></td>
-											<td class="c-assignedTo has-btn text-center">
-												<span class="${need.state == 1 ? 'status-active' : need.state == 2 ? 'status-changed' : need.state == 3 ? 'status-closed' : ''}">
-													<span class="label label-dot"></span>
-													${need.state == 1 ? '激活' : need.state == 2 ? '已变更' : need.state == 3 ? '已关闭' : need.state == 0 ? '已删除' : '未知'}
-												</span>
-											</td>
+											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.checked_time}" pattern="yyyy-MM-dd HH:mm" /></td>
 											<td class="c-assignedTo has-btn text-center">
 													${need.stage == 1 ? '待验收' : need.stage == 2 ? '验收完成' : need.stage == 3 ? '验收不通过' : '未知'}
 											</td>
@@ -297,6 +265,7 @@
 											<td class="c-actions text-right">
 												<c:if test="${need.state > 0}">
 													<c:if test="${need.state == 1 || need.state == 2}">
+														<a href="team/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
 														<a href="team/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
 														<a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
 														<c:if test="${need.full == 1}">
@@ -315,7 +284,6 @@
 												<c:if test="${need.id == subNeed.parent_id}">
 													<tr class="table-children ${subSta.first?'table-child-top':''} ${subSta.last?'table-child-bottom':''} parent-${need.id}">
 														<td class="c-id cell-id text-center">${subNeed.id}</td>
-														<td class="c-pri text-left">${subNeed.level == 1 ? '紧急重要' : subNeed.level == 2 ? '紧急不重要' : subNeed.level == 3 ? '不紧急重要' : '不紧急不重要'}</td>
 														<td class="text-left">
 															<a href="team/need/detail?id=${subNeed.id}" data-toggle="tooltip" data-placement="top" title="${subNeed.need_name}">
 																<span class="label label-badge label-light">子</span> ${subNeed.need_name}
@@ -341,12 +309,7 @@
 														</td>
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.start_date}" pattern="yyyy-MM-dd" /></td>
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.end_date}" pattern="yyyy-MM-dd" /></td>
-														<td class="c-assignedTo has-btn text-center">
-															<span class="${subNeed.state == 1 ? 'status-active' : subNeed.state == 2 ? 'status-changed' : subNeed.state == 3 ? 'status-closed' : ''}">
-																<span class="label label-dot"></span>
-																${subNeed.state == 1 ? '激活' : subNeed.state == 2 ? '已变更' : subNeed.state == 3 ? '已关闭' : subNeed.state == 0 ? '已删除' : '未知'}
-															</span>
-														</td>
+														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.checked_time}" pattern="yyyy-MM-dd HH:mm" /></td>
 														<td class="c-assignedTo has-btn text-center">
 																${subNeed.stage == 1 ? '待验收' : subNeed.stage == 2 ? '验收完成' : subNeed.stage == 3 ? '验收不通过' : '未知'}
 														</td>
@@ -375,34 +338,23 @@
 								</table>
 							</div>
 							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
 			</div>
-			<script></script>
 		</main>
-    	<%@ include file="/WEB-INF/view/team/need/div.jsp" %>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 </html>
 <script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "team/need/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
 	$("#bysearchTab").click(function(){
 		if($(this).hasClass("querybox-opened")){
 			$(this).removeClass("querybox-opened")

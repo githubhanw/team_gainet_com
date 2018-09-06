@@ -39,39 +39,39 @@ public class MyTaskController extends GiantBaseController {
 	/**
 	 * 任务列表
 	 */
-	@RequestMapping("/index")
-	public String list(@RequestParam Map<String, String> mvm, Model model) {
-		if(conditionPage == null){
-			conditionPage = new GiantPager();
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "t.update_time");
-			mvm.put("orderByValue", "DESC");
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
-			mvm.put("type", "1");
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
-			mvm.put("search", "");
-		}
-		Map<String, String> queryCondition = conditionPage.getQueryCondition();
-		//查询条件封装
-		queryCondition.clear();
-		queryCondition.putAll(mvm);
-		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
-		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
-		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
-		pageList = teamTaskService.getPageList(conditionPage);
-		requestURL = "my/task?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
-		pageList.setDesAction(requestURL);
-		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
-			teamTaskService.getSubTaskList(pageList.getPageResult(), mvm.get("type"), mvm.get("orderColumn"), mvm.get("orderByValue"));
-		}
-		model.addAttribute("pageList", pageList);
-		model.addAttribute("prm", mvm);
-		publicResult(model);
-		return "my/task";
-	}
+//	@RequestMapping("/index")
+//	public String list(@RequestParam Map<String, String> mvm, Model model) {
+//		if(conditionPage == null){
+//			conditionPage = new GiantPager();
+//		}
+//		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
+//			mvm.put("orderColumn", "t.update_time");
+//			mvm.put("orderByValue", "DESC");
+//		}
+//		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
+//			mvm.put("type", "1");
+//		}
+//		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
+//			mvm.put("search", "");
+//		}
+//		Map<String, String> queryCondition = conditionPage.getQueryCondition();
+//		//查询条件封装
+//		queryCondition.clear();
+//		queryCondition.putAll(mvm);
+//		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
+//		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
+//		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
+//		pageList = teamTaskService.getPageList(conditionPage);
+//		requestURL = "my/task?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+//		pageList.setDesAction(requestURL);
+//		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
+//			teamTaskService.getSubTaskList(pageList.getPageResult(), mvm.get("type"), mvm.get("orderColumn"), mvm.get("orderByValue"));
+//		}
+//		model.addAttribute("pageList", pageList);
+//		model.addAttribute("prm", mvm);
+//		publicResult(model);
+//		return "my/task";
+//	}
 
 	/**
 	 * 任务详情

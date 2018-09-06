@@ -212,6 +212,7 @@ public class MyController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "tn.update_time");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "7");
@@ -230,8 +231,9 @@ public class MyController extends GiantBaseController {
 		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
 		}
-		model.addAttribute("members", teamNeedService.getAllMember());
 		model.addAttribute("pageList", pageList);
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("meetings", teamNeedService.getRelateMeetings());
 		model.addAttribute("prm", mvm);
 		publicResult(model);
 		model.addAttribute("s", "need");//子模块

@@ -43,7 +43,8 @@ public class TestApplyService extends GiantBaseService {
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT ta.*,t.task_name,(SELECT tt.assigned_name FROM task tt WHERE tt.developer_task_id=ta.task_id) tester FROM test_apply ta LEFT JOIN task t ON t.id = ta.task_id WHERE 1=1 ";
+		String sql = "SELECT ta.*,t.task_name,(SELECT GROUP_CONCAT(tt.assigned_name) FROM task tt WHERE tt.developer_task_id=ta.task_id GROUP BY tt.developer_task_id) tester "
+				+ "FROM test_apply ta LEFT JOIN task t ON t.id = ta.task_id WHERE 1=1 ";
 		String countSql = "SELECT COUNT(0) from test_apply ta left join task t on t.id = ta.task_id where 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";

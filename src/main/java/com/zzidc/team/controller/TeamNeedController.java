@@ -69,6 +69,8 @@ public class TeamNeedController extends GiantBaseController {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
 		}
 		model.addAttribute("pageList", pageList);
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("meetings", teamNeedService.getRelateMeetings());
 		model.addAttribute("prm", mvm);
 		publicResult(model);
 		return "team/need/list";
@@ -383,6 +385,45 @@ public class TeamNeedController extends GiantBaseController {
 			return;
 		}
 		boolean flag = teamNeedService.relevance(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+
+	/**
+	 * 跳转关联月会议页面
+	 */
+	@RequestMapping("/toRelate")
+	public String toRelate(@RequestParam Map<String, String> mvm, Model model) {
+		//添加需求页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("n", n);
+			model.addAttribute("meetings", teamNeedService.getCanRelateMeetings());
+		}
+		publicResult(model);
+		return "team/need/relate";
+	}
+
+	/**
+	 * 需求月会议
+	 */
+	@RequestMapping("/relate")
+	public void relate(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("meeting_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.relate(mvm);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

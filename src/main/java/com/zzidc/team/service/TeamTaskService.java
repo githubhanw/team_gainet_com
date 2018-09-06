@@ -46,7 +46,7 @@ public class TeamTaskService extends GiantBaseService {
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT t.*,tn.need_name FROM task t LEFT JOIN task_need tn ON t.need_id=tn.id WHERE 1=1 ";
+		String sql = "SELECT t.*,tn.need_name,(SELECT d.assigned_name from task d WHERE d.id=t.developer_task_id) developer FROM task t LEFT JOIN task_need tn ON t.need_id=tn.id WHERE 1=1 ";
 		String countSql = "SELECT count(0) FROM task t LEFT JOIN task_need tn ON t.need_id=tn.id WHERE 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";
@@ -216,12 +216,15 @@ public class TeamTaskService extends GiantBaseService {
 				} else if ("13".equals(temp)) {// 状态：待我审核
 					sql += "AND (t.delayed_review_id=" + memberId +" OR (t.state=3 AND t.checked_id=" + memberId + "))";
 					countSql += "AND (t.delayed_review_id=" + memberId +" OR (t.state=3 AND t.checked_id=" + memberId + "))";
-				} else if ("19".equals(temp)) {// 状态：已逾期（我的）
+				} else if ("14".equals(temp)) {// 状态：已逾期（我的）
 					sql += "AND t.overdue=1 AND t.assigned_id=" + memberId;
 					countSql += "AND t.overdue=1 AND t.assigned_id=" + memberId;
 				} else if ("15".equals(temp)) {// 状态：已延期（我的）
 					sql += "AND t.delay>0 AND t.assigned_id=" + memberId;
 					countSql += "AND t.delay>0 AND t.assigned_id=" + memberId;
+				} else if ("20".equals(temp)) {// 状态：进行中（我的）
+					sql += "AND t.state=2 AND t.assigned_id=" + memberId;
+					countSql += "AND t.state=2 AND t.assigned_id=" + memberId;
 				} else if ("16".equals(temp)) {// 状态：今日任务（已接收）
 					sql += "AND DATE(t.real_start_date)=CURDATE() AND t.assigned_id=" + memberId;
 					countSql += "AND DATE(t.real_start_date)=CURDATE() AND t.assigned_id=" + memberId;
@@ -983,27 +986,6 @@ public class TeamTaskService extends GiantBaseService {
 			return false;
 		}
 		if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
-//			String needs = GiantUtil.stringOf(mvm.get("needs"));
-//			String[] needIds = needs.split(",");
-//			Map<String, Object> conditionMap = new HashMap<String, Object>();
-//			StringBuffer sb = new StringBuffer();
-//			sb.append("select * from task where id in (");
-//			for (int i = 0; i < needIds.length; i++) {
-//				sb.append(":id" + i + ",");
-//				conditionMap.put("id" + i, GiantUtil.intOf(needIds[i], 0));
-//			}
-//			String sql = sb.substring(0, sb.length() - 1) + ")";
-//			List<Object> list = super.dao.getEntityListBySQL(sql, conditionMap, new Task());
-//			if (list != null && list.size() > 0) {
-//				List<Task> taskNeeds = new ArrayList<Task>();
-//				for (Object obj : list) {
-//					Task need = (Task) obj;
-//					need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
-//					need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-//					taskNeeds.add(need);
-//				}
-//				return super.dao.saveUpdateOrDelete(taskNeeds, null);
-//			}
 			Task task = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(task != null) {
 				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.RELEVANCE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));

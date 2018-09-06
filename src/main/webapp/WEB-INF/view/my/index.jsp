@@ -47,26 +47,26 @@
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="my/task?type=16">
-													<div class="tile-title">今日任务</div>
-													<div class="tile-amount">${taskCount.today > 0 ? taskCount.today : 0}</div>
-												</a>
-											</div>
-											<div class="col tile">
 												<a href="my/task?type=18">
-													<div class="tile-title">未接收任务</div>
+													<div class="tile-title">待接收任务</div>
 													<div class="tile-amount">${taskCount.noopen > 0 ? taskCount.noopen : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="my/task?type=17">
-													<div class="tile-title">昨日任务</div>
+												<a href="my/task?type=20">
+													<div class="tile-title">进行中任务</div>
+													<div class="tile-amount">${taskCount.today > 0 ? taskCount.today : 0}</div>
+												</a>
+											</div>
+											<div class="col tile">
+												<a href="my/task?type=10">
+													<div class="tile-title">已完成任务</div>
 													<div class="tile-amount">${taskCount.yesteday > 0 ? taskCount.yesteday : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/task?type=13">
-													<div class="tile-title">待我审核</div>
+													<div class="tile-title">待审核任务</div>
 													<div class="tile-amount">${checkedMineTask.count}</div>
 												</a>
 											</div>
@@ -77,7 +77,7 @@
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="my/task?type=19">
+												<a href="my/task?type=14">
 													<div class="tile-title">逾期任务</div>
 													<div class="tile-amount"><span class="label label-danger" style="padding:.2em .6em;font-size:30px;">${taskCount.overdue > 0 ? taskCount.overdue : 0}</span></div>
 												</a>
@@ -102,7 +102,7 @@
 											</div>
 											<div class="col tile">
 												<a href="my/need?type=13">
-													<div class="tile-title">待我验收</div>
+													<div class="tile-title">待验收需求</div>
 													<div class="tile-amount">${checkedMineNeed.count}</div>
 												</a>
 											</div>

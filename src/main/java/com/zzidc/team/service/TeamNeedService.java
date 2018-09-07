@@ -101,6 +101,27 @@ public class TeamNeedService extends GiantBaseService{
 					}
 				}
 			}
+			
+			//hanwei   start
+			String temp2 = "";
+			if (!StringUtils.isEmpty(temp2 = conditionPage.getQueryCondition().get("meeting_id"))) {
+				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+					if ("301".equals(temp)) {//月会议对应的需求总数
+						sql += "AND tn.meeting_id=" + temp2 + " ";
+						countSql += "AND tn.meeting_id=" + temp2 + " ";
+					}
+					if ("302".equals(temp)) {//月会议对应的已验收需求总数
+						sql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 2 ";
+						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 2 ";
+					}
+					if ("303".equals(temp)) {//月会议对应的待验收需求总数
+						sql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 1 ";
+						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 1 ";
+					}
+				}
+			}
+			//hanwei   end
+			
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("state"))) {
 				sql += "AND tn.state=:state ";
 				countSql += "AND tn.state=:state ";

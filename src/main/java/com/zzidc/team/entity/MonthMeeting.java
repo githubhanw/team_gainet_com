@@ -1,8 +1,12 @@
 package com.zzidc.team.entity;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -46,6 +50,7 @@ public class MonthMeeting implements java.io.Serializable {
 
 	// Property accessors
 	@Id
+	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
 	public Integer getId() {
 		return this.id;

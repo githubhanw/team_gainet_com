@@ -35,6 +35,8 @@ public class Privilege implements java.io.Serializable {
 	private String remark;
 	private Integer parentId;
 	private Set<Role> roles = new HashSet<Role>(0);
+	private Integer rank;
+	private Short state;
 
 	// Constructors
 
@@ -115,6 +117,24 @@ public class Privilege implements java.io.Serializable {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	
+	@Column(name = "rank", nullable = true)
+	public Integer getRank() {
+		return this.rank;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+	
+	@Column(name = "state")
+	public Short getState() {
+		return this.state;
+	}
+
+	public void setState(Short state) {
+		this.state = state;
 	}
 
 }

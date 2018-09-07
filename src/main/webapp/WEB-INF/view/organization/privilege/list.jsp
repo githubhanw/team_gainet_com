@@ -44,12 +44,12 @@
 					class="text">已删除</span> <c:if test="${prm.type == 0}">
 						<span class="label label-light label-badge">${pageList.totalCounts}</span>
 					</c:if>
-				</a> <a
+				</a> <%-- <a
 					class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}"
 					id="bysearchTab"><i class="icon icon-search muted"></i> 搜索 <c:if
 						test="${prm.type == 10}">
 						<span class="label label-light label-badge">${pageList.totalCounts}</span>
-					</c:if> </a>
+					</c:if> </a> --%>
 			</div>
 			<!--btn-toolbar start-->
 			<div class="btn-toolbar pull-right">
@@ -86,7 +86,7 @@
 										id="state">
 											<option value="">状态</option>
 											<option ${prm.bugrank=='0'?'selected="selected"':'' }
-												value="0">无效</option>
+												value="0">已删除</option>
 											<option ${prm.bugrank=='1'?'selected="selected"':'' }
 												value="1">正常</option>
 									</select></td>

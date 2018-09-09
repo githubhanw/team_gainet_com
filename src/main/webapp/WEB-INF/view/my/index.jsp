@@ -32,13 +32,12 @@
 					<!--main-col start-->
 					<div class="main-col">
 						<div class="panel block-welcome">
-							<div class="panel-move-handler"></div>
+							<div class="panel-heading" style="background-color:white;border-color:white">
+								<div class="panel-title">统计</div>
+							</div>
 							<div class="panel-body conatiner-fluid">
 								<div class="table-row">
 									<div class="col col-right">
-										<h4>
-											<small class="text-muted">${today}</small> 工作任务统计
-										</h4>
 										<div class="row tiles" >
 											<div class="col tile">
 												<a href="my/task">
@@ -49,37 +48,51 @@
 											<div class="col tile">
 												<a href="my/task?type=18">
 													<div class="tile-title">待接收任务</div>
-													<div class="tile-amount">${taskCount.noopen > 0 ? taskCount.noopen : 0}</div>
+													<div class="tile-amount">${taskCount.wait > 0 ? taskCount.wait : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/task?type=20">
 													<div class="tile-title">进行中任务</div>
-													<div class="tile-amount">${taskCount.today > 0 ? taskCount.today : 0}</div>
+													<div class="tile-amount">${taskCount.doing > 0 ? taskCount.doing : 0}</div>
+												</a>
+											</div>
+											<div class="col tile">
+												<a href="my/task?type=13">
+													<div class="tile-title">审核中任务</div>
+													<div class="tile-amount">${taskCount.checking > 0 ? taskCount.checking : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/task?type=10">
 													<div class="tile-title">已完成任务</div>
-													<div class="tile-amount">${taskCount.yesteday > 0 ? taskCount.yesteday : 0}</div>
+													<div class="tile-amount">${taskCount.done > 0 ? taskCount.done : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/task?type=13">
-													<div class="tile-title">待审核任务</div>
-													<div class="tile-amount">${checkedMineTask.count}</div>
+													<div class="tile-title">待我审核</div>
+													<div class="tile-amount">${taskCount.wait_check > 0 ? taskCount.wait_check : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/task?type=15">
 													<div class="tile-title">延期任务</div>
-													<div class="tile-amount"><span class="label label-warning" style="padding:.2em .6em;font-size:30px;">${taskCount.delay > 0 ? taskCount.delay : 0}</span></div>
+													<div class="tile-amount">
+														<span class="label label-warning" style="padding:.2em .6em;font-size:30px;">
+															${taskCount.delay > 0 ? taskCount.delay : 0}
+														</span>
+													</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/task?type=14">
 													<div class="tile-title">逾期任务</div>
-													<div class="tile-amount"><span class="label label-danger" style="padding:.2em .6em;font-size:30px;">${taskCount.overdue > 0 ? taskCount.overdue : 0}</span></div>
+													<div class="tile-amount">
+														<span class="label label-danger" style="padding:.2em .6em;font-size:30px;">
+															${taskCount.overdue > 0 ? taskCount.overdue : 0}
+														</span>
+													</div>
 												</a>
 											</div>
 											<div class="col tile">
@@ -103,7 +116,13 @@
 											<div class="col tile">
 												<a href="my/need?type=13">
 													<div class="tile-title">待验收需求</div>
-													<div class="tile-amount">${checkedMineNeed.count}</div>
+													<div class="tile-amount">${needCount.checking}</div>
+												</a>
+											</div>
+											<div class="col tile">
+												<a href="my/need?type=14">
+													<div class="tile-title">待我验收</div>
+													<div class="tile-amount">${needCount.wait_check}</div>
 												</a>
 											</div>
 										</div>

@@ -2,8 +2,6 @@ package com.zzidc.my.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -63,26 +61,19 @@ public class MyController extends GiantBaseController {
 	@RequestMapping("")
 	public String index(@RequestParam Map<String, String> mvm, Model model) {
 		//统计数据
-		//任务
+		//所有任务相关统计
 		Map<String, Object> taskCount = myService.getTaskCount();
-		//bug
+		//所有bug相关统计
 		Map<String, Object> bugCount = myService.getBugCount();
-		//测试
+		//所有测试相关统计
 		Map<String, Object> testCount = myService.getTestCount();
-		//需求
+		//所有需求相关统计
 		Map<String, Object> needCount = myService.getNeedCount();
-		//待我审核任务
-		Map<String, Object> checkedMineTask = myService.getCheckedMineTask();
-		//待我验收需求
-		Map<String, Object> checkedMineNeed = myService.getCheckedMineNeed();
 
 		model.addAttribute("taskCount", taskCount);
 		model.addAttribute("bugCount", bugCount);
 		model.addAttribute("testCount", testCount);
 		model.addAttribute("needCount", needCount);
-		model.addAttribute("checkedMineTask", checkedMineTask);
-		model.addAttribute("checkedMineNeed", checkedMineNeed);
-		model.addAttribute("today", new SimpleDateFormat("yyyy年MM月dd日").format(new Date()));
 		publicResult(model);
 		model.addAttribute("s", "");//子模块
 		return "my/index";

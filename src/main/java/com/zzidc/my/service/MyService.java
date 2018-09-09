@@ -18,24 +18,29 @@ import com.zzidc.team.entity.Member;
 public class MyService extends GiantBaseService{
 	
 	/**
-	 * 获取任务统计数据
+	 * 通过子查询的方式，获取所有任务相关统计数据
 	 */
 	public Map<String, Object> getTaskCount(){
-		String sql = "SELECT count(0) 'count',SUM(IF(DATE(real_start_date)=CURDATE(),1,0)) 'today',SUM(IF(state=1,1,0)) 'noopen', "
-				+ "SUM(IF(DATE(real_start_date)=DATE_SUB(curdate(),INTERVAL 1 DAY),1,0)) 'yesteday',SUM(IF(delay>0,1,0)) 'delay',"
-				+ "SUM(IF(overdue=1,1,0)) 'overdue' FROM `task` WHERE deleted=0 AND assigned_id=" + super.getMemberId();
+		String sql = "SELECT count(0) 'count',SUM(IF(state=1,1,0)) 'wait',SUM(IF(state=2,1,0)) 'doing'," + 
+				"SUM(IF(state=3,1,0)) 'checking',SUM(IF(state=4,1,0)) 'done',(SELECT count(0) " + 
+				"FROM task WHERE deleted=0 AND state=3 AND checked_id=" + super.getMemberId() + 
+				") 'wait_check',SUM(IF(delay>0,1,0)) 'delay',SUM(IF(overdue=1,1,0)) 'overdue' " + 
+				"FROM `task` WHERE deleted=0 AND assigned_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);
 		}
 		return null;
 	}
-	
+
 	/**
-	 * 获取Bug统计数据
+	 * 通过子查询的方式，获取所有需求相关统计数据
 	 */
-	public Map<String, Object> getBugCount(){
-		String sql = "SELECT count(0) 'count' FROM test_bug WHERE solvestatus=0 AND developer_id=" + super.getMemberId();
+	public Map<String, Object> getNeedCount(){
+		String sql = "SELECT count(0) 'count',SUM(IF(stage=1,1,0)) 'checking'," + 
+				"(SELECT count(0) FROM task_need WHERE state!=0 AND stage=1 AND member_id=" + 
+				super.getMemberId() + ") 'wait_check' " + 
+				"FROM task_need WHERE state!=0 AND assigned_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);
@@ -44,7 +49,19 @@ public class MyService extends GiantBaseService{
 	}
 	
 	/**
-	 * 获取测试统计数据
+	 * 获取待我验收需求
+	 */
+	public Map<String, Object> getCheckedMineNeed(){
+		String sql = "SELECT COUNT(0) 'count' FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE tn.state!=0 AND tn.member_id="+super.getMemberId();
+		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		}
+		return null;
+	}
+
+	/**
+	 * 通过子查询的方式，获取所有测试相关统计数据
 	 */
 	public Map<String, Object> getTestCount(){
 		String sql ="";
@@ -61,35 +78,10 @@ public class MyService extends GiantBaseService{
 	}
 	
 	/**
-	 * 获取需求统计数据
+	 * 通过子查询的方式，获取所有Bug相关统计数据
 	 */
-	public Map<String, Object> getNeedCount(){
-		String sql = "SELECT count(0) 'count' FROM task_need WHERE 1=1 AND state!=0 AND assigned_id=" + super.getMemberId();
-		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
-		if(list != null && list.size() > 0) {
-			return list.get(0);
-		}
-		return null;
-	}
-	
-	/**
-	 * 获取待我审核任务
-	 */
-	public Map<String, Object> getCheckedMineTask(){
-		String sql = "SELECT count(0) 'count' FROM task t LEFT JOIN task_need tn ON t.need_id=tn.id "
-				+ "WHERE 1=1 AND t.deleted=0 AND t.state=3 AND t.checked_id="+super.getMemberId();
-		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
-		if(list != null && list.size() > 0) {
-			return list.get(0);
-		}
-		return null;
-	}
-	
-	/**
-	 * 获取待我验收需求
-	 */
-	public Map<String, Object> getCheckedMineNeed(){
-		String sql = "SELECT COUNT(0) 'count' FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tn.state!=0 AND tn.member_id="+super.getMemberId();
+	public Map<String, Object> getBugCount(){
+		String sql = "SELECT count(0) 'count' FROM test_bug WHERE solvestatus=0 AND developer_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);

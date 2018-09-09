@@ -12,7 +12,7 @@
 				<li class="dropdown dropdown-hover ${m=='my' && s=='auth'?'active':'' }"><a href="my/auth">我的权限</a></li>
 			</ul>
 		</nav>
-		<nav id="subNavbar" ${m=='project' || m=='need' || m=='task' || m=='apply' || m=='meeting' ?'':'style="display:none"'}>
+		<nav id="subNavbar" ${m=='project' || m=='need' || m=='task' || m=='apply' || m=='meeting'  || m=='milepost' ?'':'style="display:none"'}>
 			<ul class="nav nav-default"
 				style="max-width: 1491px; left: 0px; position: relative;">
 				<li class="dropdown dropdown-hover ${m=='project' && s=='project'?'active':'' }"><a href="team/project/index">项目列表</a></li>
@@ -27,6 +27,8 @@
 				<li class="dropdown dropdown-hover ${m=='apply' && s=='add'?'active':'' }"><a href="test/bug/toAdd">提Bug</a></li>
 				<li class="divider"></li>
 				<li class="dropdown dropdown-hover ${m=='meeting' && s=='meeting'?'active':'' }"><a href="month/meeting/index">月会议</a></li>
+				<li class="divider"></li>
+				<li class="dropdown dropdown-hover ${m=='milepost' && s=='manage'?'active':'' }"><a href="test/milepost/manage">里程碑</a></li>
 			</ul>
 		</nav>
 		<nav id="subNavbar" ${m=='pd'?'':'style="display:none"'}>

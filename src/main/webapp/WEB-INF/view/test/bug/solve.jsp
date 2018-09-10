@@ -62,7 +62,7 @@
 								<tr>
 									<th>描述</th>
 									<td class="required">
-										<input type="hidden" name="kaifafamark">
+										<input type="hidden" name="kaifamark">
 										<div id="kaifamark"></div>
 										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
@@ -125,7 +125,6 @@
 UMEditor("kaifamark");
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	var a = UM.getEditor('kaifamark').getContent();
 	$("input[name='kaifamark']").val(UM.getEditor('kaifamark').getContent());
 	$.ajax({type:"POST",url:"test/bug/solve?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){

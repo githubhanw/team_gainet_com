@@ -77,7 +77,6 @@ public class MonthMeetingController extends GiantBaseController {
 	 */
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
-		//添加项目页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			MonthMeeting p = (MonthMeeting) monthMeetingService.getEntityByPrimaryKey(new MonthMeeting(), GiantUtil.intOf(mvm.get("id"), 0));

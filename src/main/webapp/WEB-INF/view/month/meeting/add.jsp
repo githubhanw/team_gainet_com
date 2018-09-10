@@ -86,8 +86,6 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="month/meeting/toAdd" class="btn">继续创建月会议</a> <a
-									href="team/need/toAdd" class="btn">提需求</a> <a
-									href="team/need/toAdd" class="btn">批量提需求</a> <a
 									href="month/meeting/index" class="btn">返回月会议列表</a>
 							</div>
 						</div>

@@ -49,9 +49,9 @@ public class MonthMeetingController extends GiantBaseController {
 			conditionPage = new GiantPager();
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "id");
+			mvm.put("orderColumn", "id");//按月会议ID排序
 			mvm.put("orderByValue", "ASC");
-			mvm.put("currentPage", "1");
+			mvm.put("currentPage", "1");//当前页
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");//正常
@@ -60,9 +60,9 @@ public class MonthMeetingController extends GiantBaseController {
 		//查询条件封装
 		queryCondition.clear();
 		queryCondition.putAll(mvm);
-		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
-		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
-		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
+		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));//当前页
+		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));//每页显示的数量
+		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));//排序的字段
 		pageList = monthMeetingService.getPageList(conditionPage);
 		requestURL = "month/meeting/index";
 		pageList.setDesAction(requestURL);

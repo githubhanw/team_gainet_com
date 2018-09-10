@@ -37,7 +37,7 @@
 							</c:if>
 						</a>
 						<a href="month/meeting/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
-							<span class="text">正常</span>
+							<span class="text">进行中</span>
 							<c:if test="${prm.type == 1}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
@@ -62,7 +62,7 @@
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
-						<a href="month/meeting/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 新建会议</a>
+						<a href="month/meeting/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 新建月会议</a>
 					</div>
 					<!--btn-toolbar end-->
 				</div>
@@ -108,7 +108,7 @@
 									data-fixed-left-width="550" data-fixed-right-width="160">
 									<thead>
 										<tr>
-											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="ID">
+											<th data-flex="false" data-width="180px" style="width: 180px" class="c-id " title="ID">
 												<a href="javascript:void(0)" onclick="pageOrder('id');" 
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
@@ -116,7 +116,7 @@
 												<a href="javascript:void(0)" onclick="pageOrder('name');" 
 														class="${prm.orderColumn=='name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">会议名称</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:250px" class="c-name text-center" title="会议创建时间">
+											<th data-flex="false" data-width="auto" style="width:250px" class="c-pri" title="会议创建时间">
 												<a href="javascript:void(0)" onclick="pageOrder('create_time');" 
 														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">会议创建时间</a>
 											</th>
@@ -140,7 +140,7 @@
 										<tr>
 											<td class="c-id cell-id">${meeting.id}</td>
 											<td class="c-pri text-left"><a href="team/need/index?meetingId=${meeting.id}">${meeting.name}</a></td>
-											<td class="c-pri text-center"><fmt:formatDate value="${meeting.create_time}" pattern="yyyy-MM-dd" /></td>
+											<td class="c-pri text-left"><fmt:formatDate value="${meeting.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-pri text-center"><a href="team/need/index?type=301&meeting_id=${meeting.id}">${meeting.totalCount}</a></td>
 											<td class="c-pri text-center"><a href="team/need/index?type=302&meeting_id=${meeting.id}">${meeting.approvedCount}</a></td>
 											<td class="c-pri text-center"><a href="team/need/index?type=303&meeting_id=${meeting.id}">${meeting.waitApprovedCount}</a></td>
@@ -158,12 +158,12 @@
 							</div>
 							<!--table-responsive end-->
 							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
+							<!-- <div class="table-footer" style="left: 0px; bottom: 0px;">
+								pager srtart
 								<ul class="pager">
 								</ul>
-								<!--pager end-->
-							</div>
+								pager end
+							</div> -->
 							<!--table-footer end-->
 						</form>
 						<!--table-footer start-->
@@ -193,14 +193,14 @@
 			$("#queryBox").addClass("show")
 		}
 	});
-	$('.pager').pager({
+	/* $('.pager').pager({
 	    page: ${pageList.currentPage},
 	    recTotal: ${pageList.totalCounts},
 	    recPerPage: ${pageList.pageSize},
 	    pageSizeOptions: [10, 20, 30, 50, 100],
 	    lang: 'zh_cn',
 	    linkCreator: "month/meeting/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
+	}); */
 	function del(id){
 		if(confirm("确认删除？")){
 			$.ajaxSettings.async = false;

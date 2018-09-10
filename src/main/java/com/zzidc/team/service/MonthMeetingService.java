@@ -40,7 +40,7 @@ public class MonthMeetingService extends GiantBaseService {
 			if ("0".equals(temp)) {//已删除
 				sql += "AND state=0";
 				countSql += "AND state=0";
-			} else if ("1".equals(temp)) {//正常
+			} else if ("1".equals(temp)) {//进行中
 				sql += "AND state=1";
 				countSql += "AND state=1";
 			} else if ("2".equals(temp)) {//已完结

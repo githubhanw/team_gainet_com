@@ -109,27 +109,27 @@
 							data-fixed-left-width="550" data-fixed-right-width="160">
 							<thead>
 								<tr>
-									<th data-flex="false" data-width="90px" style="width: 90px"
+									<th data-flex="false" data-width="200px" style="width: 200px"
 										class="c-id " title="ID"><a href="javascript:void(0)"
 										onclick="pageOrder('id');"
 										class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 									</th>
-									<th data-flex="false" data-width="50px" style="width: 180px"
+									<th data-flex="false" data-width="50px" style="width: 250px"
 										class="c-pri " title="表名称"><a href="javascript:void(0)"
 										onclick="pageOrder('table_name');"
 										class="${prm.orderColumn=='table_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">表名称</a>
 									</th>
-									<th data-flex="false" data-width="50px" style="width: 180px"
+									<th data-flex="false" data-width="50px" style="width: 250px"
 										class="c-pri " title="字段名称"><a href="javascript:void(0)"
 										onclick="pageOrder('field_name');"
 										class="${prm.orderColumn=='field_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">字段名称</a>
 									</th>
-									<th data-flex="false" data-width="50px" style="width: 180px"
+									<th data-flex="false" data-width="50px" style="width: 300px"
 										class="c-pri " title="字段描述"><a href="javascript:void(0)"
 										onclick="pageOrder('field_desc');"
 										class="${prm.orderColumn=='field_desc'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">字段描述</a>
 									</th>
-									<th data-flex="false" data-width="auto" style="width: auto"
+									<th data-flex="false" data-width="50px" style="width: 300px"
 										class="c-pri text-center" title="状态"><a
 										href="javascript:void(0)" onclick="pageOrder('state');"
 										class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>

@@ -4,7 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.giant.zzidc.base.utils.PlusCut;
 import com.giant.zzidc.base.utils.PropertyUtils;
 import com.giant.zzidc.base.utils.ResultInfo;
 import com.zzidc.my.service.MyService;
@@ -273,7 +276,7 @@ public class MyController extends GiantBaseController {
 	 * 更新openID
 	 */
 	@RequestMapping("/getOpenId")
-	public String getOpenId(@RequestParam Map<String, String> mvm, Model model) {
+	public String getOpenId(@RequestParam Map<String, String> mvm, Model model, HttpServletRequest request) {
 		int userId =0;
 		if (GiantUtils.isEmpty(mvm.get("userId"))) {
 			//userId =Integer.parseInt(super.getSession().getAttribute("roleIds").toString());
@@ -283,7 +286,15 @@ public class MyController extends GiantBaseController {
 		}
 		String openId = mvm.get("openId");
 		openId =openId.replaceAll(" ","+" );
+		openId = PlusCut.getInstance().cut(openId);//解密
 		boolean a = myService.updateOpenId(openId,userId);
+		if (a) {//session信息内添加openID 信息
+			HttpSession session = request.getSession();
+			session.setAttribute("newOpenId", openId);
+			Map<String, Object> memberInfo =(Map<String, Object>) session.getAttribute("memberInfo");
+			memberInfo.put("NEW_OPENID", openId);
+			session.setAttribute("memberInfo", memberInfo);
+		}
 		System.out.println(" ****************userId ="+userId+" ****************openID ="+openId+" ****************是否更新openID:"+a);
 		return "my/weixin";
 	}
@@ -292,7 +303,7 @@ public class MyController extends GiantBaseController {
 	 * 解除微信绑定
 	 */
 	@RequestMapping("/unbindwx")
-	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response, HttpServletRequest request) {
 		Member login = (Member)teamNeedService.getEntityByPrimaryKey(new Member(),myService.getMemberId());
 		JSONObject json=new JSONObject();
 		if(login==null){
@@ -312,6 +323,12 @@ public class MyController extends GiantBaseController {
 		if(flag){
 			json.put("code",0);
 			json.put("message", "解除微信绑定成功");
+			//清除session信息的 openID
+			HttpSession session = request.getSession();
+			session.setAttribute("newOpenId", null);
+			Map<String, Object> memberInfo =(Map<String, Object>) session.getAttribute("memberInfo");
+			memberInfo.put("NEW_OPENID", null);
+			session.setAttribute("memberInfo", memberInfo);
 		}else{
 			json.put("code",1);
 			json.put("message", "解除微信绑定失败");

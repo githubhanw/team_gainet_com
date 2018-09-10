@@ -68,6 +68,7 @@ public class LoginController extends GiantBaseController {
 		session.setAttribute("memberInfo", memberInfo);
 		session.setAttribute("memberName", String.valueOf(memberInfo.get("NAME")));
 		session.setAttribute("loginName", String.valueOf(memberInfo.get("USERNAME")));
+		session.setAttribute("newOpenId", String.valueOf(memberInfo.get("NEW_OPENID")));
 		session.setAttribute("memberId", Integer.parseInt(String.valueOf(memberInfo.get("id"))));
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("number", memberInfo.get("NUMBER").toString());

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
+import com.giant.zzidc.base.utils.GiantUtils;
 import com.giant.zzidc.base.utils.PropertyUtils;
 
 public class LoginFilter implements Filter {
@@ -65,6 +66,16 @@ public class LoginFilter implements Filter {
 			logger.debug("未获取到登陆信息");
 			response.sendRedirect(baseUrl + "logout");
 			return;
+		}else {
+			if("my/weixin".equals(path) || "logout".equals(path)) {
+				arg2.doFilter(arg0, arg1);
+				return;
+			}
+			/*memberSession = (Map<String, Object>) session.getAttribute("memberInfo");
+			if (GiantUtils.isEmpty(memberSession.get("NEW_OPENID"))||GiantUtils.isEmpty(session.getAttribute("newOpenId"))) {
+				response.sendRedirect(baseUrl + "my/weixin");
+				return;
+			}*/
 		}
 		arg2.doFilter(arg0, arg1);
 	}

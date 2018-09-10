@@ -93,7 +93,6 @@ public class MyService extends GiantBaseService{
 	 * 设置openID
 	 */
 	public boolean updateOpenId(String openId,int adminid){
-		openId = PlusCut.getInstance().cut(openId);//解密
 		Member login = (Member)dao.getEntityByPrimaryKey(new Member(),adminid);
 		login.setNewOpenid(openId);
 		return super.dao.saveUpdateOrDelete(login, null);

@@ -48,7 +48,7 @@
 							<li><a href="my/test" data-width="600">我的测试</a></li>
 							<li><a href="my/need" data-width="600">我的需求</a></li>
 							<li><a href="my/auth" data-width="600">我的权限</a></li>
-							<!-- <li><a href="my/weixin" data-width="600">绑定微信</a></li> -->
+							<li><a href="my/weixin" data-width="600">绑定微信</a></li>
 						</ul>
 					</li>
 					<li><a href="logout">退出</a></li>

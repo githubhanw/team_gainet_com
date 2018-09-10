@@ -42,13 +42,8 @@
 										已绑定
 									</span>&nbsp;&nbsp;&nbsp;&nbsp;
 									<!-- <a href="javascript:void(0);" onclick="dounbind()">解绑</a> -->
-								</div>
-								<tr>
-									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">解绑</button>
-										<a href="my/" class="btn btn-back btn btn-wide">返回我的地盘</a>
-									</td>
-								</tr>
+								</div>
 							</tbody>
 						</table>
 					</div>

@@ -67,7 +67,8 @@
 									</td>
 									<td></td>
 								</tr>
-								<tr id="privilegeRank" ${p.id==null || p.parentId==0?'style="display:none"':''}>
+								<%-- <tr id="privilegeRank" ${p.id==null || p.parentId==0?'style="display:none"':''}> --%>
+								<tr>
 									<th>顺序</th>
 									<td class="required">
 										<input type="text" name="rank" id="rank" value="${p.rank}" class="form-control input-product-title" autocomplete="off">
@@ -141,13 +142,20 @@
 		$("#url").val("");
 		$("#rank").val("");
 		var param = $('#parent_id option:selected').val();
-		if (param == 0) {
+		/* if (param == 0) {
 			$("#privilegeUrl").hide();
 			$("#privilegeRank").hide();
 		}
 		if (param != 0) {
 			$("#privilegeUrl").show();
 			$("#privilegeRank").show();
+		} */
+		
+		if (param == 0) {
+			$("#privilegeUrl").hide();
+		}
+		if (param != 0) {
+			$("#privilegeUrl").show();
 		}
 	}
 	</script>

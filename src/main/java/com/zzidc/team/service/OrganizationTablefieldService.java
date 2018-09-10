@@ -13,14 +13,15 @@ import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.team.entity.MonthMeeting;
 import com.zzidc.team.entity.Privilege;
+import com.zzidc.team.entity.TableFieldDesc;
 
 /**
- * 权限管理业务逻辑层
+ * 表字段管理业务逻辑层
  * @author hanwei
  *
  */
-@Service("organizationPrivilegeService")
-public class OrganizationPrivilegeService extends GiantBaseService {
+@Service("organizationTablefieldService")
+public class OrganizationTablefieldService extends GiantBaseService {
 	
 	public GiantPager getPageList(GiantPager conditionPage) {
 		if (conditionPage == null) {
@@ -28,8 +29,8 @@ public class OrganizationPrivilegeService extends GiantBaseService {
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "select p.*,(select distinct name from privilege pr where pr.id=p.parent_id) parentName from privilege p where 1=1 ";
-		String countSql = "select count(0) from privilege where 1=1 ";
+		String sql = "select * from table_field_desc where 1 = 1 ";
+		String countSql = "select count(0) from table_field_desc where 1 = 1 ";
 		
 		String temp = "";
 		if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
@@ -54,28 +55,20 @@ public class OrganizationPrivilegeService extends GiantBaseService {
 	}
 	
 	/**
-	 * 添加、修改权限管理信息
+	 * 添加、修改表字段信息
 	 */
 	public boolean addOrUpd(Map<String, String> mvm) {
-		Privilege p = null;
+		TableFieldDesc p = null;
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
-			p = (Privilege) super.dao.getEntityByPrimaryKey(new Privilege(), GiantUtil.intOf(mvm.get("id"), 0));
+			p = (TableFieldDesc) super.dao.getEntityByPrimaryKey(new TableFieldDesc(), GiantUtil.intOf(mvm.get("id"), 0));
 		} else {
-			p = new Privilege();
-			p.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			p = new TableFieldDesc();
 			p.setState((short)1);
 		}
-		Integer parentId = GiantUtil.intOf(mvm.get("parent_id"), 0);
-		p.setUrl(GiantUtil.stringOf(mvm.get("url")));
-		p.setRank(GiantUtil.intOf(mvm.get("rank"), 0));
-		p.setParentId(parentId);	
-		p.setName(GiantUtil.stringOf(mvm.get("name")));
-		p.setRemark(GiantUtil.stringOf(mvm.get("remark")));	
-		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-        /*if (parentId == 0) {
-        	p.setRank(null);
-		}*/
+		p.setTableName(GiantUtil.stringOf(mvm.get("tableName")));
+		p.setFieldName(GiantUtil.stringOf(mvm.get("fieldName")));
+		p.setFieldDesc(GiantUtil.stringOf(mvm.get("fieldNesc")));	
 		return super.dao.saveUpdateOrDelete(p, null);
 	}
 

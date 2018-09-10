@@ -108,29 +108,34 @@
 							data-fixed-left-width="550" data-fixed-right-width="160">
 							<thead>
 								<tr>
-									<th data-flex="false" data-width="90px" style="width: 90px"
+									<th data-flex="false" data-width="150px" style="width: 150px"
 										class="c-id " title="ID"><a href="javascript:void(0)" onclick="pageOrder('id');" 
 										class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 									</th>
-									<th data-flex="false" data-width="50px" style="width: 180px"
+									<th data-flex="false" data-width="250px" style="width: 250px"
 										class="c-pri " title="权限名称"><a href="javascript:void(0)" onclick="pageOrder('name');" 
 										class="${prm.orderColumn=='name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">权限名称</a>
 									</th>
-									<th data-flex="false" data-width="auto" style="width: 180px"
+									<th data-flex="false" data-width="auto" style="width: 250px"
 										class="c-name " title="权限URL"><a href="javascript:void(0)" onclick="pageOrder('url');" 
 										class="${prm.orderColumn=='url'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">权限URL</a>
 									</th>
-									<th data-flex="false" data-width="auto" style="width: 130px"
+									<th data-flex="false" data-width="200px" style="width: 200px"
 										class="c-name text-center" title="创建时间"><a href="javascript:void(0)" onclick="pageOrder('create_time');" 
 										class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建时间</a>
 									</th>
-									<th data-flex="false" data-width="90px" style="width: 180px"
+									<th data-flex="false" data-width="auto" style="width: auto"
 										class="c-id " title="父权限名称(ID)"><a href="javascript:void(0)" onclick="pageOrder('parent_id');" 
 										class="${prm.orderColumn=='parent_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">父权限名称(ID)</a>
 									</th>
 									<th data-flex="false" data-width="auto" style="width: 60px"
 										class="c-name" title="排序"><a href="javascript:void(0)" onclick="pageOrder('rank');" 
 										class="${prm.orderColumn=='rank'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">排序</a>
+									</th>
+									<th data-flex="false" data-width="auto" style="width: auto"
+										class="c-pri text-center" title="状态"><a
+										href="javascript:void(0)" onclick="pageOrder('state');"
+										class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 									</th>
 									<th data-flex="false" data-width="160px" style="width: 230px"
 										class="c-actions text-center" title="操作">操作</th>
@@ -152,6 +157,10 @@
 										  <td class="c-id cell-id">${project.parentName}(${project.parent_id})</td>
 										</c:if>
 										<td class="c-name text-left">${project.rank}</td>
+										<td class="c-pri text-center">
+												<c:if test="${project.state == 1}">正常</c:if>
+												<c:if test="${project.state == 0}"><span class="text-red">已删除</span></c:if>
+										</td>
 										<td class="c-actions text-center"><c:if
 												test="${project.state == '1'}">
 												<a href="organization/privilege/toAdd?id=${project.id}"

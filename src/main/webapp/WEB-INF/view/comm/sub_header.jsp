@@ -46,7 +46,7 @@
 				<li class="dropdown dropdown-hover ${s=='user'?'active':'' }"><a href="organization/user/index">用户</a></li>
 				<li class="dropdown dropdown-hover ${s=='department'?'active':'' }"><a href="organization/department/index">团队</a></li>
 				<li class="dropdown dropdown-hover ${s=='role'?'active':'' }"><a href="organization/role/index">角色</a></li>
-				<li class="dropdown dropdown-hover ${s=='privilege'?'active':'' }"><a href="organization/privilege/index">权限管理</a></li>
+				<li class="dropdown dropdown-hover ${s=='privilege'?'active':'' }"><a href="organization/privilege/index">权限列表管理</a></li>
 				<li class="dropdown dropdown-hover ${s=='tablefield'?'active':'' }"><a href="organization/tablefield/index">表字段管理</a></li>
 			</ul>
 		</nav>

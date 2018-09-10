@@ -16,8 +16,8 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>
-			<c:if test="${p.id==null}">添加项目</c:if>
-			<c:if test="${p.id > 0}">修改项目</c:if>
+			<c:if test="${p.id==null}">添加权限</c:if>
+			<c:if test="${p.id > 0}">修改权限</c:if>
 		</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>

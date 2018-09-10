@@ -21,7 +21,7 @@ import com.zzidc.team.service.OrganizationPrivilegeService;
 import net.sf.json.JSONObject;
 
 /**
- * 权限管理
+ * 权限列表管理
  * 
  * @author hanwei
  *
@@ -74,7 +74,7 @@ public class OrganizationPrivilegeController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转添加 / 修改会议页面
+	 * 跳转添加 / 修改权限页面
 	 */
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
@@ -93,7 +93,7 @@ public class OrganizationPrivilegeController extends GiantBaseController {
 	}
 
 	/**
-	 * 添加 / 修改月会议
+	 * 添加 / 修改权限
 	 */
 	@RequestMapping("/addOrUpd")
 	public void addOrUpd(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -130,7 +130,7 @@ public class OrganizationPrivilegeController extends GiantBaseController {
 	}
 
 	/**
-	 * 删除月会议
+	 * 删除权限
 	 */
 	@RequestMapping("/del")
 	public void del(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {

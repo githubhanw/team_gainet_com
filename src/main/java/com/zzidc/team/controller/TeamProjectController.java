@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.service.TeamProjectService;
 
@@ -72,6 +73,23 @@ public class TeamProjectController extends GiantBaseController {
 
 	/**
 	 * 项目详情
+	 */
+	@RequestMapping("/pro_detail")
+	public String pro_detail(@RequestParam Map<String, String> mvm, Model model) {
+		//添加项目页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskProject p = (TaskProject) teamProjectService.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("p", p);
+			Member member = (Member) teamProjectService.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(p.getMemberId(), 0));
+			model.addAttribute("member_name", member == null ? "" : member.getName());
+		}
+		publicResult(model);
+		return "team/project/pro_detail";
+	}
+	
+	/**
+	 * 科技申报-项目详情
 	 */
 	@RequestMapping("/detail")
 	public String detail(@RequestParam Map<String, String> mvm, Model model) {

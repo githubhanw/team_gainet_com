@@ -59,6 +59,10 @@ public class TestApplyController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
 		}
+		if("1".equals(GiantUtil.stringOf(mvm.get("type")))){
+			mvm.put("orderColumn", "ta.apply_time");
+			mvm.put("orderByValue", "ASC");
+		}
 		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
 			mvm.put("search", "");
 		}

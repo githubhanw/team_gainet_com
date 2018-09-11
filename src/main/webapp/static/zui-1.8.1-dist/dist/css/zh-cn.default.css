@@ -4769,9 +4769,8 @@ body.article-content {
 .datetimepicker table tr td span {
     display:block;
     float:left;
-    width:23%;
+    width:25%;
     height:54px;
-    margin:1%;
     line-height:54px;
     cursor:pointer;
     border-radius:4px
@@ -4783,8 +4782,8 @@ body.article-content {
     color:#999
 }
 .datetimepicker .datetimepicker-hours span {
-    height:26px;
-    line-height:26px
+    height:27px;
+    line-height:27px
 }
 .datetimepicker .datetimepicker-minutes span {
     height:26px;

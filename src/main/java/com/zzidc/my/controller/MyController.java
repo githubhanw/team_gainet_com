@@ -52,6 +52,7 @@ public class MyController extends GiantBaseController {
 	@Autowired
 	private OrganizationRoleService organizationRoleService;
 	private GiantPager conditionPage = null;
+	private String requestURL = "";
 
 	public void publicResult(Model model) {
 		model.addAttribute("m", "my");//模块
@@ -143,6 +144,8 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = testBugService.getPageList(conditionPage);
+		requestURL = "my/bug?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		pageList.setDesAction(requestURL);
 		model.addAttribute("members", testBugService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);
@@ -167,14 +170,15 @@ public class MyController extends GiantBaseController {
 			mvm.put("type", "1");
 			try {
 				int juese =Integer.parseInt(super.getSession().getAttribute("roleIds").toString());
-				if (juese == 5 || juese == 9) {
-					
-				} else {
+				if (juese != 5 && juese != 9) {
 					mvm.put("type", "5");
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
 			}
+		}
+		if("1".equals(GiantUtil.stringOf(mvm.get("type")))){
+			mvm.put("orderColumn", "ta.apply_time");
+			mvm.put("orderByValue", "ASC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
 			mvm.put("search", "");
@@ -187,6 +191,8 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = testApplyService.getPageList(conditionPage);
+		requestURL = "my/test?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		pageList.setDesAction(requestURL);
 		model.addAttribute("members", testApplyService.getAllMember());
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);

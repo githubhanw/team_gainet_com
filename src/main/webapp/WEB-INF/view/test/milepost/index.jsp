@@ -122,7 +122,14 @@
 										<tr>
 											<td class="c-id cell-id text-center">${mil.id}</td>
 											<td class="c-pri text-left">${mil.milepost_name}</td>
-											<td class="c-pri text-center">${mil.milepost_describe}</td>
+											<td class="c-pri text-center" title="${mil.milepost_describe}">
+											<c:if test="${fn:length(mil.milepost_describe)>7 }">
+										                         ${fn:substring(mil.milepost_describe, 0, 7)}...
+										             </c:if>
+										             <c:if test="${fn:length(mil.milepost_describe)<=7}">
+										                         ${mil.milepost_describe}
+			                                </c:if> 
+											</td>
 											<td class="c-name text-left">
 													${mil.start_time}
 											</td>

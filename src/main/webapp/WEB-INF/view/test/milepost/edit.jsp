@@ -65,9 +65,8 @@
 								<tr>
 									<th>描述</th>
 									<td class="required">
-										<input type="hidden" name="mark" value="${mi.milepostDescribe}">
+										<input type="hidden" name="mark" value="">
 										<div id="mark">${mi.milepostDescribe}</div>
-										
 									</td>
 									<td></td>
 								</tr>

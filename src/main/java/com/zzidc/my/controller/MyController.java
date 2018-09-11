@@ -103,6 +103,7 @@ public class MyController extends GiantBaseController {
 		}
 		Map<String, String> queryCondition = conditionPage.getQueryCondition();
 		//查询条件封装
+		queryCondition.clear();
 		queryCondition.putAll(mvm);
 		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));

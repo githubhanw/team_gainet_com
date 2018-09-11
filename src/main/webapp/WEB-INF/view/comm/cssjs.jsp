@@ -5,10 +5,14 @@
 <script src="static/zui-1.8.1-dist/dist/lib/jquery/jquery.js"></script>
 <script src="static/zui-1.8.1-dist/dist/js/zui.min.js"></script>
 <script src="static/zui-1.8.1-dist/dist/js/datetimepicker.js"></script>
-<link rel="stylesheet" href="static/umeditor1.2.3/themes/default/css/umeditor.css" type="text/css">
+<!-- <link rel="stylesheet" href="static/umeditor1.2.3/themes/default/css/umeditor.css" type="text/css">
 <script type="text/javascript" charset="utf-8" src="static/umeditor1.2.3/umeditor.config.js"></script>
 <script type="text/javascript" charset="utf-8" src="static/umeditor1.2.3/umeditor.min.js"></script>
-<script type="text/javascript" src="static/umeditor1.2.3/lang/zh-cn/zh-cn.js"></script>
+<script type="text/javascript" src="static/umeditor1.2.3/lang/zh-cn/zh-cn.js"></script> -->
+
+<script type="text/javascript" charset="utf-8" src="static/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="static/ueditor/ueditor.all.js"></script>
+
 <style type="text/css" media="screen">
     @font-face {
     font-family:ZentaoIcon;

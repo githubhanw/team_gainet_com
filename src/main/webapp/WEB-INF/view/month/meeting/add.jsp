@@ -47,13 +47,14 @@
 										<input type="text" name="name" id="name" value="${p.name}" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
+									<input type="hidden" name="id" value="${p.id}"/>
 								</tr>
 								<tr>
 									<th>备注</th>
 									<td>
-										<input type="hidden" name="remark">
-										<div id="remark">${p.remark}</div>
-										<input type="hidden" name="id" value="${p.id}"/>
+										<div style="width:100%;">
+											<script type="text/plain" id="t_remark" name="remark">${p.remark}</script>
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -113,10 +114,20 @@
 	</body>
 </html>
 <script>
-UMEditor("remark");
+var editor = new UE.ui.Editor();
+editor.render("t_remark");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_remark');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='remark']").val(UM.getEditor('remark').getContent());
 	$.ajax({type:"POST",url:"month/meeting/addOrUpd?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

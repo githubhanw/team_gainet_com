@@ -48,15 +48,16 @@
 												<option value="${member.id}">${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
+										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>备注</th>
 									<td colspan="2">
-										<input type="hidden" name="comment">
-										<div id="comment"></div>
-										<input type="hidden" name="id" value="${t.id}"/>
+										<div id="comment" style="width:100%;">
+											<input type="hidden" name="comment">
+										</div>
 									</td>
 								</tr>
 								</form>
@@ -113,10 +114,20 @@
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 <script>
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+editor.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('comment');
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"test/bug/assign?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

@@ -46,13 +46,14 @@
 												class="form-control form-date-limit" placeholder="计划结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
+									<input type="hidden" name="id" value="${n.id}"/>
 								</tr>
 								<tr>
 									<th>备注</th>
 									<td>
-										<input type="hidden" name="comment">
-										<div id="comment"></div>
-										<input type="hidden" name="id" value="${n.id}"/>
+										<div id="comment" style="width:100%;">
+											<input type="hidden" name="comment">
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -112,10 +113,21 @@
 	</body>
 </html>
 <script>
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+editor.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('comment');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"team/need/open?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

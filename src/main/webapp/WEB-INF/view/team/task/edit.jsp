@@ -48,16 +48,15 @@
 									</div>
 									<div class="detail">
 										<div class="detail-title">任务描述</div>
-										<div class="detail-content form-group article-content">
-											<input type="hidden" name="remark">
-											<div id="remark">${t.remark }</div>
+										<div style="width:100%;">
+											<script type="text/plain" id="t_remark" name="remark">${t.remark}</script>
 										</div>
 									</div>
+									
 									<div class="detail">
 										<div class="detail-title">备注</div>
-										<div class="detail-content form-group article-content">
+										<div id="comment" style="width:100%;">
 											<input type="hidden" name="comment">
-											<div id="comment"></div>
 										</div>
 									</div>
 									<div class="actions form-actions text-center">
@@ -373,12 +372,24 @@
 	</body>
 </html>
 <script>
-UMEditor("remark");
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+var editor2 = new UE.ui.Editor();
+editor.render("t_remark");
+editor2.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_remark');
+UE.getEditor('comment');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='remark']").val(UM.getEditor('remark').getContent());
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"team/task/edit?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

@@ -42,6 +42,7 @@
 								<tr>
 									<th>计划结束日期</th>
 									<td class="required">
+										<input type="hidden" name="id" id="id" value="${t.id}"/>
 										<input type="text" name="plan_end_date" id="plan_end_date" value="<fmt:formatDate value="${t.endDate}" pattern="yyyy-MM-dd HH:mm"/>" 
 												class="form-control form-date-limit" placeholder="计划结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
@@ -50,9 +51,9 @@
 								<tr>
 									<th>备注</th>
 									<td colspan="2">
-										<input type="hidden" name="comment">
-										<div id="comment"></div>
-										<input type="hidden" name="id" id="id" value="${t.id}"/>
+										<div id="comment" style="width:100%;">
+											<input type="hidden" name="comment">
+										</div>
 									</td>
 								</tr>
 								</form>
@@ -111,10 +112,21 @@
 	</body>
 </html>
 <script>
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+editor.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('comment');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"team/task/open?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

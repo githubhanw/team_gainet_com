@@ -61,8 +61,9 @@
 								<tr>
 									<th>描述</th>
 									<td class="required">
-										<input type="hidden" name="need_remark">
-										<div id="need_remark"></div>
+										<div id="need_remark" style="width:100%;">
+											<input type="hidden" name="need_remark">
+										</div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 									<td></td>
@@ -122,10 +123,21 @@
 	</body>
 </html>
 <script>
-UMEditor("need_remark");
+var editor = new UE.ui.Editor();
+editor.render("need_remark");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('need_remark');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='need_remark']").val(UM.getEditor('need_remark').getContent());
+	$("input[name='need_remark']").val(UE.getEditor('need_remark').getContent());
 	$.ajax({type:"POST",url:"test/milepost/add?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

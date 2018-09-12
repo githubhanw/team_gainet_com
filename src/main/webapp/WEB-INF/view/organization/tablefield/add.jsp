@@ -70,8 +70,10 @@
 						</tr>
 						<tr>
 							<th>字段描述</th>
-							<td><input type="hidden" name="fieldDesc">
-								<div id="fieldDesc">${p.fieldDesc}</div> <input type="hidden"
+							<td>
+								<input type="text" name="fieldDesc"
+								id="fieldDesc" value="${p.fieldDesc}"
+								class="form-control input-product-title" autocomplete="off"> <input type="hidden"
 								name="id" value="${p.id}" /></td>
 							<td></td>
 						</tr>
@@ -154,10 +156,10 @@
 </body>
 </html>
 <script>
-	UMEditor("fieldDesc");
+	/* UMEditor("fieldDesc"); */
 	$("#submit").click(function() {
 		$.ajaxSettings.async = false;
-		$("input[name='fieldDesc']").val(UM.getEditor('fieldDesc').getContent());
+		/* $("input[name='fieldDesc']").val(UM.getEditor('fieldDesc').getContent()); */
 		$.ajax({
 			type : "POST",
 			url : "organization/tablefield/addOrUpd?r=" + Math.random(),

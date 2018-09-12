@@ -68,7 +68,7 @@ public class OrganizationTablefieldService extends GiantBaseService {
 		}
 		p.setTableName(GiantUtil.stringOf(mvm.get("tableName")));
 		p.setFieldName(GiantUtil.stringOf(mvm.get("fieldName")));
-		p.setFieldDesc(GiantUtil.stringOf(mvm.get("fieldNesc")));	
+		p.setFieldDesc(GiantUtil.stringOf(mvm.get("fieldDesc")));	
 		return super.dao.saveUpdateOrDelete(p, null);
 	}
 

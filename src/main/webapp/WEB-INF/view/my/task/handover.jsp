@@ -96,14 +96,15 @@
 											</c:forEach>
 										</select>
 									</td>
+									<input type="hidden" name="id" value="${t.id}"/>
 									<td></td>
 								</tr>
 								<tr>
 									<th>已完成内容</th>
 									<td>
-										<input type="hidden" name="handover_info">
-										<div id="handover_info"></div>
-										<input type="hidden" name="id" value="${t.id}"/>
+										<div style="width:50%;">
+											<script type="text/plain" id="t_handover_info" name="handover_info"></script>
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -163,10 +164,20 @@
 	</body>
 </html>
 <script>
-UMEditor("handover_info");
+var editor = new UE.ui.Editor();
+editor.render("t_handover_info");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_handover_info');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='handover_info']").val(UM.getEditor('handover_info').getContent());
 	$.ajax({type:"POST",url:"my/task/handover?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

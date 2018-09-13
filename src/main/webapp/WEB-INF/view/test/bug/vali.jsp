@@ -42,7 +42,7 @@
 								</tr>
 								<tr>
 									<th>任务名称:</th>
-									<td>${t.tasktype}<input type="hidden" name="id" value="${t.id}"/></td>
+									<td>${taskName}<input type="hidden" name="id" value="${t.id}"/></td>
 									<td></td>
 								</tr>
 								<tr>

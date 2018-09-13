@@ -124,8 +124,9 @@
 								<tr>
 									<th>BUG描述</th>
 									<td>
-										<input type="hidden" name="mark">
-										<div id="mark">${t.mark }</div>
+										<div id="mark" style="width:100%;">
+											<input type="hidden" name="mark">
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -185,11 +186,22 @@
 	</body>
 </html>
 <script>
-UMEditor("mark");
+var editor = new UE.ui.Editor();
+editor.render("mark");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('mark');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='mark']").val(UM.getEditor('mark').getContent());
-	$.ajax({type:"POST",url:"test/bug/add?r=" + Math.random(),data:$("form").serialize(),
+	$("input[name='mark']").val(UE.getEditor('mark').getContent());
+	$.ajax({type:"POST",url:"my/bug/add?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);

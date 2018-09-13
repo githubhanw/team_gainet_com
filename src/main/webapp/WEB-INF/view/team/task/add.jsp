@@ -113,10 +113,6 @@
 								<tr>
 									<th>任务描述</th>
 									<td>
-										<%-- <input type="hidden" name="remark">
-										<div id="remark"></div>
-										<input type="hidden" name="id" value="${t.id}"/> --%>
-										
 										<div id="remark" style="width:100%;">
 											<input type="hidden" name="remark">
 										</div>

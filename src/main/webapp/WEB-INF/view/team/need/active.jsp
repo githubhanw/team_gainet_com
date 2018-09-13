@@ -55,7 +55,7 @@
 									<td colspan="2">
 										<div id="comment" style="width:100%;">
 											<input type="hidden" name="comment">
-										</div>>
+										</div>
 									</td>
 								</tr>
 								</form>

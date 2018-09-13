@@ -90,10 +90,12 @@
 										class="form-control chosen chosen-select" name="state"
 										id="state">
 											<option value="">状态</option>
-											<option ${prm.bugrank=='0'?'selected="selected"':'' }
-												value="0">无效</option>
-											<option ${prm.bugrank=='1'?'selected="selected"':'' }
-												value="1">正常</option>
+											<option ${prm.state=='1'?'selected="selected"':'' }
+												value="1">进行中</option>
+											<option ${prm.state=='2'?'selected="selected"':'' }
+												value="2">已完结</option>
+												<option ${prm.state=='0'?'selected="selected"':'' }
+												value="0">已删除</option>
 									</select></td>
 								</tr>
 								<tr>

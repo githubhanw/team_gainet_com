@@ -56,6 +56,9 @@ public class MonthMeetingController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");//正常
 		}
+		/*if("".equals(GiantUtil.stringOf(mvm.get("search")))){
+			mvm.put("search", "");
+		}*/
 		Map<String, String> queryCondition = conditionPage.getQueryCondition();
 		//查询条件封装
 		queryCondition.clear();

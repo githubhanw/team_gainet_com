@@ -30,10 +30,42 @@ public class MonthMeetingService extends GiantBaseService {
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		String sql = "select mm.id id, mm.name name, mm.create_time create_time, mm.state state, " + 
 				"(SELECT count(0) FROM task_need tn WHERE tn.meeting_id=mm.id AND tn.state!=0) totalCount, " +
-				"(SELECT count(0) FROM task_need tn WHERE tn.meeting_id=mm.id AND tn.state!=0 and tn.stage=2) approvedCount, " +
-				"(SELECT count(0) FROM task_need tn WHERE tn.meeting_id=mm.id AND tn.state!=0 and tn.stage=1) waitApprovedCount " +
+				"(SELECT count(0) FROM task_need tn WHERE tn.meeting_id=mm.id AND tn.state!=0 and tn.state=4) approvedCount, " +
+				"(SELECT count(0) FROM task_need tn WHERE tn.meeting_id=mm.id AND tn.state!=0 and tn.state=3) waitApprovedCount " +
 				"from month_meeting mm where 1 = 1 ";
-		String countSql = "SELECT count(0) FROM month_meeting where 1 = 1 ";
+		String countSql = "SELECT count(0) FROM month_meeting mm where 1 = 1 ";
+		
+		/*String temp1 = "";
+		if (!StringUtils.isEmpty(temp1 = conditionPage.getQueryCondition().get("search"))) {
+			temp1 = temp1.trim();
+			String searchType = "";
+			if (!StringUtils.isEmpty(searchType = conditionPage.getQueryCondition().get("searchType"))) {
+				if ("1".equals(searchType)) {
+					try {
+						Integer.parseInt(temp1);	
+						sql += "AND mm.id =:search ";
+						countSql += "AND mm.id =:search ";
+						conditionMap.put("search", temp1);
+					} catch (Exception e) {
+						// 名称条件
+						sql += "AND mm.name LIKE :search ";
+						countSql += "AND mm.name LIKE :search ";
+						conditionMap.put("search", temp1 + "%");
+					}
+				} else if("2".equals(searchType)) {
+					sql += "AND mm.remark LIKE :search ";
+					countSql += "AND mm.remark LIKE :search ";
+					conditionMap.put("search", "%" + temp1 + "%");
+				}
+			}
+		}
+		
+		String State="";//状态
+		if (!StringUtils.isEmpty(State = conditionPage.getQueryCondition().get("state"))) {
+			sql += "AND mm.state=:state ";
+			countSql += "AND mm.state=:state ";
+			conditionMap.put("state", State);
+		}*/
 		
 		String temp = "";
 		if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {

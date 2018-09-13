@@ -185,7 +185,7 @@ public class TeamNeedService extends GiantBaseService{
 				if ("5".equals(temp)) {//已关闭
 					sql += "AND tn.state=5 ";
 					countSql += "AND tn.state=5 ";
-				} else if (!"20".equals(temp) && !"8".equals(temp)) {
+				} else if (!"20".equals(temp) && !"8".equals(temp) && !"12".equals(temp) && !"97".equals(temp)) {
 					sql += "AND tn.state!=5 ";
 					countSql += "AND tn.state!=5 ";
 				}

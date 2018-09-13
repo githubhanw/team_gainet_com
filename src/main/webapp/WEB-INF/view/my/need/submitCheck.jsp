@@ -88,7 +88,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/need/index" class="btn">返回需求列表</a>
+								<a href="my/need" class="btn">返回需求列表</a>
 							</div>
 						</div>
 					</div>

@@ -169,7 +169,7 @@
 								<a href="my/need/toAdd" class="btn">继续创建需求</a> <a
 									href="team/task/toAdd" class="btn">建任务</a> <a
 									href="team/task/toAdd" class="btn">批量建任务</a> <a
-									href="my/need/index" class="btn">返回需求列表</a>
+									href="my/need" class="btn">返回需求列表</a>
 							</div>
 						</div>
 					</div>

@@ -99,6 +99,7 @@ public class OrganizationTablefieldController extends GiantBaseController {
 		JSONObject json = new JSONObject();
 
 		if (mvm.get("tableName") == null || "".equals(mvm.get("tableName")) ||
+			mvm.get("fieldDesc") == null || "".equals(mvm.get("fieldDesc")) ||
 			mvm.get("fieldName") == null || "".equals(mvm.get("fieldName"))) {
 			json.put("code", 1);
 			json.put("message", "参数不足");

@@ -962,7 +962,7 @@ public class TeamNeedService extends GiantBaseService{
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			n = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.OPEN, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.SUBMITCHECK, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			TaskNeed oldT = new TaskNeed();
 			BeanUtils.copyProperties(n, oldT);
 			n.setFinishedId(n.getAssignedId());
@@ -974,7 +974,7 @@ public class TeamNeedService extends GiantBaseService{
 			n.setState((short)3);
 			boolean b = super.dao.saveUpdateOrDelete(n, null);
 			if (b) {
-				pmLog.add(n.getId(), oldT, n,"checked_id");
+				pmLog.add(n.getId(), oldT, n,"finished_name");
 				this.log(pmLog);
 			}
 			return b; 

@@ -28,7 +28,8 @@ public enum LogMethod {
 	DELAY("延期"),
 	DELAYCHECK("延期审核"),
 	CHECK("验收"),
-	HANDOVER("交接");
+	HANDOVER("交接"),
+	SUBMITCHECK("提交验收");
 	
 	private LogMethod(String value) {
 		this.value = value;

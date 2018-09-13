@@ -17,6 +17,7 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TestBug;
 import com.zzidc.team.service.TestBugService;
 
@@ -298,6 +299,8 @@ public class TestBugController extends GiantBaseController {
 				return "nopower";
 			}
 			model.addAttribute("t", t);
+			Task task = (Task) testBugService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(t.getTaskid(), 0));
+			model.addAttribute("taskName", task.getTaskName());
 		}
 		publicResult(model);
 		model.addAttribute("s", "add");//子模块

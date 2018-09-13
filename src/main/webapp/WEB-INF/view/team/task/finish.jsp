@@ -47,8 +47,8 @@
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}">${member.name}(${member.number})</option>
 											</c:forEach>
-										<input type="hidden" name="id" value="${t.id}"/>
 										</select>
+										<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 									<td></td>
 								</tr>

@@ -52,8 +52,8 @@
 										<div class="detail-title">备注</div>
 										<div class="form-group">
 											<div id="comment" style="width:100%;">
-											<input type="hidden" name="comment">
-										</div>
+												<input type="hidden" name="comment">
+											</div>
 										</div>
 									</div>
 									<div class="actions form-actions text-center">

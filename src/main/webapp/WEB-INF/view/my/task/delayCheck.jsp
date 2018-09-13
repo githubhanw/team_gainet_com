@@ -39,12 +39,13 @@
 						<table class="table table-form">
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+								<input type="hidden" name="id" value="${t.id}"/>
 								<tr>
 									<th>备注</th>
 									<td>
-										<input type="hidden" name="comment">
-										<div id="comment"></div>
-										<input type="hidden" name="id" value="${t.id}"/>
+										<div id="comment" style="width:100%;">
+											<input type="hidden" name="comment">
+										</div>
 									</td>
 								</tr>
 								</form>
@@ -103,7 +104,18 @@
 	</body>
 </html>
 <script>
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+editor.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('comment');
+
 function setStory(reason) {
 	if (reason == '重复') {
 		$('#duplicateStoryBox').show();
@@ -118,7 +130,7 @@ function setStory(reason) {
 }
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"my/task/delayCheck?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

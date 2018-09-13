@@ -101,8 +101,9 @@
 								<tr>
 									<th>任务描述</th>
 									<td>
-										<input type="hidden" name="remark">
-										<div id="remark">${t.test_content}</div>
+										<div style="width:50%;">
+											<script type="text/plain" id="t_remark" name="remark">${t.testContent}</script>
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -160,11 +161,21 @@
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 	<script>
-	UMEditor("remark");
+	var editor = new UE.ui.Editor();
+	editor.render("t_remark");
+	UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+	UE.Editor.prototype.getActionUrl = function(action){  
+		if(action == 'uploadimage' || action == 'uploadscrawl'){  
+			return '<%=basePath%>ueditor/upload';  
+		}else{  
+			return this._bkGetActionUrl.call(this, action);  
+		}  
+	};  
+	UE.getEditor('t_remark');
+
 	$("#submit").click(function(){
 		debugger;
 		$.ajaxSettings.async = false;
-		$("input[name='remark']").val(UM.getEditor('remark').getContent());
 		$.ajax({type:"POST",url:"my/test/receive?r=" + Math.random(),data:$("form").serialize(),
 				dataType:"json",success:function(data){
 			if(data.code == 0){

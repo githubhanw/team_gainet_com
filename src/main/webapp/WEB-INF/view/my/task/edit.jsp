@@ -48,14 +48,14 @@
 									</div>
 									<div class="detail">
 										<div class="detail-title">任务描述</div>
-										<div class="detail-content form-group article-content">
-											<div id="remark" name="remark">${t.remark }</div>
+										<div style="width:100%;">
+											<script type="text/plain" id="t_remark" name="remark">${t.remark}</script>
 										</div>
 									</div>
 									<div class="detail">
 										<div class="detail-title">备注</div>
-										<div class="detail-content form-group article-content">
-											<div id="comment" name="comment"></div>
+										<div id="comment" style="width:100%;">
+											<input type="hidden" name="comment">
 										</div>
 									</div>
 									<div class="actions form-actions text-center">
@@ -347,12 +347,27 @@
 	</body>
 </html>
 <script>
-UMEditor("remark");
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+var editor2 = new UE.ui.Editor();
+editor.render("t_remark");
+editor2.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_remark');
+UE.getEditor('comment');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$.ajax({type:"POST",url:"my/task/edit?r=" + Math.random(),data:$("form").serialize() + "&remark=" + UM.getEditor('remark').getContent() + "&comment=" + UM.getEditor('comment').getContent(),dataType:"json",success:function(data){
-		if(data.code == 0){
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"my/task/edit?r=" + Math.random(),data:$("form").serialize(),
+		dataType:"json",success:function(data){
+			if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
 		}else{

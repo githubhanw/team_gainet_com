@@ -162,7 +162,6 @@
 	</body>
 	<script>
 	var editor = new UE.ui.Editor();
-	var editor2 = new UE.ui.Editor();
 	editor.render("t_remark");
 	UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 	UE.Editor.prototype.getActionUrl = function(action){  

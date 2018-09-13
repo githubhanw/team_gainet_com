@@ -34,21 +34,24 @@
 						</div>
 						<table class="table table-form">
 							<tbody>
+							<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+							<input type="hidden" name="id" id="id" value="${entity.id}"/>
 								<tr>
 									<th>备注</th>
 									<td>
-										<input type="hidden" name="comment">
-										<div id="comment"></div>
-										<input type="hidden" name="id" id="id" value="${entity.id}"/>
+										<div id="comment" style="width:100%;">
+											<input type="hidden" name="comment">
+										</div>
 									</td>
 									<td></td>
 								</tr>
-								<tr>
-									<td colspan="3" class="text-center form-actions">
-										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
-										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
-									</td>
-								</tr>
+							</form>
+							<tr>
+								<td colspan="3" class="text-center form-actions">
+									<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
+									<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
+								</td>
+							</tr>
 							</tbody>
 						</table>
 					</div>
@@ -97,12 +100,23 @@
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 <script>
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+editor.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('comment');
+
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
-	$.ajax({type:"POST",url:"my/test/dismissal?r=" + Math.random(),data:"id=" + $("#id").val(),
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"my/test/dismissal?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		/* if(data.code == 0){
 			window.location.href = "team/need/index";

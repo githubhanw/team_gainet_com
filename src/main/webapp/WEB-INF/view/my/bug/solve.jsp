@@ -58,13 +58,14 @@
 										</select>
 									</td>
 									<td></td>
+								<input type="hidden" name="id" value="${t.id}"/>
 								</tr>
 								<tr>
 									<th>描述</th>
 									<td colspan="2">
-										<input type="hidden" name="kaifamark">
-										<div id="kaifamark"></div>
-										<input type="hidden" name="id" value="${t.id}"/>
+										<div id="kaifamark" style="width:100%;">
+											<input type="hidden" name="kaifamark">
+										</div>
 									</td>
 								</tr>
 								</form>
@@ -122,10 +123,21 @@
 	</body>
 </html>
 <script>
-UMEditor("kaifamark");
+var editor = new UE.ui.Editor();
+editor.render("kaifamark");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('kaifamark');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='kaifamark']").val(UM.getEditor('kaifamark').getContent());
+	$("input[name='kaifamark']").val(UE.getEditor('kaifamark').getContent());
 	$.ajax({type:"POST",url:"my/bug/solve?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

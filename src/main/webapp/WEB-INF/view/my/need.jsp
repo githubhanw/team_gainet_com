@@ -177,7 +177,7 @@
 														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="所属项目">
-												<a href="${pageList.desAction}&orderColumn=tp.project_name');" 
+												<a href="javascript:void(0)" onclick="pageOrder('tp.project_name');" 
 														class="${prm.orderColumn=='tp.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属项目</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="需求方">
@@ -201,8 +201,8 @@
 														class="${prm.orderColumn=='checked_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">验收时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:80px" class="c-name text-center" title="状态">
-												<a href="javascript:void(0)" onclick="pageOrder('stage');" 
-														class="${prm.orderColumn=='stage'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a href="javascript:void(0)" onclick="pageOrder('state');" 
+														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="创建时间">
 												<a href="javascript:void(0)" onclick="pageOrder('create_time');" 

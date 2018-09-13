@@ -407,7 +407,6 @@ public class TeamNeedService extends GiantBaseService{
 		//分解
 		need.setResolved((short)0);
 		need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
-		need.setStage((short)1);
 		try {
 			need.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
 		} catch (ParseException e) {
@@ -453,7 +452,6 @@ public class TeamNeedService extends GiantBaseService{
 				super.dao.saveUpdateOrDelete(parentNeed, null);
 			}
 		}
-		need.setStage((short)1);
 		//需求方
 		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
 		need.setMemberId(member == null ? 0 : member.getId());

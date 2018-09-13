@@ -166,15 +166,16 @@
 											<tr>
 												<th>当前状态</th>
 												<td>
-													${need.state == 1 ? '激活' : need.state == 2 ? '已变更' : need.state == 3 ? '已关闭' : need.state == 0 ? '已删除' : '未知'}
+													${needM.state == 0 ? '已删除' : needM.state == 1 ? '未开始' : needM.state == 2 ? '进行中'
+													 : needM.state == 3 ? '待验收' : needM.state == 4 ? '已验收' : needM.state == 5 ? '已关闭' : '未知'}
 												</td>
 											</tr>
-											<tr>
+											<%-- <tr>
 												<th>所处阶段</th>
 												<td>
 													${need.stage == 1 ? '待验收' : need.stage == 2 ? '验收完成' : need.stage == 3 ? '验收不通过' : '未知'}
 												</td>
-											</tr>
+											</tr> --%>
 											<tr>
 												<th>开始日期</th>
 												<td>${need.startDate}</td>

@@ -52,7 +52,7 @@ public class MyService extends GiantBaseService{
 	 * 获取待我验收需求
 	 */
 	public Map<String, Object> getCheckedMineNeed(){
-		String sql = "SELECT COUNT(0) 'count' FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE tn.state!=0 AND tn.member_id="+super.getMemberId();
+		String sql = "SELECT COUNT(0) 'count' FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE tn.state==3 AND tn.member_id="+super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);

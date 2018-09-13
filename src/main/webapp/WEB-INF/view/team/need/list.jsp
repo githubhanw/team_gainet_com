@@ -298,13 +298,13 @@
 													    </c:if>
 														
 														<c:if test="${need.full == 1}">
-														  <c:if test="${need.state == 1">
+														  <c:if test="${need.state == 1}">
 														    <a href="team/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
 														    </c:if>
-														    <c:if test="${need.state == 2">
+														    <c:if test="${need.state == 2}">
 														    <a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
 															</c:if>
-															<c:if test="${need.state == 3">
+															<c:if test="${need.state == 3}">
 															<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
 														    </c:if>
 														</c:if>

@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
@@ -14,11 +17,14 @@ import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.team.entity.TaskProject;
 
+import net.sf.json.JSONObject;
 /**
  * [说明/描述]
  */
 @Service("teamProjectService")
 public class TeamProjectService extends GiantBaseService{
+	@Autowired
+	private FilemanageService filemanageService;
 	
 	public GiantPager getPageList(GiantPager conditionPage) {
 		if (conditionPage == null) {
@@ -123,9 +129,9 @@ public class TeamProjectService extends GiantBaseService{
 	}
 
 	/**
-	 * 添加、修改项目信息
+	 * 添加项目信息
 	 */
-	public boolean addOrUpd(Map<String, String> mvm) {
+	public boolean addOrUpd(Map<String, String> mvm,int id,String name,MultipartFile[] file1,MultipartFile[] file2,MultipartFile[] file3,MultipartFile[] file4) {
 		TaskProject p = null;
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
@@ -136,13 +142,74 @@ public class TeamProjectService extends GiantBaseService{
 			p.setState((short)1);
 		}
 		p.setProjectName(GiantUtil.stringOf(mvm.get("project_name")));
+		p.setStartTime(mvm.get("start_date"));
+		p.setEndTime(mvm.get("end_date"));
 		p.setCompany(GiantUtil.stringOf(mvm.get("company")));
 		p.setMemberId(GiantUtil.intOf(mvm.get("member_id"), 0));
 		p.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		p.setProjectType(mvm.get("type"));
+		boolean a=super.dao.saveUpdateOrDelete(p, null);
+		boolean flags;
+		//创建文档
+		if(mvm.get("type").equals("0")){//如果等于0，就是内部文件
+		   JSONObject jsonupload=new JSONObject();
+		   jsonupload=filemanageService.uploadfiles(file2);
+		   if(jsonupload!=null){
+		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"2");
+		   }
+		   jsonupload=filemanageService.uploadfiles(file3);
+		   if(jsonupload!=null){
+	       flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"3");
+		   }
+		   jsonupload=filemanageService.uploadfiles(file4);
+		   if(jsonupload!=null){
+		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"4");
+		   }
+		}else{
+		   JSONObject jsonupload=new JSONObject();
+		   jsonupload=filemanageService.uploadfiles(file1);
+		   if(jsonupload!=null){
+		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"1");
+		   }
+		   jsonupload=filemanageService.uploadfiles(file2);
+		   if(jsonupload!=null){
+		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"2");
+		   }
+		   jsonupload=filemanageService.uploadfiles(file3);
+		   if(jsonupload!=null){
+		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"3");
+		   }
+		   jsonupload=filemanageService.uploadfiles(file4);
+		   if(jsonupload!=null){
+		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"4");
+		}
+      }
+		return a;
+	}
+	/**
+	 * 修改项目信息
+	 */
+	public boolean edit(Map<String, String> mvm) {
+		TaskProject p = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			p = (TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(mvm.get("id"), 0));
+		} else {
+			p = new TaskProject();
+			p.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			p.setState((short)1);
+		}
+		p.setProjectName(GiantUtil.stringOf(mvm.get("project_name")));
+		p.setStartTime(mvm.get("start_date"));
+		p.setEndTime(mvm.get("end_date"));
+		p.setCompany(GiantUtil.stringOf(mvm.get("company")));
+		p.setMemberId(GiantUtil.intOf(mvm.get("member_id"), 0));
+		p.setRemark(GiantUtil.stringOf(mvm.get("remark")));
+		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		p.setProjectType(mvm.get("type"));
 		return super.dao.saveUpdateOrDelete(p, null);
 	}
-
 	/**
 	 * 获取项目信息
 	 * @param projectId

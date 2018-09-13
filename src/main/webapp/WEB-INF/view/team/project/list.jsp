@@ -133,6 +133,10 @@
 												<a  href="${pageList.desAction}&orderColumn=project_name&orderByValue=${prm.orderColumn=='project_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目名称</a>
 											</th>
+											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="类型">
+												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">类型</a>
+											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="所属公司">
 												<a  href="${pageList.desAction}&orderColumn=company&orderByValue=${prm.orderColumn=='company'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属公司</a>
@@ -149,6 +153,16 @@
 												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
+											
+											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="开始时间">
+												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='start_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">开始时间</a>
+											</th>
+											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="结束时间">
+												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='end_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">结束时间</a>
+											</th>
+											
 											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="项目创建时间">
 												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目创建时间</a>
@@ -171,18 +185,24 @@
 											<td class="c-pri text-left">
 												<a href="team/project/pro_detail?id=${project.id}" data-toggle="tooltip" data-placement="top" title="${project.project_name}">${project.project_name}</a>
 											</td>
+											<td class="c-pri text-left">
+											<c:if test="${project.project_type == 0}">内部项目</c:if>
+											<c:if test="${project.project_type == 1}">外部项目</c:if>
+											</td>
 											<td class="c-name text-left">${project.company}</td>
 											<td class="c-pri text-left">${project.member_name}</td>
 											<td class="c-pri text-left">${project.remark}</td>
 											<td class="c-assignedTo has-btn text-center">
 												${project.state == 1 ? '正常' : '已删除'}
 											</td>
+											<td class="c-pri text-center" />${project.start_time}</td>
+											<td class="c-pri text-center" />${project.end_time}</td>
 											<td class="c-pri text-center"><fmt:formatDate value="${project.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-pri text-center"><a href="team/need/index?type=96&project_id=${project.id}">${project.needCount}</a></td>
 											<td class="c-pri text-center"><a href="team/task/index?type=96&project_id=${project.id}">${project.taskCount}</a></td>
 											<td class="c-actions text-center">
 												<c:if test="${project.state == '1'}">
-													<a href="team/project/toAdd?id=${project.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
+													<a href="team/project/toedit?id=${project.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
 													<a href="javascript:void(0)" onclick="del(${project.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
 													<a href="team/need/toAdd?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i> 提需求</a>
 												</c:if>

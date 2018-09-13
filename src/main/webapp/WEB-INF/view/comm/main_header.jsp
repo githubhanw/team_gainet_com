@@ -17,7 +17,9 @@
 				<li ${m=='project' || m=='need' || m=='task' || m=='apply'?'class="active"':'' } data-id="my"><a href="team/task/index"><span>管理中心</span></a></li> 
 				<li class="divider"></li>
 				<li ${m=='pd'?'class="active"':'' } data-id="doc"><a href="declaration/project/index" ${m=='pd'?'class="active"':'' }>科技申报</a></li>
-				<!-- <li data-id="doc"><a href="#">文档</a></li>
+				<li class="divider"></li>
+				<li ${m=='filemanage'?'class="active"':'' } data-id="doc"><a href="filemanage/manage/index" ${m=='filemanage'?'class="active"':'' }>文档</a></li>
+				<!--<li ${(m=='filemanage' && s=='manage')?'class="active"':'' }data-id="filemanage"><a href="filemanage/manage">文档</a></li>
 				<li data-id="report"><a href="#">统计</a></li> -->
 				<li ${m=='organization'?'class="active"':'' } data-id="doc"><a href="organization/user/index" ${m=='organization'?'class="active"':'' }>组织</a></li>
 				
@@ -48,7 +50,7 @@
 							<li><a href="my/test" data-width="600">我的测试</a></li>
 							<li><a href="my/need" data-width="600">我的需求</a></li>
 							<li><a href="my/auth" data-width="600">我的权限</a></li>
-							<li><a href="my/weixin" data-width="600">绑定微信</a></li>
+							<!-- <li><a href="my/weixin" data-width="600">绑定微信</a></li> -->
 						</ul>
 					</li>
 					<li><a href="logout">退出</a></li>

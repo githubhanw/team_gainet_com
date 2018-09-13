@@ -32,13 +32,13 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="my/need/detail?id=${n.id}">${n.needName}</a>
+								<a href="my/need">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 验收</small>
 							</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
-								<form class="main-table table-task skip-iframe-modal" method="post">
+								<form class="main-table table-task skip-iframe-modal" id="createForm" method="post">
 								<tr>
 									<th>状态</th>
 									<td class="required">
@@ -48,10 +48,18 @@
 								</tr>
 								<tr>
 									<th>备注</th>
-									<td>
+									<td class="required">
 										<input type="hidden" name="comment">
-										<div id="comment"></div>
+										<textarea id="comment" name="details" placeholder="" style="width:100%;height:500px;"></textarea>
+										<div id="comment" value=""></div>
 										<input type="hidden" name="id" value="${n.id}"/>
+										<input type="hidden" name="needname" value="${n.needName}"/>
+									</td>
+								</tr>
+								<tr>
+									<th>上传文档</th>
+									<td class="required">
+										<input type="file" name="file" id="file">
 									</td>
 									<td></td>
 								</tr>
@@ -109,21 +117,65 @@
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 	<script>
-	UMEditor("comment");
+	var editor = new UE.ui.Editor();
+	editor.render("content");
+
+	UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+	UE.Editor.prototype.getActionUrl = function(action){  
+		if(action == 'uploadimage' || action == 'uploadscrawl'){  
+			return '<%=basePath%>ueditor/upload';  
+		}else{  
+			return this._bkGetActionUrl.call(this, action);  
+		}  
+	};  
+	UE.getEditor('comment');
 	$("#submit").click(function(){
+
+			
+		
+		$("input[name='comment']").val(UE.getEditor('comment').getContent());
+		var form = new FormData(document.getElementById("createForm"));
+		var filesize=$("#file").val();
+		
+		if(filesize==''){
+			alert("请选择文件");
+		}else{
 		$.ajaxSettings.async = false;
-		$("input[name='comment']").val(UM.getEditor('comment').getContent());
-		$.ajax({type:"POST",url:"my/need/check?r=" + Math.random(),data:$("form").serialize(),
-				dataType:"json",success:function(data){
-			if(data.code == 0){
-				$("#msg").text(data.message);
-				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-			}else{
-				$("#errMsg").text(data.message);
-				$('#errModal').modal({keyboard: false,show: true, moveable: true});
-			}
-		}})
+		$.ajax({
+	         url:"my/need/check?r=" + Math.random(),
+	         type:"post",
+	         data:form,
+	         dataType:"json",
+	         processData:false,
+	         contentType:false,
+	         success:function(data){
+	        	 if(data.code == 0){
+	 				$("#msg").text(data.message);
+	 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+	 			}else{
+	 				$("#errMsg").text(data.message);
+	 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+	 			}
+	         }
+	     });
 		$.ajaxSettings.async = true;
-	});
+		}
+	});	
+//	UMEditor("comment");
+//	$("#submit").click(function(){
+//		$.ajaxSettings.async = false;
+//		$("input[name='comment']").val(UM.getEditor('comment').getContent());
+//		$.ajax({type:"POST",url:"my/need/check?r=" + Math.random(),data:$("form").serialize(),
+//				dataType:"json",success:function(data){
+//			if(data.code == 0){
+//				$("#msg").text(data.message);
+//				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+//			}else{
+//				$("#errMsg").text(data.message);
+//				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+//			}
+//	 	}})
+//		$.ajaxSettings.async = true;
+//	 });
 	</script>
 </html>

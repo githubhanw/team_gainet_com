@@ -26,10 +26,12 @@ public class TaskProject implements java.io.Serializable {
 	private String company;
 	private Integer memberId;
 	private String remark;
+	private String startTime;
+	private String endTime;
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private Short state;
-
+	private String projectType;
 	// Constructors
 
 	/** default constructor */
@@ -43,15 +45,18 @@ public class TaskProject implements java.io.Serializable {
 
 	/** full constructor */
 	public TaskProject(String projectName, String company, Integer memberId,
-			String remark, Timestamp createTime, Timestamp updateTime,
-			Short state) {
+			String remark, String startTime, String endTime, Timestamp createTime, Timestamp updateTime,
+			Short state,String projectType) {
 		this.projectName = projectName;
 		this.company = company;
 		this.memberId = memberId;
 		this.remark = remark;
+		this.startTime = startTime;
+		this.endTime = endTime;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.state = state;
+		this.projectType=projectType;
 	}
 
 	// Property accessors
@@ -102,6 +107,23 @@ public class TaskProject implements java.io.Serializable {
 		this.remark = remark;
 	}
 
+	@Column(name = "start_time", length = 25)
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+	@Column(name = "end_time", length = 25)
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
 	@Column(name = "create_time", length = 19)
 	public Timestamp getCreateTime() {
 		return this.createTime;
@@ -129,4 +151,12 @@ public class TaskProject implements java.io.Serializable {
 		this.state = state;
 	}
 
+	@Column(name = "project_type", nullable = true)
+	public String getProjectType() {
+		return projectType;
+	}
+
+	public void setProjectType(String projectType) {
+		this.projectType = projectType;
+	}
 }

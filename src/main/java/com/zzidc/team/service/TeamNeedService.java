@@ -12,7 +12,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
@@ -24,12 +26,15 @@ import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskNeed;
 
+import net.sf.json.JSONObject;
+
 /**
  * [说明/描述]
  */
 @Service("teamNeedService")
 public class TeamNeedService extends GiantBaseService{
-
+	@Autowired
+	private FilemanageService filemanageService;
 	public GiantPager getPageList(GiantPager conditionPage) {
 		if (conditionPage == null) {
 			conditionPage = new GiantPager();
@@ -236,10 +241,10 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("11".equals(temp)) {//需求方是我
 					sql += "AND tn.member_id=" + memberId;
 					countSql += "AND tn.member_id=" + memberId;
-				} else if ("14".equals(temp)) {//待我验收
+				} else if ("13".equals(temp)) {//待我验收
 					sql += "AND tn.state=3 AND tn.member_id=" + memberId;
 					countSql += "AND tn.state=3 AND tn.member_id=" + memberId;
-				} else if ("13".equals(temp)) {//指派给我，且待验收需求
+				} else if ("14".equals(temp)) {//指派给我，且待验收需求
 					sql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
 					countSql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
 				}
@@ -369,7 +374,7 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * 添加需求信息
 	 */
-	public boolean add(Map<String, String> mvm) {
+	public boolean add(Map<String, String> mvm,int id,String name,MultipartFile[] file) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		TaskNeed need = new TaskNeed();
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
@@ -428,6 +433,16 @@ public class TeamNeedService extends GiantBaseService{
 		need.setOverdue((short) 0);
 		need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		boolean flag = super.dao.saveUpdateOrDelete(need, null);
+		
+		//创建文档
+	  	JSONObject jsonupload=new JSONObject();
+	  	jsonupload=filemanageService.uploadfiles(file);
+	    if(jsonupload!=null){
+	    boolean flags = filemanageService.addxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),need.getId());
+	  	}else{
+	  	return false;
+	  	}
+		
 		pmLog.setObjectId(need.getId());
 		this.log(pmLog);
 		return flag;

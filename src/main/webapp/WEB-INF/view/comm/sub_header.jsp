@@ -46,8 +46,12 @@
 				<li class="dropdown dropdown-hover ${s=='user'?'active':'' }"><a href="organization/user/index">用户</a></li>
 				<li class="dropdown dropdown-hover ${s=='department'?'active':'' }"><a href="organization/department/index">团队</a></li>
 				<li class="dropdown dropdown-hover ${s=='role'?'active':'' }"><a href="organization/role/index">角色</a></li>
-				<li class="dropdown dropdown-hover ${s=='privilege'?'active':'' }"><a href="organization/privilege/index">权限列表管理</a></li>
-				<li class="dropdown dropdown-hover ${s=='tablefield'?'active':'' }"><a href="organization/tablefield/index">表字段管理</a></li>
+				<li class="dropdown dropdown-hover ${s=='privilege'?'active':'' }"><a href="organization/privilege/index">权限管理</a></li>
+			</ul>
+		</nav>
+		<nav id="subNavbar" ${m=='filemanage' ?'':'style="display:none"'}>
+		    <ul class="nav nav-default" style="max-width: 1491px; left: 0px; position: relative;">
+				<li class="dropdown dropdown-hover ${m=='filemanage' && s=='manage'?'active':'' }"><a href="filemanage/manage/index">全部文档</a></li>
 			</ul>
 		</nav>
 		<div id="pageActions">

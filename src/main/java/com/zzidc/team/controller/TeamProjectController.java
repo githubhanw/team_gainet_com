@@ -1,5 +1,8 @@
 package com.zzidc.team.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -10,12 +13,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
+import com.giant.zzidc.base.service.GiantBaseService;
+import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskProject;
+import com.zzidc.team.service.FilemanageService;
 import com.zzidc.team.service.TeamProjectService;
 
 import net.sf.json.JSONObject;
@@ -28,6 +35,10 @@ import net.sf.json.JSONObject;
 public class TeamProjectController extends GiantBaseController {
 	@Autowired
 	private TeamProjectService teamProjectService;
+	@Autowired
+	private FilemanageService filemanageService;
+	@Autowired
+	private GiantBaseService baseService;
 	private GiantPager conditionPage = null;
 	private String requestURL = "team/project/index";
 
@@ -114,7 +125,7 @@ public class TeamProjectController extends GiantBaseController {
 	}
 	
 	/**
-	 * 跳转添加 / 修改项目页面
+	 * 跳转添加项目页面
 	 */
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
@@ -130,20 +141,42 @@ public class TeamProjectController extends GiantBaseController {
 	}
 	
 	/**
-	 * 添加 / 修改项目
+	 * 添加项目
+	 * @throws ParseException 
 	 */
 	@RequestMapping("/addOrUpd")
-	public void addOrUpd(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+	public void addOrUpd(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file_one")MultipartFile[] file1,@RequestParam("file_two")MultipartFile[] file2
+			,@RequestParam("file_three")MultipartFile[] file3,@RequestParam("file_four")MultipartFile[] file4) throws ParseException {
+		System.out.println("数据："+mvm);
 		JSONObject json=new JSONObject();
+		int id=baseService.getMemberId();	//登录id	        
+        String name=baseService.getMemberName();   //登录姓名
+        if(name.equals("")){
+        	json.put("code", 4);
+        	json.put("message", "请重新登录");
+        	resultresponse(response,json);
+			return;
+        }
 		if(mvm.get("project_name") == null || mvm.get("company") == null || mvm.get("member_id") == null ||
-				"".equals(mvm.get("project_name")) || "".equals(mvm.get("company")) || "".equals(mvm.get("member_id"))){
+				"".equals(mvm.get("project_name")) || "".equals(mvm.get("company")) || "".equals(mvm.get("member_id"))
+				 || "".equals(mvm.get("start_date")) || "".equals(mvm.get("end_date")) ||
+					GiantUtil.isEmpty(mvm.get("type"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);
 			return;
 		}
-		
-		boolean flag = teamProjectService.addOrUpd(mvm);
+		//比较时间
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date sd1=df.parse(mvm.get("start_date")+":00");
+		Date sd2=df.parse(mvm.get("end_date")+":00");
+		if(sd2.before(sd1) || mvm.get("start_date").equals(mvm.get("end_date"))){
+				json.put("code",3);
+				json.put("message", "结束时间必须在开始时间之后");
+				resultresponse(response,json);
+				return;
+		}
+		boolean flag = teamProjectService.addOrUpd(mvm,id,name,file1, file2, file3, file4);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "添加/修改成功");
@@ -153,7 +186,57 @@ public class TeamProjectController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-
+	/**
+	 * 跳转修改项目页面
+	 */
+	@RequestMapping("/toedit")
+	public String toedit(@RequestParam Map<String, String> mvm, Model model) {
+		model.addAttribute("members", teamProjectService.getAllMember());
+		//添加项目页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskProject p = (TaskProject) teamProjectService.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("p", p);
+		}
+		publicResult(model);
+		return "team/project/edit";
+	}
+	/**
+	 * 修改项目
+	 * @throws ParseException 
+	 */
+	@RequestMapping("/edit")
+	public void edit(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) throws ParseException {
+		JSONObject json=new JSONObject();
+		if(mvm.get("project_name") == null || mvm.get("company") == null || mvm.get("member_id") == null ||
+				"".equals(mvm.get("project_name")) || "".equals(mvm.get("company")) || "".equals(mvm.get("member_id"))
+				 || "".equals(mvm.get("start_date")) || "".equals(mvm.get("end_date")) ||
+					GiantUtil.isEmpty(mvm.get("type"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		//比较时间
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date sd1=df.parse(mvm.get("start_date")+":00");
+		Date sd2=df.parse(mvm.get("end_date")+":00");
+		if(sd2.before(sd1) || mvm.get("start_date").equals(mvm.get("end_date"))){
+				json.put("code",3);
+				json.put("message", "结束时间必须在开始时间之后");
+				resultresponse(response,json);
+				return;
+		}
+		boolean flag = teamProjectService.edit(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "添加/修改成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "添加/修改失败");
+		}
+		resultresponse(response,json);
+	}
 	/**
 	 * 删除项目
 	 */

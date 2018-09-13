@@ -45,7 +45,7 @@
 							</div>
 							<div class="detail">
 								<div class="detail-title">创建时间</div>
-								<div class="detail-content article-content">${FileManage.editTime}</div>
+								<div class="detail-content article-content">${FileManage.createTime}</div>
 							</div>
 							<div class="detail">
 								<div class="detail-title">备注</div>
@@ -62,10 +62,17 @@
 									</c:if>
 								</div>
 							</div>
+							<input type="hidden" id="accessControl" name="accessControl" value="${FileManage.accessControl}">
 							<div class="detail">
 								<div class="detail-title">正文</div>
 								<div class="detail-content article-content">
 								${FileManage.fileText}
+								</div>
+							</div>
+							<div class="detail">
+								<div class="detail-title">文档路径</div>
+								<div class="detail-content article-content">
+								<a href="${FileManage.fileUrl}">${FileManage.fileUrl}</a>
 								</div>
 							</div>
 						</div>
@@ -90,7 +97,7 @@
 											</tr>
 											<tr class="nofixed">
 												<th>关联名称</th>
-												<td title="/"></td>
+												<td title="/">${glname}</td>
 											</tr>
 											<tr>
 												<th>文档标题</th>
@@ -100,6 +107,12 @@
 												<th>文件格式</th>
 												<td>
 												${FileManage.fileFormat}
+												</td>
+											</tr>
+											<tr>
+												<th>文件原名</th>
+												<td>
+												${FileManage.fileRealname}
 												</td>
 											</tr>
 										</tbody>
@@ -116,7 +129,6 @@
 							<i class="icon-goback icon-back"></i> 返回
 						</a>
 						<div class="divider"></div>
-						<a href="filemanage/manage/tomyedit?id=${FileManage.id}" class="btn btn-link"><i class="icon-common-edit icon-edit"></i> 编辑</a>
 						<a href="javascript:void(0)" onclick="del(${FileManage.id})" class="btn btn-link"><i class="icon-common-delete icon-trash"></i> 删除</a>
 					    <input id="f_id" name="f_id" type="hidden" value="${FileManage.accessControl}"></input>
 					</div>
@@ -127,6 +139,15 @@
 		<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 <script>
+function run (){
+	var accessControl =$("#accessControl").val(); //获取文档状态
+	if(accessControl==0){
+		$("#ccc").hide();
+	}else{
+		$("#ccc").show();
+	}
+}
+run();
 	function del(id){
 		var a=document.getElementById("f_id").value;
 		if(a=="0"){

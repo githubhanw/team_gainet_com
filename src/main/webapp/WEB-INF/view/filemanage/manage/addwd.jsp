@@ -15,7 +15,8 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>编辑文档</title>
+		<meta http-equiv="Content-Type" content="multipart/form-data;charset=utf-8" />
+		<title>创建文档</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,16 +31,15 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>编辑文档</h2>
+							<h2>创建文档</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
-							<form class="load-indicator main-form form-ajax" id="createForm" method="post">
-								<input id="fi_id" name="fi_id" type="hidden" value="${FileManage.id}"></input>
+							<form class="load-indicator main-form form-ajax" id="createForm" method="post" enctype="multipart/form-data">
 								<tr>
 									<th>标题</th>
 									<td class="required" style="width:60%">
-										<input type="text" name="file_name" id="file_name" class="form-control input-product-title" autocomplete="off" value="${FileManage.fileName}">
+										<input type="text" name="file_name" id="file_name" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
 								</tr>
@@ -47,56 +47,44 @@
 									<th>关联类型</th>
 									<td class="required" style="width:60%">
 									<select data-placeholder="请选择类型" class="form-control chosen-select" name="file_type" id="file_type" onchange="show_sub(this.options[this.options.selectedIndex].value)">
-												<c:if test="${FileManage.fileClassification ==0}">
-												<option value="${FileManage.fileClassification}">项目</option>
+												<option value=""></option>
+												<option value="0">项目</option>
 												<option value="1">需求</option>
-												</c:if>
-												<c:if test="${FileManage.fileClassification ==1}">
-												<option value="${FileManage.fileClassification}">需求</option>
-                                                <option value="0">项目</option>
-												</c:if>
 									</select>
 									</td>
 									<td></td>
 								</tr>
+								
 								<tr id="tr1">
 									<th>关联项目</th>
 									<td class="required" style="width:60%">
-									<select data-placeholder="请选择类型" class="form-control chosen-select" name="xm" id="xm">
-									            <c:if test="${FileManage.fileClassification ==0}">
-												<option value="${FileManage.glId}">${glname}</option>
-												</c:if>
-												<c:if test="${FileManage.fileClassification ==1}">
-									            <option value=""></option>
-									            </c:if>
-									            <c:forEach items="${tp}" var="tp" varStatus="sta">
+									<select data-placeholder="项目和需求选其中一个即可" class="form-control chosen-select" name="xm" id="xm">
+												<option value=""></option>
+											<c:forEach items="${tp}" var="tp" varStatus="sta">
 												<option value="${tp.id}">${tp.project_name}(${tp.id})</option>
-											    </c:forEach>
+											</c:forEach>
 									</select>
 									</td>
-									
+									<td></td>
 								</tr>
 								<tr id="tr2">
 									<th>关联需求</th>
 									<td class="required" style="width:60%">
-									<select data-placeholder="请选择类型" class="form-control chosen-select" name="xq" id="xq">
-									           <c:if test="${FileManage.fileClassification ==0}">
+									<select data-placeholder="项目和需求选其中一个即可" class="form-control chosen-select" name="xq" id="xq">
 												<option value=""></option>
-												</c:if>
-												<c:if test="${FileManage.fileClassification ==1}">
-									            <option value="${FileManage.glId}">${glname}</option>
-									            </c:if>
-									           <c:forEach items="${tn}" var="tn" varStatus="sta">
+											<c:forEach items="${tn}" var="tn" varStatus="sta">
 												<option value="${tn.id}">${tn.need_name}(${tn.id})</input></option>
-											   </c:forEach>
+											</c:forEach>
 									</select>
 									</td>
+									<td></td>
 								</tr>
+								
 								<tr>
 									<th>正文</th>
 									<td class="required">
 										<input type="hidden" name="file_text">
-										<textarea id="file_text" name="details" placeholder="" style="width:100%;height:500px;">${FileManage.fileText}</textarea>
+										<textarea id="file_text" name="details" placeholder="" style="width:100%;height:500px;"></textarea>
 										<div id="file_text" value=""></div>
 									</td>
 									<td></td>
@@ -104,15 +92,14 @@
 								<tr>
 									<th>备注</th>
 									<td class="required" style="width:60%">
-										<input type="text" name="file_remarks" id="file_remarks" class="form-control input-product-title" autocomplete="off" value="${FileManage.fileRemarks}">
+										<input type="text" name="file_remarks" id="file_remarks" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>修改文件</th>
+									<th>需求文件</th>
 									<td class="required">
-										<input type="file" name="file" id="file" value="">
-										<div><span>${FileManage.fileRealname}</span></div>
+										<input type="file" name="file" id="file">
 									</td>
 									<td></td>
 								</tr>
@@ -167,22 +154,11 @@
 				</div>
 			</div>
 		</div>
+		<input id="f_id" name="f_id" type="hidden" value="000"></input>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 </html>
 <script>
-function run (){
-	var type = $("#file_type").val();
-	if(type==0){
-	   	$("#tr1").show();
-	   	$("#tr2").hide();
-	   }else{
-		$("#tr2").show();
-		$("#tr1").hide();
-	   }
-}
-run();
-
 function show_sub(v){
 	   if(v==0){
 	   	$("#tr1").show();
@@ -192,7 +168,6 @@ function show_sub(v){
 		$("#tr1").hide();
 	   }
 }
-
 var editor = new UE.ui.Editor();
 editor.render("content");
 
@@ -207,11 +182,19 @@ UE.Editor.prototype.getActionUrl = function(action){
 UE.getEditor('file_text');
 
 $("#submit").click(function(){
+
+		
+	
 	$("input[name='file_text']").val(UE.getEditor('file_text').getContent());
 	var form = new FormData(document.getElementById("createForm"));
+	var filesize=$("#file").val();
+	
+	if(filesize==''){
+		alert("请选择文件");
+	}else{
 	$.ajaxSettings.async = false;
 	$.ajax({
-         url:"filemanage/manage/myedit?r=" + Math.random(),
+         url:"filemanage/manage/addwd?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",
@@ -228,49 +211,22 @@ $("#submit").click(function(){
          }
      });
 	$.ajaxSettings.async = true;
+	}
 });
-//UMEditor("file_text");
-//$("#submit").click(function(){
-//	$.ajaxSettings.async = false;
-//	$("input[name='file_text']").val(UM.getEditor('file_text').getContent());
-//	$.ajax({type:"POST",url:"filemanage/manage/myedit?r=" + Math.random(),data:$("form").serialize(),
-//			dataType:"json",success:function(data){
-//		if(data.code == 0){
-//			$("#msg").text(data.message);
-//			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-//		}else{
-//			$("#errMsg").text(data.message);
-//			$('#errModal').modal({keyboard: false,show: true, moveable: true});
-//		}
-//	}})
-//	$.ajaxSettings.async = true;
-//});
-//$("#file_type").on("change",function(){
-//    if($(this).val() == "0"){
-//    	$("#bbb").attr("style","display:none;");//隐藏div
-//    	$("#ddd").attr("style","display:none;");//隐藏div
-//    	$("#aaa").attr("style","display:block;");//显示div
-//    	$("#ccc").attr("style","display:block;");//显示div
-//    }else{
-//   	$("#aaa").attr("style","display:none;");//隐藏div
-//    	$("#ccc").attr("style","display:none;");//隐藏div
-//    	$("#bbb").attr("style","display:block;");//显示div
-//    	$("#ddd").attr("style","display:block;");//显示div
-//    }
-//})
-//function run(){
-//	var fille=$("#fille").val();//获取文档类型的值
-//	if(fille==0){
-//		$("#bbb").attr("style","display:none;");//隐藏div
-//   	$("#ddd").attr("style","display:none;");//隐藏div
-//    	$("#aaa").attr("style","display:block;");//显示div
-//    	$("#ccc").attr("style","display:block;");//显示div
-//	}else{
-//		$("#aaa").attr("style","display:none;");//隐藏div
-//    	$("#ccc").attr("style","display:none;");//隐藏div
-//   	$("#bbb").attr("style","display:block;");//显示div
-//    	$("#ddd").attr("style","display:block;");//显示div
-//	}
-//}
-//run();//进页面就执行方法
+//   $("#file_type").on("change",function(){
+//	var v1 = document.getElementById("tr1");
+//	var v2 = document.getElementById("tr2");
+ //   if($(this).val() == "0"){
+  //  	$("#tr2").toggle();
+ //   	$("#tr1").toggle();
+//      	$("#tr1").attr("style","display:block;");//隐藏选择项目下拉框
+//      	$("#tr2").attr("style","display:none;");//显示选择需求下拉框
+ //   }else{
+ //   	$("#tr2").toggle();
+  //  	$("#tr1").toggle();
+//   	$("#tr1").attr("style","display:none;");//隐藏选择项目下拉框
+//     	$("#tr2").attr("style","display:block;");//显示选择需求下拉框
+  //  }
+
+// })
 </script>

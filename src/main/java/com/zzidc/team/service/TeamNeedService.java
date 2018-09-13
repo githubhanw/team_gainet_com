@@ -693,7 +693,6 @@ public class TeamNeedService extends GiantBaseService{
 					need.setChangedStatus((short) 1);
 					need.setChangedCount((short) (need.getChangedCount() + 1));
 				}
-				need.setState((short) 2);
 			} else {
 				need.setFull((short) 1);
 				pmLog.setMethod(LogMethod.PERFECT);

@@ -355,21 +355,25 @@
 														</td>
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.create_time}" pattern="yyyy-MM-dd" /></td>
 														<td class="c-actions text-right">
-															<c:if test="${subNeed.state > 0}">
-																<%-- <c:if test="${subNeed.state == 1 || subNeed.state == 2}"> --%>
+															<c:if test="${subNeed.state == 1 || subNeed.state == 2}">
 																	<a href="team/need/toChange?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${subNeed.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
 																	<a href="team/need/toClose?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
+																	</c:if>														  
 																	<c:if test="${subNeed.full == 1}">
-																	    <a href="team/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
-														                <a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+																	<c:if test="${subNeed.state == 1}">
+																	    <a href="team/need/toOpen?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
+														                </c:if>
+														                <c:if test="${subNeed.state == 2}">
+														                <a href="team/need/toSubmitCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+																		</c:if>
+															            <c:if test="${subNeed.state == 3}">
 																		<a href="team/need/toCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
 																	</c:if>
-																	<c:if test="${subNeed.full == 1}">
+														           </c:if>
+														           <c:if test="${subNeed.full == 1 && subNeed.state == 2}">
 																		<a href="team/task/toBatchAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 																	</c:if>
-																<%-- </c:if> --%>
-															</c:if>
-															<c:if test="${subNeed.state == 0}"></c:if>
+															<c:if test="${subNeed.state == 0 || subNeed.state == 5}"></c:if>
 														</td>
 													</tr>
 												</c:if>

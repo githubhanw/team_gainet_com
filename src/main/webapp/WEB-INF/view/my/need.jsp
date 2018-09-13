@@ -260,22 +260,28 @@
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-actions text-right">
-												<c:if test="${need.state > 0}">
-													<%-- <c:if test="${need.state == 1 || need.state == 2}"> --%>
+												<c:if test="${need.state == 1 || need.state == 2 || need.state == 3 || need.state == 4}">
 														<a href="my/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
+														</c:if>
+														<c:if test="${need.state == 1 || need.state == 2}">
 														<a href="my/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
 														<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
+														</c:if>
 														<c:if test="${need.full == 1}">
+														  <c:if test="${need.state == 1}">
 														    <a href="my/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
+														    </c:if>
+														    <c:if test="${need.state == 2}">
 														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.state == 3}">
 															<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
 														</c:if>
-														<c:if test="${need.full == 1}">
+														</c:if>
+														<c:if test="${need.full == 1 && need.state == 2}">
 															<a href="my/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if>
-													<%-- </c:if> --%>
-												</c:if>
-												<c:if test="${need.state == 0}">--</c:if>
+												<c:if test="${need.state == 0 || need.state == 5}"></c:if>
 											</td>
 										</tr>
 										</c:forEach>

@@ -229,7 +229,7 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = teamNeedService.getPageList(conditionPage);
-		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
+		if("20".equals(mvm.get("type")) || "21".equals(mvm.get("type"))) {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
 		}
 		model.addAttribute("pageList", pageList);

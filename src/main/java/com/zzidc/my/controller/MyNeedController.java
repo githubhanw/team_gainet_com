@@ -293,6 +293,9 @@ public class MyNeedController extends GiantBaseController {
 			}
 			model.addAttribute("n", n);
 		}
+		String querySql = "select id, project_name from task_project where state = 1";
+		List<Map<String, Object>> projectList = teamNeedService.getMapListBySQL(querySql, null);
+		model.addAttribute("projectList", projectList);
 		publicResult(model);
 		return "my/need/change";
 	}
@@ -338,8 +341,13 @@ public class MyNeedController extends GiantBaseController {
 			if(!teamNeedService.isCanOperation(mvm)) {
 				return "nopower";
 			}
+			if (!teamNeedService.isCurrentMember(n.getCheckedId())) {
+				return "nopower";
+			}
 			model.addAttribute("n", n);
 		}
+		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
+		model.addAttribute("needM", needDetail);
 		publicResult(model);
 		return "my/need/check";
 	}
@@ -593,6 +601,9 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (!teamNeedService.isCurrentMember(n.getAssignedId())) {
+				return "nopower";
+			}
 			model.addAttribute("n", n);
 		}
 		publicResult(model);
@@ -614,6 +625,50 @@ public class MyNeedController extends GiantBaseController {
 			return;
 		}
 		boolean flag = teamNeedService.open(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	/**
+	 * 跳转提交验收页面
+	 */
+	@RequestMapping("/toSubmitCheck")
+	public String toSubmitCheck(@RequestParam Map<String, String> mvm, Model model) {
+		//添加需求页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (!teamNeedService.isCurrentMember(n.getAssignedId())) {
+				return "nopower";
+			}
+			model.addAttribute("n", n);
+		}
+		model.addAttribute("members", teamNeedService.getAllMember());
+		publicResult(model);
+		return "my/need/submitCheck";
+	}
+
+	/**
+	 * 提交验收
+	 */
+	@RequestMapping("/submitCheck")
+	public void submitCheck(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		// TODO 是否需要对需求的状态进行判断，例如：只有测试完成的需求才能进行验收操作，获取再toCheck中进行验证
+		// mvm eg :{r=0.29616789999172366, stage=y, comment=, id=25}
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("checked_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.submitCheck(mvm);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

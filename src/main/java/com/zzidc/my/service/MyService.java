@@ -37,10 +37,10 @@ public class MyService extends GiantBaseService{
 	 * 通过子查询的方式，获取所有需求相关统计数据
 	 */
 	public Map<String, Object> getNeedCount(){
-		String sql = "SELECT count(0) 'count',SUM(IF(stage=1,1,0)) 'checking'," + 
-				"(SELECT count(0) FROM task_need WHERE state!=0 AND stage=1 AND member_id=" + 
+		String sql = "SELECT count(0) 'count',SUM(IF(state=3,1,0)) 'checking'," + 
+				"(SELECT count(0) FROM task_need WHERE state!=0 AND state=3 AND member_id=" + 
 				super.getMemberId() + ") 'wait_check' " + 
-				"FROM task_need WHERE state!=0 AND assigned_id=" + super.getMemberId();
+				"FROM task_need WHERE state!=0 AND state!=5 AND assigned_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);

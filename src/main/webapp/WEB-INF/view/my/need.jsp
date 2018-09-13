@@ -103,10 +103,12 @@
 											<td class="w-200px">
 												<select class="form-control chosen chosen-select" name="state" id="state">
 													<option value="">请选择状态</option>
-													<option ${prm.state=='1'?'selected="selected"':'' } value="1">激活</option>
-													<option ${prm.state=='3'?'selected="selected"':'' } value="3">已关闭</option>
-													<option ${prm.state=='2'?'selected="selected"':'' } value="2">已变更</option>
+													<option ${prm.state=='1'?'selected="selected"':'' } value="1">未开始</option>
+													<option ${prm.state=='3'?'selected="selected"':'' } value="3">待验收</option>
+													<option ${prm.state=='2'?'selected="selected"':'' } value="2">进行中</option>
 													<option ${prm.state=='0'?'selected="selected"':'' } value="0">已删除</option>
+													<option ${prm.state=='4'?'selected="selected"':'' } value="4">已验收</option>
+													<option ${prm.state=='5'?'selected="selected"':'' } value="5">已关闭</option>
 												</select>
 											</td>
 											<td class="w-200px">
@@ -170,7 +172,7 @@
 												<a href="javascript:void(0)" onclick="pageOrder('id');" 
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="需求名称">
+											<th data-flex="false" data-width="50px" style="width:250px" class="c-pri " title="需求名称">
 												<a href="javascript:void(0)" onclick="pageOrder('need_name');" 
 														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求名称</a>
 											</th>
@@ -178,11 +180,11 @@
 												<a href="${pageList.desAction}&orderColumn=tp.project_name');" 
 														class="${prm.orderColumn=='tp.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属项目</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="需求方">
+											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="需求方">
 												<a href="javascript:void(0)" onclick="pageOrder('member_id');" 
 														class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求方</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="指派给">
+											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="指派给">
 												<a href="javascript:void(0)" onclick="pageOrder('assigned_name');" 
 														class="${prm.orderColumn=='assigned_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">指派给</a>
 											</th>
@@ -250,22 +252,28 @@
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.end_date}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.checked_time}" pattern="yyyy-MM-dd HH:mm" /></td>
 											<td class="c-assignedTo has-btn text-center">
-													${need.stage == 1 ? '待验收' : need.stage == 2 ? '验收完成' : need.stage == 3 ? '验收不通过' : '未知'}
+												    ${need.state == 0 ? '已删除' : need.state == 1 ? '未开始' : need.state == 2 ? '进行中'
+												    : need.state == 3 ? '待验收' : need.state == 4 ? '已验收' : need.state == 5 ? '已关闭' : '未知'}
+											        <c:if test="${need.overdue==1}">
+													               <span class="label label-danger" title="任务已逾期">逾</span>
+												                </c:if>
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-actions text-right">
 												<c:if test="${need.state > 0}">
-													<c:if test="${need.state == 1 || need.state == 2}">
+													<%-- <c:if test="${need.state == 1 || need.state == 2}"> --%>
 														<a href="my/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
 														<a href="my/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
 														<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
 														<c:if test="${need.full == 1}">
+														    <a href="my/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
+														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
 															<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
 														</c:if>
 														<c:if test="${need.full == 1}">
 															<a href="my/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if>
-													</c:if>
+													<%-- </c:if> --%>
 												</c:if>
 												<c:if test="${need.state == 0}">--</c:if>
 											</td>

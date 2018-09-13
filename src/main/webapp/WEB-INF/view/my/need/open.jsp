@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="my/need">${n.needName}</a>
+								<a href="my/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 接收</small>
 							</h2>
 						</div>
@@ -42,7 +42,7 @@
 								<tr>
 									<th>计划结束日期</th>
 									<td class="required">
-										<input type="text" name="plan_end_date" id="plan_end_date" value="<fmt:formatDate value="${t.startDate}" pattern="yyyy-MM-dd HH:mm"/>
+										<input type="text" name="plan_end_date" id="plan_end_date" value="<fmt:formatDate value="${n.endDate}" pattern="yyyy-MM-dd HH:mm"/>"
 												class="form-control form-date-limit" placeholder="计划结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
@@ -84,8 +84,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/task/index" class="btn">返回任务列表</a>
-								<a href="team/task/index" class="btn">任务详情</a>
+								<a href="my/need/index" class="btn">返回任务列表</a>
 							</div>
 						</div>
 					</div>

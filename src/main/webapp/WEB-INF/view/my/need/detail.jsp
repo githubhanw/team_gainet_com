@@ -89,7 +89,10 @@
 													</td>
 													<td>${item.end_date}</td>
 													<td>${item.assigned_name}</td>
-													<td>${item.state == 1 ? '激活' : item.state == 2 ? '已变更' : item.state == 3 ? '已关闭' : item.state == 0 ? '已删除' : '未知'}</td>
+													<td>
+													${item.state == 0 ? '已删除' : item.state == 1 ? '未开始' : item.state == 2 ? '进行中'
+													 : item.state == 3 ? '待验收' : item.state == 4 ? '已验收' : item.state == 5 ? '已关闭' : '未知'}
+													</td>
 												</tr>
 												</c:forEach>
 											</tbody>
@@ -163,7 +166,8 @@
 													</td>
 													<td>${item.end_date}</td>
 													<td>${item.assigned_name}</td>
-													<td>${item.state == 1 ? '激活' : item.state == 2 ? '已变更' : item.state == 3 ? '已关闭' : item.state == 0 ? '已删除' : '未知'}</td>
+													<td>${item.state == 0 ? '已删除' : item.state == 1 ? '未开始' : item.state == 2 ? '进行中'
+													 : item.state == 3 ? '待验收' : item.state == 4 ? '已验收' : item.state == 5 ? '已关闭' : '未知'}</td>
 												</tr>
 												</c:forEach>
 											</tbody>
@@ -247,15 +251,27 @@
 											<tr>
 												<th>当前状态</th>
 												<td>
-													${needM.state == 1 ? '激活' : needM.state == 2 ? '已变更' : needM.state == 3 ? '已关闭' : needM.state == 0 ? '已删除' : '未知'}
+													${needM.state == 0 ? '已删除' : needM.state == 1 ? '未开始' : needM.state == 2 ? '进行中'
+													 : needM.state == 3 ? '待验收' : needM.state == 4 ? '已验收' : needM.state == 5 ? '已关闭' : '未知'}
 												</td>
 											</tr>
 											<tr>
+												<th>逾期状态</th>
+												<td>
+												     <c:if test="${needM.overdue==1}">
+													          已逾期
+												      </c:if>
+												      <c:if test="${needM.overdue==0}">
+													         未逾期
+												      </c:if>
+												</td>
+											</tr>
+											<%-- <tr>
 												<th>当前阶段</th>
 												<td>
 													${needM.stage == 1 ? '待验收' : needM.stage == 2 ? '验收完成' : needM.stage == 3 ? '验收不通过' : '未知'}
 												</td>
-											</tr>
+											</tr> --%>
 											<tr>
 												<th>开始日期</th>
 												<td>${needM.start_date}</td>

@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
  * TaskNeed entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "task_need")
+@Table(name = "task_need", catalog = "team_gainet_com")
 public class TaskNeed implements java.io.Serializable {
 
 	// Fields
@@ -35,7 +35,6 @@ public class TaskNeed implements java.io.Serializable {
 	private Date planEndDate;
 	private String needRemark;
 	private String checkRemark;
-	private Short stage;
 	private Integer assignedId;
 	private String assignedName;
 	private Timestamp assignedTime;
@@ -58,6 +57,17 @@ public class TaskNeed implements java.io.Serializable {
 	private Timestamp updateTime;
 	private Short state;
 	private Integer meetingId;
+	private Integer openedId;
+	private String openedName;
+	private Timestamp openedTime;
+	private Integer finishedId;
+	private String finishedName;
+	private Timestamp finishedTime;
+	private Short overdue;
+	private Timestamp realStartDate;
+	private Timestamp realEndDate;
+	private Short changedStatus;
+	private Short stage;
 
 	// Constructors
 
@@ -70,14 +80,17 @@ public class TaskNeed implements java.io.Serializable {
 			String memberName, Integer createId, String createName,
 			Integer srcId, String srcRemark, Integer level, Date startDate,
 			Date endDate, Date planEndDate, String needRemark,
-			String checkRemark, Short stage, Integer assignedId,
-			String assignedName, Timestamp assignedTime, Integer changedId,
-			String changedName, Timestamp changedTime, Short changedCount,
-			Integer closedId, String closedName, Timestamp closedTime,
-			String closedReason, Integer checkedId, String checkedName,
-			Timestamp checkedTime, Short resolved, Integer parentId,
-			String link, Short full, Timestamp createTime,
-			Timestamp updateTime, Short state, Integer meetingId) {
+			String checkRemark, Integer assignedId, String assignedName,
+			Timestamp assignedTime, Integer changedId, String changedName,
+			Timestamp changedTime, Short changedCount, Integer closedId,
+			String closedName, Timestamp closedTime, String closedReason,
+			Integer checkedId, String checkedName, Timestamp checkedTime,
+			Short resolved, Integer parentId, String link, Short full,
+			Timestamp createTime, Timestamp updateTime, Short state,
+			Integer meetingId, Integer openedId, String openedName,
+			Timestamp openedTime, Integer finishedId, String finishedName,
+			Timestamp finishedTime, Short overdue, Timestamp realStartDate,
+			Timestamp realEndDate, Short changedStatus, Short stage) {
 		this.projectId = projectId;
 		this.needName = needName;
 		this.memberId = memberId;
@@ -92,7 +105,6 @@ public class TaskNeed implements java.io.Serializable {
 		this.planEndDate = planEndDate;
 		this.needRemark = needRemark;
 		this.checkRemark = checkRemark;
-		this.stage = stage;
 		this.assignedId = assignedId;
 		this.assignedName = assignedName;
 		this.assignedTime = assignedTime;
@@ -115,6 +127,17 @@ public class TaskNeed implements java.io.Serializable {
 		this.updateTime = updateTime;
 		this.state = state;
 		this.meetingId = meetingId;
+		this.openedId = openedId;
+		this.openedName = openedName;
+		this.openedTime = openedTime;
+		this.finishedId = finishedId;
+		this.finishedName = finishedName;
+		this.finishedTime = finishedTime;
+		this.overdue = overdue;
+		this.realStartDate = realStartDate;
+		this.realEndDate = realEndDate;
+		this.changedStatus = changedStatus;
+		this.stage = stage;
 	}
 
 	// Property accessors
@@ -240,7 +263,7 @@ public class TaskNeed implements java.io.Serializable {
 		this.planEndDate = planEndDate;
 	}
 
-	@Column(name = "need_remark", length = 65535)
+	@Column(name = "need_remark", length = 16777215)
 	public String getNeedRemark() {
 		return this.needRemark;
 	}
@@ -249,22 +272,13 @@ public class TaskNeed implements java.io.Serializable {
 		this.needRemark = needRemark;
 	}
 
-	@Column(name = "check_remark", length = 65535)
+	@Column(name = "check_remark", length = 16777215)
 	public String getCheckRemark() {
 		return this.checkRemark;
 	}
 
 	public void setCheckRemark(String checkRemark) {
 		this.checkRemark = checkRemark;
-	}
-
-	@Column(name = "stage")
-	public Short getStage() {
-		return this.stage;
-	}
-
-	public void setStage(Short stage) {
-		this.stage = stage;
 	}
 
 	@Column(name = "assigned_id")
@@ -455,7 +469,7 @@ public class TaskNeed implements java.io.Serializable {
 	public void setState(Short state) {
 		this.state = state;
 	}
-	
+
 	@Column(name = "meeting_id")
 	public Integer getMeetingId() {
 		return this.meetingId;
@@ -463,6 +477,105 @@ public class TaskNeed implements java.io.Serializable {
 
 	public void setMeetingId(Integer meetingId) {
 		this.meetingId = meetingId;
+	}
+
+	@Column(name = "opened_id")
+	public Integer getOpenedId() {
+		return this.openedId;
+	}
+
+	public void setOpenedId(Integer openedId) {
+		this.openedId = openedId;
+	}
+
+	@Column(name = "opened_name", length = 16)
+	public String getOpenedName() {
+		return this.openedName;
+	}
+
+	public void setOpenedName(String openedName) {
+		this.openedName = openedName;
+	}
+
+	@Column(name = "opened_time", length = 19)
+	public Timestamp getOpenedTime() {
+		return this.openedTime;
+	}
+
+	public void setOpenedTime(Timestamp openedTime) {
+		this.openedTime = openedTime;
+	}
+
+	@Column(name = "finished_id")
+	public Integer getFinishedId() {
+		return this.finishedId;
+	}
+
+	public void setFinishedId(Integer finishedId) {
+		this.finishedId = finishedId;
+	}
+
+	@Column(name = "finished_name", length = 16)
+	public String getFinishedName() {
+		return this.finishedName;
+	}
+
+	public void setFinishedName(String finishedName) {
+		this.finishedName = finishedName;
+	}
+
+	@Column(name = "finished_time", length = 19)
+	public Timestamp getFinishedTime() {
+		return this.finishedTime;
+	}
+
+	public void setFinishedTime(Timestamp finishedTime) {
+		this.finishedTime = finishedTime;
+	}
+
+	@Column(name = "overdue")
+	public Short getOverdue() {
+		return this.overdue;
+	}
+
+	public void setOverdue(Short overdue) {
+		this.overdue = overdue;
+	}
+
+	@Column(name = "real_start_date", length = 19)
+	public Timestamp getRealStartDate() {
+		return this.realStartDate;
+	}
+
+	public void setRealStartDate(Timestamp realStartDate) {
+		this.realStartDate = realStartDate;
+	}
+
+	@Column(name = "real_end_date", length = 19)
+	public Timestamp getRealEndDate() {
+		return this.realEndDate;
+	}
+
+	public void setRealEndDate(Timestamp realEndDate) {
+		this.realEndDate = realEndDate;
+	}
+
+	@Column(name = "changed_status")
+	public Short getChangedStatus() {
+		return this.changedStatus;
+	}
+
+	public void setChangedStatus(Short changedStatus) {
+		this.changedStatus = changedStatus;
+	}
+
+	@Column(name = "stage")
+	public Short getStage() {
+		return this.stage;
+	}
+
+	public void setStage(Short stage) {
+		this.stage = stage;
 	}
 
 }

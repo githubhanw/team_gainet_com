@@ -30,39 +30,59 @@
 				<!--mainMenu start-->
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<a href="team/need/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+					    <!-- type值说明：0已删除，1未开始，2进行中，3待验收，4已验收，5已关闭，20所有，21未关闭，
+					                  22已变更，23已逾期，12高级搜索    -->
+						<a href="team/need/index?type=20" class="btn btn-link ${prm.type == 20 ? 'btn-active-text':''}">
 							<span class="text">所有</span>
-							<c:if test="${prm.type == 2}">
+							<c:if test="${prm.type == 20}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/need/index?type=21" class="btn btn-link ${prm.type == 21 ? 'btn-active-text':''}">
+							<span class="text">未关闭</span>
+							<c:if test="${prm.type == 21}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a href="team/need/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
-							<span class="text">未关闭</span>
+							<span class="text">未开始</span>
 							<c:if test="${prm.type == 1}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="team/need/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
-							<span class="text">激活</span>
-							<c:if test="${prm.type == 4}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a>
-						<a href="team/need/index?type=5" class="btn btn-link ${prm.type == 5 ? 'btn-active-text':''}">
-							<span class="text">已变更</span>
-							<c:if test="${prm.type == 5}">
+						<a href="team/need/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+							<span class="text">进行中</span>
+							<c:if test="${prm.type == 2}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a href="team/need/index?type=3" class="btn btn-link ${prm.type == 3 ? 'btn-active-text':''}">
-							<span class="text">已验收</span>
+							<span class="text">待验收</span>
 							<c:if test="${prm.type == 3}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="team/need/index?type=9" class="btn btn-link ${prm.type == 9 ? 'btn-active-text':''}">
-							<span class="text">待验收</span>
-							<c:if test="${prm.type == 9}">
+						<a href="team/need/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
+							<span class="text">已验收</span>
+							<c:if test="${prm.type == 4}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/need/index?type=22" class="btn btn-link ${prm.type == 22 ? 'btn-active-text':''}">
+							<span class="text">已变更</span>
+							<c:if test="${prm.type == 22}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/need/index?type=23" class="btn btn-link ${prm.type == 23 ? 'btn-active-text':''}">
+							<span class="text">已逾期</span>
+							<c:if test="${prm.type == 23}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/need/index?type=5" class="btn btn-link ${prm.type == 5 ? 'btn-active-text':''}">
+							<span class="text">已关闭</span>
+							<c:if test="${prm.type == 5}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
@@ -112,10 +132,12 @@
 											<td class="w-200px">
 												<select class="form-control chosen chosen-select" name="state" id="state">
 													<option value="">请选择状态</option>
-													<option ${prm.state=='1'?'selected="selected"':'' } value="1">激活</option>
-													<option ${prm.state=='3'?'selected="selected"':'' } value="3">已关闭</option>
-													<option ${prm.state=='2'?'selected="selected"':'' } value="2">已变更</option>
+													<option ${prm.state=='1'?'selected="selected"':'' } value="1">未开始</option>
+													<option ${prm.state=='3'?'selected="selected"':'' } value="3">待验收</option>
+													<option ${prm.state=='2'?'selected="selected"':'' } value="2">进行中</option>
 													<option ${prm.state=='0'?'selected="selected"':'' } value="0">已删除</option>
+													<option ${prm.state=='4'?'selected="selected"':'' } value="4">已验收</option>
+													<option ${prm.state=='5'?'selected="selected"':'' } value="5">已关闭</option>
 												</select>
 											</td>
 											<td class="w-200px">
@@ -179,7 +201,7 @@
 												<a href="javascript:void(0)" onclick="pageOrder('id');" 
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="需求名称">
+											<th data-flex="false" data-width="50px" style="width:250px" class="c-pri " title="需求名称">
 												<a  href="javascript:void(0)" onclick="pageOrder('need_name');" 
 														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求名称</a>
 											</th>
@@ -187,11 +209,11 @@
 												<a href="javascript:void(0)" onclick="pageOrder('tp.project_name');" 
 														class="${prm.orderColumn=='tp.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属项目</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="需求方">
+											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="需求方">
 												<a  href="javascript:void(0)" onclick="pageOrder('member_id');" 
 														class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求方</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri " title="指派给">
+											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="指派给">
 												<a  href="javascript:void(0)" onclick="pageOrder('assigned_name');" 
 														class="${prm.orderColumn=='assigned_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">指派给</a>
 											</th>
@@ -224,10 +246,10 @@
 										<tr>
 											<td class="c-id cell-id text-center">${need.id}</td>
 											<td class="text-left">
-												<c:if test="${need.resolved == 1 && (prm.type == 1 || prm.type == 2)}">
+												<c:if test="${need.resolved == 1 && (prm.type == 21 || prm.type == 20)}">
 													<a class="task-toggle" data-id="${need.id}"><i class="icon icon-caret-down"></i></a>
 												</c:if>
-												<c:if test="${need.parent_id > 0 && prm.type != 1 && prm.type != 2}">
+												<c:if test="${need.parent_id > 0 && prm.type != 21 && prm.type != 20}">
 													<span class="label label-badge label-light">子</span>
 												</c:if>
 												<a href="team/need/detail?id=${need.id}" data-toggle="tooltip" data-placement="top" title="${need.need_name}">
@@ -259,27 +281,41 @@
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.end_date}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.checked_time}" pattern="yyyy-MM-dd HH:mm" /></td>
 											<td class="c-assignedTo has-btn text-center">
-													${need.stage == 1 ? '待验收' : need.stage == 2 ? '验收完成' : need.stage == 3 ? '验收不通过' : '未知'}
+													${need.state == 0 ? '已删除' : need.state == 1 ? '未开始' : need.state == 2 ? '进行中'
+													 : need.state == 3 ? '待验收' : need.state == 4 ? '已验收' : need.state == 5 ? '已关闭' : '未知'}
+											        <c:if test="${need.overdue==1}">
+													    <span class="label label-danger" title="任务已逾期">逾</span>
+												    </c:if>
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-actions text-right">
-												<c:if test="${need.state > 0}">
-													<c:if test="${need.state == 1 || need.state == 2}">
+													<c:if test="${need.state == 1 || need.state == 2 || need.state == 3 || need.state == 4}">
 														<a href="team/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
+													</c:if>
+														<c:if test="${need.state == 1 || need.state == 2}">
 														<a href="team/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
-														<a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
+													    <a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
+													    </c:if>
+														
 														<c:if test="${need.full == 1}">
+														  <c:if test="${need.state == 1">
+														    <a href="team/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
+														    </c:if>
+														    <c:if test="${need.state == 2">
+														    <a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.state == 3">
 															<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
+														    </c:if>
 														</c:if>
-														<c:if test="${(need.parent_id == null || need.parent_id == '') && need.full == 1}">
+														<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && need.state == 2}">
 															<a href="team/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if>
-													</c:if>
-												</c:if>
-												<c:if test="${need.state == 0}"></c:if>
+													
+												<c:if test="${need.state == 0 || need.state == 5}"></c:if>
 											</td>
 										</tr>
-										<c:if test="${need.resolved == 1 && (prm.type == 1 || prm.type == 2)}">
+										<c:if test="${need.resolved == 1 && (prm.type == 20 || prm.type == 21)}">
 											<c:forEach items="${need.subNeed}" var="subNeed" varStatus="subSta">
 												<c:if test="${need.id == subNeed.parent_id}">
 													<tr class="table-children ${subSta.first?'table-child-top':''} ${subSta.last?'table-child-bottom':''} parent-${need.id}">
@@ -311,21 +347,27 @@
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.end_date}" pattern="yyyy-MM-dd" /></td>
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.checked_time}" pattern="yyyy-MM-dd HH:mm" /></td>
 														<td class="c-assignedTo has-btn text-center">
-																${subNeed.stage == 1 ? '待验收' : subNeed.stage == 2 ? '验收完成' : subNeed.stage == 3 ? '验收不通过' : '未知'}
+														        ${subNeed.state == 0 ? '已删除' : subNeed.state == 1 ? '未开始' : subNeed.state == 2 ? '进行中'
+													            : subNeed.state == 3 ? '待验收' : subNeed.state == 4 ? '已验收' : subNeed.state == 5 ? '已关闭' : '未知'}
+													            <c:if test="${subNeed.overdue==1}">
+													               <span class="label label-danger" title="任务已逾期">逾</span>
+												                </c:if>
 														</td>
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.create_time}" pattern="yyyy-MM-dd" /></td>
 														<td class="c-actions text-right">
 															<c:if test="${subNeed.state > 0}">
-																<c:if test="${subNeed.state == 1 || subNeed.state == 2}">
+																<%-- <c:if test="${subNeed.state == 1 || subNeed.state == 2}"> --%>
 																	<a href="team/need/toChange?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${subNeed.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
 																	<a href="team/need/toClose?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
 																	<c:if test="${subNeed.full == 1}">
+																	    <a href="team/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
+														                <a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
 																		<a href="team/need/toCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
 																	</c:if>
 																	<c:if test="${subNeed.full == 1}">
 																		<a href="team/task/toBatchAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 																	</c:if>
-																</c:if>
+																<%-- </c:if> --%>
 															</c:if>
 															<c:if test="${subNeed.state == 0}"></c:if>
 														</td>

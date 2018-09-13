@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="my/need">${n.needName}</a>
+								<a href="my/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 关闭</small>
 							</h2>
 						</div>

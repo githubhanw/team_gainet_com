@@ -111,12 +111,12 @@ public class TeamNeedService extends GiantBaseService{
 						countSql += "AND tn.meeting_id=" + temp2 + " ";
 					}
 					if ("302".equals(temp)) {//月会议对应的已验收需求总数
-						sql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 2 ";
-						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 2 ";
+						sql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 4 ";
+						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 4 ";
 					}
 					if ("303".equals(temp)) {//月会议对应的待验收需求总数
-						sql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 1 ";
-						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.stage = 1 ";
+						sql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 3 ";
+						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 3 ";
 					}
 				}
 			}
@@ -170,7 +170,11 @@ public class TeamNeedService extends GiantBaseService{
 				}
 				
 			}
+			/*type值说明：0已删除，1未开始，2进行中，3待验收，4已验收，5已关闭，20所有，21未关闭，
+            22已变更，23已逾期，12高级搜索*/
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+				
+				//管理中心中的需求列表
 				if ("0".equals(temp)) {//已删除
 					sql += "AND tn.state=0 ";
 					countSql += "AND tn.state=0 ";
@@ -178,23 +182,46 @@ public class TeamNeedService extends GiantBaseService{
 					sql += "AND tn.state!=0 ";
 					countSql += "AND tn.state!=0 ";
 				}
+				if ("5".equals(temp)) {//已关闭
+					sql += "AND tn.state=5 ";
+					countSql += "AND tn.state=5 ";
+				} else if (!"20".equals(temp) && !"8".equals(temp)) {
+					sql += "AND tn.state!=5 ";
+					countSql += "AND tn.state!=5 ";
+				}
+					
+				if ("1".equals(temp)) {//未开始
+					sql += "AND tn.state=1 ";
+					countSql += "AND tn.state=1 ";
+				} else if ("2".equals(temp)) {//进行中
+					sql += "AND tn.state=2 ";
+					countSql += "AND tn.state=2 ";
+				} else if ("3".equals(temp)) {//待验收
+					sql += "AND tn.state=3 ";
+					countSql += "AND tn.state=3 ";
+				} else if ("4".equals(temp)) {//已验收
+					sql += "AND tn.state=4 ";
+					countSql += "AND tn.state=4 ";
+				} else if ("5".equals(temp)) {//已关闭
+					sql += "AND tn.state=5 ";
+					countSql += "AND tn.state=5 ";
+				} else if ("22".equals(temp)) {//已变更
+					sql += "AND tn.changed_status=1 ";
+					countSql += "AND tn.changed_status=1 ";
+				} else if ("23".equals(temp)) {//已逾期
+					sql += "AND tn.overdue=1 ";
+					countSql += "AND tn.overdue=1 ";
+				} else if ("20".equals(temp)) {//所有
+					sql += "AND tn.parent_id=0 ";
+					countSql += "AND tn.parent_id=0 ";
+				} else if ("21".equals(temp)) {//未关闭
+					sql += "AND tn.parent_id=0 AND tn.state!=5 ";
+					countSql += "AND tn.parent_id=0 AND tn.state!=5 ";
+				}
 				
-				if ("1".equals(temp)) {//正常
-					sql += "AND tn.parent_id=0 AND tn.state!=3";
-					countSql += "AND tn.parent_id=0 AND tn.state!=3";
-				} else if ("2".equals(temp)) {//所有
-					sql += "AND tn.parent_id=0";
-					countSql += "AND tn.parent_id=0";
-				} else if ("3".equals(temp)) {//已验收
-					sql += "AND tn.stage=2";
-					countSql += "AND tn.stage=2";
-				} else if ("4".equals(temp)) {//激活
-					sql += "AND tn.state=1";
-					countSql += "AND tn.state=1";
-				} else if ("5".equals(temp)) {//已变更
-					sql += "AND tn.state=2";
-					countSql += "AND tn.state=2";
-				} else if ("6".equals(temp)) {//由我创建
+				
+				//我的地盘中的我的需求
+				else if ("6".equals(temp)) {//由我创建
 					sql += "AND tn.create_id=" + memberId;
 					countSql += "AND tn.create_id=" + memberId;
 				} else if ("7".equals(temp)) {//指派给我
@@ -203,9 +230,6 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("8".equals(temp)) {//由我关闭
 					sql += "AND tn.closed_id=" + memberId;
 					countSql += "AND tn.closed_id=" + memberId;
-				} else if ("9".equals(temp)) {//待验收
-					sql += "AND tn.stage=1";
-					countSql += "AND tn.stage=1";
 				} else if ("10".equals(temp)) {//由我验收
 					sql += "AND tn.checked_id=" + memberId;
 					countSql += "AND tn.checked_id=" + memberId;
@@ -213,11 +237,11 @@ public class TeamNeedService extends GiantBaseService{
 					sql += "AND tn.member_id=" + memberId;
 					countSql += "AND tn.member_id=" + memberId;
 				} else if ("13".equals(temp)) {//待我验收
-					sql += "AND tn.stage=1 AND tn.member_id=" + memberId;
-					countSql += "AND tn.stage=1 AND tn.member_id=" + memberId;
+					sql += "AND tn.state=3 AND tn.member_id=" + memberId;
+					countSql += "AND tn.state=3 AND tn.member_id=" + memberId;
 				} else if ("14".equals(temp)) {//指派给我，且待验收需求
-					sql += "AND tn.stage=1 AND tn.assigned_id=" + memberId;
-					countSql += "AND tn.stage=1 AND tn.assigned_id=" + memberId;
+					sql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
+					countSql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
 				}
 			}
 		}
@@ -245,8 +269,8 @@ public class TeamNeedService extends GiantBaseService{
 			@SuppressWarnings("unchecked")
 			Map<String, Object> needMap = (Map<String, Object>) obj;
 			String sql = "SELECT tn.*,tp.project_name FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE tn.parent_id=" + needMap.get("id");
-			if("1".equals(type)) {
-				sql += " AND  tn.state>0 AND tn.state<3";
+			if("21".equals(type)) {
+				sql += " AND  tn.state>0 AND tn.state<5";
 			}
 			sql += " ORDER BY tn.state";
 			List<Map<String, Object>> list = super.getMapListBySQL(sql, null);
@@ -401,6 +425,8 @@ public class TeamNeedService extends GiantBaseService{
 		need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
 		need.setCheckRemark(GiantUtil.stringOf(mvm.get("check_remark")));
 		need.setFull((short) 1);
+		need.setChangedStatus((short) 0);
+		need.setOverdue((short) 0);
 		need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		boolean flag = super.dao.saveUpdateOrDelete(need, null);
 		pmLog.setObjectId(need.getId());
@@ -661,8 +687,10 @@ public class TeamNeedService extends GiantBaseService{
 				need.setChangedName(super.getMemberName());
 				need.setChangedTime(new Timestamp(System.currentTimeMillis()));
 				if(need.getChangedCount() == null || need.getChangedCount() < 1) {
+					need.setChangedStatus((short) 1);
 					need.setChangedCount((short) 1);
 				}else {
+					need.setChangedStatus((short) 1);
 					need.setChangedCount((short) (need.getChangedCount() + 1));
 				}
 				need.setState((short) 2);
@@ -670,13 +698,14 @@ public class TeamNeedService extends GiantBaseService{
 				need.setFull((short) 1);
 				pmLog.setMethod(LogMethod.PERFECT);
 			}
+			need.setProjectId(GiantUtil.intOf(mvm.get("projectId"), 0));
 			need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 			need.setCheckRemark(GiantUtil.stringOf(mvm.get("check_remark")));
 			need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
 			need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 			boolean b = super.dao.saveUpdateOrDelete(need, null);
 			if(b) {
-				pmLog.add(need.getId(), oldT, need, new String[]{"check_remark","need_remark"},"changed_name","need_name","state","changed_count","check_remark","need_remark");
+				pmLog.add(need.getId(), oldT, need, new String[]{"check_remark","need_remark","project_id"},"changed_name","need_name","state","changed_count","check_remark","need_remark","project_id");
 				this.log(pmLog);
 			}
 			return b;
@@ -700,7 +729,7 @@ public class TeamNeedService extends GiantBaseService{
 			need.setClosedName(super.getMemberName());
 			need.setClosedReason(GiantUtil.stringOf(mvm.get("closedReason")));
 			need.setClosedTime(new Timestamp(System.currentTimeMillis()));
-			need.setState((short)3);
+			need.setState((short)5);
 			need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 			boolean b = super.dao.saveUpdateOrDelete(need, null);
 			if(b) {
@@ -761,7 +790,8 @@ public class TeamNeedService extends GiantBaseService{
 				need.setCheckedId(super.getMemberId());
 				need.setCheckedName(super.getMemberName());
 				need.setCheckedTime(new Timestamp(System.currentTimeMillis()));
-				need.setStage("y".equals(GiantUtil.stringOf(mvm.get("stage"))) ? (short)2 : (short)3); // stage 2表示验收完成，3表示验收未通过
+				need.setState("y".equals(GiantUtil.stringOf(mvm.get("stage"))) ? (short)4 : (short)2);
+//				need.setStage("y".equals(GiantUtil.stringOf(mvm.get("stage"))) ? (short)2 : (short)3); // stage 2表示验收完成，3表示验收未通
 				need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				boolean b = super.dao.saveUpdateOrDelete(need, null);
 				if(b) {
@@ -904,10 +934,11 @@ public class TeamNeedService extends GiantBaseService{
 			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.OPEN, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			TaskNeed oldT = new TaskNeed();
 			BeanUtils.copyProperties(n, oldT);
-			
-//			n.setOpenedId(0);
-//			n.setOpenedName("");
-//			n.setOpenedTime(null);
+			n.setOpenedId(n.getAssignedId());
+			n.setOpenedName(n.getAssignedName());
+			n.setOpenedTime(new Timestamp(System.currentTimeMillis()));
+			n.setRealStartDate(new Timestamp(System.currentTimeMillis()));
+			n.setState((short)2);
 			try {
 				n.setPlanEndDate(super.returnTime(mvm.get("plan_end_date")));
 			} catch (Exception e) {
@@ -917,6 +948,34 @@ public class TeamNeedService extends GiantBaseService{
 			boolean b = super.dao.saveUpdateOrDelete(n, null);
 			if (b) {
 				pmLog.add(n.getId(), oldT, n,"plan_end_date");
+				this.log(pmLog);
+			}
+			return b; 
+		}
+		return false;
+	}
+	
+	/**
+	 * 提交验收
+	 */
+	public boolean submitCheck(Map<String, String> mvm) {
+		TaskNeed n = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			n = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.OPEN, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+			TaskNeed oldT = new TaskNeed();
+			BeanUtils.copyProperties(n, oldT);
+			n.setFinishedId(n.getAssignedId());
+			n.setFinishedName(n.getAssignedName());
+			n.setFinishedTime(new Timestamp(System.currentTimeMillis()));
+			n.setRealEndDate(new Timestamp(System.currentTimeMillis()));
+			n.setCheckedId(GiantUtil.intOf(mvm.get("checked_id"), 0));
+			n.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			n.setState((short)3);
+			boolean b = super.dao.saveUpdateOrDelete(n, null);
+			if (b) {
+				pmLog.add(n.getId(), oldT, n,"checked_id");
 				this.log(pmLog);
 			}
 			return b; 

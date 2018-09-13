@@ -50,7 +50,7 @@ public class TeamNeedController extends GiantBaseController {
 			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
-			mvm.put("type", "1");
+			mvm.put("type", "21");//未关闭
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
 			mvm.put("search", "");
@@ -65,7 +65,8 @@ public class TeamNeedController extends GiantBaseController {
 		pageList = teamNeedService.getPageList(conditionPage);
 		requestURL = "team/need/index";
 		pageList.setDesAction(requestURL);
-		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
+		//所有和未关闭的情况下获取子需求
+		if("20".equals(mvm.get("type")) || "21".equals(mvm.get("type"))) {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
 		}
 		model.addAttribute("pageList", pageList);
@@ -286,6 +287,9 @@ public class TeamNeedController extends GiantBaseController {
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("n", n);
 		}
+		String querySql = "select id, project_name from task_project where state = 1";
+		List<Map<String, Object>> projectList = teamNeedService.getMapListBySQL(querySql, null);
+		model.addAttribute("projectList", projectList);
 		publicResult(model);
 		return "team/need/change";
 	}
@@ -297,6 +301,7 @@ public class TeamNeedController extends GiantBaseController {
 	public void change(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
 		if(GiantUtil.isEmpty(mvm.get("need_name")) || GiantUtil.isEmpty(mvm.get("need_remark")) || 
+				GiantUtil.isEmpty(mvm.get("projectId")) ||
 				GiantUtil.isEmpty(mvm.get("check_remark"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
@@ -325,6 +330,10 @@ public class TeamNeedController extends GiantBaseController {
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("n", n);
 		}
+		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
+		String needRemark = (String) needDetail.get("need_remark");
+		String checkRemark = (String) needDetail.get("check_remark");
+		model.addAttribute("needM", needDetail);
 		publicResult(model);
 		return "team/need/check";
 	}
@@ -565,6 +574,47 @@ public class TeamNeedController extends GiantBaseController {
 			return;
 		}
 		boolean flag = teamNeedService.open(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	/**
+	 * 跳转提交验收页面
+	 */
+	@RequestMapping("/toSubmitCheck")
+	public String toSubmitCheck(@RequestParam Map<String, String> mvm, Model model) {
+		//添加需求页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("n", n);
+		}
+		model.addAttribute("members", teamNeedService.getAllMember());
+		publicResult(model);
+		return "team/need/submitCheck";
+	}
+
+	/**
+	 * 提交验收
+	 */
+	@RequestMapping("/submitCheck")
+	public void submitCheck(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		// TODO 是否需要对需求的状态进行判断，例如：只有测试完成的需求才能进行验收操作，获取再toCheck中进行验证
+		// mvm eg :{r=0.29616789999172366, stage=y, comment=, id=25}
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("checked_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.submitCheck(mvm);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

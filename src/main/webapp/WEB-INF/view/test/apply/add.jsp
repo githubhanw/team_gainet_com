@@ -56,8 +56,9 @@
 								<tr>
 									<th>测试内容</th>
 									<td>
-										<input type="hidden" name="test_content">
-										<div id="test_content">${entity.testContent }</div>
+										<div style="width:50%;">
+											<script type="text/plain" id="t_test_content" name="test_content">${entity.testContent}</script>
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -117,10 +118,20 @@
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 <script>
-UMEditor("test_content");
+var editor = new UE.ui.Editor();
+editor.render("t_test_content");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_test_content');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='test_content']").val(UM.getEditor('test_content').getContent());
 	$.ajax({type:"POST",url:"test/apply/addOrUpdate?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

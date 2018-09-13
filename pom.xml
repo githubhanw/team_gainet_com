@@ -470,11 +470,6 @@
 			<version>20140107</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.baidu.ueditor/ueditor -->
-		<dependency>
-		    <groupId>com.baidu.ueditor</groupId>
-		    <artifactId>ueditor</artifactId>
-		    <version>1.1.2</version>
-		</dependency>
 		
 	</dependencies>
 	<build>
@@ -495,6 +490,9 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>UTF8</encoding>
+					<compilerArguments>
+						<extdirs>src\main\webapp\WEB-INF\lib</extdirs>
+					</compilerArguments>
 				</configuration>
 			</plugin>
 		</plugins>

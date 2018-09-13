@@ -65,8 +65,9 @@
 								<tr>
 									<th>描述</th>
 									<td class="required">
-										<input type="hidden" name="mark" value="">
-										<div id="mark">${mi.milepostDescribe}</div>
+										<div style="width:50%;">
+											<script type="text/plain" id="t_mark" name="mark">${mi.milepostDescribe}</script>
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -126,11 +127,21 @@
 </html>
 <script>
 //alert(document.getElementById("mi_id").value );
-UMEditor("mark");
+var editor = new UE.ui.Editor();
+editor.render("t_mark");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_mark');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='mark']").val(UM.getEditor('mark').getContent());
-	if($("input[name='mark']").val(UM.getEditor('mark').getContent())==null){
+	if($("input[name='mark']").val(UE.getEditor('mark').getContent())==null){
 		alert(4556);
 	}
 	$.ajax({type:"POST",url:"test/milepost/edit?r=" + Math.random(),data:$("form").serialize(),

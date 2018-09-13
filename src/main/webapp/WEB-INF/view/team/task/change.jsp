@@ -43,22 +43,24 @@
 									<th>任务名称</th>
 									<td class="required">
 										<input type="text" name="task_name" id="task_name" value="${t.taskName}" class="form-control input-product-title" autocomplete="off">
+									<input type="hidden" name="id" value="${t.id}"/>
 									</td>
 								</tr>
 								<tr>
 									<th>任务描述</th>
 									<td class="required">
-										<input type="hidden" name="remark">
-										<div id="remark">${t.remark}</div>
+										<div style="width:50%;">
+											<script type="text/plain" id="t_remark" name="remark">${t.remark}</script>
+										</div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 								</tr>
 								<tr>
 									<th>备注</th>
 									<td>
-										<input type="hidden" name="comment">
-										<div id="comment"></div>
-										<input type="hidden" name="id" value="${t.id}"/>
+										<div id="comment" style="width:100%;">
+											<input type="hidden" name="comment">
+										</div>
 									</td>
 									<td></td>
 								</tr>
@@ -79,13 +81,25 @@
 	</body>
 </html>
 <script>
-UMEditor("remark");
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+var editor2 = new UE.ui.Editor();
+editor.render("t_remark");
+editor2.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_remark');
+UE.getEditor('comment');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='remark']").val(UM.getEditor('remark').getContent());
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
-	$.ajax({type:"POST",url:"team/task/change?r=" + Math.random(),data:$("form").serialize()
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"team/task/change?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
 			window.location.href = "team/task/index";

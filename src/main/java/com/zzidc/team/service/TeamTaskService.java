@@ -453,7 +453,7 @@ public class TeamTaskService extends GiantBaseService {
 				return false;
 			}
 		}
-		PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.EDIT, task.toString(), null);
+		PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.EDIT, task.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		Task oldTask = new Task();
 		BeanUtils.copyProperties(task, oldTask);
 		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));

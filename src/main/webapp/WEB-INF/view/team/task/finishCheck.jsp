@@ -42,14 +42,15 @@
 								<tr>
 									<th>审核人</th>
 									<td class="required">${t.checkedName}</td>
+									<input type="hidden" name="id" value="${t.id}"/>
 									<td></td>
 								</tr>
 								<tr>
 									<th>审核备注</th>
 									<td colspan="2">
-										<input type="hidden" name="checked_reason">
-										<div id="checked_reason"></div>
-										<input type="hidden" name="id" value="${t.id}"/>
+										<div style="width:100%;">
+											<script type="text/plain" id="t_checked_reason" name="checked_reason"></script>
+										</div>
 									</td>
 								</tr>
 								</form>
@@ -109,7 +110,18 @@
 	</body>
 </html>
 <script>
-UMEditor("checked_reason");
+var editor = new UE.ui.Editor();
+editor.render("t_checked_reason");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('t_checked_reason');
+
 function setStory(reason) {
 	if (reason == '重复') {
 		$('#duplicateStoryBox').show();
@@ -124,7 +136,6 @@ function setStory(reason) {
 }
 $("#submit_yes").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='checked_reason']").val(UM.getEditor('checked_reason').getContent());
 	$.ajax({type:"POST",url:"team/task/finishCheck?is=1&r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
@@ -139,7 +150,6 @@ $("#submit_yes").click(function(){
 });
 $("#submit_no").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='checked_reason']").val(UM.getEditor('checked_reason').getContent());
 	$.ajax({type:"POST",url:"team/task/finishCheck?is=0&r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

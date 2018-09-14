@@ -40,6 +40,16 @@
 							<tbody>
 								<form class="main-table table-task skip-iframe-modal" id="createForm" method="post">
 								<tr>
+									<th>需求描述</th>
+									<td>${needM.need_remark}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>验收标准</th>
+									<td class="required">${needM.check_remark}</td>
+									<td></td>
+								</tr>
+								<tr>
 									<th>状态</th>
 									<td class="required">
 										<label class="radio-inline"><input type="radio" name="stage" value="y" checked="checked" id="passy"> 通过</label>

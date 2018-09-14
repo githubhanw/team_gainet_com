@@ -374,8 +374,6 @@ public class TeamNeedController extends GiantBaseController {
 			model.addAttribute("n", n);
 		}
 		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
-		String needRemark = (String) needDetail.get("need_remark");
-		String checkRemark = (String) needDetail.get("check_remark");
 		model.addAttribute("needM", needDetail);
 		publicResult(model);
 		return "team/need/check";

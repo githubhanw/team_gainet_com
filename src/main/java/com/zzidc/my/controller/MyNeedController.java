@@ -333,6 +333,7 @@ public class MyNeedController extends GiantBaseController {
         }
         
 		if(GiantUtil.isEmpty(mvm.get("need_name")) || GiantUtil.isEmpty(mvm.get("need_remark")) || 
+				GiantUtil.isEmpty(mvm.get("projectId")) ||
 				GiantUtil.isEmpty(mvm.get("check_remark"))){
 			json.put("code",1);
 			json.put("message", "参数不足");

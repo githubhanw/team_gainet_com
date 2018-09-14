@@ -94,6 +94,9 @@ public class TeamProjectController extends GiantBaseController {
 			model.addAttribute("p", p);
 			Member member = (Member) teamProjectService.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(p.getMemberId(), 0));
 			model.addAttribute("member_name", member == null ? "" : member.getName());
+			
+			List<Map<String, Object>> needTask = teamProjectService.getRelationTaskList(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("needTask", needTask);
 		}
 		publicResult(model);
 		return "team/project/pro_detail";

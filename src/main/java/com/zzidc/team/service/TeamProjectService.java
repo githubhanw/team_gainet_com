@@ -1,6 +1,7 @@
 package com.zzidc.team.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -243,5 +244,17 @@ public class TeamProjectService extends GiantBaseService{
 		String sql = "SELECT pd.*,pdt.project_doc_type FROM declaration_project_doc pd, declaration_project_doc_type pdt "
 				+ "WHERE pd.type_id=pdt.id AND pd.state>0 AND project_id=" + projectId;
 		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 项目详情页面获取同项目需求。
+	 * 
+	 * @return
+	 */
+	public List<Map<String, Object>> getRelationTaskList(Integer needId) {
+		List<Map<String, Object>> relationTaskList = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT * FROM `task_need` WHERE 1=1 AND project_id=" + needId + " ORDER BY create_time";
+		relationTaskList = super.getMapListBySQL(sql, null);
+		return relationTaskList;
 	}
 }

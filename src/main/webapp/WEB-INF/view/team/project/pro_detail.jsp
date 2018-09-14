@@ -15,9 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>
-			项目详情
-		</title>
+		<title>项目详情：${p.projectName}</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -27,44 +25,43 @@
 	    	<%@ include file="/WEB-INF/view/comm/sub_header.jsp" %>
 	    </header>
 	    <!--header end-->
-		<main id="main" class="in">
+		<main id="main">
 			<div class="container">
-				<div id="mainContent" class="main-content">
-					<div class="center-block">
-						<div class="main-header">
-							<h2>
-								项目详情
-							</h2>
+				<div id="mainMenu" class="clearfix">
+					<div class="btn-toolbar pull-left">
+						<a href="javascript:history.go(-1);" class="btn btn-link"><i class="icon icon-back icon-sm"></i> 返回</a>
+						<div class="divider"></div>
+						<div class="page-title">
+							<span class="label label-id">${p.id}</span> <span class="text">${p.projectName}</span>
+						</div>
+					</div>
+				</div>
+				<div id="mainContent" class="main-row">
+					<div class="main-col col-12">
+					<div class="cell">
+						<div class="detail">
+							<div class="detail-title">项目详情</div>
 						</div>
 						<table class="table table-form">
 							<tbody>
-								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
 									<th>项目名称</th>
-									<td>
-										${p.projectName}
-									</td>
+									<td>${p.projectName}</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>所属公司</th>
-									<td>
-										${p.company}
-									</td>
+									<td>${p.company}</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>项目负责人</th>
-									<td>
-										${member_name}
-									</td>
+									<td>${member_name}</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>创建时间</th>
-									<td>
-										${p.createTime}
-									</td>
+									<td>${p.createTime}</td>
 									<td></td>
 								</tr>
 								<tr>
@@ -77,15 +74,53 @@
 								</tr>
 								<tr>
 									<th>备注</th>
-									<td>
-										${p.remark}
-									</td>
+									<td>${p.remark}</td>
 									<td></td>
 								</tr>
-								</form>
 							</tbody>
 						</table>
+					
+				<c:if test="${needTask != null}">
+					<div class="detail">
+						<div class="detail-title">同项目需求</div>
+						<div class="detail-content article-content">
+							<table class="table table-hover table-fixed">
+								<thead>
+									<tr class="text-center">
+										<th class="w-80px">ID</th>
+										<th class="w-300px">需求名称</th>
+										<th>需求方</th>
+										<th>指派给</th>
+										<th>创建时间</th>
+										<th>开始时间</th>
+										<th>结束时间</th>
+										<th>验收时间</th>
+										<th>阶段</th>
+										<th>状态</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${needTask}" var="item" varStatus="sta">
+									<tr class="text-center">
+										<td>${item.id}</td>
+										<td><a href="team/need/detail?id=${item.id}" data-toggle="tooltip" data-placement="top" title="${item.need_name }">${item.need_name }</a></td>
+										<td>${item.member_name}</td>
+										<td>${item.assigned_name}</td>
+										
+										<td>${item.create_time}</td>
+										<td>${item.start_date}</td>
+										<td>${item.end_date}</td>
+										<td>${item.checked_time}</td>
+										<td>${item.stage==1?'待验收':item.stage==2?'验收完成':item.stage==3?'验收不通过':'其他'}</td>
+										<td>${item.state == 1 ? '未开始' : item.state == 2 ? '进行中' : item.state == 3 ? '待验收' : item.state == 4 ? '已验收' : item.state == 5 ? '已关闭' : '未知'}</td>
+									</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
 					</div>
+				</c:if>
+				</div>
 				</div>
 				<div id="mainActions">
 					<nav class="container">

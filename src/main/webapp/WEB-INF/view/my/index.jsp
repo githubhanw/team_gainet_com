@@ -95,17 +95,23 @@
 													<div class="tile-amount">${taskCount.wait_check > 0 ? taskCount.wait_check : 0}</div>
 												</a>
 											</div>
-											<div class="col tile">
+											<div class="col tile" style="width: 100%; height:30px;">
+											</div>
+											<div class="tile">
 												<a href="my/bug">
 													<div class="tile-title">我的Bug</div>
 													<div class="tile-amount">${bugCount.count}</div>
 												</a>
 											</div>
-											<div class="col tile">
+											<div class="col tile" style="width: 100%; height:30px;">
+											</div>
+											<div class="tile">
 												<a href="my/test">
 													<div class="tile-title">我的测试</div>
 													<div class="tile-amount">${testCount.count}</div>
 												</a>
+											</div>
+											<div class="col tile" style="width: 100%; height:30px;">
 											</div>
 											<div class="col tile">
 												<a href="my/need">

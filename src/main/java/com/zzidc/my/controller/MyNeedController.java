@@ -310,6 +310,9 @@ public class MyNeedController extends GiantBaseController {
 			}
 			model.addAttribute("n", n);
 		}
+		String querySql = "select id, project_name from task_project where state = 1";
+		List<Map<String, Object>> projectList = teamNeedService.getMapListBySQL(querySql, null);
+		model.addAttribute("projectList", projectList);
 		publicResult(model);
 		return "my/need/change";
 	}
@@ -382,6 +385,8 @@ public class MyNeedController extends GiantBaseController {
 			}
 			model.addAttribute("n", n);
 		}
+		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
+		model.addAttribute("needM", needDetail);
 		publicResult(model);
 		return "my/need/check";
 	}

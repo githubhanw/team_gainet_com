@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="my/need">${n.needName}</a>
+								<a href="my/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 变更</small>
 							</h2>
 						</div>
@@ -45,7 +45,18 @@
 										<input type="text" name="need_name" id="need_name" value="${n.needName}" class="form-control input-product-title" autocomplete="off">
 									</td>
 								</tr>
-								
+								<tr>
+									<th>项目名称</th>
+									<td class="required">
+										<select class="form-control chosen-select" name="projectId" id="projectId" onchange="selectParent()">
+											<option value="0">请选择项目名称</option>
+											<c:forEach items="${projectList}" var="project" varStatus="sta">
+												<option value="${project.id}" ${project.id==n.projectId?'selected="selected"':''}>${project.project_name}</option>
+											</c:forEach>
+										</select>
+									</td>
+									<td></td>
+								</tr>
 								<tr>
 									<th>需求描述</th>
 									<td class="required">

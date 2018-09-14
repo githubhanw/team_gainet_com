@@ -32,13 +32,23 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/index">${n.needName}</a>
+								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 验收</small>
 							</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 								<form class="main-table table-task skip-iframe-modal" id="createForm" method="post">
+								<tr>
+									<th>需求描述</th>
+									<td>${needM.need_remark}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>验收标准</th>
+									<td class="required">${needM.check_remark}</td>
+									<td></td>
+								</tr>
 								<tr>
 									<th>状态</th>
 									<td class="required">

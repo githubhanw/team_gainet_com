@@ -36,9 +36,9 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="my/need?type=13" class="btn btn-link ${prm.type == 13 ? 'btn-active-text':''}">
+						<a href="my/need?type=14" class="btn btn-link ${prm.type == 14 ? 'btn-active-text':''}">
 							<span class="text">待我验收</span>
-							<c:if test="${prm.type == 13}">
+							<c:if test="${prm.type == 14}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>

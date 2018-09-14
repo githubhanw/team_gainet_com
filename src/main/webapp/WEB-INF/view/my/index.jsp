@@ -58,7 +58,7 @@
 												</a>
 											</div>
 											<div class="col tile">
-												<a href="my/task?type=13">
+												<a href="my/task?type=23">
 													<div class="tile-title">审核中任务</div>
 													<div class="tile-amount">${taskCount.checking > 0 ? taskCount.checking : 0}</div>
 												</a>
@@ -67,12 +67,6 @@
 												<a href="my/task?type=10">
 													<div class="tile-title">已完成任务</div>
 													<div class="tile-amount">${taskCount.done > 0 ? taskCount.done : 0}</div>
-												</a>
-											</div>
-											<div class="col tile">
-												<a href="my/task?type=13">
-													<div class="tile-title">待我审核</div>
-													<div class="tile-amount">${taskCount.wait_check > 0 ? taskCount.wait_check : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
@@ -93,6 +87,12 @@
 															${taskCount.overdue > 0 ? taskCount.overdue : 0}
 														</span>
 													</div>
+												</a>
+											</div>
+											<div class="col tile">
+												<a href="my/task?type=13">
+													<div class="tile-title">待我审核</div>
+													<div class="tile-amount">${taskCount.wait_check > 0 ? taskCount.wait_check : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">

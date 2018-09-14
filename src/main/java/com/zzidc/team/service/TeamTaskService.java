@@ -205,8 +205,8 @@ public class TeamTaskService extends GiantBaseService {
 					sql += "AND t.overdue=1";
 					countSql += "AND t.overdue=1";
 				} else if ("10".equals(temp)) {// 状态：我完成
-					sql += "AND t.state=4 AND t.finished_id=" + memberId;
-					countSql += "AND t.state=4 AND t.finished_id=" + memberId;
+					sql += "AND t.state=4 AND t.finished_id=" + memberId + " AND t.assigned_id=" + memberId;
+					countSql += "AND t.state=4 AND t.finished_id=" + memberId + " AND t.assigned_id=" + memberId;
 				} else if ("11".equals(temp)) {// 状态：由我创建
 					sql += "AND t.member_id=" + memberId;
 					countSql += "AND t.member_id=" + memberId;
@@ -234,7 +234,10 @@ public class TeamTaskService extends GiantBaseService {
 				} else if ("18".equals(temp)) {// 状态：未接收任务
 					sql += "AND t.state=1 AND t.assigned_id=" + memberId;
 					countSql += "AND t.state=1 AND t.assigned_id=" + memberId;
-				}
+				} else if ("23".equals(temp)) {// 状态：审核中任务
+					sql += "AND t.state=3 AND t.assigned_id=" + memberId;
+					countSql += "AND t.state=3 AND t.assigned_id=" + memberId;
+				}  
 			}
 		}
 		// 字段倒叙或升序排列

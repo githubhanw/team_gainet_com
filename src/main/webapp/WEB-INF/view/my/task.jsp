@@ -31,38 +31,32 @@
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
 						<a href="my/task?type=8" class="btn btn-link ${prm.type == 8 ? 'btn-active-text':''}">
-							<span class="text">指派给我</span>
+							<span class="text">我的任务</span>
 							<c:if test="${prm.type == 8}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a href="my/task?type=18" class="btn btn-link ${prm.type == 18 ? 'btn-active-text':''}">
-							<span class="text">待我接收</span>
+							<span class="text">待接收</span>
 							<c:if test="${prm.type == 18}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a>
-						<a href="my/task?type=13" class="btn btn-link ${prm.type == 13 ? 'btn-active-text':''}">
-							<span class="text">待我审核</span>
-							<c:if test="${prm.type == 13}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a>
-						<a href="my/task?type=11" class="btn btn-link ${prm.type == 11 ? 'btn-active-text':''}">
-							<span class="text">由我创建</span>
-							<c:if test="${prm.type == 11}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a>
-						<a href="my/task?type=10" class="btn btn-link ${prm.type == 10 ? 'btn-active-text':''}">
-							<span class="text">由我完成</span>
-							<c:if test="${prm.type == 10}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a href="my/task?type=20" class="btn btn-link ${prm.type == 20 ? 'btn-active-text':''}">
 							<span class="text">进行中</span>
 							<c:if test="${prm.type == 20}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="my/task?type=23" class="btn btn-link ${prm.type == 23 ? 'btn-active-text':''}">
+							<span class="text">审核中</span>
+							<c:if test="${prm.type == 23}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="my/task?type=10" class="btn btn-link ${prm.type == 10 ? 'btn-active-text':''}">
+							<span class="text">已完成</span>
+							<c:if test="${prm.type == 10}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
@@ -75,6 +69,18 @@
 						<a href="my/task?type=14" class="btn btn-link ${prm.type == 14 ? 'btn-active-text':''}">
 							<span class="text">已逾期</span>
 							<c:if test="${prm.type == 14}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="my/task?type=11" class="btn btn-link ${prm.type == 11 ? 'btn-active-text':''}">
+							<span class="text">由我创建</span>
+							<c:if test="${prm.type == 11}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="my/task?type=13" class="btn btn-link ${prm.type == 13 ? 'btn-active-text':''}">
+							<span class="text">待我审核</span>
+							<c:if test="${prm.type == 13}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>

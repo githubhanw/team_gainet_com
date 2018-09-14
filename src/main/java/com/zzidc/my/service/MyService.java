@@ -22,7 +22,7 @@ public class MyService extends GiantBaseService{
 	 */
 	public Map<String, Object> getTaskCount(){
 		String sql = "SELECT count(0) 'count',SUM(IF(state=1,1,0)) 'wait',SUM(IF(state=2,1,0)) 'doing'," + 
-				"SUM(IF(state=3,1,0)) 'checking',SUM(IF(state=4,1,0)) 'done',(SELECT count(0) " + 
+				"SUM(IF(state=3,1,0)) 'checking',SUM(IF(state=4 and finished_id=" + super.getMemberId() + ",1,0)) 'done',(SELECT count(0) " + 
 				"FROM task WHERE deleted=0 AND state=3 AND checked_id=" + super.getMemberId() + 
 				") 'wait_check',SUM(IF(delay>0,1,0)) 'delay',SUM(IF(overdue=1,1,0)) 'overdue' " + 
 				"FROM `task` WHERE deleted=0 AND assigned_id=" + super.getMemberId();

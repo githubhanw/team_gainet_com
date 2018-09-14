@@ -341,31 +341,31 @@
 					<div class="btn-toolbar">
 						<a href="javascript:history.go(-1);" id="back" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="返回"><i class="icon-goback icon-back"></i> 返回</a>
 						<c:if test="${needM.state == 1 || needM.state == 2 || needM.state == 3 || needM.state == 4}">
-								<a href="team/need/toRelate?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i>关联月会议</a>
+								<a href="my/need/toRelate?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i>关联月会议</a>
 						</c:if>
 						<c:if test="${needM.state == 1 || needM.state == 2}">
-							<a href="team/need/toChange?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="${needM.full == 0?'完善':'变更'}">
+							<a href="my/need/toChange?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="${needM.full == 0?'完善':'变更'}">
 								<i class="icon-story-change icon-fork"></i> ${needM.full == 0?'完善':'变更'}
 							</a>
-							<a href="team/need/toClose?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i> 关闭需求</a>
+							<a href="my/need/toClose?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i> 关闭需求</a>
 						</c:if>
 						<c:if test="${needM.full == 1}">
 						  <c:if test="${needM.state == 1}">
-						    <a href="team/need/toOpen?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i>接收需求</a>
+						    <a href="my/need/toOpen?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i>接收需求</a>
 						  </c:if>
 						  <c:if test="${needM.state == 2}">
-						  <a href="team/need/toSubmitCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i>提交验收</a>
+						  <a href="my/need/toSubmitCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i>提交验收</a>
 						</c:if>
 						<c:if test="${needM.state == 3}">
-						<a href="team/need/toCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i> 验收需求</a>
+						<a href="my/need/toCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i> 验收需求</a>
 						</c:if>
 						</c:if>
 						<c:if test="${(needM.parent_id == null || needM.parent_id == 0) && needM.full == 1 && needM.state == 2}">	
-								<a href="team/task/toAdd?need_id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i> 批量建任务</a>
+								<a href="my/task/toAdd?need_id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i> 批量建任务</a>
 						  </c:if>
 						
 						<c:if test="${needM.parent_id == null || needM.parent_id == ''}">
-							<a href="team/need/toRelevance?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关联需求"><i class='icon icon-sitemap'></i> 关联需求</a>
+							<a href="my/need/toRelevance?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关联需求"><i class='icon icon-sitemap'></i> 关联需求</a>
 						</c:if>
 					</div>
 				</div>

@@ -115,10 +115,21 @@
 	</body>
 </html>
 <script>
-UMEditor("comment");
+var editor = new UE.ui.Editor();
+editor.render("comment");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('comment');
+
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='comment']").val(UM.getEditor('comment').getContent());
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"my/need/submitCheck?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

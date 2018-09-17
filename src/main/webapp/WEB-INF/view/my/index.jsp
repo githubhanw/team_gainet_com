@@ -106,7 +106,7 @@
 													<div class="tile-title">我的测试</div>
 													<div class="tile-amount">${testCount.count}</div>
 												</a>
-											</div>
+											</div> 
 											<div class="col tile">
 												<a href="my/need">
 													<div class="tile-title">我的需求</div>

@@ -48,8 +48,8 @@
 								<tr>
 									<th>审核备注</th>
 									<td colspan="2">
-										<div style="width:100%;">
-											<script type="text/plain" id="t_checked_reason" name="checked_reason"></script>
+										<div class="detail-title">
+											<script type="text/plain" id="t_checked_reason" name="checked_reason" style="width: 100%;"></script>
 										</div>
 									</td>
 								</tr>

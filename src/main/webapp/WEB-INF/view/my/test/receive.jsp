@@ -101,8 +101,8 @@
 								<tr>
 									<th>任务描述</th>
 									<td>
-										<div style="width:50%;">
-											<script type="text/plain" id="t_remark" name="remark">${t.testContent}</script>
+										<div class="detail-title">
+											<script type="text/plain" id="t_remark" name="remark" style="width: 100%;">${t.testContent}</script>
 										</div>
 									</td>
 									<td></td>

@@ -52,8 +52,8 @@
 								<tr>
 									<th>备注</th>
 									<td>
-										<div style="width:100%;">
-											<script type="text/plain" id="t_remark" name="remark">${p.remark}</script>
+										<div class="detail-title">
+											<script type="text/plain" id="t_remark" name="remark" style="width: 100%;">${p.remark}</script>
 										</div>
 									</td>
 									<td></td>

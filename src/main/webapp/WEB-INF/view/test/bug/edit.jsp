@@ -121,8 +121,8 @@
 								<tr>
 									<th>BUG描述</th>
 									<td class="required">
-										<div style="width:50%;">
-											<script type="text/plain" id="t_mark" name="mark">${t.mark}</script>
+										<div  class="detail-title">
+											<script type="text/plain" id="t_mark" name="mark" style="width: 100%;">${t.mark}</script>
 										</div>
 									</td>
 									<td></td>

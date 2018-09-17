@@ -48,8 +48,8 @@
 								<tr>
 									<th>任务描述</th>
 									<td class="required">
-										<div style="width:50%;">
-											<script type="text/plain" id="t_remark" name="remark">${t.remark}</script>
+										<div class="detail-title">
+											<script type="text/plain" id="t_remark" name="remark" style="width: 100%;">${t.remark}</script>
 										</div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>

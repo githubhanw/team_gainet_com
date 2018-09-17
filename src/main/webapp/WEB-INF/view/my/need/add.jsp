@@ -125,7 +125,7 @@
 									<th>需求描述</th>
 									<td class="required">
 										<input type="hidden" name="need_remark">
-										<textarea id="need_remark" name="details" placeholder="" style="width:100%;height:500px;"></textarea>
+										<textarea id="need_remark" name="details" placeholder="" style="width:100%;"></textarea>
 										<div id="need_remark" value=""></div>
 									</td>
 								</tr>
@@ -134,7 +134,7 @@
 									<th>验收标准</th>
 									<td class="required">
 										<input type="hidden" name="check_remark">
-										<textarea id="check_remark" name="details" placeholder="" style="width:100%;height:500px;"></textarea>
+										<textarea id="check_remark" name="details" placeholder="" style="width:100%;"></textarea>
 										<div id="check_remark" value=""></div>
 									</td>
 									<td></td>

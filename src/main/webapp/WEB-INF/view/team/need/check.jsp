@@ -61,7 +61,7 @@
 									<th>备注</th>
 									<td class="required">
 										<input type="hidden" name="comment">
-										<textarea id="comment" name="details" placeholder="" style="width:100%;height:500px;"></textarea>
+										<textarea id="comment" name="details" placeholder="" style="width:100%;"></textarea>
 										<div id="comment" value=""></div>
 										<input type="hidden" name="id" value="${n.id}"/>
 									</td>

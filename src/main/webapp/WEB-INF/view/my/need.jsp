@@ -272,10 +272,14 @@
 														    <a href="my/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
 														    </c:if>
 														    <c:if test="${need.state == 2}">
-														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+														         <c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
+														         <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															     </c:if>
 															</c:if>
 															<c:if test="${need.state == 3}">
-															<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
+															     <c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
+															     <a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
+														         </c:if>
 														</c:if>
 														</c:if>
 														<c:if test="${need.full == 1 && need.state == 2}">

@@ -89,31 +89,31 @@
 											<th data-flex="false" data-width="90px" style="width: 50px" class="c-id text-center" title="ID">
 											ID
 											</th>
-											<th data-flex="false" data-width="150px" style="width: 123px" class="c-pri text-center" title="名称">
+											<th data-flex="false" data-width="150px" style="width: 100px" class="c-pri text-center" title="名称">
 											标题
 											</th>
-										    <th data-flex="false" data-width="50px" style="width: 65px" class="c-pri" title="名称">
+											<th data-flex="false" data-width="50px" style="width:97px" class="c-pri text-center" title="文件原名">
+											文件原名
+											</th>
+										    <th data-flex="false" data-width="50px" style="width:29px" class="c-pri" title="名称">
 											关联类型
 											</th>
 											<!--  <th data-flex="false" data-width="50px" style="width:120px" class="c-name text-center" title="描述">
 											关联名称
 											</th>-->
-											<th data-flex="false" data-width="auto" style="width:92px" class="c-name" title="创建时间">
+											<th data-flex="false" data-width="auto" style="width:58px" class="c-name" title="创建时间">
 											创建时间
 											</th>
-											<th data-flex="false" data-width="50px" style="width:69px" class="c-name" title="修改时间">
+											<th data-flex="false" data-width="50px" style="width:47px" class="c-name" title="修改时间">
 											修改时间
 											</th>
-											<th data-flex="false" data-width="50px" style="width:90px" class="c-pri text-center" title="文件原名">
-											文件原名
-											</th>
-											<th data-flex="false" data-width="50px" style="width:120px" class="c-pri text-center" title="创建者">
+											<th data-flex="false" data-width="50px" style="width:39px" class="c-pri text-center" title="创建者">
 											创建者
 											</th>
-											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri text-center" title="状态">
+											<th data-flex="false" data-width="50px" style="width:39px" class="c-pri text-center" title="状态">
 											状态
 											</th>
-											<th data-flex="false" data-width="300px" style="width:160px" class="c-actions text-center" title="操作">操作</th>
+											<th data-flex="false" data-width="300px" style="width:65px" class="c-actions text-center" title="操作">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -122,14 +122,21 @@
 											<td class="c-id cell-id text-center">${fil.id}</td>
 											<td class="c-pri text-center">
 										    <a href="filemanage/manage/mydetail?id=${fil.id}" title="${fil.file_name}">
-											         <c:if test="${fn:length(fil.file_name)>10 }">
-										                         ${fn:substring(fil.file_name, 0, 10)}...
+											         <c:if test="${fn:length(fil.file_name)>30 }">
+										                         ${fn:substring(fil.file_name, 0, 30)}...
 										             </c:if>
-										             <c:if test="${fn:length(fil.file_name)<=10}">
+										             <c:if test="${fn:length(fil.file_name)<=30}">
 										                         ${fil.file_name}
 										             </c:if> 
 										    </a>
-											
+											<td class="c-pri text-center" title="${fil.file_realname}">
+											<c:if test="${fn:length(fil.file_realname)>25 }">
+										                         ${fn:substring(fil.file_realname, 0, 25)}...
+										    </c:if>
+										    <c:if test="${fn:length(fil.file_realname)<=25}">
+										                         ${fil.file_realname}
+										    </c:if> 
+											</td>
 											</td>
 											<td class="c-name text-left">
 											<c:if test="${fil.file_classification == 0}">项目</c:if>
@@ -147,14 +154,6 @@
 											</td> -->
 											<td class="c-name text-center">${fil.create_time}</td>
 											<td class="c-name text-center">${fil.edit_time}</td>
-											<td class="c-pri text-center" title="${fil.file_realname}">
-											<c:if test="${fn:length(fil.file_realname)>7 }">
-										                         ${fn:substring(fil.file_realname, 0, 7)}...
-										    </c:if>
-										    <c:if test="${fn:length(fil.file_realname)<=7}">
-										                         ${fil.file_realname}
-										    </c:if> 
-											</td>
 											<td class="c-pri text-center">${fil.add_name}</td>
 											<td class="c-pri text-center">
 											<c:if test="${fil.access_control == 0}">已删除

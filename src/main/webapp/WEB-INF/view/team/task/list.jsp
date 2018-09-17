@@ -42,12 +42,6 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<%-- <a href="team/task/index?type=8" class="btn btn-link ${prm.type == 8 ? 'btn-active-text':''}">
-							<span class="text">指派给我</span>
-							<c:if test="${prm.type == 8}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a> --%>
 						<a href="team/task/index?type=9" class="btn btn-link ${prm.type == 9 ? 'btn-active-text':''}">
 							<span class="text">已延期</span>
 							<c:if test="${prm.type == 9}">
@@ -72,12 +66,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<%-- <a href="team/task/index?type=10" class="btn btn-link ${prm.type == 10 ? 'btn-active-text':''}">
-							<span class="text">我完成</span>
-							<c:if test="${prm.type == 10}">
+						<a href="team/task/index?type=25" class="btn btn-link ${prm.type == 25 ? 'btn-active-text':''}">
+							<span class="text">审核中</span>
+							<c:if test="${prm.type == 25}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
-						</a> --%>
+						</a>
 						<a href="team/task/index?type=5" class="btn btn-link ${prm.type == 5 ? 'btn-active-text':''}">
 							<span class="text">已完成</span>
 							<c:if test="${prm.type == 5}">
@@ -102,8 +96,8 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a class="btn btn-link querybox-toggle ${prm.type == 14 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 高级搜索
-							<c:if test="${prm.type == 14}">
+						<a class="btn btn-link querybox-toggle ${prm.type == 26 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 高级搜索
+							<c:if test="${prm.type == 26}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
@@ -125,8 +119,8 @@
 				<div id="mainContent" class="main-row fade in">
 					<!--main-col start-->
 					<div class="main-col">
-						<div class="cell load-indicator ${prm.type == 14 ? 'show':''}" id="queryBox">
-							<form method="post" action="team/task/index?type=14" id="searchForm" class="search-form">
+						<div class="cell load-indicator ${prm.type == 26 ? 'show':''}" id="queryBox">
+							<form method="post" action="team/task/index?type=26" id="searchForm" class="search-form">
 								<table class="table table-condensed table-form" id="task-search">
 									<tbody>
 										<tr>

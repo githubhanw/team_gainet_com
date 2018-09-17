@@ -186,7 +186,10 @@ public class TeamTaskService extends GiantBaseService {
 				} else if ("4".equals(temp)) {// 状态：进行中
 					sql += "AND t.state=2";
 					countSql += "AND t.state=2";
-				} else if ("5".equals(temp)) {// 状态：已完成
+				} else if ("25".equals(temp)) {// 状态：审核中任务
+					sql += "AND t.state=3 ";
+					countSql += "AND t.state=3 ";
+				}  else if ("5".equals(temp)) {// 状态：已完成
 					sql += "AND t.state=4";
 					countSql += "AND t.state=4";
 				} else if ("6".equals(temp)) {// 状态：已取消

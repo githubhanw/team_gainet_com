@@ -130,7 +130,7 @@
 									<th>备注</th>
 									<td class="required">
 										<input type="hidden" name="remark">
-										<textarea id="remark" name="details" placeholder="" style="width:100%;height:500px;">${p.remark}${p.id}</textarea>
+										<textarea id="remark" name="details" placeholder="" style="width:100%;">${p.remark}${p.id}</textarea>
 										<div id="remark" value=""></div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>

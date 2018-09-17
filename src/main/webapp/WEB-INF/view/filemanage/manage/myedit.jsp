@@ -96,7 +96,7 @@
 									<th>正文</th>
 									<td class="required">
 										<input type="hidden" name="file_text">
-										<textarea id="file_text" name="details" placeholder="" style="width:100%;height:500px;">${FileManage.fileText}</textarea>
+										<textarea id="file_text" name="details" placeholder="" style="width:100%;">${FileManage.fileText}</textarea>
 										<div id="file_text" value=""></div>
 									</td>
 									<td></td>

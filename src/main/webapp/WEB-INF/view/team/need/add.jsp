@@ -125,7 +125,7 @@
 									<th>需求描述</th>
 									<td class="required">
 										<input type="hidden" name="need_remark">
-										<textarea id="need_remark" name="details" placeholder="" style="width:100%;height:500px;">${n.needRemark}</textarea>
+										<textarea id="need_remark" name="details" placeholder="" style="width:100%;">${n.needRemark}</textarea>
 										<div id="need_remark" value=""></div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
@@ -134,7 +134,7 @@
 									<th>验收标准</th>
 									<td class="required">
 										<input type="hidden" name="check_remark">
-										<textarea id="check_remark" name="details" placeholder="" style="width:100%;height:500px;">${n.checkRemark}</textarea>
+										<textarea id="check_remark" name="details" placeholder="" style="width:100%;">${n.checkRemark}</textarea>
 										<div id="check_remark" value=""></div>
 									</td>
 									<td></td>

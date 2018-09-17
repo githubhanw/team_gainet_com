@@ -48,14 +48,14 @@
 									</div>
 									<div class="detail">
 										<div class="detail-title">任务描述</div>
-										<div style="width:100%;">
-											<script type="text/plain" id="t_remark" name="remark">${t.remark}</script>
+										<div class="detail-content">
+											<script type="text/plain" id="t_remark" name="remark" style="width:100%;">${t.remark}</script>
 										</div>
 									</div>
 									
 									<div class="detail">
 										<div class="detail-title">备注</div>
-										<div id="comment" style="width:100%;">
+										<div class="detail-content" id="comment" style="width:100%;">
 											<input type="hidden" name="comment">
 										</div>
 									</div>

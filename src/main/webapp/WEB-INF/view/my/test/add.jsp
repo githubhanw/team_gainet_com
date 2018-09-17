@@ -56,8 +56,8 @@
 								<tr>
 									<th>测试内容</th>
 									<td>
-										<div style="width:50%;">
-											<script type="text/plain" id="t_test_content" name="test_content">${entity.testContent}</script>
+										<div class="detail-title">
+											<script type="text/plain" id="t_test_content" name="test_content" style="width: 100%;">${entity.testContent}</script>
 										</div>
 									</td>
 									<td></td>

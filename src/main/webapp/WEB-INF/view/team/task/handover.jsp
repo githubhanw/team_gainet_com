@@ -102,8 +102,8 @@
 								<tr>
 									<th>已完成内容</th>
 									<td>
-										<div style="width:50%;">
-											<script type="text/plain" id="t_handover_info" name="handover_info"></script>
+										<div class="detail-title">
+											<script type="text/plain" id="t_handover_info" name="handover_info" style="width: 100%;"></script>
 										</div>
 									</td>
 									<td></td>

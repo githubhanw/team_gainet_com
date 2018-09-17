@@ -65,8 +65,8 @@
 								<tr>
 									<th>描述</th>
 									<td class="required">
-										<div style="width:50%;">
-											<script type="text/plain" id="t_mark" name="mark">${mi.milepostDescribe}</script>
+										<div  class="detail-title">
+											<script type="text/plain" id="t_mark" name="mark" style="width:100%;">${mi.milepostDescribe}</script>
 										</div>
 									</td>
 									<td></td>

@@ -108,7 +108,7 @@
 									<th>备注</th>
 									<td class="required">
 										<input type="hidden" name="remark">
-										<textarea id="content" name="details" placeholder="" style="width:100%;height:500px;">${p.remark}</textarea>
+										<textarea id="content" name="details" placeholder="" style="width:100%;">${p.remark}</textarea>
 										<div id="remark" value=""></div>
 										<input type="hidden" name="id" value="${p.id}"/>
 									</td>

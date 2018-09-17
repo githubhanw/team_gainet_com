@@ -49,7 +49,7 @@
 									<th class="w-180px">指派给</th>
 									<th class="w-120px col-estimate">开始时间</th>
 									<th class="w-120px col-review">结束时间</th>
-									<th class="w-120px">任务描述</th>
+									<th style="width:14%">任务描述</th>
 									<th class="w-150px col-pri">优先级</th>
 									<th class="w-50px"></th>
 								</tr>
@@ -136,6 +136,19 @@
 	</body>
 </html>
 <script>
+$("input[name='task_name']").blur(function(){
+	var leave = true;
+	$("input[name='task_name']").each(function() {
+		if(!!$(this).val()){
+			leave = false;
+		}
+	})
+	if(leave){
+		$(window).unbind('beforeunload');
+	}else{
+		$(window).bind('beforeunload',function(){return '您输入的内容尚未保存，确定离开此页面吗？';});
+	}
+})
 $("input[name='task_name']").focus(function(){
 	$("td[id^='msg']").text('')
 })
@@ -171,6 +184,8 @@ $("#submit").click(function(){
 		}
 	}
 	if(flag){
+		//卸载离开拦截事件
+		$(window).unbind('beforeunload');
 		window.location.href="team/task/index";
 	}
 	$.ajaxSettings.async = true;

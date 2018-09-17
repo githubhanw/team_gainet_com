@@ -274,7 +274,7 @@
 										<tbody>
 											<tr class="nofixed">
 												<th>所属需求</th>
-												<td title="${taskM.need_name}"><a href="${taskM.need_id}" target="_blank">${taskM.need_name}</a></td>
+												<td title="${taskM.need_name}"><a href="team/need/detail?id=${taskM.need_id}" target="_blank">${taskM.need_name}</a></td>
 											</tr>
 											<tr>
 												<th>指派给</th>

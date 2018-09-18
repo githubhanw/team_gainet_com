@@ -66,7 +66,7 @@ public class TaskNeed implements java.io.Serializable {
 	private Short overdue;
 	private Timestamp realStartDate;
 	private Timestamp realEndDate;
-	private Short changedStatus;
+	private Short changedStatus; 
 	// Constructors
 
 	/** default constructor */

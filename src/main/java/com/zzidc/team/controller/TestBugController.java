@@ -169,12 +169,11 @@ public class TestBugController extends GiantBaseController {
 	public String toEdit(@RequestParam Map<String, String> mvm, Model model) {
 		model.addAttribute("task", testBugService.getFinishedTasksByMember());
 		model.addAttribute("members", testBugService.getAllMember());
-		String taskId=mvm.get("id");
-		model.addAttribute("taskId", taskId);
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("t", t);
+			model.addAttribute("taskId", t.getTaskid());
 		}
 		publicResult(model);
 		model.addAttribute("s", "add");//子模块

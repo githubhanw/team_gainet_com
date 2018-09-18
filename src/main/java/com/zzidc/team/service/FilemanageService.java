@@ -40,7 +40,6 @@ public class FilemanageService extends GiantBaseService{
 				sql += "AND access_control=:accessControl ";
 				countSql += "AND access_control=:accessControl ";
 				conditionMap.put("accessControl", accessControl);
-				System.out.println("状态："+accessControl);
 			}
 			
 			String startTime="";//开始时间
@@ -48,7 +47,6 @@ public class FilemanageService extends GiantBaseService{
 				sql += "AND create_id=:startTime ";
 				countSql += "AND create_id=:startTime ";
 				conditionMap.put("startTime", startTime);
-				System.out.println("开始时间："+startTime);
 			}
 			
 			String authorId="";//创建者id
@@ -56,7 +54,6 @@ public class FilemanageService extends GiantBaseService{
 				sql += "AND create_id=:authorId ";
 				countSql += "AND create_id=:authorId ";
 				conditionMap.put("authorId", authorId);
-				System.out.println("创建者id："+authorId);
 			}
 		}
 		// 字段倒叙或升序排列

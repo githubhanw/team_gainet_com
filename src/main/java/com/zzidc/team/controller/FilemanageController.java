@@ -75,6 +75,7 @@ public class FilemanageController extends GiantBaseController{
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = filemanageService.getPageList(conditionPage);
 		requestURL = "filemanage/manage/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		System.out.println("路径:"+requestURL);
 		pageList.setDesAction(requestURL);
 		model.addAttribute("members", filemanageService.getAllMember());
 		model.addAttribute("pageList", pageList);

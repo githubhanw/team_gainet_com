@@ -141,10 +141,7 @@
 	};  
 	UE.getEditor('comment');
 
-	$("#submit").click(function(){
-
-			
-		
+	$("#submit").click(function(){	
 		$("input[name='comment']").val(UE.getEditor('comment').getContent());
 		var form = new FormData(document.getElementById("createForm"));
 		var filesize=$("#file").val();

@@ -102,9 +102,9 @@
 								<tr>
 									<th>已完成内容</th>
 									<td>
-										<div class="detail-title">
-											<script type="text/plain" id="t_handover_info" name="handover_info" style="width: 100%;"></script>
-										</div>
+										<input type="hidden" name="handover_info">
+										<textarea id="handover_info" name="details" placeholder="" style="width:100%;"></textarea>
+										<div id="handover_info" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -165,7 +165,7 @@
 </html>
 <script>
 var editor = new UE.ui.Editor();
-editor.render("t_handover_info");
+editor.render("content");
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -174,10 +174,11 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('t_handover_info');
+UE.getEditor('handover_info');
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='handover_info']").val(UE.getEditor('handover_info').getContent());
 	$.ajax({type:"POST",url:"team/task/handover?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

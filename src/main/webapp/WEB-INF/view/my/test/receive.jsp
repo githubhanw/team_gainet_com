@@ -101,9 +101,9 @@
 								<tr>
 									<th>任务描述</th>
 									<td>
-										<div class="detail-title">
-											<script type="text/plain" id="t_remark" name="remark" style="width: 100%;">${t.testContent}</script>
-										</div>
+										<input type="hidden" name="remark">
+										<textarea id="remark" name="details" placeholder="" style="width:100%;">${t.testContent}</textarea>
+										<div id="remark" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -162,7 +162,7 @@
 	</body>
 	<script>
 	var editor = new UE.ui.Editor();
-	editor.render("t_remark");
+	editor.render("content");
 	UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 	UE.Editor.prototype.getActionUrl = function(action){  
 		if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -171,11 +171,11 @@
 			return this._bkGetActionUrl.call(this, action);  
 		}  
 	};  
-	UE.getEditor('t_remark');
+	UE.getEditor('remark');
 
 	$("#submit").click(function(){
-		debugger;
 		$.ajaxSettings.async = false;
+		$("input[name='remark']").val(UE.getEditor('remark').getContent());
 		$.ajax({type:"POST",url:"my/test/receive?r=" + Math.random(),data:$("form").serialize(),
 				dataType:"json",success:function(data){
 			if(data.code == 0){

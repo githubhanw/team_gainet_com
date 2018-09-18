@@ -56,9 +56,9 @@
 								<tr>
 									<th>测试内容</th>
 									<td>
-										<div class="detail-title">
-											<script type="text/plain" id="t_test_content" name="test_content" style="width: 100%;">${entity.testContent}</script>
-										</div>
+										<input type="hidden" name="test_content">
+										<textarea id="test_content" name="details" placeholder="" style="width:100%;">${entity.testContent}</textarea>
+										<div id="test_content" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -119,7 +119,8 @@
 	</body>
 <script>
 var editor = new UE.ui.Editor();
-editor.render("t_test_content");
+editor.render("content");
+
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -128,10 +129,11 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('t_test_content');
+UE.getEditor('test_content');
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='test_content']").val(UE.getEditor('test_content').getContent());
 	$.ajax({type:"POST",url:"test/apply/addOrUpdate?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

@@ -216,9 +216,6 @@ UE.Editor.prototype.getActionUrl = function(action){
 UE.getEditor('remark');
 
 $("#submit").click(function(){
-
-		
-	
 	$("input[name='remark']").val(UE.getEditor('remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var fileone=$("#file_one").val();

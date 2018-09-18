@@ -115,9 +115,6 @@ UE.Editor.prototype.getActionUrl = function(action){
 UE.getEditor('need_remark');
 UE.getEditor('check_remark');
 $("#submit").click(function(){
-
-		
-	
 	$("input[name='need_remark']").val(UE.getEditor('need_remark').getContent());
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));

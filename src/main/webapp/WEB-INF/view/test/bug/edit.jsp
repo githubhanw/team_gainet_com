@@ -121,9 +121,9 @@
 								<tr>
 									<th>BUG描述</th>
 									<td class="required">
-										<div  class="detail-title">
-											<script type="text/plain" id="t_mark" name="mark" style="width: 100%;">${t.mark}</script>
-										</div>
+										<input type="hidden" name="mark">
+										<textarea id="mark" name="details" placeholder="" style="width:100%;">${t.mark}</textarea>
+										<div id="mark" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -183,7 +183,7 @@
 </html>
 <script>
 var editor = new UE.ui.Editor();
-editor.render("t_mark");
+editor.render("content");
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -192,9 +192,10 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('t_mark');
+UE.getEditor('mark');
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='mark']").val(UE.getEditor('mark').getContent());
 	$.ajax({type:"POST",url:"test/bug/edit?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

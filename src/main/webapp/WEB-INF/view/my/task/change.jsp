@@ -48,9 +48,9 @@
 								<tr>
 									<th>任务描述</th>
 									<td class="required">
-										<div class="detail-title">
-											<script type="text/plain" id="t_remark" name="remark" style="width: 100%;">${t.remark}</script>
-										</div>
+										<input type="hidden" name="remark">
+										<textarea id="remark" name="details" placeholder="" style="width:100%;">${t.remark}</textarea>
+										<div id="remark" value=""></div>
 										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 								</tr>
@@ -58,9 +58,9 @@
 									<input type="hidden" name="id" value="${t.id}"/>
 									<th>备注</th>
 									<td>
-										<div id="comment" style="width:100%;">
-											<input type="hidden" name="comment">
-										</div>
+										<input type="hidden" name="comment">
+										<textarea id="comment" name="details" placeholder="" style="width:100%;"></textarea>
+										<div id="comment" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -83,8 +83,7 @@
 <script>
 var editor = new UE.ui.Editor();
 var editor2 = new UE.ui.Editor();
-editor.render("t_remark");
-editor2.render("comment");
+editor.render("content");
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -93,11 +92,12 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('t_remark');
+UE.getEditor('remark');
 UE.getEditor('comment');
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='remark']").val(UE.getEditor('remark').getContent());
 	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"my/task/change?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){

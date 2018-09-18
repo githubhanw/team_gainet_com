@@ -100,10 +100,10 @@
 								</tr>
 								<tr>
 									<th>任务描述</th>
-									<td class="required"> 
-										<div class="detail-title">
-											<script type="text/plain" id="t_remark" name="remark" style="width: 100%">${t.testContent}</script>
-										</div>
+									<td class="required">
+										<input type="hidden" name="remark">
+										<textarea id="remark" name="details" placeholder="" style="width:100%;">${t.testContent}</textarea>
+										<div id="remark" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -171,10 +171,11 @@
 			return this._bkGetActionUrl.call(this, action);  
 		}  
 	};  
-	UE.getEditor('t_remark');
+	UE.getEditor('remark');
 
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
+		$("input[name='remark']").val(UE.getEditor('remark').getContent());
 		$.ajax({type:"POST",url:"test/apply/receive?r=" + Math.random(),data:$("form").serialize(),
 				dataType:"json",success:function(data){
 			if(data.code == 0){

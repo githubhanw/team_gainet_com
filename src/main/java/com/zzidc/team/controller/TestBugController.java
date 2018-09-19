@@ -51,8 +51,8 @@ public class TestBugController extends GiantBaseController {
 			conditionPage = new GiantPager();
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "tb.solvestatus");
-			mvm.put("orderByValue", "ASC");
+			mvm.put("orderColumn", "tb.id");
+			mvm.put("orderByValue", "DESC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "0");

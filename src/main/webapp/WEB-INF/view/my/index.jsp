@@ -98,31 +98,31 @@
 											<div class="col tile">
 												<a href="my/bug">
 													<div class="tile-title">我的Bug</div>
-													<div class="tile-amount">${bugCount.count}</div>
+													<div class="tile-amount">${bugCount.count > 0 ? bugCount.count : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/test">
 													<div class="tile-title">我的测试</div>
-													<div class="tile-amount">${testCount.count}</div>
+													<div class="tile-amount">${testCount.count > 0 ? testCount.count : 0}</div>
 												</a>
 											</div> 
 											<div class="col tile">
 												<a href="my/need">
 													<div class="tile-title">我的需求</div>
-													<div class="tile-amount">${needCount.count}</div>
+													<div class="tile-amount">${needCount.count > 0 ? needCount.count : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/need?type=13">
 													<div class="tile-title">待验收需求</div>
-													<div class="tile-amount">${needCount.checking}</div>
+													<div class="tile-amount">${needCount.checking > 0 ? needCount.checking : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/need?type=14">
 													<div class="tile-title">待我验收</div>
-													<div class="tile-amount">${needCount.wait_check}</div>
+													<div class="tile-amount">${needCount.wait_check > 0 ? needCount.wait_check : 0}</div>
 												</a>
 											</div>
 										</div>

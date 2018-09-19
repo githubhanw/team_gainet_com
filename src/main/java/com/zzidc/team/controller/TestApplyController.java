@@ -53,14 +53,14 @@ public class TestApplyController extends GiantBaseController {
 			conditionPage = new GiantPager();
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "ta.id");
+			mvm.put("orderColumn", "id");
 			mvm.put("orderByValue", "DESC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
 		}
 		if("1".equals(GiantUtil.stringOf(mvm.get("type")))){
-			mvm.put("orderColumn", "ta.apply_time");
+			mvm.put("orderColumn", "apply_time");
 			mvm.put("orderByValue", "ASC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("search")))){

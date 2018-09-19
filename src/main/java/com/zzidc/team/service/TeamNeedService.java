@@ -434,14 +434,17 @@ public class TeamNeedService extends GiantBaseService{
 		need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		boolean flag = super.dao.saveUpdateOrDelete(need, null);
 		
-		//创建文档
-	  	JSONObject jsonupload=new JSONObject();
-	  	jsonupload=filemanageService.uploadfiles(file);
-	    if(jsonupload!=null){
-	    boolean flags = filemanageService.addxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),need.getId());
-	  	}else{
-	  	return false;
-	  	}
+		String fileName = file[0].getOriginalFilename();
+		if(fileName != null && !"".equals(fileName)) {
+			//创建文档
+			JSONObject jsonupload=new JSONObject();
+			jsonupload=filemanageService.uploadfiles(file);
+			if(jsonupload!=null){
+				filemanageService.addxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),need.getId());
+			}else{
+				return false;
+			}
+		}
 		
 		pmLog.setObjectId(need.getId());
 		this.log(pmLog);

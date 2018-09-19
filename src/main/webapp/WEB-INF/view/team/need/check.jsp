@@ -67,8 +67,8 @@
 									</td>
 								</tr>
 								<tr>
-									<th>上传文档</th>
-									<td class="required">
+									<th>验收报告</th>
+									<td>
 										<input type="file" name="file" id="file">
 									</td>
 									<td></td>
@@ -146,9 +146,9 @@
 		var form = new FormData(document.getElementById("createForm"));
 		var filesize=$("#file").val();
 		
-		if(filesize==''){
+		/* if(filesize==''){
 			alert("请选择文件");
-		}else{
+		}else{ */
 		$.ajaxSettings.async = false;
 		$.ajax({
 	         url:"team/need/check?r=" + Math.random(),
@@ -168,7 +168,7 @@
 	         }
 	     });
 		$.ajaxSettings.async = true;
-		}
+		/* } */
 	});
 	
 	

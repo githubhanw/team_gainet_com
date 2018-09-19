@@ -140,8 +140,8 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>上传文档</th>
-									<td class="required">
+									<th>需求文档</th>
+									<td>
 										<input type="file" name="file" id="file">
 									</td>
 									<td></td>
@@ -223,9 +223,9 @@ $("#submit").click(function(){
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
 	
-	if(filesize==''){
+	/* if(filesize==''){
 		alert("请选择文件");
-	}else{
+	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
          url:"team/need/add?r=" + Math.random(),
@@ -245,6 +245,6 @@ $("#submit").click(function(){
          }
      });
 	$.ajaxSettings.async = true;
-	}
+	/* } */
 });
 </script>

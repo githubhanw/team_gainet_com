@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.service.GiantBaseService;
@@ -151,41 +150,82 @@ public class TeamProjectService extends GiantBaseService{
 		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		p.setProjectType(mvm.get("type"));
 		boolean a=super.dao.saveUpdateOrDelete(p, null);
-		boolean flags;
-		//创建文档
-		if(mvm.get("type").equals("0")){//如果等于0，就是内部文件
-		   JSONObject jsonupload=new JSONObject();
-		   jsonupload=filemanageService.uploadfiles(file2);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"2");
-		   }
-		   jsonupload=filemanageService.uploadfiles(file3);
-		   if(jsonupload!=null){
-	       flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"3");
-		   }
-		   jsonupload=filemanageService.uploadfiles(file4);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"4");
-		   }
-		}else{
-		   JSONObject jsonupload=new JSONObject();
-		   jsonupload=filemanageService.uploadfiles(file1);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"1");
-		   }
-		   jsonupload=filemanageService.uploadfiles(file2);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"2");
-		   }
-		   jsonupload=filemanageService.uploadfiles(file3);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"3");
-		   }
-		   jsonupload=filemanageService.uploadfiles(file4);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addxm(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"4");
+		// 创建文档
+		if (mvm.get("type").equals("0")) {// 如果等于0，就是内部文件
+			JSONObject jsonupload = new JSONObject();
+			if(file2 != null && file2.length > 0) {
+				String fileName = file2[0].getOriginalFilename();
+				if(fileName != null && !"".equals(fileName)) {
+					jsonupload = filemanageService.uploadfiles(file2);
+					if (jsonupload != null) {
+						filemanageService.addxm(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"),
+								p.getId(), "2");
+					}
+				}
+			}
+			if (file3 != null && file3.length > 0) {
+				String fileName = file3[0].getOriginalFilename();
+				if(fileName != null && !"".equals(fileName)) {
+					jsonupload = filemanageService.uploadfiles(file3);
+					if (jsonupload != null) {
+						filemanageService.addxm(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"),
+								p.getId(), "3");
+					}
+				}
+			}
+			if (file4 != null && file4.length > 0) {
+				String fileName = file4[0].getOriginalFilename();
+				if(fileName != null && !"".equals(fileName)) {
+					jsonupload = filemanageService.uploadfiles(file4);
+					if (jsonupload != null) {
+						filemanageService.addxm(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"),
+								p.getId(), "4");
+					}
+				}
+			}
+		} else {
+			JSONObject jsonupload = new JSONObject();
+			if (file1 != null && file1.length > 0) {
+				String fileName = file1[0].getOriginalFilename();
+				if(fileName != null && !"".equals(fileName)) {
+					jsonupload = filemanageService.uploadfiles(file1);
+					if (jsonupload != null) {
+						filemanageService.addxm(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"),
+								p.getId(), "1");
+					}
+				}
+			}
+			if (file2 != null && file2.length > 0) {
+				String fileName = file2[0].getOriginalFilename();
+				if(fileName != null && !"".equals(fileName)) {
+					jsonupload = filemanageService.uploadfiles(file2);
+					if (jsonupload != null) {
+						filemanageService.addxm(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"),
+								p.getId(), "2");
+					}
+				}
+			}
+			if (file3 != null && file3.length > 0) {
+				String fileName = file3[0].getOriginalFilename();
+				if(fileName != null && !"".equals(fileName)) {
+					jsonupload = filemanageService.uploadfiles(file3);
+					if (jsonupload != null) {
+						filemanageService.addxm(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"),
+								p.getId(), "3");
+					}
+				}
+			}
+			if (file4 != null && file4.length > 0) {
+				String fileName = file4[0].getOriginalFilename();
+				if(fileName != null && !"".equals(fileName)) {
+					jsonupload = filemanageService.uploadfiles(file4);
+					if (jsonupload != null) {
+						filemanageService.addxm(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"),
+								p.getId(), "4");
+					}
+				}
+			}
 		}
-      }
 		return a;
 	}
 	/**

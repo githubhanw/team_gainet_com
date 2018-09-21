@@ -1,7 +1,5 @@
 package com.zzidc.my.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.service.GiantBaseService;
-import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.service.FilemanageService;
@@ -347,16 +344,21 @@ public class MyNeedController extends GiantBaseController {
 		}
 		
 		boolean flag = teamNeedService.change(mvm);
-		//创建文档
-		JSONObject jsonupload=new JSONObject();
-		jsonupload=filemanageService.uploadfiles(file);
-		if(jsonupload!=null){
-		boolean flags = filemanageService.changexq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("need_name"));
-		}else{
-		json.put("code",0);
-		json.put("message", "上传成功");  
-		resultresponse(response,json);
-		return;
+		if(file != null && file.length > 0) {
+			String fileName = file[0].getOriginalFilename();
+			if(fileName != null && !"".equals(fileName)) {
+				//创建文档
+				JSONObject jsonupload=new JSONObject();
+				jsonupload=filemanageService.uploadfiles(file);
+				if(jsonupload!=null){
+					filemanageService.changexq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("need_name"));
+				}else{
+					json.put("code",0);
+					json.put("message", "上传成功");  
+					resultresponse(response,json);
+					return;
+				}
+			}
 		}
 		
 		if(flag){
@@ -416,17 +418,22 @@ public class MyNeedController extends GiantBaseController {
 		}
 		
 		boolean flag = teamNeedService.check(mvm);
-	    //创建文档
-	  	JSONObject jsonupload=new JSONObject();
-	  	jsonupload=filemanageService.uploadfiles(file);
-	  	if(jsonupload!=null){
-	  	boolean flags = filemanageService.checkxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("need_name"));
-	  	}else{
-	  	json.put("code",0);
-	  	json.put("message", "上传成功");  
-	  	resultresponse(response,json);
-	  	return;
-	  	}
+		if(file != null && file.length > 0) {
+			String fileName = file[0].getOriginalFilename();
+			if(fileName != null && !"".equals(fileName)) {
+			    //创建文档
+			  	JSONObject jsonupload=new JSONObject();
+			  	jsonupload=filemanageService.uploadfiles(file);
+			  	if(jsonupload!=null){
+			  		filemanageService.checkxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("need_name"));
+			  	}else{
+				  	json.put("code",0);
+				  	json.put("message", "上传成功");  
+				  	resultresponse(response,json);
+				  	return;
+			  	}
+			}
+		}
 	    if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

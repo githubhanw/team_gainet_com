@@ -58,7 +58,8 @@ public class CompetenceFilter implements Filter {
 		}
 		if (!uri.contains(".")) {
 			if (uri.endsWith("nopower") || uri.endsWith("login") || uri.endsWith("logout") || 
-					uri.endsWith("toLogin") || uri.equals("/") || uri.equals("/team_gainet_com/") || uri.endsWith("/my/weixin") || uri.endsWith("/my/unbindwx")) {
+					uri.endsWith("toLogin") || uri.equals("/") || uri.equals("/team_gainet_com/")
+					|| uri.endsWith("/my/weixin") || uri.endsWith("/my/unbindwx") || uri.endsWith("/my/checkbindwx") || uri.endsWith("/my/getOpenId")) {
 				arg2.doFilter(arg0, arg1);
 				logger.debug("用户跳转没有权限页面或登录页面或登录、登出");
 				return;

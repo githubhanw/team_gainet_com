@@ -3,6 +3,8 @@ package com.zzidc.my.service;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Service;
 
 import com.giant.zzidc.base.service.GiantBaseService;
@@ -115,6 +117,13 @@ public class MyService extends GiantBaseService{
 			return new ResultInfo(1, "获取会员信息失败");
 		}
 		if(!GiantUtils.isEmpty(login.getNewOpenid())){//已绑定微信
+			
+			HttpSession session = super.getSession();
+			session.setAttribute("newOpenId", login.getNewOpenid());
+			Map<String, Object> memberInfo =(Map<String, Object>) session.getAttribute("memberInfo");
+			memberInfo.put("NEW_OPENID", login.getNewOpenid());
+			session.setAttribute("memberInfo", memberInfo);
+			
 			return new ResultInfo(0,"绑定成功");
 		}
 		return new ResultInfo(2, "未绑定微信");

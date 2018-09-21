@@ -296,11 +296,11 @@ public class MyController extends GiantBaseController {
 		openId = PlusCut.getInstance().cut(openId);//解密
 		boolean a = myService.updateOpenId(openId,userId);
 		if (a) {//session信息内添加openID 信息
-			HttpSession session = request.getSession();
-			session.setAttribute("newOpenId", openId);
-			Map<String, Object> memberInfo =(Map<String, Object>) session.getAttribute("memberInfo");
-			memberInfo.put("NEW_OPENID", openId);
-			session.setAttribute("memberInfo", memberInfo);
+//			HttpSession session = request.getSession();
+//			session.setAttribute("newOpenId", openId);
+//			Map<String, Object> memberInfo =(Map<String, Object>) session.getAttribute("memberInfo");
+//			memberInfo.put("NEW_OPENID", openId);
+//			session.setAttribute("memberInfo", memberInfo);
 		}
 		System.out.println(" ****************userId ="+userId+" ****************openID ="+openId+" ****************是否更新openID:"+a);
 		return "my/weixin";

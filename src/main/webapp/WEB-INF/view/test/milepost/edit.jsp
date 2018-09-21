@@ -65,9 +65,9 @@
 								<tr>
 									<th>描述</th>
 									<td class="required">
-										<div  class="detail-title">
-											<script type="text/plain" id="t_mark" name="mark" style="width:100%;">${mi.milepostDescribe}</script>
-										</div>
+										<input type="hidden" name="mark">
+										<textarea id="mark" name="details" placeholder="" style="width:100%;">${mi.milepostDescribe}</textarea>
+										<div id="mark" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -128,7 +128,8 @@
 <script>
 //alert(document.getElementById("mi_id").value );
 var editor = new UE.ui.Editor();
-editor.render("t_mark");
+editor.render("mark");
+
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -137,10 +138,11 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('t_mark');
+UE.getEditor('mark');
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='mark']").val(UE.getEditor('mark').getContent());
 	if($("input[name='mark']").val(UE.getEditor('mark').getContent())==null){
 		alert(4556);
 	}

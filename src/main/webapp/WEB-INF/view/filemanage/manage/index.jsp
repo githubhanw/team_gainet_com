@@ -53,9 +53,9 @@
 										<tr>
 											<td class="w-150px">
 												<select class="form-control chosen chosen-select" name="accessControl" id="accessControl">
-													<option value="">状态</option>
-													<option value="0">删除</option>
-													<option value="1">正常</option>
+												    <option ${prm.accessControl==''?'selected="selected"':'' } value="">请选择状态</option>
+													<option ${prm.accessControl=='0'?'selected="selected"':'' } value="0">删除</option>
+													<option ${prm.accessControl=='1'?'selected="selected"':'' } value="1">正常</option>
 												</select>
 											</td>
 											<td class="w-200px">
@@ -65,7 +65,7 @@
 												<select data-placeholder="请选择人员" class="form-control chosen-select" name="authorId" id="authorId">
 													<option value=""></option>
 													<c:forEach items="${members}" var="member" varStatus="sta">
-														<option value="${member.id}">${member.name}(${member.number})</option>
+														<option ${prm.authorId==member.id?'selected="selected"':'' } value="${member.id}">${member.name}(${member.number})</option>
 													</c:forEach>
 												</select>
 											</td>

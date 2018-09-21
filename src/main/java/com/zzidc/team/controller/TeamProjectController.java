@@ -17,12 +17,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.service.GiantBaseService;
-import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskProject;
-import com.zzidc.team.service.FilemanageService;
 import com.zzidc.team.service.TeamProjectService;
 
 import net.sf.json.JSONObject;
@@ -35,8 +33,6 @@ import net.sf.json.JSONObject;
 public class TeamProjectController extends GiantBaseController {
 	@Autowired
 	private TeamProjectService teamProjectService;
-	@Autowired
-	private FilemanageService filemanageService;
 	@Autowired
 	private GiantBaseService baseService;
 	private GiantPager conditionPage = null;

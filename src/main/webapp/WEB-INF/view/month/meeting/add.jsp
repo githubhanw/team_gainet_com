@@ -52,9 +52,9 @@
 								<tr>
 									<th>备注</th>
 									<td>
-										<div class="detail-title">
-											<script type="text/plain" id="t_remark" name="remark" style="width: 100%;">${p.remark}</script>
-										</div>
+										<input type="hidden" name="remark">
+										<textarea id="remark" name="details" placeholder="" style="width:100%;">${p.remark}</textarea>
+										<div id="remark" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -115,7 +115,7 @@
 </html>
 <script>
 var editor = new UE.ui.Editor();
-editor.render("t_remark");
+editor.render("content");
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -124,10 +124,11 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('t_remark');
+UE.getEditor('remark');
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='remark']").val(UE.getEditor('remark').getContent());
 	$.ajax({type:"POST",url:"month/meeting/addOrUpd?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

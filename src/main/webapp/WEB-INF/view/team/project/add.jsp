@@ -107,21 +107,21 @@
 								</tr>
 								<tr>
 									<th>项目立项书</th>
-									<td class="required">
+									<td>
 										<input type="file" name="file_two" id="file_two">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>工作量评估报告</th>
-									<td class="required">
+									<td>
 										<input type="file" name="file_three" id="file_three">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>项目预算费用表</th>
-									<td class="required">
+									<td>
 										<input type="file" name="file_four" id="file_four">
 									</td>
 									<td></td>
@@ -216,9 +216,6 @@ UE.Editor.prototype.getActionUrl = function(action){
 UE.getEditor('remark');
 
 $("#submit").click(function(){
-
-		
-	
 	$("input[name='remark']").val(UE.getEditor('remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var fileone=$("#file_one").val();
@@ -228,35 +225,33 @@ $("#submit").click(function(){
 	
 	if($("#type").val()==0){  //属于内部项目
 	
-	if(filetwo=='' || filethree=='' || filefour==''){
-		
-		
+	/* if(filetwo=='' || filethree=='' || filefour==''){
 		alert("请选择文件");
+	}else{ */
+		$.ajaxSettings.async = false;
+		$.ajax({
+	         url:"team/project/addOrUpd?r=" + Math.random(),
+	         type:"post",
+	         data:form,
+	         dataType:"json",
+	        processData:false,
+	         contentType:false,
+	        success:function(data){
+	        	if(data.code == 0){
+					$("#msg").text(data.message);
+	 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+	 			}else{
+	 				$("#errMsg").text(data.message);
+	 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+	  			}
+	        }
+	    });
+		$.ajaxSettings.async = true;
+	/* } */
 	}else{
-	$.ajaxSettings.async = false;
-	$.ajax({
-         url:"team/project/addOrUpd?r=" + Math.random(),
-         type:"post",
-         data:form,
-         dataType:"json",
-        processData:false,
-         contentType:false,
-        success:function(data){
-        	if(data.code == 0){
-				$("#msg").text(data.message);
- 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
- 			}else{
- 				$("#errMsg").text(data.message);
- 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
-  			}
-        }
-     });
-	$.ajaxSettings.async = true;
-	}
-	}else{
-		if(fileone==''|| filetwo=='' || filethree=='' || filefour==''){
+		/* if(fileone==''|| filetwo=='' || filethree=='' || filefour==''){
 			alert("请选择文件");
-		}else{
+		}else{ */
 		$.ajaxSettings.async = false;
 		$.ajax({
 	         url:"team/project/addOrUpd?r=" + Math.random(),
@@ -276,9 +271,7 @@ $("#submit").click(function(){
 	        }
 	     });
 		$.ajaxSettings.async = true;
-		}	
-		
-		
+		/* } */	
 	}
 });
 </script>

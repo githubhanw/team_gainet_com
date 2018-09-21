@@ -78,8 +78,8 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>上传文档</th>
-									<td class="required">
+									<th>需求变更文档</th>
+									<td>
 										<input type="file" name="file" id="file">
 									</td>
 									<td></td>
@@ -115,17 +115,14 @@ UE.Editor.prototype.getActionUrl = function(action){
 UE.getEditor('need_remark');
 UE.getEditor('check_remark');
 $("#submit").click(function(){
-
-		
-	
 	$("input[name='need_remark']").val(UE.getEditor('need_remark').getContent());
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
 	
-	if(filesize==''){
+	/* if(filesize==''){
 		alert("请选择文件");
-	}else{
+	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
          url:"team/need/change?r=" + Math.random(),
@@ -144,7 +141,7 @@ $("#submit").click(function(){
          }
      });
 	$.ajaxSettings.async = true;
-	}
+	/* } */
 });
 
 //UMEditor("need_remark");

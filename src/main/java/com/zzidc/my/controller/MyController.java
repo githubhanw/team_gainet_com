@@ -164,7 +164,7 @@ public class MyController extends GiantBaseController {
 			conditionPage = new GiantPager();
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "ta.id");
+			mvm.put("orderColumn", "id");
 			mvm.put("orderByValue", "DESC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
@@ -178,7 +178,7 @@ public class MyController extends GiantBaseController {
 			}
 		}
 		if("1".equals(GiantUtil.stringOf(mvm.get("type")))){
-			mvm.put("orderColumn", "ta.apply_time");
+			mvm.put("orderColumn", "apply_time");
 			mvm.put("orderByValue", "ASC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
@@ -296,11 +296,11 @@ public class MyController extends GiantBaseController {
 		openId = PlusCut.getInstance().cut(openId);//解密
 		boolean a = myService.updateOpenId(openId,userId);
 		if (a) {//session信息内添加openID 信息
-			HttpSession session = request.getSession();
-			session.setAttribute("newOpenId", openId);
-			Map<String, Object> memberInfo =(Map<String, Object>) session.getAttribute("memberInfo");
-			memberInfo.put("NEW_OPENID", openId);
-			session.setAttribute("memberInfo", memberInfo);
+//			HttpSession session = request.getSession();
+//			session.setAttribute("newOpenId", openId);
+//			Map<String, Object> memberInfo =(Map<String, Object>) session.getAttribute("memberInfo");
+//			memberInfo.put("NEW_OPENID", openId);
+//			session.setAttribute("memberInfo", memberInfo);
 		}
 		System.out.println(" ****************userId ="+userId+" ****************openID ="+openId+" ****************是否更新openID:"+a);
 		return "my/weixin";

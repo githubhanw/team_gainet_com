@@ -338,17 +338,22 @@ public class TeamNeedController extends GiantBaseController {
 			return;
 		}
 		boolean flag = teamNeedService.change(mvm);
-	    //创建文档
-	    JSONObject jsonupload=new JSONObject();
-	  	jsonupload=filemanageService.uploadfiles(file);
-	  	if(jsonupload!=null){
-	  	boolean flags = filemanageService.changexq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("need_name"));
-	  	}else{
-	  	json.put("code",0);
-	  	json.put("message", "上传失败");  
-	  	resultresponse(response,json);
-	  	return;
-	  	}
+		if(file != null && file.length > 0) {
+			String fileName = file[0].getOriginalFilename();
+			if(fileName != null && !"".equals(fileName)) {
+			    //创建文档
+			    JSONObject jsonupload=new JSONObject();
+			  	jsonupload=filemanageService.uploadfiles(file);
+			  	if(jsonupload!=null){
+			  		filemanageService.changexq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("need_name"));
+			  	}else{
+				  	json.put("code",0);
+				  	json.put("message", "上传失败");  
+				  	resultresponse(response,json);
+				  	return;
+			  	}
+			}
+		}
 	    if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");
@@ -403,18 +408,22 @@ public class TeamNeedController extends GiantBaseController {
 			return;
 		}
 		boolean flag = teamNeedService.check(mvm);
-		//创建文档
-	    JSONObject jsonupload=new JSONObject();
-		jsonupload=filemanageService.uploadfiles(file);
-		if(jsonupload!=null){
-		boolean flags = filemanageService.checkxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("needname"));
-		}else{
-		json.put("code",0);
-		json.put("message", "上传成功");  
-		resultresponse(response,json);
-		return;
+		if(file != null && file.length > 0) {
+			String fileName = file[0].getOriginalFilename();
+			if(fileName != null && !"".equals(fileName)) {
+				//创建文档
+			    JSONObject jsonupload=new JSONObject();
+				jsonupload=filemanageService.uploadfiles(file);
+				if(jsonupload!=null){
+					filemanageService.checkxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),mvm.get("id"),mvm.get("needname"));
+				}else{
+					json.put("code",0);
+					json.put("message", "上传成功");  
+					resultresponse(response,json);
+					return;
+				}
+			}
 		}
-		
 		if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

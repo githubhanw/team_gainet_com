@@ -91,6 +91,7 @@ public class MyBugController extends GiantBaseController {
 			//获取对象
 			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("members", testBugService.getAllMember());
+			model.addAttribute("loginId", testBugService.getMemberId());
 			model.addAttribute("t", t);
 		}
 		publicResult(model);

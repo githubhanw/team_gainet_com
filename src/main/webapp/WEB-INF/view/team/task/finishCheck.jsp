@@ -48,9 +48,9 @@
 								<tr>
 									<th>审核备注</th>
 									<td colspan="2">
-										<div class="detail-title">
-											<script type="text/plain" id="t_checked_reason" name="checked_reason" style="width: 100%;"></script>
-										</div>
+										<input type="hidden" name="checked_reason">
+										<textarea id="checked_reason" name="details" placeholder="" style="width:100%;"></textarea>
+										<div id="checked_reason" value=""></div>
 									</td>
 								</tr>
 								</form>
@@ -111,7 +111,7 @@
 </html>
 <script>
 var editor = new UE.ui.Editor();
-editor.render("t_checked_reason");
+editor.render("content");
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -120,7 +120,7 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('t_checked_reason');
+UE.getEditor('checked_reason');
 
 function setStory(reason) {
 	if (reason == '重复') {
@@ -136,6 +136,7 @@ function setStory(reason) {
 }
 $("#submit_yes").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='checked_reason']").val(UE.getEditor('checked_reason').getContent());
 	$.ajax({type:"POST",url:"team/task/finishCheck?is=1&r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
@@ -150,6 +151,7 @@ $("#submit_yes").click(function(){
 });
 $("#submit_no").click(function(){
 	$.ajaxSettings.async = false;
+	$("input[name='checked_reason']").val(UE.getEditor('checked_reason').getContent());
 	$.ajax({type:"POST",url:"team/task/finishCheck?is=0&r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

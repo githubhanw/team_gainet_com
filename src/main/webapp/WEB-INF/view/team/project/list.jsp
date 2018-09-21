@@ -182,7 +182,7 @@
 										<c:forEach items="${pageList.pageResult}" var="project" varStatus="sta">
 										<tr>
 											<td class="c-id cell-id">${project.id}</td>
-											<td class="c-pri text-left">
+											<td class="text-left">
 												<a href="team/project/pro_detail?id=${project.id}" data-toggle="tooltip" data-placement="top" title="${project.project_name}">${project.project_name}</a>
 											</td>
 											<td class="c-pri text-left">

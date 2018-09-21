@@ -48,14 +48,15 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>处理人</th>
+									<th>解决人</th>
 									<td class="required">
-										<select data-placeholder="请选择处理人" class="form-control chosen-select" name="solver_id" id="solver_id">
+										<select data-placeholder="请选择bug解决人" class="form-control chosen-select" name="solver_id" id="solver_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
+												<option value="${member.id}" ${member.id==loginId?'selected="selected"':''}>${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
+										<span class="help-block">(注意:解决人应是修复bug的开发人员。)</span>
 									</td>
 									<td></td>
 								<input type="hidden" name="id" value="${t.id}"/>

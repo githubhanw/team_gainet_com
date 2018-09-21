@@ -32,6 +32,8 @@
 						<div class="main-header">
 							<h2>绑定微信</h2>
 						</div>
+						<span class="help-block">(批注:绑定微信可以接收到实时的任务提醒,审核提醒,bug处理提醒等,能更加有效的完成自己的任务。)</span>
+						<span class="help-block" style="color: red;">(注：必须连接公司的&nbsp;WiFi&nbsp;才可正常绑定！！！)</span>
 						<table class="table table-form">
 							<tbody>
 								<div id="bdwx" style="margin: 34px auto 0 auto;display:none">

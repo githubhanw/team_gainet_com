@@ -34,7 +34,7 @@
 						</div>
 						<table class="table table-form">
 							<tbody>
-								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+								<form class="load-indicator main-form form-ajax" id="createForm" method="post" enctype="multipart/form-data">
 								<tr>
 									<th>任务名称</th>
 									<td class="required">
@@ -206,16 +206,36 @@
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
 		$("input[name='remark']").val(UE.getEditor('remark').getContent());
-		$.ajax({type:"POST",url:"my/task/addTask?r=" + Math.random(),data:$("form").serialize(),
-				dataType:"json",success:function(data){
-			if(data.code == 0){
-				$("#msg").text(data.message);
-				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-			}else{
-				$("#errMsg").text(data.message);
-				$('#errModal').modal({keyboard: false,show: true, moveable: true});
-			}
-		}})
+		var form = new FormData(document.getElementById("createForm"));
+		$.ajax({
+	         url:"my/task/addTask?r=" + Math.random(),
+	         type:"post",
+	         data:form,
+	         dataType:"json",
+	         processData:false,
+	         contentType:false,
+	         success:function(data){
+	        	if(data.code == 0){
+	 				$("#msg").text(data.message);
+	 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+	 			}else{
+	 				$("#errMsg").text(data.message);
+	 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+	 			}
+	         }
+	     });
+//		$.ajaxSettings.async = false;
+//		$("input[name='remark']").val(UE.getEditor('remark').getContent());
+//		$.ajax({type:"POST",url:"my/task/addTask?r=" + Math.random(),data:$("form").serialize(),
+//				dataType:"json",success:function(data){
+//			if(data.code == 0){
+//				$("#msg").text(data.message);
+//				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+//			}else{
+//				$("#errMsg").text(data.message);
+//				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+//			}
+//		}})
 		$.ajaxSettings.async = true;
 	});
 	</script>

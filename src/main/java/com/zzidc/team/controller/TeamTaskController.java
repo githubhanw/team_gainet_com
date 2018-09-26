@@ -10,8 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
+import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.Task;
@@ -129,6 +131,46 @@ public class TeamTaskController extends GiantBaseController {
 	/**
 	 * 添加任务
 	 */
+	@RequestMapping("/addTask")
+	public void addTask(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response
+			,@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
+		JSONObject json=new JSONObject();
+		String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		if(prototypeName.equals("")){
+			json.put("code",2);
+			json.put("message", "请选择界面原型文件");
+			resultresponse(response,json);
+			return;
+		}
+		if(treeName.equals("")){
+			json.put("code",3);
+			json.put("message", "请选择流程图");
+			resultresponse(response,json);
+			return;
+		}
+		if(GiantUtil.isEmpty(mvm.get("task_name")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || 
+				GiantUtil.isEmpty(mvm.get("task_type")) || GiantUtil.isEmpty(mvm.get("need_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		
+		boolean flag = teamTaskService.addTask(mvm, filePrototype, filetree);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "添加/修改成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "添加/修改失败");
+		}
+		resultresponse(response,json);
+	}
+
+	/**
+	 * 批量添加任务
+	 */
 	@RequestMapping("/add")
 	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
@@ -150,7 +192,7 @@ public class TeamTaskController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-
+	
 	/**
 	 * 跳转编辑需求页面
 	 */

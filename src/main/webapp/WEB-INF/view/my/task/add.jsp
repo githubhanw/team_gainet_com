@@ -112,6 +112,20 @@
 									<input type="hidden" name="id" value="${t.id}"/>
 								</tr>
 								<tr>
+								    <th>界面原型</th>
+								    <td class="required">
+									<input type="file" name="filePrototype" multiple="multiple" accept="image/*"/>
+								    </td>
+								    <td></td>
+								</tr>
+								<tr>
+								    <th>流程图</th>
+								    <td class="required">
+								    <input type="file" name="filetree" multiple="multiple" accept="image/*"/>
+									</td>
+								    <td></td>
+								</tr>
+								<tr>
 									<th>任务描述</th>
 									<td>
 										<div id="remark" style="width:100%;">
@@ -192,7 +206,7 @@
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
 		$("input[name='remark']").val(UE.getEditor('remark').getContent());
-		$.ajax({type:"POST",url:"my/task/add?r=" + Math.random(),data:$("form").serialize(),
+		$.ajax({type:"POST",url:"my/task/addTask?r=" + Math.random(),data:$("form").serialize(),
 				dataType:"json",success:function(data){
 			if(data.code == 0){
 				$("#msg").text(data.message);

@@ -236,10 +236,13 @@ public class TestMilepostController extends GiantBaseController {
 	 */
 	@RequestMapping("/tosure")
 	public String tosure(@RequestParam Map<String, String> mvm, Model model) {
-		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
-			//获取对象
-			MilepostManage m = (MilepostManage) testMilepostService.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("id"), 0));
-			model.addAttribute("mi", m);
+		List<Map<String, Object>> map=new ArrayList<Map<String, Object>>();
+		if(GiantUtil.intOf(mvm.get("project_id"),0) != 0){
+			String sql="select * from milepost_manage where project_id = "+mvm.get("project_id");//查询该项目的所有里程碑
+			map=testMilepostService.getMapListBySQL(sql, null);
+			model.addAttribute("MilMan", map);
+			TaskProject tp=(TaskProject)testMilepostService.getEntityByPrimaryKey(new TaskProject(),GiantUtil.intOf(mvm.get("project_id"), 0));
+			model.addAttribute("tp", tp);
 		}
 		publicResult(model);
 		model.addAttribute("s", "manage");//子模块
@@ -389,21 +392,30 @@ public class TestMilepostController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 	/**
-	 * 跳转确认里程碑和界面原型页面
+	 * 跳转确认里程碑和概要设计页面
 	 */
 	@RequestMapping("/tosureui")
 	public String tosureui(@RequestParam Map<String, String> mvm, Model model) {
 		
-		
-		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
-			//获取对象
-			MilepostManage m = (MilepostManage) testMilepostService.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("id"), 0));
-			model.addAttribute("mi", m);
-			List<Map<String, Object>> milNeedList=testMilepostService.getMilNeedList(mvm);
-			model.addAttribute("milNeedList", milNeedList);
+		List<Map<String, Object>> map=new ArrayList<Map<String, Object>>();
+		if(GiantUtil.intOf(mvm.get("project_id"),0) != 0){
+			String sql="select * from milepost_manage where project_id = "+mvm.get("project_id");//查询该项目的所有里程碑
+			map=testMilepostService.getMapListBySQL(sql, null);
+			model.addAttribute("MilMan", map);
+			TaskProject tp=(TaskProject)testMilepostService.getEntityByPrimaryKey(new TaskProject(),GiantUtil.intOf(mvm.get("project_id"), 0));
+			model.addAttribute("tp", tp);
 		}
 		publicResult(model);
 		model.addAttribute("s", "manage");//子模块
+//		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+//			//获取对象
+//			MilepostManage m = (MilepostManage) testMilepostService.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("id"), 0));
+//			model.addAttribute("mi", m);
+//			List<Map<String, Object>> milNeedList=testMilepostService.getMilNeedList(mvm);
+//			model.addAttribute("milNeedList", milNeedList);
+//		}
+//		publicResult(model);
+//		model.addAttribute("s", "manage");//子模块
 		return "test/milepost/sureui";
 	}
 	/**

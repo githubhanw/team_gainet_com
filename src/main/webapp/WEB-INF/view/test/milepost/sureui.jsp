@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>确认里程碑和界面原型</title>
+		<title>确认里程碑和概要设计</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,24 +30,39 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>确认里程碑和界面原型</h2>
+							<h2>确认里程碑和概要设计</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
-								<input type="hidden" id="mi_id" name="mi_id" value="${mi.id}"></input>
-								<input type="hidden" id="mi_name" name="mi_name" value="${mi.authorName}"></input>
+								<input type="hidden" id="project_id" name="project_id" value="${tp.id}"></input>
+								<input type="hidden" id="project_name" name="project_name" value="${tp.projectName}"></input>
 								<tr>
-									<th>里程碑名称:</th>
-									<td class="required">${mi.milepostName}</td>
+									<th>项目名称:</th>
+									<td class="required">${tp.projectName}</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>描述:</th>
-									<td class="required">${mi.milepostDescribe}</td>
+									<th>里程碑:</th>
+									<td>
+									<table width="600" border="1">
+									   <tr bgcolor=#D3D3D3> 
+									     <td width="100">名称</td>
+									     <td width="100">开始</td>
+									     <td width="100">结束</td>
+									   </tr>
+									   <c:forEach items="${MilMan}" var="MilMan">
+									   <tr>
+									     <td>${MilMan.milepost_name}</td>
+									     <td>${MilMan.start_time}</td>
+									     <td>${MilMan.end_time}</td>
+									   </tr>
+									   </c:forEach>
+									</table>
+									</td>
 									<td></td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<th>模块列表:</th>
 									<td class="required">
 									<table width="600" border="1">
@@ -66,13 +81,13 @@
 									</td>
 									<td></td>
 								</tr>
+								 -->
 								<tr>
 									<th>备注</th>
 									<td class="required">
 									    <input type="hidden" name="need_remark">
-										<textarea id="need_remark" name="details" placeholder="" style="width:100%;">${mi.milepostDescribe}</textarea>
+										<textarea id="need_remark" name="details" placeholder="" style="width:100%;">${tp.remark}</textarea>
 										<div id="need_remark" style="width:100%;"></div>
-										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 									<td></td>
 								</tr>

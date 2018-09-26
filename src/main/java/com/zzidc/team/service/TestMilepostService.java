@@ -37,18 +37,6 @@ public class TestMilepostService extends GiantBaseService{
 		String sql = "select id, milepost_name, milepost_describe, start_time, end_time, edit_time,"
 				+ " create_time, author_id, author_name, milepost_state from milepost_manage where 1=1 ";
 		String countSql = "SELECT COUNT(0) from milepost_manage where 1=1 ";
-		//type=2 查询出来关联的项目
-		String temp="";
-		if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
-			String projectId="";//关联项目id
-			if(temp.equals("2")){
-				if (!StringUtils.isEmpty(projectId = conditionPage.getQueryCondition().get("project_id"))) {
-					sql += "AND project_id=:projectId ";
-					countSql += "AND project_id=:projectId ";
-					conditionMap.put("projectId", projectId);
-				}
-			}
-		}
 		if (conditionPage.getQueryCondition() != null) {
 			String milepostState="";//里程碑状态
 			if (!StringUtils.isEmpty(milepostState = conditionPage.getQueryCondition().get("milepostState"))) {
@@ -76,6 +64,43 @@ public class TestMilepostService extends GiantBaseService{
 				sql += "AND author_id=:authorId ";
 				countSql += "AND author_id=:authorId ";
 				conditionMap.put("authorId", authorId);
+			}
+		}
+		String temp="";
+		if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+			String projectId="";//关联项目id
+			//待验收的里程碑
+			if(temp.equals("3")){
+				if (!StringUtils.isEmpty(projectId = conditionPage.getQueryCondition().get("project_id"))) {
+					sql += "AND project_id=:projectId AND milepost_state= 3 ";
+					countSql += "AND project_id=:projectId AND milepost_state= 3 ";
+					conditionMap.put("projectId", projectId);
+				}
+			//待编写里程碑报告的里程碑
+			}else if(temp.equals("4")){
+				if (!StringUtils.isEmpty(projectId = conditionPage.getQueryCondition().get("project_id"))) {
+					sql += "AND project_id=:projectId AND milepost_state= 4 ";
+					countSql += "AND project_id=:projectId AND milepost_state= 4 ";
+					conditionMap.put("projectId", projectId);
+				}
+			//待验收报告的里程碑
+			}else if(temp.equals("5")){
+				if (!StringUtils.isEmpty(projectId = conditionPage.getQueryCondition().get("project_id"))) {
+					sql += "AND project_id=:projectId AND milepost_state= 5 ";
+					countSql += "AND project_id=:projectId AND milepost_state= 5 ";
+					conditionMap.put("projectId", projectId);
+				}
+			//验收完报告的里程碑
+			}else if(temp.equals("10")){
+				
+			}else if(temp.equals("0")){
+				
+			}else{
+				if (!StringUtils.isEmpty(projectId = conditionPage.getQueryCondition().get("project_id"))) {
+					sql += "AND project_id=:projectId AND milepost_state= 6 ";
+					countSql += "AND project_id=:projectId AND milepost_state= 6 ";
+					conditionMap.put("projectId", projectId);
+				}
 			}
 		}
 		// 字段倒叙或升序排列
@@ -171,19 +196,31 @@ public class TestMilepostService extends GiantBaseService{
 	 * 确认里程碑列表
 	 */
 	public boolean sure(Map<String, String> mvm) {
-		MilepostManage m=null;
+		boolean b=false;
 		boolean c=false;
-		if(GiantUtil.intOf(mvm.get("mi_id"), 0) != 0){
-			 //获取对象
-		     m = (MilepostManage) super.dao.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("mi_id"), 0));
-		     m.setMilepostRemarks(mvm.get("need_remark"));
-			 m.setMilepostState("2");//已确认
+		MilepostManage m=new MilepostManage();
+		//修改里程碑状态
+		List<Map<String, Object>> map=new ArrayList<Map<String, Object>>();
+		if(GiantUtil.intOf(mvm.get("project_id"),0) != 0){
+			String sql="select id from milepost_manage where project_id = "+mvm.get("project_id");//查询该项目的所有里程碑
+			map=super.dao.getMapListBySQL(sql, null);
+			if(map!=null){
+				for (int i = 0; i < map.size(); i++) {
+					map.get(i).get("id");
+					//获取对象
+				    m = (MilepostManage) super.dao.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(map.get(i).get("id"), 0));
+					m.setMilepostState("2");//已确认
+					b =  super.dao.saveUpdateOrDelete(m, null);
+				}
+			}else{
+				return false;
+			}
 		}
-		boolean b =  super.dao.saveUpdateOrDelete(m, null);
-		//修改项目状态
-		TaskProject tp=(TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(m.getProjectId(), 0));
-		tp.setState((short) 7);
 		if(b){
+		//修改项目状态
+		TaskProject tp=(TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(mvm.get("project_id"), 0));
+		tp.setState((short) 7);
+		tp.setRemark(mvm.get("need_remark"));
 		c=super.dao.saveUpdateOrDelete(tp, null);
 		}
 		return c;
@@ -227,24 +264,37 @@ public class TestMilepostService extends GiantBaseService{
 		return subNeedList;
 	}
 	/**
-	 * 确认里程碑和界面原型
+	 * 确认里程碑和概要设计
 	 */
 	public boolean sureui(Map<String, String> mvm) {
-		MilepostManage m=null;
+		
+		boolean b=false;
 		boolean c=false;
-		if(GiantUtil.intOf(mvm.get("mi_id"), 0) != 0){
-			//获取对象
-		     m = (MilepostManage) super.dao.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("mi_id"), 0));
-		     m.setMilepostRemarks(mvm.get("need_remark"));
-			 m.setMilepostState("3");//已确认
+		MilepostManage m=new MilepostManage();
+		//修改里程碑状态
+		List<Map<String, Object>> map=new ArrayList<Map<String, Object>>();
+		if(GiantUtil.intOf(mvm.get("project_id"),0) != 0){
+			String sql="select id from milepost_manage where project_id = "+mvm.get("project_id");//查询该项目的所有里程碑
+			map=super.dao.getMapListBySQL(sql, null);
+			if(map!=null){
+				for (int i = 0; i < map.size(); i++) {
+					map.get(i).get("id");
+					//获取对象
+				    m = (MilepostManage) super.dao.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(map.get(i).get("id"), 0));
+					m.setMilepostState("3");//已确认
+					b =  super.dao.saveUpdateOrDelete(m, null);
+				}
+			}else{
+				return false;
+			}
 		}
-		boolean b =  super.dao.saveUpdateOrDelete(m, null);
+		if(b){
 		//修改项目状态
-        TaskProject tp=(TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(m.getProjectId(), 0));
-      	tp.setState((short) 8);
-      	if(b){
-      	c=super.dao.saveUpdateOrDelete(tp, null);
-      	}
+		TaskProject tp=(TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(mvm.get("project_id"), 0));
+		tp.setState((short) 8);
+		tp.setRemark(mvm.get("need_remark"));
+		c=super.dao.saveUpdateOrDelete(tp, null);
+		}
 		return c;
 	}
 	/**
@@ -300,17 +350,27 @@ public class TestMilepostService extends GiantBaseService{
 	 * 验收里程碑报告
 	 */
 	public boolean vailreport(Map<String, String> mvm) {
-		MilepostManage m=null;
+		MilepostManage m=new MilepostManage();
 		boolean c=false;
+		Integer count=0;
 		if(GiantUtil.intOf(mvm.get("mi_id"), 0) != 0){
 			//获取对象
 		     m = (MilepostManage) super.dao.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("mi_id"), 0));
 			 m.setMilepostState("6");//已确认
 		}
 		boolean b =  super.dao.saveUpdateOrDelete(m, null);
+		
+		if(GiantUtil.intOf(m.getProjectId(),0) != 0){
+			String sql="select COUNT(0) from milepost_manage where milepost_state = 3 AND project_id = "+m.getProjectId();//查询该项目的所有里程碑
+			count=super.dao.getGiantCounts(sql, null);//该项目下待验收的里程碑的个数
+		}
 		//修改项目状态
         TaskProject tp=(TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(m.getProjectId(), 0));
-      	tp.setState((short) 13);
+        if(count>0){
+        tp.setState((short) 8);
+		}else{
+        tp.setState((short) 13);
+		}
       	if(b){
       	c=super.dao.saveUpdateOrDelete(tp, null);
       	}

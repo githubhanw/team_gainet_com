@@ -163,13 +163,13 @@
 											<c:if test="${mil.milepost_state == 1}">
 												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 												<a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
-              									<a href="test/milepost/tosure?id=${mil.id}" class="btn" title="确认"><i class='icon-task-start icon-play'></i></a>
+              									<!-- <a href="test/milepost/tosure?id=${mil.id}" class="btn" title="确认"><i class='icon-task-start icon-play'></i></a> -->
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 2}">
        											<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
-												<a href="test/milepost/tosureui?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认里程碑和界面原型"><i class="icon-story-review icon-glasses"></i></a>
+												<!-- <a href="test/milepost/tosureui?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认里程碑和概要设计"><i class="icon-story-review icon-glasses"></i></a> -->
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 3}">

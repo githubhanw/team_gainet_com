@@ -237,22 +237,22 @@
 													<a href="test/milepost/toBatchAdd?project_id=${project.id}" class="btn" title="填写里程碑"><i class="icon-story-change icon-fork"></i></a>
 												</c:if>
 												<c:if test="${project.state == '6' }">
-													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="确认里程碑"><i class="icon-story-change icon-fork"></i></a>
+													<a href="test/milepost/tosure?project_id=${project.id}" class="btn" title="确认里程碑"><i class="icon-story-change icon-fork"></i></a>
 												</c:if>
 												<c:if test="${project.state == '7' }">
-													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="确认里程碑及概要设计"><i class="icon-story-change icon-fork"></i></a>
+													<a href="test/milepost/tosureui?project_id=${project.id}" class="btn" title="确认里程碑及概要设计"><i class="icon-story-change icon-fork"></i></a>
 												</c:if>
 												<c:if test="${project.state == '8' }">
 													<a href="test/apply/toAdd?project_id=${project.id}" class="btn" title="提交测试"><i class="icon-story-change icon-fork"></i></a>
 												</c:if>
 												<c:if test="${project.state == '10' }">
-													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="验收里程碑"><i class="icon icon-sitemap"></i></a>
+													<a href="test/milepost/manage?type=3&project_id=${project.id}" class="btn" title="验收里程碑"><i class="icon icon-sitemap"></i></a>
 												</c:if>
 												<c:if test="${project.state == '11' }">
-													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="编写里程碑报告"><i class="icon-task-close icon-off"></i></a>
+													<a href="test/milepost/manage?type=4&project_id=${project.id}" class="btn" title="编写里程碑报告"><i class="icon-task-close icon-off"></i></a>
 												</c:if>
 												<c:if test="${project.state == '12' }">
-													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="验收里程碑报告"><i class="icon icon-sitemap"></i></a>
+													<a href="test/milepost/manage?type=5&project_id=${project.id}" class="btn" title="验收里程碑报告"><i class="icon icon-sitemap"></i></a>
 												</c:if>
 												<c:if test="${project.state == '13' }">
 													<a href="team/project/toEditReport?id=${project.id}" class="btn" title="编写项目验收报告"><i class="icon-testreport-browse icon-flag"></i></a>

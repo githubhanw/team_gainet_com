@@ -25,7 +25,7 @@
 				
 				<%-- <li ${m=='my'?'class="active"':'' } data-id="my"><a href="my" ${m=='my'?'class="active"':'' }><span>我的地盘</span></a></li>
 				<li ${m=='project'?'class="active"':'' } data-id="doc"><a href="team/project/index" ${m=='project'?'class="active"':'' }>项目</a></li>
-				<li ${m=='need'?'class="active"':'' } data-id="doc"><a href="team/need/index" ${m=='need'?'class="active"':'' }>需求</a></li>
+				<li ${m=='need'?'class="active"':'' } data-id="doc"><a href="team/need/index" ${m=='need'?'class="active"':'' }>模块</a></li>
 				<li ${m=='task'?'class="active"':'' } data-id="doc"><a href="team/task/index" ${m=='task'?'class="active"':'' }>任务</a></li>
 				<li ${m=='apply'?'class="active"':'' } data-id="doc"><a href="test/apply/index" ${m=='apply'?'class="active"':'' }>测试</a></li>
 				<li class="divider"></li>

@@ -44,7 +44,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>所属需求</th>
+									<th>所属模块</th>
 									<td class="required">
 										<input type="hidden" name="need_id" id="need_id" value="2">
 										<input type="text" readonly value="${needName}" class="form-control input-product-title" autocomplete="off">

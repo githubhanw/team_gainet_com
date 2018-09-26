@@ -49,7 +49,7 @@
 									<select data-placeholder="请选择类型" class="form-control chosen-select" name="file_type" id="file_type" onchange="show_sub(this.options[this.options.selectedIndex].value)">
 												<option value=""></option>
 												<option value="0">项目</option>
-												<option value="1">需求</option>
+												<option value="1">模块</option>
 									</select>
 									</td>
 									<td></td>
@@ -58,7 +58,7 @@
 								<tr id="tr1">
 									<th>关联项目</th>
 									<td class="required" style="width:60%">
-									<select data-placeholder="项目和需求选其中一个即可" class="form-control chosen-select" name="xm" id="xm">
+									<select data-placeholder="项目和模块选其中一个即可" class="form-control chosen-select" name="xm" id="xm">
 												<option value=""></option>
 											<c:forEach items="${tp}" var="tp" varStatus="sta">
 												<option value="${tp.id}">${tp.project_name}(${tp.id})</option>
@@ -68,9 +68,9 @@
 									<td></td>
 								</tr>
 								<tr id="tr2">
-									<th>关联需求</th>
+									<th>关联模块</th>
 									<td class="required" style="width:60%">
-									<select data-placeholder="项目和需求选其中一个即可" class="form-control chosen-select" name="xq" id="xq">
+									<select data-placeholder="项目和模块选其中一个即可" class="form-control chosen-select" name="xq" id="xq">
 												<option value=""></option>
 											<c:forEach items="${tn}" var="tn" varStatus="sta">
 												<option value="${tn.id}">${tn.need_name}(${tn.id})</input></option>
@@ -97,7 +97,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求文件</th>
+									<th>模块文件</th>
 									<td class="required">
 										<input type="file" name="file" id="file">
 									</td>
@@ -220,12 +220,12 @@ $("#submit").click(function(){
   //  	$("#tr2").toggle();
  //   	$("#tr1").toggle();
 //      	$("#tr1").attr("style","display:block;");//隐藏选择项目下拉框
-//      	$("#tr2").attr("style","display:none;");//显示选择需求下拉框
+//      	$("#tr2").attr("style","display:none;");//显示选择模块下拉框
  //   }else{
  //   	$("#tr2").toggle();
   //  	$("#tr1").toggle();
 //   	$("#tr1").attr("style","display:none;");//隐藏选择项目下拉框
-//     	$("#tr2").attr("style","display:block;");//显示选择需求下拉框
+//     	$("#tr2").attr("style","display:block;");//显示选择模块下拉框
   //  }
 
 // })

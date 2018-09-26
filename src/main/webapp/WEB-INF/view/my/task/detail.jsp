@@ -51,7 +51,7 @@
 								</div>
 							</div>
 							<div class="detail">
-								<div class="detail-title">需求描述</div>
+								<div class="detail-title">模块描述</div>
 								<div class="detail-content article-content">
 									<c:if test="${taskM.need_remark != null && taskM.need_remark != ''}">
 										${taskM.need_remark}
@@ -101,7 +101,7 @@
 													</td>
 													<td>${item.end_date}</td>
 													<td>${item.assigned_name}</td>
-													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
+													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'模块':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
 												</c:forEach>
@@ -112,7 +112,7 @@
 							</c:if>
 							<c:if test="${needTask != null}">
 								<div class="detail">
-									<div class="detail-title">同需求任务</div>
+									<div class="detail-title">同模块任务</div>
 									<div class="detail-content article-content">
 										<table class="table table-hover table-fixed">
 											<thead>
@@ -139,7 +139,7 @@
 													</td>
 													<td>${item.end_date}</td>
 													<td>${item.assigned_name}</td>
-													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
+													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'模块':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
 												</c:forEach>
@@ -177,7 +177,7 @@
 													</td>
 													<td>${item.end_date}</td>
 													<td>${item.assigned_name}</td>
-													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
+													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'模块':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
 												</c:forEach>
@@ -215,7 +215,7 @@
 													</td>
 													<td>${item.end_date}</td>
 													<td>${item.assigned_name}</td>
-													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
+													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'模块':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
 												</c:forEach>
@@ -273,7 +273,7 @@
 									<table class="table table-data">
 										<tbody>
 											<tr class="nofixed">
-												<th>所属需求</th>
+												<th>所属模块</th>
 												<td title="${taskM.need_name}"><a href="my/need/detail?id=${taskM.need_id}" target="_blank">${taskM.need_name}</a></td>
 											</tr>
 											<tr>
@@ -283,7 +283,7 @@
 											<tr>
 												<th>任务类型</th>
 												<td>
-													${taskM.task_type==1?'开发':taskM.task_type==2?'测试':taskM.task_type==3?'设计':taskM.task_type==4?'前端':taskM.task_type==5?'维护':taskM.task_type==6?'需求':taskM.task_type==7?'研究':taskM.task_type==8?'讨论':taskM.task_type==9?'运维':taskM.task_type==10?'事务':'其他'}
+													${taskM.task_type==1?'开发':taskM.task_type==2?'测试':taskM.task_type==3?'设计':taskM.task_type==4?'前端':taskM.task_type==5?'维护':taskM.task_type==6?'模块':taskM.task_type==7?'研究':taskM.task_type==8?'讨论':taskM.task_type==9?'运维':taskM.task_type==10?'事务':'其他'}
 												</td>
 											</tr>
 											<tr>

@@ -86,7 +86,7 @@ public class MyBugController extends GiantBaseController {
 	 */
 	@RequestMapping("/toSolve")
 	public String toSolve(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));

@@ -56,14 +56,14 @@
 									<td></td>
 								</tr>
 								<tr id="duplicateStoryBox" style="display: none">
-									<th>重复需求</th>
+									<th>重复模块</th>
 									<td><input type="text" name="duplicateStory"
 										id="duplicateStory" value="" class="form-control"
 										autocomplete="off"></td>
 									<td></td>
 								</tr>
 								<tr id="childStoriesBox" style="display: none">
-									<th>细分需求</th>
+									<th>细分模块</th>
 									<td><input type="text" name="childStories" id="childStories"
 										value="" class="form-control" autocomplete="off"></td>
 									<td></td>
@@ -104,10 +104,10 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建需求</a> <a
+								<a href="team/need/toAdd" class="btn">继续创建模块</a> <a
 									href="team/task/toAdd" class="btn">建任务</a> <a
 									href="team/task/toAdd" class="btn">批量建任务</a> <a
-									href="team/need/index" class="btn">返回需求列表</a>
+									href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>需求：${needM.need_name}</title>
+		<title>模块：${needM.need_name}</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -40,7 +40,7 @@
 					<div class="main-col col-8">
 						<div class="cell">
 							<div class="detail">
-								<div class="detail-title">需求描述</div>
+								<div class="detail-title">模块描述</div>
 								<div class="detail-content article-content">
 									<c:if test="${needM.need_remark != null && needM.need_remark != ''}">
 										${needM.need_remark}
@@ -63,13 +63,13 @@
 							</div>
 							<c:if test="${subNeed != null}">
 								<div class="detail">
-									<div class="detail-title">子需求</div>
+									<div class="detail-title">子模块</div>
 									<div class="detail-content article-content">
 										<table class="table table-hover table-fixed">
 											<thead>
 												<tr class="text-center">
 													<th>ID</th>
-													<th class="w-300px">需求名称</th>
+													<th class="w-300px">模块名称</th>
 													<th>优先级</th>
 													<th class="w-100px">结束时间</th>
 													<th>指派给</th>
@@ -129,7 +129,7 @@
 													</td>
 													<td>${item.end_date}</td>
 													<td>${item.assigned_name}</td>
-													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'需求':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
+													<td>${item.task_type==1?'开发':item.task_type==2?'测试':item.task_type==3?'设计':item.task_type==4?'前端':item.task_type==5?'维护':item.task_type==6?'模块':item.task_type==7?'研究':item.task_type==8?'讨论':item.task_type==9?'运维':item.task_type==10?'事务':'其他'}</td>
 													<td>${item.state == 1 ? '待接收' : item.state == 2 ? '进行中' : item.state == 3 ? '审核中' : item.state == 4 ? '已完成' : item.state == 5 ? '已暂停' : item.state == 6 ? '已取消' : item.state == 7 ? '已关闭' : '未知'}</td>
 												</tr>
 												</c:forEach>
@@ -140,13 +140,13 @@
 							</c:if>
 							<c:if test="${linkNeed != null}">
 								<div class="detail">
-									<div class="detail-title">关联需求</div>
+									<div class="detail-title">关联模块</div>
 									<div class="detail-content article-content">
 										<table class="table table-hover table-fixed">
 											<thead>
 												<tr class="text-center">
 													<th>ID</th>
-													<th class="w-300px">需求名称</th>
+													<th class="w-300px">模块名称</th>
 													<th>优先级</th>
 													<th class="w-100px">结束时间</th>
 													<th>指派给</th>
@@ -228,7 +228,7 @@
 												<td title="${needM.project_name}">${needM.project_name}</td>
 											</tr>
 											<tr>
-												<th>需求来源</th>
+												<th>模块来源</th>
 												<td>${needM.need_src}</td>
 											</tr>
 											<tr>
@@ -287,7 +287,7 @@
 						</div>
 						<div class="cell">
 							<details class="detail" open="">
-								<summary class="detail-title">需求的一生</summary>
+								<summary class="detail-title">模块的一生</summary>
 								<div class="detail-content">
 									<table class="table table-data">
 										<tbody>
@@ -347,17 +347,17 @@
 							<a href="my/need/toChange?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="${needM.full == 0?'完善':'变更'}">
 								<i class="icon-story-change icon-fork"></i> ${needM.full == 0?'完善':'变更'}
 							</a>
-							<a href="my/need/toClose?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i> 关闭需求</a>
+							<a href="my/need/toClose?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i> 关闭模块</a>
 						</c:if>
 						<c:if test="${needM.full == 1}">
 						  <c:if test="${needM.state == 1}">
-						    <a href="my/need/toOpen?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i>接收需求</a>
+						    <a href="my/need/toOpen?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="接收模块"><i class="icon-task-start icon-play"></i>接收模块</a>
 						  </c:if>
 						  <c:if test="${needM.state == 2}">
 						  <a href="my/need/toSubmitCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i>提交验收</a>
 						</c:if>
 						<c:if test="${needM.state == 3}">
-						<a href="my/need/toCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i> 验收需求</a>
+						<a href="my/need/toCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i> 验收模块</a>
 						</c:if>
 						</c:if>
 						<c:if test="${(needM.parent_id == null || needM.parent_id == 0) && needM.full == 1 && needM.state == 2}">	
@@ -365,7 +365,7 @@
 						  </c:if>
 						
 						<c:if test="${needM.parent_id == null || needM.parent_id == ''}">
-							<a href="my/need/toRelevance?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关联需求"><i class='icon icon-sitemap'></i> 关联需求</a>
+							<a href="my/need/toRelevance?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="关联模块"><i class='icon icon-sitemap'></i> 关联模块</a>
 						</c:if>
 					</div>
 				</div>

@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>批量创建需求</title>
+		<title>批量创建模块</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -34,7 +34,7 @@
 							<c:if test="${n.id != null}">
 								<span class="label label-id">${n.id}</span>
 								<a href="team/need/index">${n.needName}</a>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 批量建子需求</small>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 批量建子模块</small>
 							</c:if>
 						</h2>
 					</div>
@@ -44,9 +44,9 @@
 								<tr>
 									<th class="w-30px col-id">ID</th>
 									<th class="w-150px col-plan">所属项目</th>
-									<th class="w-130px">需求来源</th>
+									<th class="w-130px">模块来源</th>
 									<th class="w-130px">需求方</th>
-									<th class="col-name has-btn required">需求名称</th>
+									<th class="col-name has-btn required">模块名称</th>
 									<th class="w-150px">指派给</th>
 									<th class="w-120px col-estimate">开始时间</th>
 									<th class="w-120px col-review">结束时间</th>
@@ -68,7 +68,7 @@
 												<input type="hidden" name="id" id="id" value="${n.id}"/>
 											</td>
 											<td style="overflow: visible">
-												<select data-placeholder="请选择需求来源" class="form-control chosen-select" name="src_id" id="src_id">
+												<select data-placeholder="请选择模块来源" class="form-control chosen-select" name="src_id" id="src_id">
 													<option value=""></option>
 													<c:forEach items="${needSrc}" var="src" varStatus="sta">
 														<option ${n.srcId==src.id?'selected="selected"':'' } value="${src.id}">${src.need_src}</option>
@@ -143,10 +143,10 @@
 								<strong><span id="msg">成功</span> ，您现在可以进行以下操作：</strong>
 							</p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建需求</a> <a
+								<a href="team/need/toAdd" class="btn">继续创建模块</a> <a
 									href="team/task/toAdd" class="btn">创建任务</a> <a
 									href="team/task/toAdd" class="btn">批量创建任务</a> <a
-									href="team/need/index" class="btn">返回需求列表</a>
+									href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

@@ -161,37 +161,37 @@
 											</td>
 											<td class="c-actions text-center">
 											<c:if test="${mil.milepost_state == 1}">
-												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 												<a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
               									<a href="test/milepost/tosure?id=${mil.id}" class="btn" title="确认"><i class='icon-task-start icon-play'></i></a>
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 2}">
-       											<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+       											<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 												<a href="test/milepost/tosureui?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认里程碑和界面原型"><i class="icon-story-review icon-glasses"></i></a>
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 3}">
-												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 												<a href="test/milepost/tovali?id=${mil.id}" class="btn" title="验收"><i class='icon-task-finish icon-checked'></i></a>
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 4}">
-												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 												<a href="test/milepost/toreport?id=${mil.id}" class="btn" title="编写里程碑报告"><i class="icon-story-review icon-glasses"></i></a>
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 5}">
-												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 												<a href="test/milepost/tovailreport?id=${mil.id}" class="btn" title="验收里程碑报告"><i class="icon-task-start icon-play"></i></a>
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 6}">
-												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联模块"><i class="icon icon-plus"></i></a>
 											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>

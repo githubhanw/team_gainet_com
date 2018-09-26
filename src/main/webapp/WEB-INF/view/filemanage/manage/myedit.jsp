@@ -49,10 +49,10 @@
 									<select data-placeholder="请选择类型" class="form-control chosen-select" name="file_type" id="file_type" onchange="show_sub(this.options[this.options.selectedIndex].value)">
 												<c:if test="${FileManage.fileClassification ==0}">
 												<option value="${FileManage.fileClassification}">项目</option>
-												<option value="1">需求</option>
+												<option value="1">模块</option>
 												</c:if>
 												<c:if test="${FileManage.fileClassification ==1}">
-												<option value="${FileManage.fileClassification}">需求</option>
+												<option value="${FileManage.fileClassification}">模块</option>
                                                 <option value="0">项目</option>
 												</c:if>
 									</select>
@@ -77,7 +77,7 @@
 									
 								</tr>
 								<tr id="tr2">
-									<th>关联需求</th>
+									<th>关联模块</th>
 									<td class="required" style="width:60%">
 									<select data-placeholder="请选择类型" class="form-control chosen-select" name="xq" id="xq">
 									           <c:if test="${FileManage.fileClassification ==0}">

@@ -43,9 +43,9 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>所属需求</th>
+									<th>所属模块</th>
 									<td class="required">
-										<select data-placeholder="请选择需求" class="form-control chosen chosen-select" name="need_id" id="need_id">
+										<select data-placeholder="请选择模块" class="form-control chosen chosen-select" name="need_id" id="need_id">
 											<option value=""></option>
 											<c:forEach items="${need}" var="n" varStatus="sta">
 												<option value="${n.id}" ${n.id==need_id?'selected="selected"':''}>${n.need_name}</option>
@@ -74,7 +74,7 @@
 											<option ${t.taskType=='3'?'selected="selected"':'' } value="3">设计</option>
 											<option ${t.taskType=='4'?'selected="selected"':'' } value="4">前端</option>
 											<option ${t.taskType=='5'?'selected="selected"':'' } value="5">维护</option>
-											<option ${t.taskType=='6'?'selected="selected"':'' } value="6">需求</option>
+											<option ${t.taskType=='6'?'selected="selected"':'' } value="6">模块</option>
 											<option ${t.taskType=='7'?'selected="selected"':'' } value="7">研究</option>
 											<option ${t.taskType=='8'?'selected="selected"':'' } value="8">讨论</option>
 											<option ${t.taskType=='9'?'selected="selected"':'' } value="9">运维</option>
@@ -165,7 +165,7 @@
 								<a href="my/task/toAdd" class="btn">继续建任务</a>
 								<a href="my/task/toAdd" class="btn">批量建任务</a>
 								<a href="my/task" class="btn">返回任务列表</a>
-								<a href="my/need" class="btn">返回需求列表</a>
+								<a href="my/need" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

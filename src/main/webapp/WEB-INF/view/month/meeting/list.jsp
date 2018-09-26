@@ -131,21 +131,21 @@
 										class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">会议创建时间</a>
 									</th>
 									<th data-flex="false" data-width="auto" style="width: 250px"
-										class="c-name text-center" title="需求总数"><a
+										class="c-name text-center" title="模块总数"><a
 										href="javascript:void(0)" onclick="pageOrder('totalCount');"
-										class="${prm.orderColumn=='totalCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求总数</a>
+										class="${prm.orderColumn=='totalCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">模块总数</a>
 									</th>
 									<th data-flex="false" data-width="auto" style="width: 200px"
-										class="c-name text-center" title="已验收需求数"><a
+										class="c-name text-center" title="已验收模块数"><a
 										href="javascript:void(0)"
 										onclick="pageOrder('approvedCount');"
-										class="${prm.orderColumn=='approvedCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">已验收需求数</a>
+										class="${prm.orderColumn=='approvedCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">已验收模块数</a>
 									</th>
 									<th data-flex="false" data-width="auto" style="width: 200px"
-										class="c-name text-center" title="待验收需求数"><a
+										class="c-name text-center" title="待验收模块数"><a
 										href="javascript:void(0)"
 										onclick="pageOrder('waitApprovedCount');"
-										class="${prm.orderColumn=='waitApprovedCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">待验收需求数</a>
+										class="${prm.orderColumn=='waitApprovedCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">待验收模块数</a>
 									</th>
 									<th data-flex="false" data-width="auto" style="width: auto"
 										class="c-pri text-center" title="状态"><a

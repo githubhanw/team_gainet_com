@@ -88,7 +88,7 @@ public class MyTaskController extends GiantBaseController {
 			List<Map<String, Object>> subTask = teamTaskService.getSubTaskList(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("subTask", subTask);
 
-			//同需求任务
+			//同模块任务
 			if ("3".equals(taskDetail.get("task_type"))) {//测试任务
 				List<Map<String, Object>> needTask = teamTaskService.getRelationTaskList(null, GiantUtil.intOf(mvm.get("id"), 0), 2);
 				model.addAttribute("needTask", needTask);
@@ -192,11 +192,11 @@ public class MyTaskController extends GiantBaseController {
 	}
 	
 	/**
-	 * 跳转编辑需求页面
+	 * 跳转编辑模块页面
 	 */
 	@RequestMapping("/toEdit")
 	public String toEdit(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		model.addAttribute("need", teamTaskService.getNeed());
 		model.addAttribute("members", teamTaskService.getAllMember());
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
@@ -241,7 +241,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toBatchAdd")
 	public String toBatchAdd(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		model.addAttribute("need", teamTaskService.getNeed());
 		model.addAttribute("members", teamTaskService.getAllMember());
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
@@ -263,7 +263,7 @@ public class MyTaskController extends GiantBaseController {
 	@RequestMapping("/toAssign")
 	public String toAssign(@RequestParam Map<String, String> mvm, Model model) {
 		model.addAttribute("members", teamTaskService.getAllMember());
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -301,7 +301,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toChange")
 	public String toChange(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -338,11 +338,11 @@ public class MyTaskController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转关闭需求页面
+	 * 跳转关闭模块页面
 	 */
 	@RequestMapping("/toClose")
 	public String toClose(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -356,7 +356,7 @@ public class MyTaskController extends GiantBaseController {
 	}
 
 	/**
-	 * 关闭需求
+	 * 关闭模块
 	 */
 	@RequestMapping("/close")
 	public void close(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -379,11 +379,11 @@ public class MyTaskController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转激活需求页面
+	 * 跳转激活模块页面
 	 */
 	@RequestMapping("/toActive")
 	public String toActive(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -394,7 +394,7 @@ public class MyTaskController extends GiantBaseController {
 	}
 
 	/**
-	 * 激活需求
+	 * 激活模块
 	 */
 	@RequestMapping("/active")
 	public void active(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -421,7 +421,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toOpen")
 	public String toOpen(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -465,7 +465,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toPause")
 	public String toPause(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -510,7 +510,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toCancel")
 	public String toCancel(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -554,7 +554,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toFinish")
 	public String toFinish(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -612,7 +612,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toFinishCheck")
 	public String toCheck(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -769,7 +769,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toDelayCheck")
 	public String toDelayCheck(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -814,7 +814,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toHandover")
 	public String toHandover(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));

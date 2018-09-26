@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>编辑需求：${n.needName}</title>
+		<title>编辑模块：${n.needName}</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -41,7 +41,7 @@
 							<div class="main-col col-8">
 								<div class="cell">
 									<div class="detail">
-										<div class="detail-title">需求描述</div>
+										<div class="detail-title">模块描述</div>
 										<div class="detail-content article-content">${n.needRemark}</div>
 									</div>
 									<div class="detail">
@@ -123,7 +123,7 @@
 													</td>
 												</tr>
 												<tr>
-													<th>需求来源</th>
+													<th>模块来源</th>
 													<td>
 														<select class="form-control chosen-select" name="src_id" id="src_id">
 															<option value=""></option>
@@ -142,7 +142,7 @@
 												<tr>
 													<th>需求方</th>
 													<td>
-														<select data-placeholder="请选择需求方" class="form-control chosen-select" name="member_id" id="member_id">
+														<select data-placeholder="请选择模块方" class="form-control chosen-select" name="member_id" id="member_id">
 															<option value=""></option>
 															<c:forEach items="${members}" var="member" varStatus="sta">
 																<option value="${member.id}" ${member.id==n.memberId?'selected="selected"':''}>${member.name}(${member.number})</option>
@@ -176,21 +176,21 @@
 													<th>开始日期</th>
 													<td>
 														<input type="text" name="start_date" id="start_date" value="<fmt:formatDate value="${n.startDate}" pattern="yyyy-MM-dd"/>" 
-															class="form-control form-date-limit" placeholder="需求开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+															class="form-control form-date-limit" placeholder="模块开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
 													<th>结束日期</th>
 													<td>
 														<input type="text" name="end_date" id="end_date" value="<fmt:formatDate value="${n.endDate}" pattern="yyyy-MM-dd"/>" 
-															class="form-control form-date-limit" placeholder="需求结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+															class="form-control form-date-limit" placeholder="模块结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 											</tbody>
 										</table>
 									</div>
 									<div class="detail">
-										<div class="detail-title">需求的一生</div>
+										<div class="detail-title">模块的一生</div>
 										<table class="table table-form">
 											<tbody>
 												<tr>
@@ -222,10 +222,10 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/need/toEdit?id=${n.id}" class="btn">继续编辑需求</a>
+								<a href="my/need/toEdit?id=${n.id}" class="btn">继续编辑模块</a>
 								<a href="team/task/toAdd" class="btn">建任务</a>
 								<a href="team/task/toBatchAdd" class="btn">批量建任务</a>
-								<a href="my/need" class="btn">返回需求列表</a>
+								<a href="my/need" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

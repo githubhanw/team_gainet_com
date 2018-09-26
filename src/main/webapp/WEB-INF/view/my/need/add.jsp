@@ -36,7 +36,7 @@
 							<tbody>
 							<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th>需求名称</th>
+									<th>模块名称</th>
 									<td class="required" style="width:60%">
 										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off">
 									</td>
@@ -77,9 +77,9 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求来源</th>
+									<th>模块来源</th>
 									<td class="required">
-										<select data-placeholder="请选择需求来源" class="form-control chosen-select" name="src_id" id="src_id">
+										<select data-placeholder="请选择模块来源" class="form-control chosen-select" name="src_id" id="src_id">
 											<option value=""></option>
 											<c:forEach items="${needSrc}" var="src" varStatus="sta">
 												<option value="${src.id}">${src.need_src}</option>
@@ -88,7 +88,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求来源备注</th>
+									<th>模块来源备注</th>
 									<td>
 										<input type="text" name="src_remark" id="src_remark" class="form-control input-product-title" autocomplete="off">
 									</td>
@@ -106,23 +106,23 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求开始日期</th>
+									<th>模块开始日期</th>
 									<td class="required">
 										<input type="text" name="start_date" id="start_date"
-												class="form-control form-date-limit" placeholder="需求开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="模块开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求结束日期</th>
+									<th>模块结束日期</th>
 									<td class="required">
 										<input type="text" name="end_date" id="end_date"
-												class="form-control form-date-limit" placeholder="需求结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="模块结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求描述</th>
+									<th>模块描述</th>
 									<td class="required">
 										<input type="hidden" name="need_remark">
 										<textarea id="need_remark" name="details" placeholder="" style="width:100%;"></textarea>
@@ -140,7 +140,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求文档</th>
+									<th>模块文档</th>
 									<td>
 										<input type="file" name="file" id="file">
 									</td>
@@ -174,10 +174,10 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/need/toAdd" class="btn">继续创建需求</a> <a
+								<a href="my/need/toAdd" class="btn">继续创建模块</a> <a
 									href="my/task/toAdd" class="btn">建任务</a> <a
 									href="my/task/toBatchAdd" class="btn">批量建任务</a> <a
-									href="my/need" class="btn">返回需求列表</a>
+									href="my/need" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

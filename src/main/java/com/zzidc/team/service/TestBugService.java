@@ -164,7 +164,7 @@ public class TestBugService extends GiantBaseService {
 	}
 	
 	/**
-	 * 添加Bug时候需求选择
+	 * 添加Bug时候模块选择
 	 * @return
 	 */
 	public List<Map<String, Object>> getNeed(){
@@ -215,7 +215,7 @@ public class TestBugService extends GiantBaseService {
 								 "3".equals(t.getBugrank().toString()) ? "信息类" : 
 								 "4".equals(t.getBugrank().toString()) ? "数据类" : 
 								 "5".equals(t.getBugrank().toString()) ? "流程类" : 
-								 "6".equals(t.getBugrank().toString()) ? "需求问题" :"" ;
+								 "6".equals(t.getBugrank().toString()) ? "模块问题" :"" ;
 				
 				String openid = developer.getNewOpenid();//"o-GQDj8vVvfH2715yROC1aqY4YM0";
 				String first = "你好,收到一个【BUG处理】提醒";

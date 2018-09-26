@@ -147,7 +147,7 @@
 													<option ${prm.taskType=='3'?'selected="selected"':'' } value="3">设计</option>
 													<option ${prm.taskType=='4'?'selected="selected"':'' } value="4">前端</option>
 													<option ${prm.taskType=='5'?'selected="selected"':'' } value="5">维护</option>
-													<option ${prm.taskType=='6'?'selected="selected"':'' } value="6">需求</option>
+													<option ${prm.taskType=='6'?'selected="selected"':'' } value="6">模块</option>
 													<option ${prm.taskType=='7'?'selected="selected"':'' } value="7">研究</option>
 													<option ${prm.taskType=='8'?'selected="selected"':'' } value="8">讨论</option>
 													<option ${prm.taskType=='9'?'selected="selected"':'' } value="9">运维</option>
@@ -233,9 +233,9 @@
 												<a href="javascript:void(0)" onclick="pageOrder('t.task_name');" 
 													class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务名称</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="需求ID">
+											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri " title="模块ID">
 												<a href="javascript:void(0)" onclick="pageOrder('t.need_id');" 
-													class="${prm.orderColumn=='t.need_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求ID</a>
+													class="${prm.orderColumn=='t.need_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">模块ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:90px" class="c-name " title="任务类型">
 												<a href="javascript:void(0)" onclick="pageOrder('t.task_type');" 
@@ -288,7 +288,7 @@
 											<td class="text-left">
 												<a href="team/need/detail?id=${task.need_id}" data-toggle="tooltip" data-placement="top" title="${task.need_name}">${task.need_id}</a>
 											</td>
-											<td class="c-pri text-center">${task.task_type==1?'开发':task.task_type==2?'测试':task.task_type==3?'设计':task.task_type==4?'前端':task.task_type==5?'维护':task.task_type==6?'需求':task.task_type==7?'研究':task.task_type==8?'讨论':task.task_type==9?'运维':task.task_type==10?'事务':'其他'}</td>
+											<td class="c-pri text-center">${task.task_type==1?'开发':task.task_type==2?'测试':task.task_type==3?'设计':task.task_type==4?'前端':task.task_type==5?'维护':task.task_type==6?'模块':task.task_type==7?'研究':task.task_type==8?'讨论':task.task_type==9?'运维':task.task_type==10?'事务':'其他'}</td>
 											<td class="c-pri text-center">
 												<span class="${task.state == 1 ? 'status-wait' : task.state == 2 ? 'status-doing' : task.state == 3 ? 'status-pause' : task.state == 4 ? 'status-done' : task.state == 7 ? 'status-closed' : 'status-cancel'}">
 													<span class="label label-dot"></span>
@@ -387,7 +387,7 @@
 														<td class="text-left">
 															<a href="team/need/detail?id=${subTask.need_id}" data-toggle="tooltip" data-placement="top" title="${subTask.need_name}">${subTask.need_id}</a>
 														</td>
-														<td class="c-pri text-center">${subTask.task_type==1?'开发':subTask.task_type==2?'测试':subTask.task_type==3?'设计':subTask.task_type==4?'前端':subTask.task_type==5?'维护':subTask.task_type==6?'需求':subTask.task_type==7?'研究':subTask.task_type==8?'讨论':subTask.task_type==9?'运维':subTask.task_type==10?'事务':'其他'}</td>
+														<td class="c-pri text-center">${subTask.task_type==1?'开发':subTask.task_type==2?'测试':subTask.task_type==3?'设计':subTask.task_type==4?'前端':subTask.task_type==5?'维护':subTask.task_type==6?'模块':subTask.task_type==7?'研究':subTask.task_type==8?'讨论':subTask.task_type==9?'运维':subTask.task_type==10?'事务':'其他'}</td>
 														<td class="c-pri text-center">
 															<span class="${subTask.state == 1 ? 'status-wait' : subTask.state == 2 ? 'status-doing' : subTask.state == 3 ? 'status-pause' : subTask.state == 4 ? 'status-done' : subTask.state == 7 ? 'status-closed' : 'status-cancel'}">
 																<span class="label label-dot"></span>

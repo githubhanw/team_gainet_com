@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>关联需求</title>
+		<title>关联模块</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${mi.id}</span>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 关联需求</small>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 关联模块</small>
 							</h2>
 						</div>
 						<table class="table table-form">
@@ -69,7 +69,7 @@
 								<tr>
 									<th>关联</th>
 									<td class="required">
-										<select data-placeholder="请选择需求" class="form-control chosen-select" name="handover_id" id="handover_id">
+										<select data-placeholder="请选择模块" class="form-control chosen-select" name="handover_id" id="handover_id">
 											<option value=""></option>
 											<c:forEach items="${taskNeed}" var="taskNeed" varStatus="sta">
 												<option value="${taskNeed.id}">${taskNeed.need_name}(${taskNeed.id})</option>

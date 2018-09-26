@@ -136,7 +136,7 @@ public class TeamTaskService extends GiantBaseService {
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("need_id"))) {
 				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
-					if ("95".equals(temp)) {// 所属需求
+					if ("95".equals(temp)) {// 所属模块
 						sql += "AND t.need_id=:need_id ";
 						countSql += "AND t.need_id=:need_id ";
 						conditionMap.put("need_id", temp);
@@ -309,7 +309,7 @@ public class TeamTaskService extends GiantBaseService {
 	}
 
 	/**
-	 * 详情页面获取同需求任务和测试任务 1、非测试任务的关联任务为：同需求的任务； 2、测试任务的关联任务为：同开发任务的测试任务。
+	 * 详情页面获取同模块任务和测试任务 1、非测试任务的关联任务为：同模块的任务； 2、测试任务的关联任务为：同开发任务的测试任务。
 	 * 
 	 * @return
 	 */

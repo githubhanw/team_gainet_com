@@ -40,7 +40,7 @@
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post" enctype="multipart/form-data">
 								<tr>
-									<th>需求名称</th>
+									<th>模块名称</th>
 									<td class="required">
 										<input type="text" name="need_name" id="need_name" value="${n.needName}" class="form-control input-product-title" autocomplete="off">
 									</td>
@@ -58,7 +58,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求描述</th>
+									<th>模块描述</th>
 									<td class="required">
 										<input type="hidden" name="need_remark">
 										<textarea id="need_remark" name="details" placeholder="" style="width:100%;">${n.needRemark}</textarea>
@@ -78,7 +78,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求变更文档</th>
+									<th>模块变更文档</th>
 									<td>
 										<input type="file" name="file" id="file">
 									</td>

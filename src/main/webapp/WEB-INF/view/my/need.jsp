@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>我的地盘::我的需求</title>
+		<title>我的地盘::我的模块</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -43,7 +43,7 @@
 							</c:if>
 						</a>
 						<a href="my/need?type=13" class="btn btn-link ${prm.type == 13 ? 'btn-active-text':''}">
-							<span class="text">待验收需求</span>
+							<span class="text">待验收模块</span>
 							<c:if test="${prm.type == 13}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
@@ -80,7 +80,7 @@
 						<div style="width:220px;float:right">
 							<form method="post" action="my/need?type=98" class="search-form">
 								<input type="text" name="nameOrId" value="${prm.nameOrId}" class="form-control searchInput" 
-									style="border:1px solid #999;height:34px" placeholder="输入 需求名称 或 ID，按 回车 查询">
+									style="border:1px solid #999;height:34px" placeholder="输入 模块名称 或 ID，按 回车 查询">
 							</form>
 						</div>
 					</div>
@@ -99,12 +99,12 @@
 										<tr>
 											<td class="w-200px">
 												<select class="form-control chosen chosen-select" name="needType" id="needType">
-													<option ${prm.needType=='1'?'selected="selected"':'' } value="1">需求名称</option>
-													<option ${prm.needType=='2'?'selected="selected"':'' } value="2">需求描述</option>
+													<option ${prm.needType=='1'?'selected="selected"':'' } value="1">模块名称</option>
+													<option ${prm.needType=='2'?'selected="selected"':'' } value="2">模块描述</option>
 												</select>
 											</td>
 											<td>
-												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="选择后请输入要查询的需求名称 或 需求描述">
+												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="选择后请输入要查询的模块名称 或 模块描述">
 											</td>
 											<td class="w-200px">
 												<select class="form-control chosen chosen-select" name="state" id="state">
@@ -119,7 +119,7 @@
 											</td>
 											<td class="w-200px">
 												<select class="form-control chosen chosen-select" name="srcId" id="srcId">
-													<option value="">请选择需求来源</option>
+													<option value="">请选择模块来源</option>
 													<c:forEach items="${needSrc}" var="src" varStatus="sta">
 														<option ${prm.srcId==src.id?'selected="selected"':'' } value="${src.id}">${src.need_src}</option>
 													</c:forEach>
@@ -178,9 +178,9 @@
 												<a href="javascript:void(0)" onclick="pageOrder('id');" 
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:250px" class="c-pri " title="需求名称">
+											<th data-flex="false" data-width="50px" style="width:250px" class="c-pri " title="模块名称">
 												<a href="javascript:void(0)" onclick="pageOrder('need_name');" 
-														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">需求名称</a>
+														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">模块名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:150px" class="c-pri " title="所属项目">
 												<a href="javascript:void(0)" onclick="pageOrder('tp.project_name');" 
@@ -233,7 +233,7 @@
 													${need.need_name}
 												</a>
 												<c:if test="${need.full == 0}">
-													<span class="label label-warning" title="不能创建任务，不能分解">不完整需求</span>
+													<span class="label label-warning" title="不能创建任务，不能分解">不完整模块</span>
 												</c:if>
 												<c:if test="${need.meeting_id > 0}">
 													<span class="label label-info" data-toggle="tooltip" data-placement="top" title="${need.meeting_name}">会</span>
@@ -270,12 +270,12 @@
 														<a href="my/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
 														</c:if>
 														<c:if test="${need.state == 1 || need.state == 2}">
-														<a href="my/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善需求':'需求变更'}"><i class="icon-story-change icon-fork"></i></a>
-														<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭需求"><i class='icon-task-close icon-off'></i></a>
+														<a href="my/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善模块':'模块变更'}"><i class="icon-story-change icon-fork"></i></a>
+														<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i></a>
 														</c:if>
 														<c:if test="${need.full == 1}">
 														  <c:if test="${need.state == 1}">
-														    <a href="my/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收需求"><i class="icon-task-start icon-play"></i></a>
+														    <a href="my/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收模块"><i class="icon-task-start icon-play"></i></a>
 														    </c:if>
 														    <c:if test="${need.state == 2}">
 														         <c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
@@ -284,7 +284,7 @@
 															</c:if>
 															<c:if test="${need.state == 3}">
 															     <c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
-															     <a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收需求"><i class="icon-story-review icon-glasses"></i></a>
+															     <a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
 														         </c:if>
 														</c:if>
 														</c:if>

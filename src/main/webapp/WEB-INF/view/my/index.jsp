@@ -109,13 +109,13 @@
 											</div> 
 											<div class="col tile">
 												<a href="my/need">
-													<div class="tile-title">我的需求</div>
+													<div class="tile-title">我的模块</div>
 													<div class="tile-amount">${needCount.count > 0 ? needCount.count : 0}</div>
 												</a>
 											</div>
 											<div class="col tile">
 												<a href="my/need?type=13">
-													<div class="tile-title">待验收需求</div>
+													<div class="tile-title">待验收模块</div>
 													<div class="tile-amount">${needCount.checking > 0 ? needCount.checking : 0}</div>
 												</a>
 											</div>
@@ -162,14 +162,14 @@
 											<td>维护组织</td>
 											<td>维护权限</td>
 											<td>维护项目</td>
-											<td>维护需求</td>
+											<td>维护模块</td>
 											<td></td>
 										</tr>
 										<tr class="text-middle">
 											<th>产品经理 / 需求方</th>
-											<td>创建需求</td>
-											<td>分配需求</td>
-											<td>验收需求</td>
+											<td>创建模块</td>
+											<td>分配模块</td>
+											<td>验收模块</td>
 											<td></td>
 											<td></td>
 										</tr>

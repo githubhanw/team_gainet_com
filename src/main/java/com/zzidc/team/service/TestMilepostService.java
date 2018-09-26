@@ -189,7 +189,7 @@ public class TestMilepostService extends GiantBaseService{
 		return c;
 	}
 	/**
-	 * 添加一条里程碑关联需求的数据
+	 * 添加一条里程碑关联模块的数据
 	 */
 	public boolean ass(Map<String, String> mvm) {
 		Date date =new Date();
@@ -203,7 +203,7 @@ public class TestMilepostService extends GiantBaseService{
 		return b;
 	}
 	/**
-	 * 添加里程碑关联需求的数据
+	 * 添加里程碑关联模块的数据
 	 */
 	public boolean assTaskneed(int milid,int taskneed) {
 		Date date =new Date();
@@ -217,7 +217,7 @@ public class TestMilepostService extends GiantBaseService{
 		return b;
 	}
 	/**
-	 * 查询相关模块（相关需求）
+	 * 查询相关模块（相关模块）
 	 * @return
 	 */
 	public List<Map<String, Object>> getMilNeedList(Map<String, String> mvm){
@@ -253,7 +253,7 @@ public class TestMilepostService extends GiantBaseService{
 	public boolean vali(Map<String, String> mvm,int id,String name) {
 		MilepostManage t =null;
 		 boolean c=false;
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
         if(GiantUtil.intOf(mvm.get("mi_id"), 0) != 0){
         	Date date =new Date();
     		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

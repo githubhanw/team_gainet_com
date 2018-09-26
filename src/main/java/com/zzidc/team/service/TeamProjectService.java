@@ -375,7 +375,7 @@ public class TeamProjectService extends GiantBaseService{
 	}
 	
 	/**
-	 * 项目详情页面获取同项目需求。
+	 * 项目详情页面获取同项目模块。
 	 * 
 	 * @return
 	 */

@@ -79,7 +79,7 @@
 									<th>开始日期</th>
 									<td class="required">
 										<input type="text" name="start_date" id="start_date"
-												class="form-control form-date-limit" placeholder="需求开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="模块开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>
@@ -87,7 +87,7 @@
 									<th>结束日期</th>
 									<td class="required">
 										<input type="text" name="end_date" id="end_date"
-												class="form-control form-date-limit" placeholder="需求结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="模块结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>

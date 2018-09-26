@@ -43,7 +43,7 @@
 							<thead>
 								<tr>
 									<th class="w-30px col-id">ID</th>
-									<th class="w-150px col-plan">所属需求</th>
+									<th class="w-150px col-plan">所属模块</th>
 									<th class="w-100px required">任务类型</th>
 									<th class="col-name has-btn required">任务名称</th>
 									<th class="w-180px">指派给</th>
@@ -76,7 +76,7 @@
 													<option ${t.taskType=='3'?'selected="selected"':'' } value="3">设计</option>
 													<option ${t.taskType=='4'?'selected="selected"':'' } value="4">前端</option>
 													<option ${t.taskType=='5'?'selected="selected"':'' } value="5">维护</option>
-													<option ${t.taskType=='6'?'selected="selected"':'' } value="6">需求</option>
+													<option ${t.taskType=='6'?'selected="selected"':'' } value="6">模块</option>
 													<option ${t.taskType=='7'?'selected="selected"':'' } value="7">研究</option>
 													<option ${t.taskType=='8'?'selected="selected"':'' } value="8">讨论</option>
 													<option ${t.taskType=='9'?'selected="selected"':'' } value="9">运维</option>

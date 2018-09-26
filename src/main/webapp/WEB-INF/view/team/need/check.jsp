@@ -40,7 +40,7 @@
 							<tbody>
 								<form class="main-table table-task skip-iframe-modal" id="createForm" method="post">
 								<tr>
-									<th>需求描述</th>
+									<th>模块描述</th>
 									<td>${needM.need_remark}</td>
 									<td></td>
 								</tr>
@@ -102,7 +102,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/index" class="btn">返回需求列表</a>
+								<a href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

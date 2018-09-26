@@ -140,13 +140,13 @@ public class FilemanageController extends GiantBaseController{
 				model.addAttribute("glname", a.toString());
 			}
 			String sqlone="select id, project_name from task_project";//查询项目的id和名称
-			String sqltwo="select id, need_name from task_need";//查询需求的id和名称
+			String sqltwo="select id, need_name from task_need";//查询模块的id和名称
 			List<Map<String, Object>> map=new ArrayList<Map<String, Object>>();
 			List<Map<String, Object>> map1=new ArrayList<Map<String, Object>>();
 			map=filemanageService.getMapListBySQL(sqlone, null);
 			map1=filemanageService.getMapListBySQL(sqltwo, null);
 			model.addAttribute("tp", map);//查询出来的项目数据
-			model.addAttribute("tn", map1);//查询出来的需求模块
+			model.addAttribute("tn", map1);//查询出来的模块模块
 		}
 		publicResult(model);
 		model.addAttribute("s", "manage");//子模块
@@ -174,7 +174,7 @@ public class FilemanageController extends GiantBaseController{
 		return;
         }else if(mvm.get("file_type").equals("1")&&GiantUtil.isEmpty(mvm.get("xq"))){
 		json.put("code",3);
-		json.put("message", "请选择需求");
+		json.put("message", "请选择模块");
 		resultresponse(response,json);
 		return;
         }else{
@@ -230,13 +230,13 @@ public class FilemanageController extends GiantBaseController{
 	@RequestMapping("/toaddwd")
 	public String toaddwd(@RequestParam Map<String, String> mvm, Model model) {
 		String sqlone="select id, project_name from task_project";//查询项目的id和名称
-		String sqltwo="select id, need_name from task_need";//查询需求的id和名称
+		String sqltwo="select id, need_name from task_need";//查询模块的id和名称
 		List<Map<String, Object>> map=new ArrayList<Map<String, Object>>();
 		List<Map<String, Object>> map1=new ArrayList<Map<String, Object>>();
 		map=filemanageService.getMapListBySQL(sqlone, null);
 		map1=filemanageService.getMapListBySQL(sqltwo, null);
 		model.addAttribute("tp", map);//查询出来的项目数据
-		model.addAttribute("tn", map1);//查询出来的需求模块
+		model.addAttribute("tn", map1);//查询出来的模块模块
 		publicResult(model);
 		model.addAttribute("s", "manage");//子模块
 		return "filemanage/manage/addwd";
@@ -265,7 +265,7 @@ public class FilemanageController extends GiantBaseController{
 			return;
        }else if(mvm.get("file_type").equals("1")&&GiantUtil.isEmpty(mvm.get("xq"))){
 			json.put("code",3);
-			json.put("message", "请选择需求");
+			json.put("message", "请选择模块");
 			resultresponse(response,json);
 			return;
        }else{

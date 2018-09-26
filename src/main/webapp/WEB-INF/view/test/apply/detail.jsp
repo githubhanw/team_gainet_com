@@ -129,11 +129,11 @@
 												<td title="/">${project.projectName}</td>
 											</tr>
 											<tr class="nofixed">
-												<th>所属需求</th>
+												<th>所属模块</th>
 												<td title="/">${need.needName}</td>
 											</tr>
 											<tr>
-												<th>需求来源</th>
+												<th>模块来源</th>
 												<td>
 													<c:if test="${need.srcId=='1'}">产品经理</c:if>
 													<c:if test="${need.srcId=='2'}">市场</c:if>

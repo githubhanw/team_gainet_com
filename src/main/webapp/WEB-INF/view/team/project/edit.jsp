@@ -83,9 +83,9 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求负责人</th>
+									<th>模块负责人</th>
 									<td class="required">
-										<select data-placeholder="选择需求负责人" class="form-control chosen-select" name="demand_id" id="demand_id">
+										<select data-placeholder="选择模块负责人" class="form-control chosen-select" name="demand_id" id="demand_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}" ${member.id==p.demandId?'selected="selected"':''}>${member.name}(${member.number})</option>

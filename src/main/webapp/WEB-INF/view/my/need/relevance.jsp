@@ -40,9 +40,9 @@
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th>需求</th>
+									<th>模块</th>
 									<td class="required">
-										<select data-placeholder="请选择要关联是需求" class="form-control chosen chosen-select" multiple name="needs" id="needs">
+										<select data-placeholder="请选择要关联是模块" class="form-control chosen chosen-select" multiple name="needs" id="needs">
 											<option value=""></option>
 											<c:forEach items="${needs}" var="p" varStatus="sta">
 												<%-- <c:set var="nneeds" value="${fn:split(n.link, ',')}" /> --%>
@@ -98,7 +98,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/need" class="btn">返回需求列表</a>
+								<a href="my/need" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

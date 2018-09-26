@@ -39,14 +39,14 @@
 								<td></td>
 							</tr>
 							<tr id="duplicateStoryBox" style="display: none">
-								<th>重复需求</th>
+								<th>重复模块</th>
 								<td><input type="text" name="duplicateStory"
 									id="duplicateStory" value="" class="form-control"
 									autocomplete="off"></td>
 								<td></td>
 							</tr>
 							<tr id="childStoriesBox" style="display: none">
-								<th>细分需求</th>
+								<th>细分模块</th>
 								<td><input type="text" name="childStories" id="childStories"
 									value="" class="form-control" autocomplete="off"></td>
 								<td></td>

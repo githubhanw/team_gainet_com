@@ -114,7 +114,7 @@
 										<table class="table table-form">
 											<tbody>
 												<tr>
-													<th class="w-80px">所属需求</th>
+													<th class="w-80px">所属模块</th>
 													<td>
 														<div class="input-group">
 															<select class="form-control chosen chosen-select"  name="need_id" id="need_id">
@@ -145,7 +145,7 @@
 															<option ${t.taskType=='3'?'selected="selected"':'' } value="3">设计</option>
 															<option ${t.taskType=='4'?'selected="selected"':'' } value="4">前端</option>
 															<option ${t.taskType=='5'?'selected="selected"':'' } value="5">维护</option>
-															<option ${t.taskType=='6'?'selected="selected"':'' } value="6">需求</option>
+															<option ${t.taskType=='6'?'selected="selected"':'' } value="6">模块</option>
 															<option ${t.taskType=='7'?'selected="selected"':'' } value="7">研究</option>
 															<option ${t.taskType=='8'?'selected="selected"':'' } value="8">讨论</option>
 															<option ${t.taskType=='9'?'selected="selected"':'' } value="9">运维</option>

@@ -164,7 +164,7 @@ public class TestMilepostController extends GiantBaseController {
 		String sqls = "SELECT id,project_name FROM `task_project`";
 		taskNeedList = baseService.getMapListBySQL(sql, null);
 		taskProjectList = baseService.getMapListBySQL(sqls, null);
-		model.addAttribute("taskNeed", taskNeedList);//查询出来的需求id和名称
+		model.addAttribute("taskNeed", taskNeedList);//查询出来的模块id和名称
 		model.addAttribute("taskProjectList", taskProjectList);//查询出来的项目id和名称
 		publicResult(model);
 		model.addAttribute("s", "manage");//子模块
@@ -266,7 +266,7 @@ public class TestMilepostController extends GiantBaseController {
 	 */
 	@RequestMapping("/todelete")
 	public String todelete(@RequestParam Map<String, String> mvm, Model model) {
-		        //添加需求页面的项目列表
+		        //添加模块页面的项目列表
 				if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 					//获取对象
 					MilepostManage t = (MilepostManage) testMilepostService.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -281,7 +281,7 @@ public class TestMilepostController extends GiantBaseController {
 	@RequestMapping("/delete")
 	public void delete(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 	if(GiantUtil.intOf(mvm.get("mi_id"), 0) != 0){
 			//获取对象
 			MilepostManage t = (MilepostManage) testMilepostService.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("mi_id"), 0));
@@ -494,7 +494,7 @@ public class TestMilepostController extends GiantBaseController {
 	 */
 	public void showTreeMsg(Model model, Integer needId, Integer projectId) {
 		int applyType = 0;
-		if (needId != null && needId > 0) {//需求（模块）：获取模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），所有任务下的测试用例；【获取已完成的任务、已验收的模块】
+		if (needId != null && needId > 0) {//模块（模块）：获取模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），所有任务下的测试用例；【获取已完成的任务、已验收的模块】
 			applyType = 2;
 			TaskNeed n = (TaskNeed) testMilepostService.getEntityByPrimaryKey(new TaskNeed(), needId);
 			if(n != null && n.getState() == 4) {

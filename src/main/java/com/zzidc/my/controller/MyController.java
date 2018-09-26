@@ -71,7 +71,7 @@ public class MyController extends GiantBaseController {
 		Map<String, Object> bugCount = myService.getBugCount();
 		//所有测试相关统计
 		Map<String, Object> testCount = myService.getTestCount();
-		//所有需求相关统计
+		//所有模块相关统计
 		Map<String, Object> needCount = myService.getNeedCount();
 
 		model.addAttribute("taskCount", taskCount);
@@ -203,7 +203,7 @@ public class MyController extends GiantBaseController {
 	}
 
 	/**
-	 * 我的需求
+	 * 我的模块
 	 */
 	@RequestMapping("/need")
 	public String need(@RequestParam Map<String, String> mvm, Model model) {

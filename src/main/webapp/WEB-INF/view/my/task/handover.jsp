@@ -52,7 +52,7 @@
 										<c:if test="${t.taskType=='3'}">设计</c:if>
 										<c:if test="${t.taskType=='4'}">前端</c:if>
 										<c:if test="${t.taskType=='5'}">维护</c:if>
-										<c:if test="${t.taskType=='6'}">需求</c:if>
+										<c:if test="${t.taskType=='6'}">模块</c:if>
 										<c:if test="${t.taskType=='7'}">研究</c:if>
 										<c:if test="${t.taskType=='8'}">讨论</c:if>
 										<c:if test="${t.taskType=='9'}">运维</c:if>
@@ -137,7 +137,7 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="my/task" class="btn">返回任务列表</a>
-								<a href="my/need" class="btn">返回需求列表</a>
+								<a href="my/need" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

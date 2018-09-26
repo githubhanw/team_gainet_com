@@ -36,7 +36,7 @@ public class MyService extends GiantBaseService{
 	}
 
 	/**
-	 * 通过子查询的方式，获取所有需求相关统计数据
+	 * 通过子查询的方式，获取所有模块相关统计数据
 	 */
 	public Map<String, Object> getNeedCount(){
 		String sql = "SELECT count(0) 'count',SUM(IF(state=3,1,0)) 'checking'," + 
@@ -51,7 +51,7 @@ public class MyService extends GiantBaseService{
 	}
 	
 	/**
-	 * 获取待我验收需求
+	 * 获取待我验收模块
 	 */
 	public Map<String, Object> getCheckedMineNeed(){
 		String sql = "SELECT COUNT(0) 'count' FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE tn.state==3 AND tn.member_id="+super.getMemberId();

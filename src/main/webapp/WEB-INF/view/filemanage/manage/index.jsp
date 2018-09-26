@@ -140,7 +140,7 @@
 											</td>
 											<td class="c-name text-left">
 											<c:if test="${fil.file_classification == 0}">项目</c:if>
-											<c:if test="${fil.file_classification == 1}">需求</c:if>
+											<c:if test="${fil.file_classification == 1}">模块</c:if>
 											</td>
 											<!--<td class="c-id cell-id text-center">
 											     <a href="filemanage/manage/mydetail?id=${fil.id}" title="${fil.gl_name}">

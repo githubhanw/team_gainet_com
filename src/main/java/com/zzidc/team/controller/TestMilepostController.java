@@ -454,7 +454,7 @@ public class TestMilepostController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 	/**
-	 * 跳转编写里程碑报告页面
+	 * 跳转验收里程碑报告页面
 	 */
 	@RequestMapping("/tovailreport")
 	public String tovailreport(@RequestParam Map<String, String> mvm, Model model) {
@@ -469,7 +469,7 @@ public class TestMilepostController extends GiantBaseController {
 		return "test/milepost/vailreport";
 	}
 	/**
-	 * 提交里程碑报告
+	 * 验收里程碑报告
 	 */
 	@RequestMapping("/vailreport")
 	public void vailreport(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {

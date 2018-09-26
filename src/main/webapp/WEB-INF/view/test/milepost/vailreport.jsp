@@ -30,7 +30,7 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>编写里程碑报告</h2>
+							<h2>验收里程碑报告</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>

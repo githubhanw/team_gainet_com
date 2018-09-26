@@ -310,7 +310,7 @@ public class TestMilepostService extends GiantBaseService{
 		boolean b =  super.dao.saveUpdateOrDelete(m, null);
 		//修改项目状态
         TaskProject tp=(TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(m.getProjectId(), 0));
-      	tp.setState((short) 12);
+      	tp.setState((short) 13);
       	if(b){
       	c=super.dao.saveUpdateOrDelete(tp, null);
       	}

@@ -12,9 +12,9 @@
 			<ul class="nav nav-default">
 				<li ${m=='my' && s!='task' && s!='need'?'class="active"':'' } data-id="my"><a href="my"><span>我的地盘</span></a></li>
 				<li ${(m=='my' && s=='task')?'class="active"':'' } data-id="my"><a href="my/task"><span>我的任务</span></a></li>
-				<li ${(m=='my' && s=='need')?'class="active"':'' } data-id="my"><a href="my/need"><span>我的需求</span></a></li>
+				<li ${(m=='my' && s=='need')?'class="active"':'' } data-id="my"><a href="my/need"><span>我的模块</span></a></li>
 				<li class="divider"></li>
-				<li ${m=='project' || m=='need' || m=='task' || m=='release' || m=='meeting' || m=='apply'?'class="active"':'' } data-id="my"><a href="team/task/index"><span>管理中心</span></a></li> 
+				<li ${m=='project' || m=='product' || m=='need' || m=='task' || m=='apply'?'class="active"':'' } data-id="my"><a href="team/task/index"><span>管理中心</span></a></li> 
 				<li class="divider"></li>
 				<li ${m=='pd'?'class="active"':'' } data-id="doc"><a href="declaration/project/index" ${m=='pd'?'class="active"':'' }>科技申报</a></li>
 				<li class="divider"></li>
@@ -48,7 +48,7 @@
 							<li><a href="my/task" data-width="600">我的任务</a></li>
 							<li><a href="my/bug" data-width="600">我的Bug</a></li>
 							<li><a href="my/test" data-width="600">我的测试</a></li>
-							<li><a href="my/need" data-width="600">我的需求</a></li>
+							<li><a href="my/need" data-width="600">我的模块</a></li>
 							<li><a href="my/auth" data-width="600">我的权限</a></li>
 							<li><a href="my/weixin" data-width="600">绑定微信</a></li>
 						</ul>

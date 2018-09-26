@@ -19,6 +19,7 @@ import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.service.FilemanageService;
 import com.zzidc.team.service.TeamNeedService;
@@ -26,7 +27,7 @@ import com.zzidc.team.service.TeamNeedService;
 import net.sf.json.JSONObject;
 
 /**
- * 需求管理
+ * 模块管理
  * 
  */
 @Controller
@@ -48,7 +49,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 	
 	/**
-	 * 需求列表
+	 * 模块列表
 	 */
 	@RequestMapping("/index")
 	public String list(@RequestParam Map<String, String> mvm, Model model) {
@@ -76,7 +77,7 @@ public class TeamNeedController extends GiantBaseController {
 		pageList = teamNeedService.getPageList(conditionPage);
 		requestURL = "team/need/index";
 		pageList.setDesAction(requestURL);
-		//所有和未关闭的情况下获取子需求
+		//所有和未关闭的情况下获取子模块
 		if("20".equals(mvm.get("type")) || "21".equals(mvm.get("type"))) {
 			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
 		}
@@ -89,7 +90,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 需求详情
+	 * 模块详情
 	 */
 	@RequestMapping("/detail")
 	public String detail(@RequestParam Map<String, String> mvm, Model model) {
@@ -104,7 +105,7 @@ public class TeamNeedController extends GiantBaseController {
 			//相关任务
 			List<Map<String, Object>> task = teamNeedService.getTaskList(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("task", task);
-			//关联需求
+			//关联模块
 			if(needDetail.get("link") != null) {
 				List<Map<String, Object>> linkNeed = teamNeedService.getLinkNeed(needDetail.get("link").toString());
 				model.addAttribute("linkNeed", linkNeed);
@@ -118,21 +119,28 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转添加需求页面
+	 * 跳转添加模块页面
 	 */
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		String fenlei = "0";//0->项目 1->产品
+		if (!"".equals(mvm.get("fenlei"))) {
+			fenlei = mvm.get("fenlei").toString();
+		}
+		//添加模块页面的项目列表
+		model.addAttribute("fenlei", fenlei);
 		model.addAttribute("project", teamNeedService.getTeamProject());
+		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
 		model.addAttribute("members", teamNeedService.getAllMember());
 		publicResult(model);
 		return "team/need/add";
 	}
 
 	/**
-	 * 添加需求
+	 * 添加模块
 	 */
 	@RequestMapping("/add")
 	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) {
@@ -146,7 +154,7 @@ public class TeamNeedController extends GiantBaseController {
 			return;
         }
 		
-		if(GiantUtil.isEmpty(mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("need_name")) || 
+		if(GiantUtil.isEmpty(mvm.get("project_id")==null?mvm.get("product_id"):mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("need_name")) || 
 				GiantUtil.isEmpty(mvm.get("level")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || 
 				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date")) || 
 				GiantUtil.isEmpty(mvm.get("need_remark")) || GiantUtil.isEmpty(mvm.get("check_remark")) || 
@@ -168,13 +176,56 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
+	
+	/**
+	 * 跳转添加子模块页面
+	 */
+	@RequestMapping("/toAddSon")
+	public String toAddSon(@RequestParam Map<String, String> mvm, Model model) {
+		String fenlei = "0";//0->项目 1->产品
+		if (!"".equals(mvm.get("fenlei"))) {
+			fenlei = mvm.get("fenlei").toString();
+		}
+		//添加模块页面的项目列表
+		model.addAttribute("need_id",GiantUtil.intOf(mvm.get("need_id"), 0));
+		model.addAttribute("fenlei", fenlei);
+		model.addAttribute("project", teamNeedService.getTeamProject());
+		model.addAttribute("product", teamNeedService.getTeamProduct());
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
+		model.addAttribute("members", teamNeedService.getAllMember());
+		publicResult(model);
+		return "team/need/addson";
+	}
 
 	/**
-	 * 跳转批量添加、分解需求页面
+	 * [项目]跳转添加选中项目的模块列表页面
+	 */
+	@RequestMapping("/toEachAdd")
+	public String toEachAdd(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		if(conditionPage == null){
+			conditionPage = new GiantPager();
+		}
+		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
+		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
+		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
+		pageList = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("project", teamNeedService.getTeamProjectByID(GiantUtil.intOf(mvm.get("project_id"), 0)));
+		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("pageList", pageList);
+		pageList.setDesAction(requestURL);
+		publicResult(model);
+		return "team/need/eachAdd";
+	}
+
+	/**
+	 * 跳转批量添加、分解模块页面
 	 */
 	@RequestMapping("/toBatchAdd")
 	public String toBatchAdd(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		model.addAttribute("project", teamNeedService.getTeamProject());
 		model.addAttribute("members", teamNeedService.getAllMember());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
@@ -188,7 +239,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 批量添加、分解需求
+	 * 批量添加、分解模块
 	 */
 	@RequestMapping("/batchAdd")
 	public void batchAdd(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -213,11 +264,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转编辑需求页面
+	 * 跳转编辑模块页面
 	 */
 	@RequestMapping("/toEdit")
 	public String toEdit(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		model.addAttribute("project", teamNeedService.getTeamProject());
 		model.addAttribute("members", teamNeedService.getAllMember());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
@@ -234,7 +285,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 编辑需求
+	 * 编辑模块
 	 */
 	@RequestMapping("/edit")
 	public void edit(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -263,7 +314,7 @@ public class TeamNeedController extends GiantBaseController {
 	 */
 	@RequestMapping("/toAssign")
 	public String toAssign(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		model.addAttribute("members", teamNeedService.getAllMember());
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
@@ -298,11 +349,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转变更需求页面
+	 * 跳转变更模块页面
 	 */
 	@RequestMapping("/toChange")
 	public String toChange(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -316,7 +367,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 变更需求
+	 * 变更模块
 	 */
 	@RequestMapping("/change")
 	public void change(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) {
@@ -368,11 +419,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转验收需求页面
+	 * 跳转验收模块页面
 	 */
 	@RequestMapping("/toCheck")
 	public String toCheck(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -385,11 +436,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 需求验收
+	 * 模块验收
 	 */
 	@RequestMapping("/check")
 	public void check(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) {
-		// TODO 是否需要对需求的状态进行判断，例如：只有测试完成的需求才能进行验收操作，获取再toCheck中进行验证
+		// TODO 是否需要对模块的状态进行判断，例如：只有测试完成的模块才能进行验收操作，获取再toCheck中进行验证
 		// mvm eg :{r=0.29616789999172366, stage=y, comment=, id=25}
 		JSONObject json=new JSONObject();
 		int id=baseService.getMemberId();	//登录id	        
@@ -435,11 +486,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转关联需求页面
+	 * 跳转关联模块页面
 	 */
 	@RequestMapping("/toRelevance")
 	public String toRelevance(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -451,11 +502,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 需求关联
+	 * 模块关联
 	 */
 	@RequestMapping("/relevance")
 	public void relevance(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
-		// TODO 是否需要对需求的状态进行判断，例如：只有测试完成的需求才能进行验收操作，获取再toCheck中进行验证
+		// TODO 是否需要对模块的状态进行判断，例如：只有测试完成的模块才能进行验收操作，获取再toCheck中进行验证
 		// mvm eg :{r=0.4018686015158184, id=25, needs=1,3,5, comment=dsdsdsd}
 		JSONObject json=new JSONObject();
 		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("needs"))){
@@ -480,7 +531,7 @@ public class TeamNeedController extends GiantBaseController {
 	 */
 	@RequestMapping("/toRelate")
 	public String toRelate(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -492,7 +543,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 需求月会议
+	 * 模块月会议
 	 */
 	@RequestMapping("/relate")
 	public void relate(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -515,11 +566,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转关闭需求页面
+	 * 跳转关闭模块页面
 	 */
 	@RequestMapping("/toClose")
 	public String toClose(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -530,7 +581,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 关闭需求
+	 * 关闭模块
 	 */
 	@RequestMapping("/close")
 	public void close(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -553,11 +604,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转激活需求页面
+	 * 跳转激活模块页面
 	 */
 	@RequestMapping("/toActive")
 	public String toActive(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -568,7 +619,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 激活需求
+	 * 激活模块
 	 */
 	@RequestMapping("/active")
 	public void active(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -591,7 +642,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 删除需求
+	 * 删除模块
 	 */
 	@RequestMapping("/del")
 	public void del(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
@@ -616,11 +667,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转接收需求页面
+	 * 跳转接收模块页面
 	 */
 	@RequestMapping("/toOpen")
 	public String toOpen(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -631,11 +682,11 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 需求接收
+	 * 模块接收
 	 */
 	@RequestMapping("/open")
 	public void open(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
-		// TODO 是否需要对需求的状态进行判断，例如：只有测试完成的需求才能进行验收操作，获取再toCheck中进行验证
+		// TODO 是否需要对模块的状态进行判断，例如：只有测试完成的模块才能进行验收操作，获取再toCheck中进行验证
 		// mvm eg :{r=0.29616789999172366, stage=y, comment=, id=25}
 		JSONObject json=new JSONObject();
 		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("plan_end_date"))){
@@ -660,7 +711,7 @@ public class TeamNeedController extends GiantBaseController {
 	 */
 	@RequestMapping("/toSubmitCheck")
 	public String toSubmitCheck(@RequestParam Map<String, String> mvm, Model model) {
-		//添加需求页面的项目列表
+		//添加模块页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -676,7 +727,7 @@ public class TeamNeedController extends GiantBaseController {
 	 */
 	@RequestMapping("/submitCheck")
 	public void submitCheck(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
-		// TODO 是否需要对需求的状态进行判断，例如：只有测试完成的需求才能进行验收操作，获取再toCheck中进行验证
+		// TODO 是否需要对模块的状态进行判断，例如：只有测试完成的模块才能进行验收操作，获取再toCheck中进行验证
 		// mvm eg :{r=0.29616789999172366, stage=y, comment=, id=25}
 		JSONObject json=new JSONObject();
 		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("checked_id"))){

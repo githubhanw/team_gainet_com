@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * 里程碑关联需求表
+ * 里程碑关联模块表
  * @author chenmenghao
  *
  */

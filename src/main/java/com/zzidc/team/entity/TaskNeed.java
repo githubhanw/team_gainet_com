@@ -22,6 +22,7 @@ public class TaskNeed implements java.io.Serializable {
 
 	private Integer id;
 	private Integer projectId;
+	private Integer productId;
 	private String needName;
 	private Integer memberId;
 	private String memberName;
@@ -74,7 +75,7 @@ public class TaskNeed implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TaskNeed(Integer projectId, String needName, Integer memberId,
+	public TaskNeed(Integer projectId, Integer productId, String needName, Integer memberId,
 			String memberName, Integer createId, String createName,
 			Integer srcId, String srcRemark, Integer level, Date startDate,
 			Date endDate, Date planEndDate, String needRemark,
@@ -90,6 +91,7 @@ public class TaskNeed implements java.io.Serializable {
 			Timestamp finishedTime, Short overdue, Timestamp realStartDate,
 			Timestamp realEndDate, Short changedStatus) {
 		this.projectId = projectId;
+		this.productId = productId;
 		this.needName = needName;
 		this.memberId = memberId;
 		this.memberName = memberName;
@@ -156,6 +158,15 @@ public class TaskNeed implements java.io.Serializable {
 
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
+	}
+
+	@Column(name = "product_id")
+	public Integer getProductId() {
+		return this.productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
 	@Column(name = "need_name", length = 64)

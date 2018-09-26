@@ -84,7 +84,7 @@ public class TeamProjectController extends GiantBaseController {
 	/**
 	 * 项目详情
 	 */
-	@RequestMapping("/pro_detail")
+	@RequestMapping("/detail")
 	public String pro_detail(@RequestParam Map<String, String> mvm, Model model) {
 		//添加项目页面的项目列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
@@ -98,34 +98,9 @@ public class TeamProjectController extends GiantBaseController {
 			model.addAttribute("needTask", needTask);
 		}
 		publicResult(model);
-		return "team/project/pro_detail";
-	}
-	
-	/**
-	 * 科技申报-项目详情
-	 */
-	@RequestMapping("/detail")
-	public String detail(@RequestParam Map<String, String> mvm, Model model) {
-		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
-			//获取成果对象
-			Map<String, Object> projectDetail = teamProjectService.getProjectDetail(GiantUtil.intOf(mvm.get("id"), 0));
-			if(projectDetail == null) {
-				return "comm/notexists";
-			}
-			model.addAttribute("projectM", projectDetail);
-
-			//获取项目成果
-			List<Map<String, Object>> pr = teamProjectService.getProjectResult(GiantUtil.intOf(mvm.get("id"), 0));
-			model.addAttribute("pr", pr);
-			
-			//获取项目文档
-			List<Map<String, Object>> doc = teamProjectService.getProjectDoc(GiantUtil.intOf(mvm.get("id"), 0));
-			model.addAttribute("doc", doc);
-		}
-		publicResult(model);
 		return "team/project/detail";
 	}
-	
+
 	/**
 	 * 跳转添加项目页面
 	 */

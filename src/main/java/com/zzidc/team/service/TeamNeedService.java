@@ -35,6 +35,7 @@ import net.sf.json.JSONObject;
 public class TeamNeedService extends GiantBaseService{
 	@Autowired
 	private FilemanageService filemanageService;
+	
 	public GiantPager getPageList(GiantPager conditionPage) {
 		if (conditionPage == null) {
 			conditionPage = new GiantPager();
@@ -46,8 +47,12 @@ public class TeamNeedService extends GiantBaseService{
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT tn.*,tp.project_name,m.name meeting_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id LEFT JOIN month_meeting m ON tn.meeting_id=m.id WHERE 1=1 ";
-		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 ";
+		String sql = "SELECT tn.*,tp.project_name,tpd.product_name,m.name meeting_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,(SELECT COUNT(0) "
+				+ "FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
+				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id "
+				+ "LEFT JOIN task_product tpd ON tn.product_id=tpd.id "
+				+ "LEFT JOIN month_meeting m ON tn.meeting_id=m.id WHERE 1=1 ";
+		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id LEFT JOIN task_product tpd ON tn.product_id=tpd.id WHERE 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
@@ -67,12 +72,12 @@ public class TeamNeedService extends GiantBaseService{
 				temp = temp.trim();
 				String needType = "";
 				if (!StringUtils.isEmpty(needType = conditionPage.getQueryCondition().get("needType"))) {
-					if ("1".equals(needType)) {//需求名称 / ID
+					if ("1".equals(needType)) {//模块名称 / ID
 						sql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
 						countSql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
 						conditionMap.put("id", temp);
 						conditionMap.put("name", "%" + temp + "%");
-					} else if("2".equals(needType)) {//需求描述
+					} else if("2".equals(needType)) {//模块描述
 						sql += "AND tn.need_remark LIKE :search ";
 						countSql += "AND tn.need_remark LIKE :search ";
 						conditionMap.put("search", "%" + temp + "%");
@@ -89,7 +94,7 @@ public class TeamNeedService extends GiantBaseService{
 					} else if("2".equals(memberType)) {//关闭人
 						sql += "AND tn.closed_name=:memberSearch ";
 						countSql += "AND tn.closed_name=:memberSearch ";
-					} else if("3".equals(memberType)) {//需求方
+					} else if("3".equals(memberType)) {//模块方
 						sql += "AND tn.member_name=:memberSearch ";
 						countSql += "AND tn.member_name=:memberSearch ";
 					}
@@ -111,15 +116,15 @@ public class TeamNeedService extends GiantBaseService{
 			String temp2 = "";
 			if (!StringUtils.isEmpty(temp2 = conditionPage.getQueryCondition().get("meeting_id"))) {
 				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
-					if ("301".equals(temp)) {//月会议对应的需求总数
+					if ("301".equals(temp)) {//月会议对应的模块总数
 						sql += "AND tn.meeting_id=" + temp2 + " ";
 						countSql += "AND tn.meeting_id=" + temp2 + " ";
 					}
-					if ("302".equals(temp)) {//月会议对应的已验收需求总数
+					if ("302".equals(temp)) {//月会议对应的已验收模块总数
 						sql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 4 ";
 						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 4 ";
 					}
-					if ("303".equals(temp)) {//月会议对应的待验收需求总数
+					if ("303".equals(temp)) {//月会议对应的待验收模块总数
 						sql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 3 ";
 						countSql += "AND tn.meeting_id=" + temp2 + " AND tn.state = 3 ";
 					}
@@ -179,7 +184,7 @@ public class TeamNeedService extends GiantBaseService{
             22已变更，23已逾期，12高级搜索*/
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
 				
-				//管理中心中的需求列表
+				//管理中心中的模块列表
 				if ("0".equals(temp)) {//已删除
 					sql += "AND tn.state=0 ";
 					countSql += "AND tn.state=0 ";
@@ -225,7 +230,7 @@ public class TeamNeedService extends GiantBaseService{
 				}
 				
 				
-				//我的地盘中的我的需求
+				//我的地盘中的我的模块
 				else if ("6".equals(temp)) {//由我创建
 					sql += "AND tn.create_id=" + memberId;
 					countSql += "AND tn.create_id=" + memberId;
@@ -238,13 +243,13 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("10".equals(temp)) {//由我验收
 					sql += "AND tn.checked_id=" + memberId;
 					countSql += "AND tn.checked_id=" + memberId;
-				} else if ("11".equals(temp)) {//需求方是我
+				} else if ("11".equals(temp)) {//模块方是我
 					sql += "AND tn.member_id=" + memberId;
 					countSql += "AND tn.member_id=" + memberId;
 				} else if ("14".equals(temp)) {//待我验收
 					sql += "AND tn.state=3 AND tn.member_id=" + memberId;
 					countSql += "AND tn.state=3 AND tn.member_id=" + memberId;
-				} else if ("13".equals(temp)) {//指派给我，且待验收需求
+				} else if ("13".equals(temp)) {//指派给我，且待验收模块
 					sql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
 					countSql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
 				}
@@ -262,7 +267,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 获取子需求
+	 * 获取子模块
 	 * @return
 	 */
 	public List<Map<String, Object>> getSubNeedList(List<?> needList, String type){
@@ -287,8 +292,21 @@ public class TeamNeedService extends GiantBaseService{
 		return subNeedList;
 	}
 
+	public GiantPager getPageListThisProject(int project_id) {
+		GiantPager conditionPage = new GiantPager();
+		conditionPage = this.filterStr(conditionPage);
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		String sql = "SELECT tn.*,tp.project_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
+				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
+				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id +" ORDER BY tn.update_time DESC";
+		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id LEFT JOIN task_product tpd ON tn.product_id=tpd.id  WHERE 1=1 AND tp.id="+project_id;
+		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
+		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
+		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
+		return resultPage;
+	}
 	/**
-	 * 获取需求详情
+	 * 获取模块详情
 	 * @return
 	 */
 	public Map<String, Object> getNeedDetail(Integer needId){
@@ -301,7 +319,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 需求详情页面获取子需求
+	 * 模块详情页面获取子模块
 	 * @return
 	 */
 	public List<Map<String, Object>> getSubNeedList(Integer parentNeedId){
@@ -312,7 +330,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 需求详情页面获取相关任务
+	 * 模块详情页面获取相关任务
 	 * @return
 	 */
 	public List<Map<String, Object>> getTaskList(Integer parentNeedId){
@@ -323,7 +341,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 需求详情页面获取关联需求
+	 * 模块详情页面获取关联模块
 	 * @return
 	 */
 	public List<Map<String, Object>> getLinkNeed(String linkNeed){
@@ -361,9 +379,27 @@ public class TeamNeedService extends GiantBaseService{
 		String sql = "select id,project_name from task_project where state>0 order by id desc";
 		return super.getMapListBySQL(sql, null);
 	}
+	
+	/**
+	 * 根据ID获取项目名称
+	 * @return
+	 */
+	public Map<String, Object> getTeamProjectByID(int project_id){
+		String sql = "select id,project_name from task_project where id="+project_id;
+		return super.getMapListBySQL(sql, null).get(0);
+	}
+	
+	/**
+	 * 获取产品信息
+	 * @return
+	 */
+	public List<Map<String, Object>> getTeamProduct(){
+		String sql = "select id,product_name from task_product where state>0 order by id desc";
+		return super.getMapListBySQL(sql, null);
+	}
 
 	/**
-	 * 获取需求来源
+	 * 获取模块来源
 	 * @return
 	 */
 	public List<Map<String, Object>> getNeedSrc(){
@@ -372,16 +408,17 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 添加需求信息
+	 * 添加模块信息
 	 */
 	public boolean add(Map<String, String> mvm,int id,String name,MultipartFile[] file) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		TaskNeed need = new TaskNeed();
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
+		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());
-		//需求方
+		//模块方
 		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
 		need.setMemberId(member == null ? 0 : member.getId());
 		need.setMemberName(member == null ? "" : member.getName());
@@ -452,7 +489,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 批量添加、分解需求信息
+	 * 批量添加、分解模块信息
 	 */
 	public Integer batchAdd(Map<String, String> mvm) {
 		TaskNeed need = new TaskNeed();
@@ -470,7 +507,7 @@ public class TeamNeedService extends GiantBaseService{
 				super.dao.saveUpdateOrDelete(parentNeed, null);
 			}
 		}
-		//需求方
+		//模块方
 		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
 		need.setMemberId(member == null ? 0 : member.getId());
 		need.setMemberName(member == null ? "" : member.getName());
@@ -534,7 +571,7 @@ public class TeamNeedService extends GiantBaseService{
 		TaskNeed oldNeed = new TaskNeed();
 		BeanUtils.copyProperties(need, oldNeed);
 		
-		//需求方
+		//模块方
 		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
 		need.setMemberId(member == null ? 0 : member.getId());
 		need.setMemberName(member == null ? "" : member.getName());
@@ -607,7 +644,7 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * [是否能进行指派操作] <br>
 	 * <pre>
-	 * 只有需求方和创建者能指派
+	 * 只有模块方和创建者能指派
 	 * </pre>
 	 * @author likai <br>
 	 * @date 2018年8月13日 下午5:16:50 <br>
@@ -621,7 +658,7 @@ public class TeamNeedService extends GiantBaseService{
 			TaskNeed need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			// 当前用户是否为创建者
 			b = this.isCurrentMember(need.getCreateId());
-			// 当前用户是否为需求方
+			// 当前用户是否为模块方
 			b = b && this.isCurrentMember(need.getMemberId());
 			if(b) {
 				// 是否已经指派
@@ -665,7 +702,7 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * [是否能进行指派操作] <br>
 	 * <pre>
-	 * 只有需求方和创建者能指派
+	 * 只有模块方和创建者能指派
 	 * </pre>
 	 * @author likai <br>
 	 * @date 2018年8月13日 下午5:16:50 <br>
@@ -680,7 +717,7 @@ public class TeamNeedService extends GiantBaseService{
 //			// 当前用户是否为创建者
 //			b = this.isCurrentMember(need.getCreateId());
 			
-			// 当前用户是否为需求方
+			// 当前用户是否为模块方
 			b = this.isCurrentMember(need.getMemberId());
 			return b;
 		}
@@ -688,7 +725,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 变更需求信息
+	 * 变更模块信息
 	 */
 	public boolean change(Map<String, String> mvm) {
 		TaskNeed need = null;
@@ -729,7 +766,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 关闭需求
+	 * 关闭模块
 	 */
 	public boolean close(Map<String, String> mvm) {
 		TaskNeed need = null;
@@ -757,7 +794,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 激活需求
+	 * 激活模块
 	 */
 	public boolean active(Map<String, String> mvm) {
 		TaskNeed need = null;
@@ -820,11 +857,11 @@ public class TeamNeedService extends GiantBaseService{
 	}
 	
 	/**
-	 * [判断需求是否能进行关联操作] <br>
+	 * [判断模块是否能进行关联操作] <br>
 	 * 
 	 * @author likai <br>
 	 * @date 2018年7月26日 下午9:10:04 <br>
-	 * @param id 需求ID
+	 * @param id 模块ID
 	 * @return <br>
 	 */
 	public boolean isCanRelevance(int id) {
@@ -838,17 +875,17 @@ public class TeamNeedService extends GiantBaseService{
 	}
 	
 	/**
-	 * [获取当前需求可关联的需求列表] <br>
+	 * [获取当前模块可关联的模块列表] <br>
 	 * <pre>
 	 *  符合条件：
-	 *  1. 不是子需求的， 即parent_id 为 0；
-	 *  2. 没有子需求的需求，即id 不在 parent_id中的，除了当前需求id；
+	 *  1. 不是子模块的， 即parent_id 为 0；
+	 *  2. 没有子模块的模块，即id 不在 parent_id中的，除了当前模块id；
 	 *  3. state不为删除的，及 state != 0的；
 	 * </pre>
 	 * 
 	 * @author likai <br>
 	 * @date 2018年7月26日 下午9:10:04 <br>
-	 * @param id 需求ID
+	 * @param id 模块ID
 	 * @return <br>
 	 */
 	public List<Map<String, Object>> getCanRelevanceNeeds(int id) {
@@ -939,7 +976,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 开始需求
+	 * 开始模块
 	 */
 	public boolean open(Map<String, String> mvm) {
 		TaskNeed n = null;

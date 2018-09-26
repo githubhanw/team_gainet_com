@@ -146,7 +146,7 @@ public class FilemanageService extends GiantBaseService{
 		return b;
 	}
 	/**
-	 * 创建需求创建文档(我的、管理中心)
+	 * 创建模块创建文档(我的、管理中心)
 	 */
 	public boolean addxq(Map<String, String> mvm,int id,String name,String gs,String url,String fileRealname,int needId) {
 		Date date =new Date();
@@ -155,7 +155,7 @@ public class FilemanageService extends GiantBaseService{
 		FileManage fm =new FileManage();
 		fm.setGlId(needId);
 		fm.setFileClassification("1");
-		fm.setFileName("需求相关文档（"+mvm.get("need_name")+"）");
+		fm.setFileName("模块相关文档（"+mvm.get("need_name")+"）");
 		fm.setFileText("");
 		fm.setCreateId(id+"");
 		fm.setAddName(name);
@@ -170,7 +170,7 @@ public class FilemanageService extends GiantBaseService{
 		return b;
 	}
 	/**
-	 * 变更需求创建文档(我的、 管理中心)
+	 * 变更模块创建文档(我的、 管理中心)
 	 */
 	public boolean changexq(Map<String, String> mvm,int id,String name,String gs,String url,String fileRealname,String needid,String needname) {
 		Date date =new Date();
@@ -179,7 +179,7 @@ public class FilemanageService extends GiantBaseService{
 		FileManage fm =new FileManage();
 		fm.setGlId(Integer.parseInt(needid));
 		fm.setFileClassification("1");
-		fm.setFileName("需求变更文档（"+needname+"）");
+		fm.setFileName("模块变更文档（"+needname+"）");
 		fm.setFileText("");
 		fm.setCreateId(id+"");
 		fm.setAddName(name);
@@ -194,7 +194,7 @@ public class FilemanageService extends GiantBaseService{
 		return b;
 	}
 	/**
-	 * 验收需求创建文档(我的、管理中心)
+	 * 验收模块创建文档(我的、管理中心)
 	 */
 	public boolean checkxq(Map<String, String> mvm,int id,String name,String gs,String url,String fileRealname,String needid,String needname) {
 		Date date =new Date();
@@ -203,7 +203,7 @@ public class FilemanageService extends GiantBaseService{
 		FileManage fm =new FileManage();
 		fm.setGlId(Integer.parseInt(needid));
 		fm.setFileClassification("1");
-		fm.setFileName("需求验收文档（"+needname+"）");
+		fm.setFileName("模块验收文档（"+needname+"）");
 		fm.setFileText("");
 		fm.setCreateId(id+"");
 		fm.setAddName(name);
@@ -249,6 +249,38 @@ public class FilemanageService extends GiantBaseService{
 		fm.setFileText(mvm.get("file_text"));
 		fm.setEditTime(datetime);
 		fm.setFileRemarks(mvm.get("file_remarks"));
+		boolean b =  super.dao.saveUpdateOrDelete(fm, null);
+		return b;
+	}
+	
+	/**
+	 * 创建产品创建文档
+	 */
+	public boolean addcp(Map<String, String> mvm,int id,String name,String gs,String url,String fileRealname,int pid,String i) {
+		Date date =new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String createTime = sdf.format(date);
+		FileManage fm =new FileManage();
+		fm.setGlId(pid);
+		fm.setFileClassification("2");
+		if(i.equals("2")){
+			fm.setFileName("产品立项书（"+mvm.get("product_name")+"）");
+		}else if(i.equals("3")){
+			fm.setFileName("工作量评估报告（"+mvm.get("product_name")+"）");
+		}else{
+			fm.setFileName("产品预算费用表（"+mvm.get("product_name")+"）");
+		}
+		
+		fm.setFileText("");
+		fm.setCreateId(id+"");
+		fm.setAddName(name);
+		fm.setCreateTime(createTime);
+		fm.setEditTime(createTime);
+		fm.setFileFormat(gs);
+		fm.setFileUrl(url);
+		fm.setFileRealname(fileRealname);
+		fm.setFileRemarks("");
+		fm.setAccessControl("1");
 		boolean b =  super.dao.saveUpdateOrDelete(fm, null);
 		return b;
 	}

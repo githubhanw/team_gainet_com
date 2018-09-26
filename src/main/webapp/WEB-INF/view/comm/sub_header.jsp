@@ -8,25 +8,24 @@
 				<li class="dropdown dropdown-hover ${m=='my' && s=='task'?'active':'' }"><a href="my/task">我的任务</a></li>
 				<li class="dropdown dropdown-hover ${m=='my' && s=='bug'?'active':'' }"><a href="my/bug">我的Bug</a></li>
 				<li class="dropdown dropdown-hover ${m=='my' && s=='test'?'active':'' }"><a href="my/test">我的测试</a></li>
-				<li class="dropdown dropdown-hover ${m=='my' && s=='need'?'active':'' }"><a href="my/need">我的需求</a></li>
+				<li class="dropdown dropdown-hover ${m=='my' && s=='need'?'active':'' }"><a href="my/need">我的模块</a></li>
 				<li class="dropdown dropdown-hover ${m=='my' && s=='auth'?'active':'' }"><a href="my/auth">我的权限</a></li>
 			</ul>
 		</nav>
-		<nav id="subNavbar" ${m=='project' || m=='need' || m=='task' || m=='apply' || m=='meeting' || m=='release'  || m=='milepost' ?'':'style="display:none"'}>
+		<nav id="subNavbar" ${m=='project' || m=='product' || m=='need' || m=='task' || m=='apply' || m=='meeting'  || m=='milepost' ?'':'style="display:none"'}>
 			<ul class="nav nav-default"
 				style="max-width: 1491px; left: 0px; position: relative;">
-				<li class="dropdown dropdown-hover ${m=='project' && s=='project'?'active':'' }"><a href="team/project/index">项目</a></li>
+				<li class="dropdown dropdown-hover ${m=='project' && s=='project'?'active':'' }"><a href="team/project/index">项目列表</a></li>
+				<li class="dropdown dropdown-hover ${m=='product' && s=='product'?'active':'' }"><a href="team/product/index">产品列表</a></li>
 				<li class="divider"></li>
-				<li class="dropdown dropdown-hover ${m=='need' && s=='need'?'active':'' }"><a href="team/need/index">需求</a></li>
+				<li class="dropdown dropdown-hover ${m=='need' && s=='need'?'active':'' }"><a href="team/need/index">模块列表</a></li>
 				<li class="divider"></li>
-				<li class="dropdown dropdown-hover ${m=='task' && s=='task'?'active':'' }"><a href="team/task/index">任务</a></li>
+				<li class="dropdown dropdown-hover ${m=='task' && s=='task'?'active':'' }"><a href="team/task/index">任务列表</a></li>
 				<li class="divider"></li>
-				<li class="dropdown dropdown-hover ${m=='apply' && s=='apply'?'active':'' }"><a href="test/apply/index">测试单</a></li>
+				<li class="dropdown dropdown-hover ${m=='apply' && s=='apply'?'active':'' }"><a href="test/apply/index">测试单列表</a></li>
 				<li class="divider"></li>
-				<li class="dropdown dropdown-hover ${m=='apply' && s=='bug'?'active':'' }"><a href="test/bug/index">Bug</a></li>
+				<li class="dropdown dropdown-hover ${m=='apply' && s=='bug'?'active':'' }"><a href="test/bug/index">Bug列表</a></li>
 				<li class="dropdown dropdown-hover ${m=='apply' && s=='add'?'active':'' }"><a href="test/bug/toAdd">提Bug</a></li>
-				<li class="divider"></li>
-				<li class="dropdown dropdown-hover ${m=='release' && s=='release'?'active':'' }"><a href="release/index">发布</a></li>
 				<li class="divider"></li>
 				<li class="dropdown dropdown-hover ${m=='meeting' && s=='meeting'?'active':'' }"><a href="month/meeting/index">月会议</a></li>
 				<li class="divider"></li>

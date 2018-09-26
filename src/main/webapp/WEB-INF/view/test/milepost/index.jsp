@@ -57,8 +57,11 @@
 													<option ${prm.milepostState==''?'selected="selected"':'' }value="">里程碑状态</option>
 													<option ${prm.milepostState=='0'?'selected="selected"':'' } value="0">删除</option>
 													<option ${prm.milepostState=='1'?'selected="selected"':'' } value="1">正常</option>
-													<option ${prm.milepostState=='2'?'selected="selected"':'' } value="2">已验收</option>
-												</select>
+													<option ${prm.milepostState=='2'?'selected="selected"':'' } value="2">已确认</option>
+													<option ${prm.milepostState=='3'?'selected="selected"':'' } value="3">已确认原型</option>
+													<option ${prm.milepostState=='4'?'selected="selected"':'' } value="4">已验收</option>
+													<option ${prm.milepostState=='5'?'selected="selected"':'' } value="5">已编写报告</option>
+												    <option ${prm.milepostState=='6'?'selected="selected"':'' } value="6">已验收报告</option>
 											</td>
 											<td class="w-200px">
 												<input type="text" name="startTime" id="startTime" value="${prm.startTime}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">

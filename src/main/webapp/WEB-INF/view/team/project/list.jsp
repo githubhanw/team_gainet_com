@@ -30,15 +30,33 @@
 				<!--mainMenu start-->
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<a href="team/project/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+						<a href="team/project/index?type=5" class="btn btn-link ${prm.type == 5 ? 'btn-active-text':''}">
 							<span class="text">所有</span>
-							<c:if test="${prm.type == 2}">
+							<c:if test="${prm.type == 5}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a href="team/project/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
 							<span class="text">正常</span>
 							<c:if test="${prm.type == 1}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/project/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+							<span class="text">待验收</span>
+							<c:if test="${prm.type == 2}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/project/index?type=3" class="btn btn-link ${prm.type == 3 ? 'btn-active-text':''}">
+							<span class="text">已验收</span>
+							<c:if test="${prm.type == 3}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/project/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
+							<span class="text">已完成</span>
+							<c:if test="${prm.type == 4}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
@@ -129,7 +147,7 @@
 												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="项目名称">
+											<th data-flex="false" data-width="50px" style="width: 130px" class="c-pri " title="项目名称">
 												<a  href="${pageList.desAction}&orderColumn=project_name&orderByValue=${prm.orderColumn=='project_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目名称</a>
 											</th>
@@ -145,11 +163,11 @@
 												<a  href="${pageList.desAction}&orderColumn=member_id&orderByValue=${prm.orderColumn=='member_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目负责人</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="备注">
+											<th data-flex="false" data-width="50px" style="width: 200px" class="c-pri " title="备注">
 												<a  href="${pageList.desAction}&orderColumn=remark&orderByValue=${prm.orderColumn=='remark'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">备注</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:60px" class="c-name text-center" title="状态">
+											<th data-flex="false" data-width="auto" style="width:160px" class="c-name text-center" title="状态">
 												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
@@ -175,7 +193,7 @@
 												<a  href="${pageList.desAction}&orderColumn=taskCount&orderByValue=${prm.orderColumn=='taskCount'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='taskCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务数</a>
 											</th>
-											<th data-flex="false" data-width="160px" style="width:230px" class="c-actions text-center" title="操作">操作</th>
+											<th data-flex="false" data-width="160px" style="width:200px" class="c-actions text-center" title="操作">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -193,7 +211,14 @@
 											<td class="c-pri text-left">${project.member_name}</td>
 											<td class="c-pri text-left">${project.remark}</td>
 											<td class="c-assignedTo has-btn text-center">
-												${project.state == 1 ? '正常' : '已删除'}
+												${project.state == 0 ? '已删除' : project.state == 1 ? '正常' :
+												  project.state == 2 ? '项目待验收' : project.state == 3 ? '项目已验收' :
+												  project.state == 4 ? '项目已完成' : project.state == 5 ? '已拆分模块' :
+												  project.state == 6 ? '里程碑待确认' : project.state == 7 ? '里程碑待验收' :
+												  project.state == 8 ? '里程碑及概要设计已确认' : project.state == 9 ? '待测试' :
+												  project.state == 10 ? '已完成测试' : project.state == 11 ? '里程碑已验收' :
+												  project.state == 12 ? '里程碑报告待验收' : project.state == 13 ? '里程碑报告已验收' :
+												  '未知'}
 											</td>
 											<td class="c-pri text-center" />${project.start_time}</td>
 											<td class="c-pri text-center" />${project.end_time}</td>
@@ -201,12 +226,42 @@
 											<td class="c-pri text-center"><a href="team/need/index?type=96&project_id=${project.id}">${project.needCount}</a></td>
 											<td class="c-pri text-center"><a href="team/task/index?type=96&project_id=${project.id}">${project.taskCount}</a></td>
 											<td class="c-actions text-center">
-												<c:if test="${project.state == '1'}">
-													<a href="team/project/toedit?id=${project.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
-													<a href="javascript:void(0)" onclick="del(${project.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
-													<a href="team/need/toAdd?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i> 提需求</a>
+											    <c:if test="${project.state == '1'}">
+													<a href="team/project/toedit?id=${project.id}" class="btn" title="编辑项目"><i class="icon-common-edit icon-edit"></i></a>
+													<a href="team/need/toAdd?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
+													<a href="team/need/toEachAdd?fenlei=0&project_id=${project.id}" class="btn" title="拆分模块"><i class="icon-task-batchCreate icon-branch"></i></a>
+												    <a href="javascript:void(0)" onclick="del(${project.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>	
 												</c:if>
-												<c:if test="${project.state != '1'}">--</c:if>
+												<c:if test="${project.state == '5' }">
+													<a href="test/milepost/toBatchAdd?project_id=${project.id}" class="btn" title="填写里程碑"><i class="icon-story-change icon-fork"></i></a>
+												</c:if>
+												<c:if test="${project.state == '6' }">
+													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="确认里程碑"><i class="icon-story-change icon-fork"></i></a>
+												</c:if>
+												<c:if test="${project.state == '7' }">
+													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="确认里程碑及概要设计"><i class="icon-story-change icon-fork"></i></a>
+												</c:if>
+												<c:if test="${project.state == '8' }">
+													<a href="test/apply/toAdd?project_id=${project.id}" class="btn" title="提交测试"><i class="icon-story-change icon-fork"></i></a>
+												</c:if>
+												<c:if test="${project.state == '10' }">
+													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="验收里程碑"><i class="icon icon-sitemap"></i></a>
+												</c:if>
+												<c:if test="${project.state == '11' }">
+													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="编写里程碑报告"><i class="icon-task-close icon-off"></i></a>
+												</c:if>
+												<c:if test="${project.state == '12' }">
+													<a href="test/milepost/manage?type=2&project_id=${project.id}" class="btn" title="验收里程碑报告"><i class="icon icon-sitemap"></i></a>
+												</c:if>
+												<c:if test="${project.state == '13' }">
+													<a href="team/project/toEditReport?id=${project.id}" class="btn" title="编写项目验收报告"><i class="icon-testreport-browse icon-flag"></i></a>
+												</c:if>
+												<c:if test="${project.state == '2' }">
+													<a href="team/project/toCheck?id=${project.id}" class="btn" title="验收项目"><i class="icon-story-review icon-glasses"></i></a>
+												</c:if>
+												<c:if test="${project.state == '3' }">
+													<a href="team/project/toFinish?id=${project.id}" class="btn" title="确认项目完成"><i class="icon-task-finish icon-checked"></i></a>
+												</c:if>
 											</td>
 										</tr>
 										</c:forEach>

@@ -60,7 +60,7 @@
 										</select>
 									<td></td>
 								</tr>
-								<tr>
+								<!-- <tr>
 									<th>所属分类</th>
 									<td class="required">
 										<select data-placeholder="选择分类" class="form-control chosen chosen-select" name="type" id="type"  onchange="show_sub(this.options[this.options.selectedIndex].value)">
@@ -68,6 +68,53 @@
 											<option value="0">内部项目</option>
 											<option value="1">外部项目</option>
 										</select>
+									<td></td>
+								</tr> -->
+								<tr>
+									<th>客户名称(公司名称)</th>
+									<td class="required">
+										<input type="text" name="customer_name" id="customer_name" value="${p.customer_name}" class="form-control input-product-title" autocomplete="off">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>需求负责人</th>
+									<td class="required">
+										<select data-placeholder="选择需求负责人" class="form-control chosen-select" name="demand_id" id="demand_id">
+											<option value=""></option>
+											<c:forEach items="${members}" var="member" varStatus="sta">
+												<option value="${member.id}" ${member.id==p.demandId?'selected="selected"':''}>${member.name}(${member.number})</option>
+											</c:forEach>
+										</select>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>项目工期</th>
+									<td class="required">
+										<input type="text" name="time_limit" id="time_limit" value="${p.time_limit}" class="form-control input-product-title" autocomplete="off">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>项目预算</th>
+									<td class="required">
+										<input type="text" name="budget" id="budget" value="${p.budget}" class="form-control input-product-title" autocomplete="off">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>立项评估文件(路径)</th>
+									<td class="required">
+										<input type="text" name="file_url" id="file_url" value="${p.file_url}" class="form-control input-product-title" autocomplete="off">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>工作量评估</th>
+									<td class="required">
+										<input type="text" name="assessment" id="assessment" value="${p.assessment}" class="form-control input-product-title" autocomplete="off">
+									</td>
 									<td></td>
 								</tr>
 								<tr>
@@ -79,6 +126,54 @@
 												<option value="${member.id}" ${member.id==p.memberId?'selected="selected"':''}>${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>项目成员</th>
+									<td class="required">
+										<select data-placeholder="请选择项目成员" class="form-control chosen chosen-select" multiple name="projectMembers" id="projectMembers">
+											<option value=""></option>
+											<c:forEach items="${members}" var="member" varStatus="sta">
+												<c:set var="isSelected" value="0" />
+												<c:forEach items="${listProject}" var="projectMember" varStatus="sta">
+													<c:if test="${member.id == projectMember.memberId }">
+														<option value="${member.id}" selected="selected">${member.name }</option>
+														<c:set var="isSelected" value="1" />
+													</c:if>
+												</c:forEach>
+												<c:if test="${isSelected == 0}">
+													<option value="${member.id}">${member.name }</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>测试人员</th>
+									<td class="required">
+										<select data-placeholder="请选择测试人员" class="form-control chosen chosen-select" multiple name="testMembers" id="testMembers">
+											<option value=""></option>
+											<c:forEach items="${members}" var="member" varStatus="sta">
+												<c:set var="isSelected" value="0" />
+												<c:forEach items="${listTest}" var="testMember" varStatus="sta">
+													<c:if test="${member.id == testMember.memberId }">
+														<option value="${member.id}" selected="selected">${member.name }</option>
+														<c:set var="isSelected" value="1" />
+													</c:if>
+												</c:forEach>
+												<c:if test="${isSelected == 0}">
+													<option value="${member.id}">${member.name }</option>
+												</c:if>
+											</c:forEach>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>是否加班</th>
+									<td class="required">
+										<input type="radio" name="overtime" value="1">是
+										<input type="radio" name="overtime" value="0" checked="checked" style="margin-left: 30px">否
 									</td>
 									<td></td>
 								</tr>
@@ -125,6 +220,14 @@
 										<input type="file" name="file_four" id="file_four">
 									</td>
 									<td></td>
+								</tr>
+								<tr>
+									<th>项目内容</th>
+									<td class="required">
+										<input type="hidden" name="project_content">
+										<textarea id="project_content" name="details" placeholder="" style="width:100%;">${p.project_content}${p.id}</textarea>
+										<div id="project_content" value=""></div>
+									</td>
 								</tr>
 								<tr>
 									<th>备注</th>
@@ -213,9 +316,11 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
+UE.getEditor('project_content');
 UE.getEditor('remark');
 
 $("#submit").click(function(){
+	$("input[name='project_content']").val(UE.getEditor('project_content').getContent());
 	$("input[name='remark']").val(UE.getEditor('remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var fileone=$("#file_one").val();

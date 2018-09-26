@@ -106,8 +106,8 @@ public class TeamProjectService extends GiantBaseService{
 					sql += "AND p.state=0";
 					countSql += "AND p.state=0";
 				} else if ("1".equals(temp)) {//正常
-					sql += "AND p.state=1";
-					countSql += "AND p.state=1";
+					sql += "AND p.state!=0";
+					countSql += "AND p.state!=0";
 				} else if ("2".equals(temp)) {//待验收
 					sql += "AND p.state=2";
 					countSql += "AND p.state=2";

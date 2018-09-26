@@ -104,7 +104,7 @@ public class TeamProjectService extends GiantBaseService{
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
 				if ("0".equals(temp)) {//已删除
 					sql += "AND p.state=0";
-					countSql += "AND p.state=0";
+					countSql += "AND p.state=0"; 
 				} else if ("1".equals(temp)) {//正常
 					sql += "AND p.state!=0";
 					countSql += "AND p.state!=0";

@@ -36,10 +36,11 @@
 							</c:if>
 						</a>
 					</div>
-					<!--btn-toolbar start-->
-					<div class="btn-toolbar pull-right">
+					<!--btn-toolbar 创建里程碑和批量创建里程碑 start-->
+					<!-- <div class="btn-toolbar pull-right">
+					    <a href="test/milepost/toBatchAdd" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0,0,0,.2);"><i class="icon icon-plus"></i> 批量创建</a>
 						<a href="test/milepost/toadd" class="btn btn-primary"><i class="icon icon-plus"></i>创建里程碑</a>
-					</div>
+					</div>  -->
 					<!--btn-toolbar end-->
 				</div>
 				<!--mainMenu end-->
@@ -53,23 +54,23 @@
 										<tr>
 											<td class="w-150px">
 												<select class="form-control chosen chosen-select" name="milepostState" id="milepostState">
-													<option value="">里程碑状态</option>
-													<option ${mil.milepost_state == 0} value="0">删除</option>
-													<option ${mil.milepost_state == 0} value="1">正常</option>
-													<option ${mil.milepost_state == 0} value="2">已验收</option>
+													<option ${prm.milepostState==''?'selected="selected"':'' }value="">里程碑状态</option>
+													<option ${prm.milepostState=='0'?'selected="selected"':'' } value="0">删除</option>
+													<option ${prm.milepostState=='1'?'selected="selected"':'' } value="1">正常</option>
+													<option ${prm.milepostState=='2'?'selected="selected"':'' } value="2">已验收</option>
 												</select>
 											</td>
 											<td class="w-200px">
-												<input type="text" name="startTime" id="startTime" value="${mil.start_time}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+												<input type="text" name="startTime" id="startTime" value="${prm.startTime}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
 											</td>
 											<td class="w-200px">
-												<input type="text" name="endTime" id="endTime" value="${mil.end_time}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
+												<input type="text" name="endTime" id="endTime" value="${prm.endTime}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;">
 											</td>
 											<td class="w-150px">
 												<select data-placeholder="请选择人员" class="form-control chosen-select" name="authorId" id="authorId">
 													<option value=""></option>
 													<c:forEach items="${members}" var="member" varStatus="sta">
-														<option value="${member.id}">${member.name}(${member.number})</option>
+														<option  ${prm.authorId==member.id?'selected="selected"':'' } value="${member.id}">${member.name}(${member.number})</option>
 													</c:forEach>
 												</select>
 											</td>
@@ -90,45 +91,46 @@
 									data-fixed-left-width="550" data-fixed-right-width="160">
 									<thead>
 										<tr>
-											<th data-flex="false" data-width="90px" style="width: 50px" class="c-id text-center" title="ID">
+											<th data-flex="false" data-width="90px" style="width: 28px" class="c-id text-center" title="ID">
 											ID
 											</th>
-										    <th data-flex="false" data-width="50px" style="width: 65px" class="c-pri" title="名称">
+										    <th data-flex="false" data-width="50px" style="width: 34px" class="c-pri" title="名称">
 											名称
 											</th>
-											<th data-flex="false" data-width="50px" style="width:80px" class="c-name text-center" title="描述">
+											<th data-flex="false" data-width="50px" style="width:81px" class="c-name text-center" title="描述">
 											描述
 											</th>
-											<th data-flex="false" data-width="auto" style="width:80px" class="c-name" title="开始时间">
+											<th data-flex="false" data-width="auto" style="width:25px" class="c-name" title="开始时间">
 											开始时间
 											</th>
-											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri text-center" title="结束时间">
+											<th data-flex="false" data-width="50px" style="width:33px" class="c-pri text-center" title="结束时间">
 											结束时间
 											</th>
-											<th data-flex="false" data-width="50px" style="width:90px" class="c-pri text-center" title="修改时间">
+											<th data-flex="false" data-width="50px" style="width:36px" class="c-pri text-center" title="修改时间">
 											修改时间
 											</th>
-											<th data-flex="false" data-width="50px" style="width:120px" class="c-pri text-center" title="创建者名字">
+											<th data-flex="false" data-width="50px" style="width:35px" class="c-pri text-center" title="创建者名字">
 											创建者名字
 											</th>
-											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri text-center" title="状态">
+											<th data-flex="false" data-width="50px" style="width:25px" class="c-pri text-center" title="状态">
 											状态
 											</th>
-											<th data-flex="false" data-width="300px" style="width:160px" class="c-actions text-center" title="操作">操作</th>
+											<th data-flex="false" data-width="300px" style="width:51px" class="c-actions text-center" title="操作">操作</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${pageList.pageResult}" var="mil" varStatus="sta">
 										<tr>
 											<td class="c-id cell-id text-center">${mil.id}</td>
-											<td class="c-pri text-left">${mil.milepost_name}</td>
+											<td class="c-pri text-left"><a href="test/milepost/detail?id=${mil.id}">${mil.milepost_name}</a></td>
 											<td class="c-pri text-center" title="${mil.milepost_describe}">
-											<c:if test="${fn:length(mil.milepost_describe)>7 }">
-										                         ${fn:substring(mil.milepost_describe, 0, 7)}...
+											${mil.milepost_describe}
+											<!--<c:if test="${fn:length(mil.milepost_describe)>50 }">
+										                         ${fn:substring(mil.milepost_describe, 0, 50)}...
 										             </c:if>
-										             <c:if test="${fn:length(mil.milepost_describe)<=7}">
+										             <c:if test="${fn:length(mil.milepost_describe)<=50}">
 										                         ${mil.milepost_describe}
-			                                </c:if> 
+			                                </c:if> -->
 											</td>
 											<td class="c-name text-left">
 													${mil.start_time}
@@ -143,21 +145,52 @@
 							                </c:if>
 							                <c:if test="${mil.milepost_state == 1}">正常
 							                </c:if>
-							                <c:if test="${mil.milepost_state == 2}">已验收
+							                <c:if test="${mil.milepost_state == 2}">已确认
+							                </c:if>
+							                <c:if test="${mil.milepost_state == 3}">已确认原型
+							                </c:if>
+							                <c:if test="${mil.milepost_state == 4}">已验收
+							                </c:if>
+							                <c:if test="${mil.milepost_state == 5}">已编写报告
+							                </c:if>
+							                <c:if test="${mil.milepost_state == 6}">已验收报告
 							                </c:if>
 											</td>
 											<td class="c-actions text-center">
 											<c:if test="${mil.milepost_state == 1}">
 												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
-											</c:if>
-											<c:if test="${mil.milepost_state == 1}">
-												<a href="test/milepost/tovali?id=${mil.id}" class="btn" title="验收"><i class='icon-task-finish icon-checked'></i></a>
-											</c:if>
-											<c:if test="${mil.milepost_state == 1}">
 												<a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+              									<a href="test/milepost/tosure?id=${mil.id}" class="btn" title="确认"><i class='icon-task-start icon-play'></i></a>
+											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
-											<c:if test="${mil.milepost_state == 1 || mil.milepost_state == 2}">
-												<a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
+											<c:if test="${mil.milepost_state == 2}">
+       											<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+												<a href="test/milepost/tosureui?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认里程碑和界面原型"><i class="icon-story-review icon-glasses"></i></a>
+											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
+											</c:if>
+											<c:if test="${mil.milepost_state == 3}">
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+												<a href="test/milepost/tovali?id=${mil.id}" class="btn" title="验收"><i class='icon-task-finish icon-checked'></i></a>
+											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
+											</c:if>
+											<c:if test="${mil.milepost_state == 4}">
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+												<a href="test/milepost/toreport?id=${mil.id}" class="btn" title="编写里程碑报告"><i class="icon-story-review icon-glasses"></i></a>
+											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
+											</c:if>
+											<c:if test="${mil.milepost_state == 5}">
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+												<a href="test/milepost/tovailreport?id=${mil.id}" class="btn" title="验收里程碑报告"><i class="icon-task-start icon-play"></i></a>
+											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
+											</c:if>
+											<c:if test="${mil.milepost_state == 6}">
+												<a href="test/milepost/toass?id=${mil.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联需求"><i class="icon icon-plus"></i></a>
+											    <a href="test/milepost/toedit?id=${mil.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+											    <a href="test/milepost/todelete?id=${mil.id}" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 											</c:if>
 											<c:if test="${mil.milepost_state == 0}">
 											<strong>无法操作</strong>

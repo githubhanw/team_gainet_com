@@ -263,7 +263,13 @@
 												</c:if>
 											</td>
 											<td class="text-left">
-												${need.project_name}
+												<c:if test="${need.project_id!='0'}">
+													<span class="label label-info" style="background-color: #00da88;" data-toggle="tooltip" data-placement="top" title="${need.project_name}">项目</span>
+												</c:if>
+												<c:if test="${need.project_id=='0'}">
+													<span class="label label-info" style="background-color: #03b8cf;" data-toggle="tooltip" data-placement="top" title="${need.product_name}">产品</span>
+												</c:if>
+												${need.project_id!='0'?need.project_name:need.product_name}
 											</td>
 											<td class="c-name text-left">${need.member_name}</td>
 											<td class="c-name text-left">

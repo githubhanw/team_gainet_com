@@ -47,7 +47,7 @@ public class TeamNeedService extends GiantBaseService{
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT tn.*,tp.project_name,tpd.product_name,m.name meeting_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,(SELECT COUNT(0) "
+		String sql = "SELECT tn.*,tp.project_name,tp.id proje_id,tpd.product_name,m.name meeting_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,(SELECT COUNT(0) "
 				+ "FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
 				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id "
 				+ "LEFT JOIN task_product tpd ON tn.product_id=tpd.id "

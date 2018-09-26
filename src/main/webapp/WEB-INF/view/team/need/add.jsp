@@ -42,6 +42,7 @@
 									</td>
 									<td></td>
 								</tr>
+								<c:if test="${fenlei!='1'}">
 								<tr>
 									<th>所属项目</th>
 									<td class="required">
@@ -52,7 +53,19 @@
 										</select>
 									<td></td>
 								</tr>
+								</c:if>
+								<c:if test="${fenlei=='1'}">
 								<tr>
+									<th>所属产品</th>
+									<td class="required">
+										<select class="form-control chosen chosen-select"  name="product_id" id="product_id">
+											<c:forEach items="${product}" var="p" varStatus="sta">
+												<option value="${p.id}" ${p.id==product_id?'selected="selected"':''}>${p.product_name }</option>
+											</c:forEach>
+										</select>
+									<td></td>
+								</tr>
+								</c:if>
 									<th>指派给</th>
 									<td class="required">
 										<select data-placeholder="请选择被指派人员" class="form-control chosen-select" name="assigned_id" id="assigned_id">
@@ -174,10 +187,17 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建模块</a> <a
-									href="team/task/toAdd" class="btn">建任务</a> <a
-									href="team/task/toAdd" class="btn">批量建任务</a> <a
-									href="team/need/index" class="btn">返回模块列表</a>
+								<a href="team/need/toAdd" class="btn">继续创建模块</a> 
+								<a href="team/task/toAdd" class="btn">建任务</a> 
+								<a href="team/task/toAdd" class="btn">批量建任务</a> 
+								<a href="team/need/index" class="btn">返回模块列表</a>
+								<c:if test="${fenlei == '0'}">
+								<a href="team/need/toEachAdd?fenlei=0&project_id=${project_id}" class="btn">返回本项目模块列表</a>
+								</c:if>
+								<c:if test="${fenlei == '1'}">
+								<a href="team/need/index?fenlei=1&project_id=${project_id}" class="btn">返回本产品模块列表</a>
+								</c:if>
+									
 							</div>
 						</div>
 					</div>
@@ -236,8 +256,12 @@ $("#submit").click(function(){
          contentType:false,
          success:function(data){
         	 if(data.code == 0){
-     			$("#msg").text(data.message);
-     			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+        		 if (fenlei == 0) {
+        			 window.location.href="team/need/toEachAdd?fenlei=0&project_id="+project_id;
+				}else{
+	     			$("#msg").text(data.message);
+	     			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+				}
      		}else{
      			$("#errMsg").text(data.message);
      			$('#errModal').modal({keyboard: false,show: true, moveable: true});

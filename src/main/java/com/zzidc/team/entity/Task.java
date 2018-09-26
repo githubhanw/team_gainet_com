@@ -29,6 +29,8 @@ public class Task implements java.io.Serializable {
 	private String remark;
 	private Timestamp startDate;
 	private Timestamp endDate;
+	private String interfaceImg;
+	private String flowImg;
 	private Timestamp planEndDate;
 	private Timestamp realStartDate;
 	private Timestamp realEndDate;
@@ -76,7 +78,6 @@ public class Task implements java.io.Serializable {
 	private Short overdue;
 	private Short deleted;
 	private Integer developerTaskId;
-	private Short full;
 
 	// Constructors
 
@@ -87,7 +88,7 @@ public class Task implements java.io.Serializable {
 	/** full constructor */
 	public Task(Integer projectId, Integer needId, String taskName,
 			Integer taskType, Integer level, String remark,
-			Timestamp startDate, Timestamp endDate, Timestamp planEndDate,
+			Timestamp startDate, Timestamp endDate, String interfaceImg, String flowImg,Timestamp planEndDate,
 			Timestamp realStartDate, Timestamp realEndDate, Integer memberId,
 			String memberName, Integer openedId, String openedName,
 			Timestamp openedTime, Integer handoverId, String handoverName,
@@ -102,8 +103,7 @@ public class Task implements java.io.Serializable {
 			String finishedName, Timestamp finishedTime, Integer percent,
 			Short resolved, Integer parentId, String link,
 			Timestamp createTime, Timestamp updateTime, Short state,
-			Short delay, Short overdue, Short deleted, Integer developerTaskId,
-			Short full) {
+			Short delay, Short overdue, Short deleted, Integer developerTaskId) {
 		this.projectId = projectId;
 		this.needId = needId;
 		this.taskName = taskName;
@@ -112,6 +112,8 @@ public class Task implements java.io.Serializable {
 		this.remark = remark;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.interfaceImg=interfaceImg;
+		this.flowImg=flowImg;
 		this.planEndDate = planEndDate;
 		this.realStartDate = realStartDate;
 		this.realEndDate = realEndDate;
@@ -159,7 +161,6 @@ public class Task implements java.io.Serializable {
 		this.overdue = overdue;
 		this.deleted = deleted;
 		this.developerTaskId = developerTaskId;
-		this.full = full;
 	}
 
 	// Property accessors
@@ -244,6 +245,24 @@ public class Task implements java.io.Serializable {
 
 	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
+	}
+
+	@Column(name = "interface_img")
+	public String getInterfaceImg() {
+		return interfaceImg;
+	}
+
+	public void setInterfaceImg(String interfaceImg) {
+		this.interfaceImg = interfaceImg;
+	}
+
+	@Column(name = "flow_img")
+	public String getFlowImg() {
+		return flowImg;
+	}
+
+	public void setFlowImg(String flowImg) {
+		this.flowImg = flowImg;
 	}
 
 	@Column(name = "plan_end_date", length = 19)
@@ -668,15 +687,6 @@ public class Task implements java.io.Serializable {
 
 	public void setDeveloperTaskId(Integer developerTaskId) {
 		this.developerTaskId = developerTaskId;
-	}
-
-	@Column(name = "full")
-	public Short getFull() {
-		return this.full;
-	}
-
-	public void setFull(Short full) {
-		this.full = full;
 	}
 
 }

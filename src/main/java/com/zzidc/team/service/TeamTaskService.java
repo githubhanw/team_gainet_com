@@ -13,8 +13,11 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.service.GiantBaseService;
+import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
@@ -357,6 +360,112 @@ public class TeamTaskService extends GiantBaseService {
 	}
 
 	/**
+	 * 添加任务
+	 */
+	public boolean addTask(Map<String, String> mvm,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+		//上传界面原型图和流程图文件
+		String interfaceImg="";//界面原型图（格式：url,url）
+		String flowImg="";//流程图（格式：url,url）
+		for (int i = 0; i < filePrototype.length; i++) {
+			MultipartFile file = filePrototype[i];
+			interfaceImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+		}
+		interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
+		for (int i = 0; i < filetree.length; i++) {
+			MultipartFile file = filetree[i];
+			flowImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+		}
+		flowImg = flowImg.substring(0,flowImg.length() - 1);
+		Task task = new Task();
+		task.setResolved((short) 0);
+		task.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
+		task.setInterfaceImg(interfaceImg);//界面原型图拼接路径
+		task.setFlowImg(flowImg);//流程图拼接路径
+		if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
+			// 获取对象
+			Task parentTask = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (parentTask.getResolved() == 0) {
+				PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.RESOLVED, task.toString(), null);
+				Task oldParentTask = new Task();
+				BeanUtils.copyProperties(parentTask, oldParentTask);
+				parentTask.setResolved((short) 1);
+				parentTask.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				super.dao.saveUpdateOrDelete(parentTask, null);
+				pmLog.add(parentTask.getId(), oldParentTask, parentTask, "resolved");
+				this.log(pmLog);
+			}
+		}
+		TaskNeed need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("need_id"), 0));
+		task.setNeedId(need == null ? GiantUtil.intOf(mvm.get("need_id"), 0) : need.getId());
+		task.setProjectId(need == null ? 0 : need.getProjectId());
+		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
+		task.setTaskType(GiantUtil.intOf(mvm.get("task_type"), 0));
+		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
+		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
+		try {
+			task.setStartDate(super.returnTime(mvm.get("start_date")));
+		} catch (Exception e) {
+			task.setStartDate(new Timestamp(System.currentTimeMillis()));
+		}
+		try {
+			task.setEndDate(super.returnTime(mvm.get("end_date")));
+		} catch (Exception e) {
+			Date date = new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			calendar.add(Calendar.DAY_OF_MONTH, +1);//+1今天的时间加一天
+			date = calendar.getTime();
+			task.setEndDate(new Timestamp(date.getTime()));
+		}
+		task.setMemberId(super.getMemberId());
+		task.setMemberName(super.getMemberName());
+		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
+		task.setAssignedId(member == null ? 0 : member.getId());
+		task.setAssignedName(member == null ? "" : member.getName());
+		task.setAssignedTime(new Timestamp(System.currentTimeMillis()));
+		task.setOpenedId(0);
+		task.setOpenedName("");
+		task.setCheckedId(0);
+		task.setCheckedName("");
+		task.setCanceledId(0);
+		task.setCanceledName("");
+		task.setClosedId(0);
+		task.setClosedName("");
+		task.setPercent(0);
+		task.setState((short) 1);
+		task.setDelay((short) 0);
+		task.setOverdue((short) 0);
+		task.setDeleted((short) 0);
+		task.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		
+		boolean b =  super.dao.saveUpdateOrDelete(task, null);
+		if(b) {
+			//微信提醒
+			SimpleDateFormat form = new SimpleDateFormat("yyyy-MM-dd E HH:mm");
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String start_date = sdf.format(task.getStartDate());
+			String end_date = sdf.format(task.getEndDate());
+			Date date = new Date();
+			String time = form.format(date);
+			if (GiantUtils.isEmpty(member) || GiantUtils.isEmpty(member.getNewOpenid())) {
+				
+			}else {
+				String openid = member.getNewOpenid();//"o-GQDj8vVvfH2715yROC1aqY4YM0";
+				String first = "你好,收到一个【领取任务】提醒";
+				String keyword1 = "任务领取";
+				String keyword2 = this.getMemberName();
+				String keyword3 = time;
+				String remark = "总任务标题："+task.getTaskName()+"\\n总任务领取ID："+task.getId()+"\\n总任务负责人："+task.getMemberName()+"\\n总任务开始时间："+start_date+"\\n总任务结束时间："+end_date;//自定义通知，以换行符隔开 \n
+				String str=sendWeChatUtil(openid,first,keyword1,keyword2,keyword3,remark);
+				String a1 = JSONObject.fromObject(str).toString();
+				HttpUtils.weiXinSendPost(a1);
+			}
+		}
+		return b;
+	}
+
+	/**
 	 * 添加任务信息（批量、分解）
 	 */
 	public boolean add(Map<String, String> mvm) {
@@ -446,7 +555,7 @@ public class TeamTaskService extends GiantBaseService {
 		}
 		return b;
 	}
-
+	
 	/**
 	 * 编辑任务信息
 	 */

@@ -15,6 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv="Content-Type" content="multipart/form-data;charset=utf-8" />
 		<title>建任务</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
@@ -34,7 +35,7 @@
 						</div>
 						<table class="table table-form">
 							<tbody>
-								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+								<form class="load-indicator main-form form-ajax" id="createForm" method="post" enctype="multipart/form-data">
 								<tr>
 									<th>任务名称</th>
 									<td class="required">
@@ -109,6 +110,20 @@
 												class="form-control form-date-limit" placeholder="任务结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
+								</tr>
+								<tr>
+								    <th>界面原型</th>
+								    <td class="required">
+									<input type="file" name="filePrototype" multiple="multiple" accept="image/*"/>
+								    </td>
+								    <td></td>
+								</tr>
+								<tr>
+								    <th>流程图</th>
+								    <td class="required">
+								    <input type="file" name="filetree" multiple="multiple" accept="image/*"/>
+									</td>
+								    <td></td>
 								</tr>
 								<tr>
 									<th>任务描述</th>
@@ -187,20 +202,38 @@
 		}  
 	};  
     UE.getEditor('remark');
-	
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
 		$("input[name='remark']").val(UE.getEditor('remark').getContent());
-		$.ajax({type:"POST",url:"team/task/add?r=" + Math.random(),data:$("form").serialize(),
-				dataType:"json",success:function(data){
-			if(data.code == 0){
-				$("#msg").text(data.message);
-				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-			}else{
-				$("#errMsg").text(data.message);
-				$('#errModal').modal({keyboard: false,show: true, moveable: true});
-			}
-		}})
+		var form = new FormData(document.getElementById("createForm"));
+		$.ajax({
+	         url:"team/task/addTask?r=" + Math.random(),
+	         type:"post",
+	         data:form,
+	         dataType:"json",
+	         processData:false,
+	         contentType:false,
+	         success:function(data){
+	        	if(data.code == 0){
+	 				$("#msg").text(data.message);
+	 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+	 			}else{
+	 				$("#errMsg").text(data.message);
+	 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+	 			}
+	         }
+	     });
+		
+//		$.ajax({type:"POST",url:"team/task/add?r=" + Math.random(),data:$("form").serialize(),
+//				dataType:"json",success:function(data){
+//			if(data.code == 0){
+//				$("#msg").text(data.message);
+//				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+//			}else{
+//				$("#errMsg").text(data.message);
+//				$('#errModal').modal({keyboard: false,show: true, moveable: true});
+//			}
+//		}})
 		$.ajaxSettings.async = true;
 	});
 	</script>

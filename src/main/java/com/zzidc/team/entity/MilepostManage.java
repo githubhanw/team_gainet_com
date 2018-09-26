@@ -31,6 +31,9 @@ public class MilepostManage implements java.io.Serializable{
 	private String milepostRemarks;
 	private String checkTime;
 	private String checkName;
+	private Integer projectId;
+	private Integer checkId;
+	private String finishTime;
 	/** default constructor */
 	public MilepostManage() {
 	}
@@ -139,16 +142,40 @@ public class MilepostManage implements java.io.Serializable{
 	public void setCheckName(String checkName) {
 		this.checkName = checkName;
 	}
+	@Column(name = "project_id", nullable = true)
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+	@Column(name = "check_id", nullable = true)
+	public Integer getCheckId() {
+		return checkId;
+	}
+
+	public void setCheckId(Integer checkId) {
+		this.checkId = checkId;
+	}
+	@Column(name = "finish_time", nullable = true)
+	public String getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(String finishTime) {
+		this.finishTime = finishTime;
+	}
 
 	@Override
 	public String toString() {
 		return "MilepostManage [id=" + id + ", milepostName=" + milepostName + ", milepostDescribe=" + milepostDescribe + ", startTime=" + startTime + ", endTime="
 				+ endTime + ", editTime=" + editTime + ", createTime=" + createTime + ", authorId=" + authorId
 				+ ", authorName=" + authorName + ", milepostState=" + milepostState
-				+  ", milepostRemarks=" + milepostRemarks + ", checkTime=" + checkTime+ ", checkName=" + checkName
-				+ "]";
+				+  ", milepostRemarks=" + milepostRemarks + ", checkTime=" + checkTime+ ", checkName=" + checkName+ ", projectId=" + projectId+ ", checkId=" + checkId
+				+  ", finishTime=" + finishTime+ "]";
 	}
 	
 	
-
+	
 }

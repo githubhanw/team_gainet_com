@@ -288,4 +288,35 @@ public class FileUploadUtil {
 		}
 		return null;
 	}
+	/**
+	 * [上传input文件到云存储，返回文件路径] <br>
+	 * @author chenmenghao <br>
+	 * @date 2018年9月5日 下午9:13:50 <br>
+	 * @param file
+	 * @return <br>
+	 */
+	public static Object uploadFiles(MultipartFile file) {
+			String fileName = file.getOriginalFilename();
+			MultipartFile f =file;
+			String hz = fileName.substring(fileName.lastIndexOf("."));
+			fileName = System.currentTimeMillis() + hz;
+			try {
+				if (!fileName.endsWith("BMP") && !fileName.endsWith("JPEG") && !fileName.endsWith("GIF") && !fileName.endsWith("PNG")&&!fileName.endsWith("JPG")) {
+					if(uploadFileToCloud(fileName,f.getInputStream(),UPLOADFILEPATH)){
+						return "http://"+BUCKETNAME+".kuaiyunds.com/"+BUCKETNAME+"/"+UPLOADFILEPATH+"/" + fileName;
+					}else{
+						return null;
+					}
+				}else{
+					if(uploadFileToCloud(fileName,f.getInputStream(),UPLOADIMAGEPATH)){
+						return "http://"+BUCKETNAME+".kuaiyunds.com/"+BUCKETNAME+"/"+UPLOADIMAGEPATH+"/" + fileName;
+					}else{
+						return null;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+	}
 }

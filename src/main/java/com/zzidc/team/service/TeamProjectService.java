@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.zzidc.team.entity.ProjectMember;
 import com.zzidc.team.entity.TaskProject;
 
 import net.sf.json.JSONObject;
@@ -101,10 +104,19 @@ public class TeamProjectService extends GiantBaseService{
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
 				if ("0".equals(temp)) {//已删除
 					sql += "AND p.state=0";
-					countSql += "AND p.state=0";
+					countSql += "AND p.state=0"; 
 				} else if ("1".equals(temp)) {//正常
-					sql += "AND p.state=1";
-					countSql += "AND p.state=1";
+					sql += "AND p.state!=0";
+					countSql += "AND p.state!=0";
+				} else if ("2".equals(temp)) {//待验收
+					sql += "AND p.state=2";
+					countSql += "AND p.state=2";
+				} else if ("3".equals(temp)) {//已验收
+					sql += "AND p.state=3";
+					countSql += "AND p.state=3";
+				} else if ("4".equals(temp)) {//已完成
+					sql += "AND p.state=4";
+					countSql += "AND p.state=4";
 //				} else if ("3".equals(temp)) {//阶段：研究
 //					sql += "AND p.stage='研究'";
 //					countSql += "AND p.stage='研究'";
@@ -131,7 +143,7 @@ public class TeamProjectService extends GiantBaseService{
 	/**
 	 * 添加项目信息
 	 */
-	public boolean addOrUpd(Map<String, String> mvm,int id,String name,MultipartFile[] file1,MultipartFile[] file2,MultipartFile[] file3,MultipartFile[] file4) {
+	public boolean addOrUpd(Map<String, String> mvm, HttpServletRequest request, int id,String name,MultipartFile[] file1,MultipartFile[] file2,MultipartFile[] file3,MultipartFile[] file4) {
 		TaskProject p = null;
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
@@ -147,11 +159,45 @@ public class TeamProjectService extends GiantBaseService{
 		p.setCompany(GiantUtil.stringOf(mvm.get("company")));
 		p.setMemberId(GiantUtil.intOf(mvm.get("member_id"), 0));
 		p.setRemark(GiantUtil.stringOf(mvm.get("remark")));
+		p.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		p.setProjectType(mvm.get("type"));
+//		p.setProjectType(mvm.get("type"));
+		p.setCustomerName(GiantUtil.stringOf(mvm.get("customer_name")));
+		p.setDemandId(GiantUtil.intOf(mvm.get("demand_id"), 0));
+		p.setTimeLimit(GiantUtil.stringOf(mvm.get("time_limit")));
+		p.setBudget(GiantUtil.stringOf(mvm.get("budget")));		
+		p.setFileUrl(GiantUtil.stringOf(mvm.get("file_url")));
+		p.setAssessment(GiantUtil.stringOf(mvm.get("assessment")));
+		p.setOvertime(GiantUtil.intOf(mvm.get("overtime"), 0));
+		p.setProjectContent(GiantUtil.stringOf(mvm.get("project_content")));
 		boolean a=super.dao.saveUpdateOrDelete(p, null);
+		String[] projectMembers = request.getParameterValues("projectMembers");
+		String[] testMembers = request.getParameterValues("testMembers");
+		if (projectMembers != null && projectMembers.length > 0) {
+			ProjectMember projectMember = new ProjectMember();
+			for (int i = 0; i < projectMembers.length; i++) {
+				projectMember.setId(null);
+				projectMember.setProjectId(p.getId());
+				projectMember.setMemberType((short)1);
+				projectMember.setMemberId(Integer.valueOf(projectMembers[i]));
+				projectMember.setState((short)1);
+				super.dao.saveUpdateOrDelete(projectMember, null);
+			}
+		}
+		if (testMembers != null && testMembers.length > 0) {
+			ProjectMember projectMember = new ProjectMember();
+			for (int i = 0; i < testMembers.length; i++) {
+				projectMember.setId(null);
+				projectMember.setProjectId(p.getId());
+				projectMember.setMemberType((short)2);
+				projectMember.setMemberId(Integer.valueOf(testMembers[i]));
+				projectMember.setState((short)1);
+				super.dao.saveUpdateOrDelete(projectMember, null);
+			}
+		}
+		
 		// 创建文档
-		if (mvm.get("type").equals("0")) {// 如果等于0，就是内部文件
+		if ("0".equals(mvm.get("type"))) {// 如果等于0，就是内部文件
 			JSONObject jsonupload = new JSONObject();
 			if(file2 != null && file2.length > 0) {
 				String fileName = file2[0].getOriginalFilename();
@@ -231,7 +277,7 @@ public class TeamProjectService extends GiantBaseService{
 	/**
 	 * 修改项目信息
 	 */
-	public boolean edit(Map<String, String> mvm) {
+	public boolean edit(Map<String, String> mvm, HttpServletRequest request) {
 		TaskProject p = null;
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
@@ -248,8 +294,50 @@ public class TeamProjectService extends GiantBaseService{
 		p.setMemberId(GiantUtil.intOf(mvm.get("member_id"), 0));
 		p.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		p.setProjectType(mvm.get("type"));
-		return super.dao.saveUpdateOrDelete(p, null);
+//		p.setProjectType(mvm.get("type"));
+		p.setCustomerName(GiantUtil.stringOf(mvm.get("customer_name")));
+		p.setDemandId(GiantUtil.intOf(mvm.get("demand_id"), 0));
+		p.setTimeLimit(GiantUtil.stringOf(mvm.get("time_limit")));
+		p.setBudget(GiantUtil.stringOf(mvm.get("budget")));		
+		p.setFileUrl(GiantUtil.stringOf(mvm.get("file_url")));
+		p.setAssessment(GiantUtil.stringOf(mvm.get("assessment")));
+		p.setOvertime(GiantUtil.intOf(mvm.get("overtime"), 0));
+		p.setProjectContent(GiantUtil.stringOf(mvm.get("project_content")));
+		boolean result = super.dao.saveUpdateOrDelete(p, null);
+		String querySql = "select * from project_member where project_id=" + p.getId();
+		List<Object> list = super.dao.getEntityListBySQL(querySql, null, new ProjectMember());
+		if (list != null && list.size() > 0 ) {
+			for (int i = 0; i < list.size(); i++) {
+				ProjectMember pro = (ProjectMember) list.get(i);
+				super.dao.deleteOne(pro);
+			}
+		}
+		
+		String[] projectMembers = request.getParameterValues("projectMembers");
+		String[] testMembers = request.getParameterValues("testMembers");
+		if (projectMembers != null && projectMembers.length > 0) {
+			ProjectMember projectMember = new ProjectMember();
+			for (int i = 0; i < projectMembers.length; i++) {
+				projectMember.setId(null);
+				projectMember.setProjectId(p.getId());
+				projectMember.setMemberType((short)1);
+				projectMember.setMemberId(Integer.valueOf(projectMembers[i]));
+				projectMember.setState((short)1);
+				super.dao.saveUpdateOrDelete(projectMember, null);
+			}
+		}
+		if (testMembers != null && testMembers.length > 0) {
+			ProjectMember projectMember = new ProjectMember();
+			for (int i = 0; i < testMembers.length; i++) {
+				projectMember.setId(null);
+				projectMember.setProjectId(p.getId());
+				projectMember.setMemberType((short)2);
+				projectMember.setMemberId(Integer.valueOf(testMembers[i]));
+				projectMember.setState((short)1);
+				super.dao.saveUpdateOrDelete(projectMember, null);
+			}
+		}
+		return result;
 	}
 	/**
 	 * 获取项目信息
@@ -296,5 +384,72 @@ public class TeamProjectService extends GiantBaseService{
 		String sql = "SELECT * FROM `task_need` WHERE 1=1 AND project_id=" + needId + " ORDER BY create_time";
 		relationTaskList = super.getMapListBySQL(sql, null);
 		return relationTaskList;
+	}
+	
+	
+	
+	
+	/**
+	 * 获取项目下所有模块【获取已验收模块】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getNeedByProject(int projectId){
+		String sql = "SELECT id,need_name,state FROM task_need WHERE state=4 AND parent_id=0 AND project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取项目下所有子模块【获取已验收模块】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getSubNeedByProject(int projectId){
+		String sql = "SELECT id,need_name,state,parent_id FROM task_need WHERE state=4 AND parent_id>0 AND project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有模块下任务【获取已完成任务】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getNeedTaskByProject(int projectId){
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img FROM task t, task_need n "
+				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有子模块下任务【获取已完成任务】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getSubNeedTaskByProject(int projectId){
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img FROM task t, task_need n "
+				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有任务下的所有测试用例列表
+	 * @param needId
+	 * @return
+	 */
+	public List<Map<String, Object>> getTestCaseByProject(int projectId){
+		String sql = "SELECT c.id,c.task_id,c.case_name,c.case_type,c.precondition FROM task t, task_need n, test_case c WHERE c.task_id=t.id AND t.need_id=n.id "
+				+ "AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有测试用例下的所有步骤
+	 * @param needId
+	 * @return
+	 */
+	public List<Map<String, Object>> getTestCaseStepByProject(int projectId){
+		String sql = "SELECT s.case_id,s.step,s.expect FROM task t, task_need n, test_case c, test_case_step s WHERE s.case_id=c.id AND s.version=c.version " + 
+				"AND c.task_id=t.id AND t.need_id=n.id AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
 	}
 }

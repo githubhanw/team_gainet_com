@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>验收里程碑</title>
+		<title>验收里程碑报告</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,22 +30,16 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>验收里程碑</h2>
+							<h2>验收里程碑报告</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<input type="hidden" id="mi_id" name="mi_id" value="${mi.id}"></input>
 								<input type="hidden" id="mi_name" name="mi_name" value="${mi.authorName}"></input>
-								<input type="hidden" id="finishtime" name="finishtime" value="${finishtime}"></input>
 								<tr>
 									<th>名称:</th>
 									<td class="required">${mi.milepostName}</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>完成时间:</th>
-									<td class="required">${finishtime}</td>
 									<td></td>
 								</tr>
 								<tr>
@@ -54,36 +48,73 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>模块列表:</th>
-									<td class="required">
-									<table width="600" border="1">
-									   <tr bgcolor=#D3D3D3> 
-									     <td width="300">模块名称</td>
-									     <td width="300">完成情况</td>
-									   </tr>
-									   <c:forEach items="${milNeedList}" var="milNeedList">
-									   <tr>
-									     <td>${milNeedList.need_name}</td>
-									     <td>
-									     <c:if test="${milNeedList.state == 0}">已删除</c:if>
-									     <c:if test="${milNeedList.state == 1}">未开始</c:if>      
-									     <c:if test="${milNeedList.state == 2}">进行中</c:if>
-									     <c:if test="${milNeedList.state == 3}">待验收</c:if>
-									     <c:if test="${milNeedList.state == 4}">已验收</c:if>
-									     <c:if test="${milNeedList.state == 5}">已关闭</c:if>
-									     </td>
-									   </tr>
-									   </c:forEach>
-									</table> 
-									</td>
+									<th>完成时间:</th>
+									<td class="required">${mi.finishTime}</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>备注:</th>
-									<td class="required">
-										<input type="hidden" name="need_remark">
-										<textarea id="need_remark" name="details" placeholder="" style="width:100%;">${mi.milepostRemarks}</textarea>
-										<div id="need_remark" value=""></div>
+								<th>模块详情</th>
+									<td>
+										<ul class="tree tree-lines" data-ride="tree">
+											<c:forEach items="${need}" var="need" varStatus="sta">
+												<li>&nbsp;<a href="#">${need.need_name }【模块】</a>
+													<ul>
+													<c:forEach items="${subNeed}" var="subNeed" varStatus="sta">
+													<c:if test="${need.id == subNeed.parent_id }">
+														<li><a href="#">&nbsp;${subNeed.need_name }【子模块】</a>
+															<ul>
+															<c:forEach items="${subNeedTask}" var="task" varStatus="sta">
+															<c:if test="${subNeed.id == task.need_id }">
+																<li><a href="#">&nbsp;${task.task_name}【任务】</a>
+																	<ul>
+																		<li><a href="#">&nbsp;界面原型图</a>
+																			<ul>
+																				<c:forEach items="${fn:split(task.interface_img, ',')}" var="inter" varStatus="sta">
+																					<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【界面原型图】">
+																				</c:forEach>
+																			</ul>
+																		</li>
+																		<li><a href="#">&nbsp;流程图</a>
+																			<ul>
+																				<c:forEach items="${fn:split(task.flow_img, ',')}" var="flow" varStatus="sta">
+																					<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【流程图】">
+																				</c:forEach>
+																			</ul>
+																		</li>
+																	</ul>
+																</li>
+															</c:if>
+															</c:forEach>
+															</ul>
+														</li>
+													</c:if>
+													</c:forEach>
+													<c:forEach items="${needTask}" var="task" varStatus="sta">
+													<c:if test="${need.id == task.need_id }">
+														<li><a href="#">&nbsp;${task.task_name}【任务】</a>
+															<ul>
+																<li><a href="#">&nbsp;界面原型图</a>
+																	<ul>
+																		<c:forEach items="${fn:split(task.interface_img, ',')}" var="inter" varStatus="sta">
+																			<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【界面原型图】">
+																		</c:forEach>
+																	</ul>
+																</li>
+																<li><a href="#">&nbsp;流程图</a>
+																	<ul>
+																		<c:forEach items="${fn:split(task.flow_img, ',')}" var="flow" varStatus="sta">
+																			<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【流程图】">
+																		</c:forEach>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</c:if>
+													</c:forEach>
+													</ul>
+												</li>
+											</c:forEach>
+										</ul>
 									</td>
 									<td></td>
 								</tr>
@@ -94,7 +125,6 @@
 										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
 									</td>
 								</tr>
-								
 							</tbody>
 						</table>
 					</div>
@@ -143,23 +173,9 @@
 	</body>
 </html>
 <script>
-var editor = new UE.ui.Editor();
-editor.render("need_remark");
-UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
-UE.Editor.prototype.getActionUrl = function(action){  
-	if(action == 'uploadimage' || action == 'uploadscrawl'){  
-		return '<%=basePath%>ueditor/upload';  
-	}else{  
-		return this._bkGetActionUrl.call(this, action);  
-	}  
-};  
-UE.getEditor('need_remark');
-
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='need_remark']").val(UE.getEditor('need_remark').getContent());
-	$.ajax({type:"POST",url:"test/milepost/vali?r=" + Math.random(),data:$("form").serialize(),dataType:"json",success:function(data){
-		console.log(data);
+	$.ajax({type:"POST",url:"test/milepost/vailreport?r=" + Math.random(),data:$("form").serialize(),dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

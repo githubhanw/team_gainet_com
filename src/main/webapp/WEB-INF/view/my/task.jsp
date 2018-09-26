@@ -305,6 +305,8 @@
 													<%-- 任务状态为待接收时，且是未分解任务 --%>
 													<c:if test="${task.state == 1 && task.resolved == 0}">
 														<a href="my/task/toOpen?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
+                                                        <!-- chenmenghao -->														
+													    <a href="code/report/toMyAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
 													</c:if>
 													<%-- 任务状态为待接收和进行中时 --%>
 													<c:if test="${task.state == 1 || task.state == 2}">

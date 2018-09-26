@@ -12,7 +12,7 @@
 				<li class="dropdown dropdown-hover ${m=='my' && s=='auth'?'active':'' }"><a href="my/auth">我的权限</a></li>
 			</ul>
 		</nav>
-		<nav id="subNavbar" ${m=='project' || m=='product' || m=='need' || m=='task' || m=='apply' || m=='meeting'  || m=='milepost' ?'':'style="display:none"'}>
+		<nav id="subNavbar" ${m=='project' || m=='product' || m=='need' || m=='task' || m=='release' || m=='apply' || m=='meeting'  || m=='milepost' ?'':'style="display:none"'}>
 			<ul class="nav nav-default"
 				style="max-width: 1491px; left: 0px; position: relative;">
 				<li class="dropdown dropdown-hover ${m=='project' && s=='project'?'active':'' }"><a href="team/project/index">项目</a></li>
@@ -24,7 +24,7 @@
 				<li class="divider"></li>
 				<li class="dropdown dropdown-hover ${m=='apply' && s=='apply'?'active':'' }"><a href="test/apply/index">测试单</a></li>
 				<li class="divider"></li>
-				<li class="dropdown dropdown-hover ${m=='apply' && s=='bug'?'active':'' }"><a href="test/bug/index">Bug列表</a></li>
+				<li class="dropdown dropdown-hover ${m=='apply' && s=='bug'?'active':'' }"><a href="test/bug/index">Bug</a></li>
 				<li class="dropdown dropdown-hover ${m=='apply' && s=='add'?'active':'' }"><a href="test/bug/toAdd">提Bug</a></li>
 				<li class="divider"></li>
 				<li class="dropdown dropdown-hover ${m=='release' && s=='release'?'active':'' }"><a href="release/index">发布</a></li>

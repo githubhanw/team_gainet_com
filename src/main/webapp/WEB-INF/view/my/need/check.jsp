@@ -45,6 +45,24 @@
 									<td></td>
 								</tr>
 								<tr>
+									<th>原型图</th>
+									<td class="required">
+										<c:forEach items="${fn:split(needM.interface_img, ',')}" var="flow" varStatus="sta">
+											<img src="${flow}" data-toggle="lightbox" height="25px" data-caption="${needM.need_name}【原型图】">
+										</c:forEach>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>流程图</th>
+									<td class="required">
+										<c:forEach items="${fn:split(needM.flow_img, ',')}" var="flow" varStatus="sta">
+												<img src="${flow}" data-toggle="lightbox" height="25px" data-caption="${needM.need_name}【流程图】">
+										</c:forEach>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
 									<th>验收标准</th>
 									<td class="required">${needM.check_remark}</td>
 									<td></td>

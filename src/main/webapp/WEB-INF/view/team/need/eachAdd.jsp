@@ -94,12 +94,12 @@
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-actions text-right">
 											<c:forEach items="${fn:split(need.interface_img, ',')}" var="flow" varStatus="sta">
-												<img src="${flow}" data-toggle="lightbox" height="20px" data-caption="${need.need_name}【原型图】">
+												<img src="${flow}" data-toggle="lightbox" height="25px" data-caption="${need.need_name}【原型图】">
 											</c:forEach>
 											</td>
 											<td class="c-actions text-right">
 											<c:forEach items="${fn:split(need.flow_img, ',')}" var="flow" varStatus="sta">
-												<img src="${flow}" data-toggle="lightbox" height="20px" data-caption="${need.flow_img}【流程图】">
+												<img src="${flow}" data-toggle="lightbox" height="25px" data-caption="${need.need_name}【流程图】">
 											</c:forEach>
 											</td>
 										</tr>

@@ -126,7 +126,8 @@ public class MyNeedController extends GiantBaseController {
 	 * 添加模块
 	 */
 	@RequestMapping("/add")
-	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) {
+	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
+			@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
 		JSONObject json=new JSONObject();
 		int id=baseService.getMemberId();	//登录id	        
         String name=baseService.getMemberName();   //登录姓名
@@ -136,6 +137,20 @@ public class MyNeedController extends GiantBaseController {
         	resultresponse(response,json);
 			return;
         }
+        String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		if(prototypeName.equals("")){
+			json.put("code",2);
+			json.put("message", "请选择界面原型文件");
+			resultresponse(response,json);
+			return;
+		}
+		if(treeName.equals("")){
+			json.put("code",3);
+			json.put("message", "请选择流程图");
+			resultresponse(response,json);
+			return;
+		}
 		if(GiantUtil.isEmpty(mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("need_name")) || 
 				GiantUtil.isEmpty(mvm.get("level")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || 
 				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date")) || 
@@ -146,7 +161,7 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		boolean flag = teamNeedService.add(mvm,id,name,file);
+		boolean flag = teamNeedService.add(mvm,id,name,file,filePrototype,filetree);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "添加成功");

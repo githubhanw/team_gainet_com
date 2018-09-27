@@ -69,6 +69,19 @@
 									<td>
 										<c:if test="${p.state=='0'}">无效</c:if>
 										<c:if test="${p.state=='1'}">正常</c:if>
+										<c:if test="${p.state=='2'}">项目待验收</c:if>
+										<c:if test="${p.state=='3'}">项目已验收</c:if>
+										<c:if test="${p.state=='4'}">项目已完成</c:if>
+										<c:if test="${p.state=='5'}">已拆分模块</c:if>
+										<c:if test="${p.state=='6'}">里程碑待确认</c:if>
+										<c:if test="${p.state=='7'}">里程碑待验收</c:if>
+										<c:if test="${p.state=='8'}">里程碑及概要设计已确认</c:if>
+										<c:if test="${p.state=='9'}">待测试</c:if>
+										<c:if test="${p.state=='10'}">已完成测试</c:if>
+										<c:if test="${p.state=='11'}">里程碑已验收</c:if>
+										<c:if test="${p.state=='12'}">里程碑报告待验收</c:if>
+										<c:if test="${p.state=='13'}">里程碑报告已验收</c:if>
+										
 									</td>
 									<td></td>
 								</tr>

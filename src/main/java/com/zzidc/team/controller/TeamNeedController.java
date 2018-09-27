@@ -200,10 +200,14 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * [项目]跳转添加选中项目的模块列表页面
+	 * [项目]跳转到 选中项目的添加模块列表页面
 	 */
 	@RequestMapping("/toEachAdd")
 	public String toEachAdd(@RequestParam Map<String, String> mvm, Model model) {
+		String fenlei = "0";//0->项目 1->产品
+		if (!"".equals(mvm.get("fenlei"))) {
+			fenlei = mvm.get("fenlei").toString();
+		}
 		//添加模块页面的项目列表
 		if(conditionPage == null){
 			conditionPage = new GiantPager();
@@ -211,11 +215,22 @@ public class TeamNeedController extends GiantBaseController {
 		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
-		pageList = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0));
-		model.addAttribute("project", teamNeedService.getTeamProjectByID(GiantUtil.intOf(mvm.get("project_id"), 0)));
-		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
-		model.addAttribute("pageList", pageList);
-		pageList.setDesAction(requestURL);
+		if (!GiantUtil.isEmpty(mvm.get("product_id")) || "1".equals(fenlei)) {
+			pageList = teamNeedService.getPageListThisProduct(GiantUtil.intOf(mvm.get("product_id"), 0));
+			model.addAttribute("product", teamNeedService.getTeamProductByID(GiantUtil.intOf(mvm.get("product_id"), 0)));
+			model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 1));
+			model.addAttribute("pageList", pageList);
+			model.addAttribute("fenlei", fenlei);
+			pageList.setDesAction(requestURL);
+		}
+		if (!GiantUtil.isEmpty(mvm.get("project_id")) || "0".equals(fenlei)){
+			pageList = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0));
+			model.addAttribute("project", teamNeedService.getTeamProjectByID(GiantUtil.intOf(mvm.get("project_id"), 0)));
+			model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+			model.addAttribute("pageList", pageList);
+			model.addAttribute("fenlei", fenlei);
+			pageList.setDesAction(requestURL);
+		}
 		publicResult(model);
 		return "team/need/eachAdd";
 	}

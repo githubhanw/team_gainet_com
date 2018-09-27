@@ -184,7 +184,7 @@
 												<c:if test="${product.state == '1'}">
 													<a href="team/product/toedit?id=${product.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
 													<a href="javascript:void(0)" onclick="del(${product.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
-													<a href="team/need/toAdd?product_id=${product.id}&fenlei=1" class="btn" title="提需求"><i class="icon icon-plus"></i> 提需求</a>
+													<a href="team/need/toEachAdd?fenlei=1&product_id=${product.id}" class="btn" title="拆分模块"><i class="icon-task-batchCreate icon-branch"></i></a>
 												</c:if>
 												<c:if test="${product.state != '1'}">--</c:if>
 											</td>

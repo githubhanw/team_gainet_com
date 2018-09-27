@@ -47,7 +47,7 @@ public class TeamNeedService extends GiantBaseService{
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT tn.*,tp.project_name,tp.id proje_id,tpd.product_name,m.name meeting_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,(SELECT COUNT(0) "
+		String sql = "SELECT tn.*,tp.project_name,tp.id proje_id,tpd.product_name,tpd.id produ_id,m.name meeting_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,(SELECT COUNT(0) "
 				+ "FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
 				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id "
 				+ "LEFT JOIN task_product tpd ON tn.product_id=tpd.id "
@@ -292,6 +292,9 @@ public class TeamNeedService extends GiantBaseService{
 		return subNeedList;
 	}
 
+	/**
+	 * 项目划分模块时,同项目的模块列表
+	 */
 	public GiantPager getPageListThisProject(int project_id) {
 		GiantPager conditionPage = new GiantPager();
 		conditionPage = this.filterStr(conditionPage);
@@ -299,12 +302,30 @@ public class TeamNeedService extends GiantBaseService{
 		String sql = "SELECT tn.*,tp.project_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
 				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
 				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id +" ORDER BY tn.update_time DESC";
-		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id LEFT JOIN task_product tpd ON tn.product_id=tpd.id  WHERE 1=1 AND tp.id="+project_id;
+		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id;
 		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
 		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
 		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
 		return resultPage;
 	}
+	
+	/**
+	 * 产品划分模块时,同产品的模块列表
+	 */
+	public GiantPager getPageListThisProduct(int product_id) {
+		GiantPager conditionPage = new GiantPager();
+		conditionPage = this.filterStr(conditionPage);
+		Map<String, Object> conditionMap = new HashMap<String, Object>();
+		String sql = "SELECT tn.*,tp.product_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
+				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
+				+ "LEFT JOIN task_product tp ON tn.product_id=tp.id WHERE 1=1 AND tp.id="+product_id +" ORDER BY tn.update_time DESC";
+		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_product tp ON tn.product_id=tp.id  WHERE 1=1 AND tp.id="+product_id;
+		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
+		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
+		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
+		return resultPage;
+	}
+	
 	/**
 	 * 获取模块详情
 	 * @return
@@ -386,6 +407,15 @@ public class TeamNeedService extends GiantBaseService{
 	 */
 	public Map<String, Object> getTeamProjectByID(int project_id){
 		String sql = "select id,project_name from task_project where id="+project_id;
+		return super.getMapListBySQL(sql, null).get(0);
+	}
+	
+	/**
+	 * 根据ID获取产品名称
+	 * @return
+	 */
+	public Map<String, Object> getTeamProductByID(int product_id){
+		String sql = "select id,product_name from task_product where id="+product_id;
 		return super.getMapListBySQL(sql, null).get(0);
 	}
 	

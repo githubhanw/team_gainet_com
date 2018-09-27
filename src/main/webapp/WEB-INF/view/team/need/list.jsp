@@ -321,7 +321,12 @@
 														<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && need.state == 2}">
 															<a href="team/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 														</c:if>
-														<a href="team/need/toAddSon?fenlei=0&need_id=${need.id}&project_id=${need.proje_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
+														<c:if test="${need.project_id!='0'}">
+															<a href="team/need/toAddSon?fenlei=0&need_id=${need.id}&project_id=${need.proje_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
+														</c:if>
+														<c:if test="${need.project_id == '0'}">
+															<a href="team/need/toAddSon?fenlei=1&need_id=${need.id}&product_id=${need.produ_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
+														</c:if>
 												<c:if test="${need.state == 0 || need.state == 5}"></c:if>
 											</td>
 										</tr>

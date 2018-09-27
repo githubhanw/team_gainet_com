@@ -42,7 +42,7 @@
 									</td>
 									<td></td>
 								</tr>
-								<c:if test="${fenlei!='1'}">
+								<c:if test="${fenlei != '1'}">
 								<tr>
 									<th>所属项目</th>
 									<td class="required">
@@ -54,7 +54,7 @@
 									<td></td>
 								</tr>
 								</c:if>
-								<c:if test="${fenlei=='1'}">
+								<c:if test="${fenlei == '1'}">
 								<tr>
 									<th>所属产品</th>
 									<td class="required">
@@ -195,7 +195,7 @@
 								<a href="team/need/toEachAdd?fenlei=0&project_id=${project_id}" class="btn">返回本项目模块列表</a>
 								</c:if>
 								<c:if test="${fenlei == '1'}">
-								<a href="team/need/index?fenlei=1&project_id=${project_id}" class="btn">返回本产品模块列表</a>
+								<a href="team/need/toEachAdd?fenlei=1&product_id=${product_id}" class="btn">返回本产品模块列表</a>
 								</c:if>
 									
 							</div>
@@ -242,6 +242,9 @@ $("#submit").click(function(){
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
+	var fenlei=${fenlei};
+	var project_id = ${project_id};
+	var product_id = ${product_id};
 	
 	/* if(filesize==''){
 		alert("请选择文件");
@@ -258,7 +261,9 @@ $("#submit").click(function(){
         	 if(data.code == 0){
         		 if (fenlei == 0) {
         			 window.location.href="team/need/toEachAdd?fenlei=0&project_id="+project_id;
-				}else{
+				} else if(fenlei == 1){
+					 window.location.href="team/need/toEachAdd?fenlei=1&product_id="+product_id;
+				} else{
 	     			$("#msg").text(data.message);
 	     			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
 				}

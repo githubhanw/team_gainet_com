@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.service.GiantBaseService;
+import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
@@ -24,6 +25,7 @@ import com.zzidc.log.LogMethod;
 import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.Member;
+import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
 
 import net.sf.json.JSONObject;
@@ -440,9 +442,25 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * 添加模块信息
 	 */
-	public boolean add(Map<String, String> mvm,int id,String name,MultipartFile[] file) {
+	public boolean add(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		TaskNeed need = new TaskNeed();
+		//上传界面原型图和流程图文件
+		String interfaceImg="";//界面原型图（格式：url,url）
+		String flowImg="";//流程图（格式：url,url）
+		for (int i = 0; i < filePrototype.length; i++) {
+			MultipartFile file1 = filePrototype[i];
+			interfaceImg+=FileUploadUtil.uploadFiles(file1).toString()+",";
+		}
+		interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
+		for (int i = 0; i < filetree.length; i++) {
+			MultipartFile file2 = filetree[i];
+			flowImg+=FileUploadUtil.uploadFiles(file2).toString()+",";
+		}
+		flowImg = flowImg.substring(0,flowImg.length() - 1);
+		need.setInterfaceImg(interfaceImg);//界面原型图拼接路径
+		need.setFlowImg(flowImg);//流程图拼接路径
+		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
 		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));

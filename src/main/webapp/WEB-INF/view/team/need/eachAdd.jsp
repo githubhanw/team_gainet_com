@@ -54,7 +54,7 @@
 						</c:if>
 						<c:if test="${fenlei == '1'}">
 						<div class="cell load-indicator">
-							<span  class="btn btn-wide btn-primary"  style="background-color: #00da88;" data-toggle="tooltip" data-placement="top">列表模块所属产品：</span>
+							<span  class="btn btn-wide btn-primary"  style="background-color: #03b8cf;" data-toggle="tooltip" data-placement="top">列表模块所属产品：</span>
 							${product.product_name}
 						</div>
 						</c:if>
@@ -74,7 +74,8 @@
 											<th data-flex="false" data-width="auto" style="width:120px" class="c-name text-center" >验收时间</th>
 											<th data-flex="false" data-width="auto" style="width:90px" class="c-name text-center" >状态</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" >创建时间</th>
-											<th data-flex="false" data-width="300px" style="width:200px" class="c-name text-center" >操作</th>
+											<th data-flex="false" data-width="300px" style="width:200px" class="c-name text-center" >原型图</th>
+											<th data-flex="false" data-width="300px" style="width:200px" class="c-name text-center" >流程图</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -92,8 +93,14 @@
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-actions text-right">
-												<a href="team/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top">查看原型图</a>
-												<a href="team/task/toBatchA?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top">查看流程图</a>
+											<c:forEach items="${fn:split(need.interface_img, ',')}" var="flow" varStatus="sta">
+												<img src="${flow}" data-toggle="lightbox" height="20px" data-caption="${need.need_name}【原型图】">
+											</c:forEach>
+											</td>
+											<td class="c-actions text-right">
+											<c:forEach items="${fn:split(need.flow_img, ',')}" var="flow" varStatus="sta">
+												<img src="${flow}" data-toggle="lightbox" height="20px" data-caption="${need.flow_img}【流程图】">
+											</c:forEach>
 											</td>
 										</tr>
 										</c:forEach>

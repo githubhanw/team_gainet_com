@@ -38,66 +38,70 @@ public class TeamProjectService extends GiantBaseService{
 		String sql = "SELECT p.*,m.`name` 'member_name',(SELECT count(0) FROM task_need tn WHERE tn.project_id=p.id AND state!=0) needCount, " + 
 				"(SELECT count(0) FROM task t WHERE t.project_id=p.id AND deleted=0) taskCount FROM task_project p LEFT JOIN member m ON p.member_id=m.id WHERE 1=1 ";
 		String countSql = "SELECT count(0) FROM task_project p LEFT JOIN member m ON p.member_id=m.id WHERE 1=1 ";
+		
 		if (conditionPage.getQueryCondition() != null) {
 			String temp = "";
-			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
-				temp = temp.trim();
-				String searchType = "";
-				if (!StringUtils.isEmpty(searchType = conditionPage.getQueryCondition().get("searchType"))) {
-					if ("1".equals(searchType)) {
-						try {
-							// 如果成功则为编号
-							Integer.parseInt(temp);	
-							sql += "AND p.id =:search ";
-							countSql += "AND p.id =:search ";
-							conditionMap.put("search", temp);
-						} catch (Exception e) {
-							// 名称条件
-							sql += "AND p.project_name LIKE :search ";
-							countSql += "AND p.project_name LIKE :search ";
-							conditionMap.put("search", temp + "%");
+			
+			if ("10".equals(conditionPage.getQueryCondition().get("type"))) {
+				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("search"))) {
+					temp = temp.trim();
+					String searchType = "";
+					if (!StringUtils.isEmpty(searchType = conditionPage.getQueryCondition().get("searchType"))) {
+						if ("1".equals(searchType)) {
+							try {
+								// 如果成功则为编号
+								Integer.parseInt(temp);	
+								sql += "AND p.id =:search ";
+								countSql += "AND p.id =:search ";
+								conditionMap.put("search", temp);
+							} catch (Exception e) {
+								// 名称条件
+								sql += "AND p.project_name LIKE :search ";
+								countSql += "AND p.project_name LIKE :search ";
+								conditionMap.put("search", temp + "%");
+							}
+						} else if("2".equals(searchType)) {//项目备注
+							sql += "AND p.remark LIKE :search ";
+							countSql += "AND p.remark LIKE :search ";
+							conditionMap.put("search", "%" + temp + "%");
 						}
-					} else if("2".equals(searchType)) {//项目备注
-						sql += "AND p.remark LIKE :search ";
-						countSql += "AND p.remark LIKE :search ";
-						conditionMap.put("search", "%" + temp + "%");
 					}
 				}
-			}
 
-			String Company="";//公司
-			if (!StringUtils.isEmpty(Company = conditionPage.getQueryCondition().get("company"))) {
-				sql += "AND p.company=:company ";
-				countSql += "AND p.company=:company ";
-				conditionMap.put("company", Company);
-			}
-			
-			String MemberId="";//项目负责人
-			if (!StringUtils.isEmpty(MemberId = conditionPage.getQueryCondition().get("member_id"))) {
-				sql += "AND p.member_id=:member_id ";
-				countSql += "AND p.member_id=:member_id ";
-				conditionMap.put("member_id", MemberId);
-			}
-			
-			String State="";//状态
-			if (!StringUtils.isEmpty(State = conditionPage.getQueryCondition().get("state"))) {
-				sql += "AND p.state=:state ";
-				countSql += "AND p.state=:state ";
-				conditionMap.put("state", State);
-			}
-			
-			String Createtime="";//开始时间
-			if (!StringUtils.isEmpty(Createtime = conditionPage.getQueryCondition().get("createtime"))) {
-				sql += "AND p.create_time>:createtime ";
-				countSql += "AND p.create_time>:createtime ";
-				conditionMap.put("createtime", Createtime);
-			}
-			
-			String Endtime="";//结束时间
-			if (!StringUtils.isEmpty(Endtime = conditionPage.getQueryCondition().get("endtime"))) {
-				sql += "AND p.create_time<:endtime ";
-				countSql += "AND p.create_time<:endtime ";
-				conditionMap.put("endtime", Endtime);
+				String Company="";//公司
+				if (!StringUtils.isEmpty(Company = conditionPage.getQueryCondition().get("company"))) {
+					sql += "AND p.company=:company ";
+					countSql += "AND p.company=:company ";
+					conditionMap.put("company", Company);
+				}
+				
+				String MemberId="";//项目负责人
+				if (!StringUtils.isEmpty(MemberId = conditionPage.getQueryCondition().get("member_id"))) {
+					sql += "AND p.member_id=:member_id ";
+					countSql += "AND p.member_id=:member_id ";
+					conditionMap.put("member_id", MemberId);
+				}
+				
+				String State="";//状态
+				if (!StringUtils.isEmpty(State = conditionPage.getQueryCondition().get("state"))) {
+					sql += "AND p.state=:state ";
+					countSql += "AND p.state=:state ";
+					conditionMap.put("state", State);
+				}
+				
+				String Createtime="";//开始时间
+				if (!StringUtils.isEmpty(Createtime = conditionPage.getQueryCondition().get("createtime"))) {
+					sql += "AND p.create_time>:createtime ";
+					countSql += "AND p.create_time>:createtime ";
+					conditionMap.put("createtime", Createtime);
+				}
+				
+				String Endtime="";//结束时间
+				if (!StringUtils.isEmpty(Endtime = conditionPage.getQueryCondition().get("endtime"))) {
+					sql += "AND p.create_time<:endtime ";
+					countSql += "AND p.create_time<:endtime ";
+					conditionMap.put("endtime", Endtime);
+				}
 			}
 			
 			

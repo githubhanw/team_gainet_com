@@ -30,15 +30,33 @@
 				<!--mainMenu start-->
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
-						<a href="team/product/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+						<a href="team/product/index?type=5" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
 							<span class="text">所有</span>
-							<c:if test="${prm.type == 2}">
+							<c:if test="${prm.type == 5}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
 						<a href="team/product/index?type=1" class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}">
 							<span class="text">正常</span>
 							<c:if test="${prm.type == 1}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/product/index?type=2" class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}">
+							<span class="text">待验收</span>
+							<c:if test="${prm.type == 2}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/product/index?type=3" class="btn btn-link ${prm.type == 3 ? 'btn-active-text':''}">
+							<span class="text">已验收</span>
+							<c:if test="${prm.type == 3}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
+						<a href="team/product/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
+							<span class="text">已完成</span>
+							<c:if test="${prm.type == 4}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
@@ -145,7 +163,7 @@
 												<a  href="${pageList.desAction}&orderColumn=remark&orderByValue=${prm.orderColumn=='remark'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">备注</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:60px" class="c-name text-center" title="状态">
+											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="状态">
 												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
@@ -175,18 +193,32 @@
 											<td class="c-pri text-left">${product.member_name}</td>
 											<td class="c-pri text-left">${product.remark}</td>
 											<td class="c-assignedTo has-btn text-center">
-												${product.state == 1 ? '正常' : '无效'}
+												${product.state == 0 ? '已删除' : product.state == 1 ? '正常' :
+												  product.state == 2 ? '产品待验收' : product.state == 3 ? '产品已验收' :
+												  product.state == 4 ? '产品已完成' : product.state == 5 ? '已拆分模块' : 
+												  product.state == 6 ? '待测试' : product.state == 7 ? '已完成测试' : '未知'}
 											</td>
 											<td class="c-pri text-center"><fmt:formatDate value="${product.create_time}" pattern="yyyy-MM-dd" /></td>
 											<td class="c-pri text-center"><a href="team/need/index?type=96&product_id=${product.id}">${product.needCount}</a></td>
 											<td class="c-pri text-center"><a href="team/task/index?type=96&product_id=${product.id}">${product.taskCount}</a></td>
 											<td class="c-actions text-center">
 												<c:if test="${product.state == '1'}"> 
-													<a href="team/product/toedit?id=${product.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i> 编辑</a>
-													<a href="javascript:void(0)" onclick="del(${product.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i> 删除</a>
+													<a href="team/product/toedit?id=${product.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
+													<a href="javascript:void(0)" onclick="del(${product.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
 													<a href="team/need/toEachAdd?fenlei=1&product_id=${product.id}" class="btn" title="拆分模块"><i class="icon-task-batchCreate icon-branch"></i></a>
 												</c:if>
-												<c:if test="${product.state != '1'}">--</c:if>
+												<c:if test="${product.state == '5' }">
+													<a href="test/apply/toAdd?product_id=${product.id}" class="btn" title="提交测试"><i class="icon-story-change icon-fork"></i></a>
+												</c:if>
+												<c:if test="${product.state == '7' }">
+													<a href="team/product/toEditReport?id=${product.id}" class="btn" title="编写产品验收报告"><i class="icon-testreport-browse icon-flag"></i></a>
+												</c:if>
+												<c:if test="${product.state == '2' }">
+													<a href="team/product/toCheck?id=${product.id}" class="btn" title="验收产品"><i class="icon-story-review icon-glasses"></i></a>
+												</c:if>
+												<c:if test="${product.state == '3' }">
+													<a href="team/product/toFinish?id=${product.id}" class="btn" title="确认产品完成"><i class="icon-task-finish icon-checked"></i></a>
+												</c:if>
 											</td>
 										</tr>
 										</c:forEach>

@@ -1,11 +1,13 @@
 package com.zzidc.team.controller;
 
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,10 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.giant.zzidc.base.utils.StringUtil;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskProduct;
+import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.service.FilemanageService;
 import com.zzidc.team.service.TeamProductService;
 
@@ -219,6 +223,184 @@ public class TeamProductController extends GiantBaseController {
 			}else{
 				json.put("code",1);
 				json.put("message", "删除失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	@RequestMapping("/toEditReport")
+	public String toEditReport(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		Integer productId = GiantUtil.intOf(mvm.get("id"), 0);
+		TaskProduct p = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("p", p);
+		}
+		if(p != null
+				/*&& p.getState() == 4*/
+				) {
+			//获取项目下所有模块
+			List<Map<String, Object>> need = teamProductService.getNeedByProject(productId);
+			//获取项目下所有子模块
+			List<Map<String, Object>> subNeed = teamProductService.getSubNeedByProject(productId);
+			//获取所有模块下任务
+			List<Map<String, Object>> needTask = teamProductService.getNeedTaskByProject(productId);
+			//获取所有子模块下任务
+			List<Map<String, Object>> subNeedTask = teamProductService.getSubNeedTaskByProject(productId);
+			//获取所有任务下的所有测试用例列表
+			List<Map<String, Object>> testCase = teamProductService.getTestCaseByProject(productId);
+			//获取所有测试用例下的所有步骤
+			List<Map<String, Object>> testCaseStep = teamProductService.getTestCaseStepByProject(productId);
+			
+			model.addAttribute("need", need);
+			model.addAttribute("subNeed", subNeed);
+			model.addAttribute("needTask", needTask);
+			model.addAttribute("subNeedTask", subNeedTask);
+			model.addAttribute("testCase", testCase);
+			model.addAttribute("testCaseStep", testCaseStep);
+		}
+		publicResult(model);
+		return "team/product/editReport";
+	}
+	
+	@RequestMapping("/editReport")
+	public void editReport(@RequestParam Map<String, String> mvm, Model model, HttpServletRequest request, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) throws ParseException {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskProduct p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
+			p.setState((short)2);
+			String actualEndTime = StringUtil.timestampToString(new Timestamp(System.currentTimeMillis()),StringUtil.SHORT_FORMATTER);
+//			p.setActualEndTime(actualEndTime);
+			boolean flag = teamProductService.saveUpdateOrDelete(p, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "编写验收报告成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "编写验收报告失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	@RequestMapping("/toCheck")
+	public String toCheck(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		Integer productId = GiantUtil.intOf(mvm.get("id"), 0);
+		TaskProduct p = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("p", p);
+		}
+		if(p != null
+				/*&& p.getState() == 4*/
+				) {
+			//获取项目下所有模块
+			List<Map<String, Object>> need = teamProductService.getNeedByProject(productId);
+			//获取项目下所有子模块
+			List<Map<String, Object>> subNeed = teamProductService.getSubNeedByProject(productId);
+			//获取所有模块下任务
+			List<Map<String, Object>> needTask = teamProductService.getNeedTaskByProject(productId);
+			//获取所有子模块下任务
+			List<Map<String, Object>> subNeedTask = teamProductService.getSubNeedTaskByProject(productId);
+			//获取所有任务下的所有测试用例列表
+			List<Map<String, Object>> testCase = teamProductService.getTestCaseByProject(productId);
+			//获取所有测试用例下的所有步骤
+			List<Map<String, Object>> testCaseStep = teamProductService.getTestCaseStepByProject(productId);
+			
+			model.addAttribute("need", need);
+			model.addAttribute("subNeed", subNeed);
+			model.addAttribute("needTask", needTask);
+			model.addAttribute("subNeedTask", subNeedTask);
+			model.addAttribute("testCase", testCase);
+			model.addAttribute("testCaseStep", testCaseStep);
+		}
+		publicResult(model);
+		return "team/product/check";
+	}
+	
+	@RequestMapping("/check")
+	public void check(@RequestParam Map<String, String> mvm, Model model, HttpServletRequest request, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) throws ParseException {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskProduct p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
+			String notThrough =  GiantUtil.stringOf(mvm.get("notThrough"));
+			//项目验收不通过的情况
+			/*if ("0".equals(notThrough)) {
+				
+			}*/
+			p.setState((short)3);
+			boolean flag = teamProductService.saveUpdateOrDelete(p, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "项目验收成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "项目验收失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	@RequestMapping("/toFinish")
+	public String toFinish(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		Integer productId = GiantUtil.intOf(mvm.get("id"), 0);
+		TaskProduct p = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("p", p);
+		}
+		if(p != null
+				/*&& p.getState() == 4*/
+				) {
+			//获取项目下所有模块
+			List<Map<String, Object>> need = teamProductService.getNeedByProject(productId);
+			//获取项目下所有子模块
+			List<Map<String, Object>> subNeed = teamProductService.getSubNeedByProject(productId);
+			//获取所有模块下任务
+			List<Map<String, Object>> needTask = teamProductService.getNeedTaskByProject(productId);
+			//获取所有子模块下任务
+			List<Map<String, Object>> subNeedTask = teamProductService.getSubNeedTaskByProject(productId);
+			//获取所有任务下的所有测试用例列表
+			List<Map<String, Object>> testCase = teamProductService.getTestCaseByProject(productId);
+			//获取所有测试用例下的所有步骤
+			List<Map<String, Object>> testCaseStep = teamProductService.getTestCaseStepByProject(productId);
+			
+			model.addAttribute("need", need);
+			model.addAttribute("subNeed", subNeed);
+			model.addAttribute("needTask", needTask);
+			model.addAttribute("subNeedTask", subNeedTask);
+			model.addAttribute("testCase", testCase);
+			model.addAttribute("testCaseStep", testCaseStep);
+		}
+		publicResult(model);
+		return "team/product/finish";
+	}
+	
+	@RequestMapping("/finish")
+	public void finish(@RequestParam Map<String, String> mvm, Model model, HttpServletRequest request, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) throws ParseException {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskProduct p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
+			p.setState((short)4);
+			boolean flag = teamProductService.saveUpdateOrDelete(p, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "确认项目完成成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "确认项目完成失败");
 			}
 		}else {
 			json.put("code",1);

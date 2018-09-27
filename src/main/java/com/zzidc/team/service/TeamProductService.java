@@ -103,8 +103,17 @@ public class TeamProductService extends GiantBaseService{
 					sql += "AND p.state=0";
 					countSql += "AND p.state=0";
 				} else if ("1".equals(temp)) {//正常
-					sql += "AND p.state=1";
-					countSql += "AND p.state=1";
+					sql += "AND p.state!=0";
+					countSql += "AND p.state!=0";
+				} else if ("2".equals(temp)) {//待验收
+					sql += "AND p.state=2";
+					countSql += "AND p.state=2";
+				} else if ("3".equals(temp)) {//已验收
+					sql += "AND p.state=3";
+					countSql += "AND p.state=3";
+				} else if ("4".equals(temp)) {//已完成
+					sql += "AND p.state=4";
+					countSql += "AND p.state=4";
 				}
 			}
 		}
@@ -186,5 +195,69 @@ public class TeamProductService extends GiantBaseService{
 		String sql = "SELECT * FROM `task_need` WHERE 1=1 AND product_id=" + needId + " ORDER BY create_time";
 		relationTaskList = super.getMapListBySQL(sql, null);
 		return relationTaskList;
+	}
+	
+	/**
+	 * 获取项目下所有模块【获取已验收模块】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getNeedByProject(int projectId){
+		String sql = "SELECT id,need_name,state FROM task_need WHERE state=4 AND parent_id=0 AND project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取项目下所有子模块【获取已验收模块】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getSubNeedByProject(int projectId){
+		String sql = "SELECT id,need_name,state,parent_id FROM task_need WHERE state=4 AND parent_id>0 AND project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有模块下任务【获取已完成任务】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getNeedTaskByProject(int projectId){
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img FROM task t, task_need n "
+				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有子模块下任务【获取已完成任务】
+	 * @param projectId
+	 * @return
+	 */
+	public List<Map<String, Object>> getSubNeedTaskByProject(int projectId){
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img FROM task t, task_need n "
+				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有任务下的所有测试用例列表
+	 * @param needId
+	 * @return
+	 */
+	public List<Map<String, Object>> getTestCaseByProject(int projectId){
+		String sql = "SELECT c.id,c.task_id,c.case_name,c.case_type,c.precondition FROM task t, task_need n, test_case c WHERE c.task_id=t.id AND t.need_id=n.id "
+				+ "AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取所有测试用例下的所有步骤
+	 * @param needId
+	 * @return
+	 */
+	public List<Map<String, Object>> getTestCaseStepByProject(int projectId){
+		String sql = "SELECT s.case_id,s.step,s.expect FROM task t, task_need n, test_case c, test_case_step s WHERE s.case_id=c.id AND s.version=c.version " + 
+				"AND c.task_id=t.id AND t.need_id=n.id AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.project_id=" + projectId;
+		return super.getMapListBySQL(sql, null);
 	}
 }

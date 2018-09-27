@@ -72,6 +72,34 @@
 									</c:if>
 								</div>
 							</div>
+							 <div class="detail">
+								<div class="detail-title">原型图和流程图&nbsp;&nbsp;
+                                <a href="team/task/toaddPicture?id=${taskM.id }">添加</a>&nbsp;&nbsp;
+								<a href="team/task/todelPicture?id=${taskM.id }">删除</a>
+								</div>  
+								<div class="detail-content article-content">
+								            原型图&nbsp;&nbsp;  
+								    <c:if test="${taskM.interface_img !=null }">
+									<c:forEach items="${fn:split(taskM.interface_img, ',')}" var="flow" varStatus="sta">
+										<img src="${flow}" data-toggle="lightbox" height="50px" width="50px" data-caption="【原型图】">&nbsp;&nbsp;
+									</c:forEach> 
+									</c:if>
+									<c:if test="${taskM.interface_img ==null }">
+									无图片
+									</c:if>
+								</div>
+								<div class="detail-content article-content">
+								            流程图&nbsp;&nbsp;
+								    <c:if test="${taskM.flow_img != null}">
+									<c:forEach items="${fn:split(taskM.flow_img, ',')}" var="flow" varStatus="sta">
+										<img src="${flow}" data-toggle="lightbox" height="50px" width="50px" data-caption="【流程图】">&nbsp;&nbsp;
+									</c:forEach>
+									</c:if>
+									<c:if test="${taskM.flow_img == null}">
+									无图片
+									</c:if>
+								</div>
+							</div> 
 							<c:if test="${subTask != null}">
 								<div class="detail">
 									<div class="detail-title">子任务</div>

@@ -3,6 +3,7 @@ package com.zzidc.my.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,7 +126,79 @@ public class MyTaskController extends GiantBaseController {
 		publicResult(model);
 		return "my/task/add";
 	}
-	
+	/**
+	 * 跳转添加原型图和流程图页面
+	 */
+	@RequestMapping("/toaddPicture")
+	public String toaddPicture(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("t", t);
+		}
+		publicResult(model);
+		return "team/task/addPicture";
+	}
+	/**
+	 * 添加原型图和流程图
+	 */
+	@RequestMapping("/addPicture")
+	public void addPicture(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response
+			,@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
+		JSONObject json=new JSONObject();
+		String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		if(prototypeName.equals("") && treeName.equals("")){
+			json.put("code",2);
+			json.put("message", "请选择");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamTaskService.addPicture(mvm, filePrototype, filetree);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "添加成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "添加失败");
+		}
+		resultresponse(response,json);
+	}
+	/**
+	 * 跳转删除原型图和流程图页面
+	 */
+	@RequestMapping("/todelPicture")
+	public String todelPicture(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("t", t);
+		}
+		publicResult(model);
+		return "team/task/delPicture";
+	}
+	/**
+	 * 删除原型图和流程图
+	 */
+	@RequestMapping("/delPicture")
+	public void delPicture(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,HttpServletRequest request){
+		JSONObject json=new JSONObject();
+		if(request.getParameterValues("checkinterface")==null && request.getParameterValues("checkfolw")==null){
+			json.put("code",2);
+			json.put("message", "请选择要删除的图片");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamTaskService.delPicture(mvm,request);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "失败");
+		}
+		resultresponse(response,json);
+	}
 	/**
 	 * 添加任务
 	 */

@@ -319,7 +319,9 @@
 												<c:if test="${task.deleted == '0'}">
 													<%-- 任务状态为待接收时，且是未分解任务 --%>
 													<c:if test="${task.state == 1 && task.resolved == 0}">
+													    <c:if test="${task.interface_img != null && task.interface_img != '' && task.flow_img != null && task.flow_img != ''}"> 
 														<a href="team/task/toOpen?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
+														</c:if>
 														<!-- chenmenghao -->
 														<a href="code/report/toAdd?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
 													</c:if>
@@ -419,8 +421,6 @@
 																<%-- 任务状态为待接收时，且是未分解任务 --%>
 																<c:if test="${subTask.state == 1 && subTask.resolved == 0}">
 																	<a href="team/task/toOpen?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
-																	<!-- chenmenghao -->
-																	<a href="code/report/toAdd?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
 																</c:if>
 																<%-- 任务状态为待接收和进行中时 --%>
 																<c:if test="${subTask.state == 1 || subTask.state == 2}">

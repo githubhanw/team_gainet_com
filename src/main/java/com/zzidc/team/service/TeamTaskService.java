@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -359,6 +361,101 @@ public class TeamTaskService extends GiantBaseService {
 		return super.getMapListBySQL(sql, null);
 	}
 
+	/**
+	 * 添加原型图和流程图
+	 */
+	public boolean addPicture(Map<String, String> mvm,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+		Task task = new Task();
+		String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		//上传界面原型图和流程图文件
+		String interfaceImg="";//界面原型图（格式：url,url）
+		String flowImg="";//流程图（格式：url,url）
+		if(!prototypeName.equals("")){
+			for (int i = 0; i < filePrototype.length; i++) {
+				MultipartFile file = filePrototype[i];
+				interfaceImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+			}
+			interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
+		}
+		if(!treeName.equals("")){
+			for (int i = 0; i < filetree.length; i++) {
+				MultipartFile file = filetree[i];
+				flowImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+			}
+			flowImg = flowImg.substring(0,flowImg.length() - 1);
+		}
+		if(GiantUtil.intOf(mvm.get("task_id"), 0) != 0){
+			//获取对象
+			task = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("task_id"), 0));
+		    if(!interfaceImg.equals("")){
+				if(task.getInterfaceImg()==null || task.getInterfaceImg().equals("")){
+			    task.setInterfaceImg(interfaceImg);	
+			    }else{
+			    task.setInterfaceImg(task.getInterfaceImg()+","+interfaceImg);	
+			    }
+		    }  
+		    if(!flowImg.equals("")){
+			    if(task.getFlowImg()==null || task.getFlowImg().equals("")){
+			    task.setFlowImg(flowImg);	
+			    }else{
+			    task.setFlowImg(task.getFlowImg()+","+flowImg);
+			    }
+		    }
+		}
+		boolean b =  super.dao.saveUpdateOrDelete(task, null);
+		return b;
+	}
+	/**
+	 * 删除原型图和流程图
+	 */
+	public boolean delPicture(Map<String, String> mvm,HttpServletRequest request) {
+		Task task = new Task();
+		String [] interfaceImg=request.getParameterValues("checkinterface");//选中要删除的原型图数组
+		String [] flowImg=request.getParameterValues("checkfolw");//选中要删除的流程图数组
+		if(GiantUtil.intOf(mvm.get("task_id"), 0) != 0){
+			//获取对象
+			task = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("task_id"), 0));
+		    if(task.getInterfaceImg()!=null &&interfaceImg!=null){
+		      String [] stringInterfaceImg= task.getInterfaceImg().split(",");
+		      //删除选中的原型图
+		      List<String> list = new ArrayList<String>();
+		      for (int i=0; i<stringInterfaceImg.length; i++) {
+		          list.add(stringInterfaceImg[i]);
+		      }
+		      for (String string : interfaceImg) {
+		     	 list.remove(string);
+		 	  }
+		      String[] newStr =  list.toArray(new String[1]);
+		      String temp = String.join(",", newStr);
+		      if(temp.equals("null")){
+		    	  task.setInterfaceImg(null);
+		      }else{
+		    	  task.setInterfaceImg(temp);
+		      }
+		    }
+		    if(task.getFlowImg()!=null &&flowImg!=null){
+		      String [] stringFlowImg= task.getFlowImg().split(",");
+		      //删除选中的流程图
+		      List<String> list = new ArrayList<String>();
+		      for (int i=0; i<stringFlowImg.length; i++) {
+		          list.add(stringFlowImg[i]);
+		      }
+		      for (String string : flowImg) {
+		     	 list.remove(string);
+		 	  }
+		      String[] newStr =  list.toArray(new String[1]);
+		      String temp = String.join(",", newStr);
+		      if(temp.equals("null")){
+		    	  task.setFlowImg(null);
+		      }else{
+		    	  task.setFlowImg(temp);
+		      }
+		    }
+		}
+		boolean b =  super.dao.saveUpdateOrDelete(task, null);
+		return b;
+	}
 	/**
 	 * 添加任务
 	 */

@@ -265,7 +265,7 @@ public class ReleaseController extends GiantBaseController {
 			resultresponse(response, json);
 			return;
 		}
-		String isUdpate = GiantUtil.stringOf(mvm.get("remark"));
+		String isUdpate = GiantUtil.stringOf(mvm.get("isUpdate"));
 		List<Publish> publishList = new ArrayList<Publish>();
 		for (int i = 0; i < test.length; i++) {
 			Integer id = Integer.valueOf(test[i]);

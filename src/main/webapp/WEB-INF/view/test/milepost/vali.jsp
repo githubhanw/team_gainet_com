@@ -91,7 +91,7 @@
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">确认</button>
-										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
+										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">驳回</a>
 									</td>
 								</tr>
 								

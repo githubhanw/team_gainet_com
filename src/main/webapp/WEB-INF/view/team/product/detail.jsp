@@ -69,6 +69,12 @@
 									<td>
 										<c:if test="${p.state=='0'}">无效</c:if>
 										<c:if test="${p.state=='1'}">正常</c:if>
+										<c:if test="${p.state=='2'}">项目待验收</c:if>
+										<c:if test="${p.state=='3'}">项目已验收</c:if>
+										<c:if test="${p.state=='4'}">项目已完成</c:if>
+										<c:if test="${p.state=='5'}">已拆分模块</c:if>
+										<c:if test="${p.state=='6'}">待测试</c:if>
+										<c:if test="${p.state=='7'}">已完成测试</c:if>
 									</td>
 									<td></td>
 								</tr>

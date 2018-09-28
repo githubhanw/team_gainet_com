@@ -86,7 +86,9 @@
 										<tbody>
 											<tr class="nofixed">
 												<th>任务名称</th>
-												<td title="/">${task.taskName}</td>
+												<td title="/">
+													<a href="team/task/detail?id=${task.id}" data-toggle="tooltip" data-placement="top" title="${task.taskName}">${task.taskName}</a>
+												</td>
 											</tr>
 											<tr class="nofixed">
 												<th>初始开始</th>
@@ -126,11 +128,15 @@
 										<tbody>
 											<tr class="nofixed">
 												<th>所属项目</th>
-												<td title="/">${project.projectName}</td>
+												<td title="/">
+													<a href="team/project/detail?id=${project.id}" data-toggle="tooltip" data-placement="top" title="${project.projectName}">${project.projectName}</a>
+												</td>
 											</tr>
 											<tr class="nofixed">
 												<th>所属模块</th>
-												<td title="/">${need.needName}</td>
+												<td title="/">
+													<a href="team/need/detail?id=${need.id}" data-toggle="tooltip" data-placement="top" title="${need.needName}">${need.needName}</a>
+												</td>
 											</tr>
 											<tr>
 												<th>模块来源</th>

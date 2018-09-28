@@ -225,7 +225,9 @@
 										<tbody>
 											<tr class="nofixed">
 												<th>所属项目</th>
-												<td title="${needM.project_name}">${needM.project_name}</td>
+												<td>
+													<a href="team/project/detail?id=${needM.project_id}" data-toggle="tooltip" data-placement="top" title="${needM.project_name}">${needM.project_name}</a>
+												</td>
 											</tr>
 											<tr>
 												<th>模块来源</th>

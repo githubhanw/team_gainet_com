@@ -340,10 +340,10 @@ public class TeamProductController extends GiantBaseController {
 			boolean flag = teamProductService.saveUpdateOrDelete(p, null);
 			if(flag){
 				json.put("code",0);
-				json.put("message", "项目验收成功");
+				json.put("message", "产品验收成功");
 			}else{
 				json.put("code",1);
-				json.put("message", "项目验收失败");
+				json.put("message", "产品验收失败");
 			}
 		}else {
 			json.put("code",1);
@@ -397,10 +397,10 @@ public class TeamProductController extends GiantBaseController {
 			boolean flag = teamProductService.saveUpdateOrDelete(p, null);
 			if(flag){
 				json.put("code",0);
-				json.put("message", "确认项目完成成功");
+				json.put("message", "确认产品完成成功");
 			}else{
 				json.put("code",1);
-				json.put("message", "确认项目完成失败");
+				json.put("message", "确认产品完成失败");
 			}
 		}else {
 			json.put("code",1);

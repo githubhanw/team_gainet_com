@@ -34,14 +34,14 @@ public class FileUploadUtil {
 	private static Logger logger = Logger.getLogger(FileUploadUtil.class);
 	
 	private final static String UPLOADURL = "http://api.storagesdk.com/";//测试使用
-	private final static String ACCESSKEY = "W7O2M3KY4G5TLPN2URI1";//测试组测试用
-//	private final static String ACCESSKEY = "3M3JYO5HFN6RNO3Y5BGO";//测试
-	private final static String SECRETKEY = "/rWk5zUcLyHSEobRz5ARM1zaVxqbt4ZLXVBBDHi7";//测试组测试用
-//	private final static String SECRETKEY = "3rIpwa/5HNJpWkxtfsmaGeUVNX5kqQ04hJDBu5ya";//测试
+//	private final static String ACCESSKEY = "W7O2M3KY4G5TLPN2URI1";//测试组测试用
+	private final static String ACCESSKEY = "3M3JYO5HFN6RNO3Y5BGO";//测试
+//	private final static String SECRETKEY = "/rWk5zUcLyHSEobRz5ARM1zaVxqbt4ZLXVBBDHi7";//测试组测试用
+	private final static String SECRETKEY = "3rIpwa/5HNJpWkxtfsmaGeUVNX5kqQ04hJDBu5ya";//测试
 //	private final static String UPLOADURL = "http://lanapi.storagesdk.com/";
 	
-	private final static String RESOURCE = "VG3OQ81wtrNjl7GkAWD9LSNETSqlzykT";//正式RESOURCE值
-//	private final static String RESOURCE = "VG3OQ81wtrP6xM+q9Ak6G2DLWdw5WNqb";//测试RESOURCE值
+//	private final static String RESOURCE = "VG3OQ81wtrNjl7GkAWD9LSNETSqlzykT";//正式RESOURCE值
+	private final static String RESOURCE = "VG3OQ81wtrP6xM+q9Ak6G2DLWdw5WNqb";//测试RESOURCE值
 	private final static String BUCKETNAME = "team-gainet-com";
 	private final static String UPLOADIMAGEPATH = "images";
 	private final static String UPLOADFILEPATH = "files";

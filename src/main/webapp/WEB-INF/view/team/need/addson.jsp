@@ -68,6 +68,20 @@
 								</tr>
 								</c:if>
 								<tr>
+								    <th>原型图</th>
+								    <td class="required">
+									<input type="file" name="filePrototype" multiple="multiple" accept="image/*"/>
+								    </td>
+								    <td></td>
+								</tr>
+								<tr>
+								    <th>流程图</th>
+								    <td class="required">
+								    <input type="file" name="filetree" multiple="multiple" accept="image/*"/>
+									</td>
+								    <td></td>
+								</tr>
+								<tr>
 									<th>指派给</th>
 									<td class="required">
 										<select data-placeholder="请选择被指派人员" class="form-control chosen-select" name="assigned_id" id="assigned_id">

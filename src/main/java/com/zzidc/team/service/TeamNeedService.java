@@ -450,7 +450,7 @@ public class TeamNeedService extends GiantBaseService{
 		String flowImg="";//流程图（格式：url,url）
 		for (int i = 0; i < filePrototype.length; i++) {
 			MultipartFile file1 = filePrototype[i];
-			interfaceImg+=FileUploadUtil.uploadFiles(file1).toString()+",";
+			interfaceImg+=String.valueOf(FileUploadUtil.uploadFiles(file1))+",";
 		}
 		interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
 		for (int i = 0; i < filetree.length; i++) {

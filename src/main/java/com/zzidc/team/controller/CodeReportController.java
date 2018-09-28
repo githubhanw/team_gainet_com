@@ -71,7 +71,6 @@ public class CodeReportController extends GiantBaseController {
 	@RequestMapping("/add")
 	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		System.out.println("数据："+mvm);
 		int id=baseService.getMemberId();	//登录id	        
         String name=baseService.getMemberName();   //登录姓名
         //判断是否登录
@@ -81,9 +80,12 @@ public class CodeReportController extends GiantBaseController {
         resultresponse(response,json);
 		return;
         }
-		if(GiantUtil.isEmpty(mvm.get("report_interface")) || GiantUtil.isEmpty(mvm.get("entry_point")) || 
-				GiantUtil.isEmpty(mvm.get("online_url")) || GiantUtil.isEmpty(mvm.get("source_file"))
-				 || GiantUtil.isEmpty(mvm.get("report_remark")) || GiantUtil.isEmpty(mvm.get("task_id"))
+		if(GiantUtil.isEmpty(mvm.get("report_interface")) 
+				|| GiantUtil.isEmpty(mvm.get("entry_point")) || 
+				GiantUtil.isEmpty(mvm.get("online_url")) || 
+				GiantUtil.isEmpty(mvm.get("source_file"))
+				 || GiantUtil.isEmpty(mvm.get("report_remark")) 
+				 || GiantUtil.isEmpty(mvm.get("task_id"))
 				 || GiantUtil.isEmpty(mvm.get("report_type"))){
 			json.put("code",1);
 			json.put("message", "参数不足");

@@ -323,7 +323,7 @@
 														<a href="team/task/toOpen?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
 														</c:if>
 														<!-- chenmenghao -->
-														<a href="code/report/toAdd?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
+														<a href="code/report/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
 													</c:if>
 													<%-- 任务状态为待接收和进行中时 --%>
 													<c:if test="${task.state == 1 || task.state == 2}">

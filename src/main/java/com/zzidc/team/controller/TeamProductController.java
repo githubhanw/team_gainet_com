@@ -62,6 +62,7 @@ public class TeamProductController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "id");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
@@ -76,7 +77,7 @@ public class TeamProductController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = teamProductService.getPageList(conditionPage);
-		requestURL = "team/product/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "team/product/index";
 		pageList.setDesAction(requestURL);
 		model.addAttribute("members", teamProductService.getAllMember());
 		model.addAttribute("pageList", pageList);

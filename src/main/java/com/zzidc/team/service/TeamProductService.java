@@ -111,9 +111,18 @@ public class TeamProductService extends GiantBaseService{
 				} else if ("3".equals(temp)) {//已验收
 					sql += "AND p.state=3";
 					countSql += "AND p.state=3";
-				} else if ("4".equals(temp)) {//已完成
+				} else if ("4".equals(temp)) {//产品已验收
 					sql += "AND p.state=4";
 					countSql += "AND p.state=4";
+				} else if ("5".equals(temp)) {//产品已完成
+					sql += "AND p.state=5";
+					countSql += "AND p.state=5";
+				} else if ("6".equals(temp)) {//待测试
+					sql += "AND p.state=6";
+					countSql += "AND p.state=6";
+				} else if ("7".equals(temp)) {//已完成测试
+					sql += "AND p.state=7";
+					countSql += "AND p.state=7";
 				}
 			}
 		}

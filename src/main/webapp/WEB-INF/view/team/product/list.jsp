@@ -112,11 +112,17 @@
 													</c:forEach>
 												</select>
 											</td>
-											<td style="width:100px">
+											<td style="width:200px">
 												<select class="form-control chosen chosen-select" name="state" id="state">
 													<option value="">状态</option>
-													<option ${prm.bugrank=='0'?'selected="selected"':'' } value="0">无效</option>
-													<option ${prm.bugrank=='1'?'selected="selected"':'' } value="1">正常</option>
+													<option ${prm.state=='0'?'selected="selected"':'' } value="0">无效</option>
+													<option ${prm.state=='1'?'selected="selected"':'' } value="1">正常</option>
+													<option ${prm.state=='2'?'selected="selected"':'' } value="2">待验收</option>
+													<option ${prm.state=='3'?'selected="selected"':'' } value="3">产品已验收</option>
+													<option ${prm.state=='4'?'selected="selected"':'' } value="4">产品已完成</option>
+													<option ${prm.state=='5'?'selected="selected"':'' } value="5">已拆分模块</option>
+													<option ${prm.state=='6'?'selected="selected"':'' } value="6">待测试</option>
+													<option ${prm.state=='7'?'selected="selected"':'' } value="7">已完成测试</option>
 												</select>
 											</td>
 											

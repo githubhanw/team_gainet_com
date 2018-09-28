@@ -119,7 +119,7 @@
 													<option ${prm.bugrank=='1'?'selected="selected"':'' } value="1">正常</option>
 													<option ${prm.bugrank=='0'?'selected="selected"':'' } value="2">待验收</option>
 													<option ${prm.bugrank=='1'?'selected="selected"':'' } value="3">已验收</option>
-													<option ${prm.bugrank=='0'?'selected="selected"':'' } value="4">已完成</option>
+													<option ${prm.bugrank=='0'?'selected="selected"':'' } value="4">已完成</option> 
 												</select>
 											</td>
 											

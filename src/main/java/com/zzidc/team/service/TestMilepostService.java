@@ -142,6 +142,9 @@ public class TestMilepostService extends GiantBaseService{
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String edittime = sdf.format(date);
 		MilepostManage mm=new MilepostManage();
+		if(GiantUtil.intOf(mvm.get("mi_id"),0) != 0){
+		//获取对象
+	    mm = (MilepostManage) super.dao.getEntityByPrimaryKey(new MilepostManage(), GiantUtil.intOf(mvm.get("mi_id"), 0));
 		mm.setId(Integer.parseInt(mvm.get("mi_id")));
 		mm.setMilepostName(mvm.get("milepost_name"));
 		mm.setMilepostDescribe(mvm.get("mark"));
@@ -152,6 +155,7 @@ public class TestMilepostService extends GiantBaseService{
 		mm.setAuthorName(mvm.get("author_name"));
 		mm.setAuthorId(mvm.get("authorId"));
 		mm.setMilepostState(mvm.get("milepostState"));
+		}
 		boolean b =  super.dao.saveUpdateOrDelete(mm, null);
 		return b;
 	}

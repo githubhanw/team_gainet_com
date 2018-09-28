@@ -202,8 +202,8 @@ public class TeamProductService extends GiantBaseService{
 	 * @param projectId
 	 * @return
 	 */
-	public List<Map<String, Object>> getNeedByProject(int projectId){
-		String sql = "SELECT id,need_name,state FROM task_need WHERE state=4 AND parent_id=0 AND project_id=" + projectId;
+	public List<Map<String, Object>> getNeedByProject(int productId){
+		String sql = "SELECT id,need_name,state FROM task_need WHERE state=4 AND parent_id=0 AND product_id=" + productId;
 		return super.getMapListBySQL(sql, null);
 	}
 	
@@ -212,8 +212,8 @@ public class TeamProductService extends GiantBaseService{
 	 * @param projectId
 	 * @return
 	 */
-	public List<Map<String, Object>> getSubNeedByProject(int projectId){
-		String sql = "SELECT id,need_name,state,parent_id FROM task_need WHERE state=4 AND parent_id>0 AND project_id=" + projectId;
+	public List<Map<String, Object>> getSubNeedByProject(int productId){
+		String sql = "SELECT id,need_name,state,parent_id FROM task_need WHERE state=4 AND parent_id>0 AND product_id=" + productId;
 		return super.getMapListBySQL(sql, null);
 	}
 	
@@ -222,9 +222,9 @@ public class TeamProductService extends GiantBaseService{
 	 * @param projectId
 	 * @return
 	 */
-	public List<Map<String, Object>> getNeedTaskByProject(int projectId){
+	public List<Map<String, Object>> getNeedTaskByProject(int productId){
 		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img FROM task t, task_need n "
-				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.project_id=" + projectId;
+				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.product_id=" + productId;
 		return super.getMapListBySQL(sql, null);
 	}
 	
@@ -233,9 +233,9 @@ public class TeamProductService extends GiantBaseService{
 	 * @param projectId
 	 * @return
 	 */
-	public List<Map<String, Object>> getSubNeedTaskByProject(int projectId){
+	public List<Map<String, Object>> getSubNeedTaskByProject(int productId){
 		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img FROM task t, task_need n "
-				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.project_id=" + projectId;
+				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.product_id=" + productId;
 		return super.getMapListBySQL(sql, null);
 	}
 	
@@ -244,9 +244,9 @@ public class TeamProductService extends GiantBaseService{
 	 * @param needId
 	 * @return
 	 */
-	public List<Map<String, Object>> getTestCaseByProject(int projectId){
+	public List<Map<String, Object>> getTestCaseByProject(int productId){
 		String sql = "SELECT c.id,c.task_id,c.case_name,c.case_type,c.precondition FROM task t, task_need n, test_case c WHERE c.task_id=t.id AND t.need_id=n.id "
-				+ "AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.project_id=" + projectId;
+				+ "AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.product_id=" + productId;
 		return super.getMapListBySQL(sql, null);
 	}
 	
@@ -255,9 +255,9 @@ public class TeamProductService extends GiantBaseService{
 	 * @param needId
 	 * @return
 	 */
-	public List<Map<String, Object>> getTestCaseStepByProject(int projectId){
+	public List<Map<String, Object>> getTestCaseStepByProject(int productId){
 		String sql = "SELECT s.case_id,s.step,s.expect FROM task t, task_need n, test_case c, test_case_step s WHERE s.case_id=c.id AND s.version=c.version " + 
-				"AND c.task_id=t.id AND t.need_id=n.id AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.project_id=" + projectId;
+				"AND c.task_id=t.id AND t.need_id=n.id AND c.state=1 AND t.deleted=0 AND t.state=4 AND n.state=4 AND n.product_id=" + productId;
 		return super.getMapListBySQL(sql, null);
 	}
 }

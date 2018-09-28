@@ -497,6 +497,18 @@ public class TeamNeedService extends GiantBaseService{
 		//分解
 		need.setResolved((short)0);
 		need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
+		
+		//修改父类对象的resolved 状态改为已分解 
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed parentNeed = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(parentNeed.getResolved() == 0) {
+				parentNeed.setResolved((short) 1);
+				parentNeed.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				super.dao.saveUpdateOrDelete(parentNeed, null);
+			}
+		}
+		
 		try {
 			need.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
 		} catch (ParseException e) {

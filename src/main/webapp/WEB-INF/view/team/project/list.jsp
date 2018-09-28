@@ -231,7 +231,7 @@
 											<td class="c-actions text-center">
 											    <c:if test="${project.state == '1'}">
 													<a href="team/project/toedit?id=${project.id}" class="btn" title="编辑项目"><i class="icon-common-edit icon-edit"></i></a>
-													<a href="team/need/toAdd?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
+													<a href="team/need/toAdd?fenlei=0&project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
 													<a href="team/need/toEachAdd?fenlei=0&project_id=${project.id}" class="btn" title="拆分模块"><i class="icon-task-batchCreate icon-branch"></i></a>
 												    <a href="javascript:void(0)" onclick="del(${project.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>	
 												</c:if>

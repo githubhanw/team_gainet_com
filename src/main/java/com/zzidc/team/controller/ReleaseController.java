@@ -258,14 +258,14 @@ public class ReleaseController extends GiantBaseController {
 	public void confirm(@RequestParam Map<String, String> mvm, HttpServletRequest request,
 			HttpServletResponse response) {
 		JSONObject json = new JSONObject();
-		String[] test = request.getParameterValues("test");
+		String[] test = request.getParameterValues("test"); 
 		if (test == null || test.length == 0) {
 			json.put("code", 1);
 			json.put("message", "没有需要确认更新的模块，请原路返回！");
 			resultresponse(response, json);
 			return;
 		}
-		String isUdpate = GiantUtil.stringOf(mvm.get("remark"));
+		String isUdpate = GiantUtil.stringOf(mvm.get("isUpdate"));
 		List<Publish> publishList = new ArrayList<Publish>();
 		for (int i = 0; i < test.length; i++) {
 			Integer id = Integer.valueOf(test[i]);

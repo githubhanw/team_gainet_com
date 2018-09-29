@@ -712,6 +712,10 @@ public class MyTaskController extends GiantBaseController {
 					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", t.getAssignedId());
 				}
 			}
+			List<Map<String, Object>> codeReport = teamTaskService.getCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("codeReport", codeReport);
+			List<Map<String, Object>> codeInterface = teamTaskService.getCodeInterface(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("codeInterface", codeInterface);
 		}
 		publicResult(model);
 		return "my/task/finishCheck";
@@ -726,9 +730,14 @@ public class MyTaskController extends GiantBaseController {
 	@RequestMapping("/finishCheck")
 	public void check(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("id"))){
+		int codeNum = teamTaskService.getCodeNum(GiantUtil.intOf(mvm.get("id"), 0));
+		if(GiantUtil.isEmpty(mvm.get("id")) || codeNum>0){
 			json.put("code",1);
-			json.put("message", "参数不足");
+			if (codeNum > 0) {
+				json.put("message", "有"+codeNum+"个任务代码未审查!");
+			}else {
+				json.put("message", "参数不足!");
+			}
 			resultresponse(response,json);
 			return;
 		}
@@ -742,6 +751,28 @@ public class MyTaskController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}	
+	
+	/**
+	 * 代码审查
+	 */
+	@RequestMapping("/exam")
+	public void exam(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			boolean flag = teamTaskService.updateCodeReport(mvm);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "操作成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "操作失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
 	
 	/**
 	 * 删除任务

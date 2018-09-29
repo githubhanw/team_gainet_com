@@ -24,6 +24,7 @@ import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.log.LogMethod;
 import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
+import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskNeed;
 
@@ -914,6 +915,63 @@ public class TeamNeedService extends GiantBaseService{
 		}
 		return false;
 	}
+	
+	/**
+	 * 模块代码审核,界面审核
+	 * @return
+	 */
+	public List<Map<String, Object>> getCodeReport(Integer needId) {
+		List<Map<String, Object>> subTaskList = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT cr.* FROM code_report cr,task_need tn,task t WHERE cr.report_type=0 AND tn.id=t.need_id AND t.id=cr.task_id AND tn.id ="+ needId;
+		subTaskList = super.getMapListBySQL(sql, null);
+		return subTaskList;
+	}
+	
+	/**
+	 * 模块代码审核,流程审核
+	 * @return
+	 */
+	public List<Map<String, Object>> getCodeInterface(Integer needId) {
+		List<Map<String, Object>> subTaskList = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT cr.* FROM code_report cr,task_need tn,task t WHERE cr.report_type=1 AND tn.id=t.need_id AND t.id=cr.task_id AND tn.id ="+ needId;
+		subTaskList = super.getMapListBySQL(sql, null);
+		return subTaskList;
+	}
+	
+	/**
+	 * 模块代码审核,查询模块下所有任务代码审查状态未审查个数
+	 * @return
+	 */
+	public int getCodeNum(Integer needId) {
+		String sql = "SELECT COUNT(0)codenum FROM code_report cr,task_need tn,task t WHERE cr.examination=0 AND tn.id=t.need_id AND t.id=cr.task_id AND tn.id ="+ needId;
+		int subTaskList = Integer.parseInt(super.getMapListBySQL(sql, null).get(0).get("codenum").toString());
+		return subTaskList;
+	}
+	
+	/**
+	 * 代码审查-编辑状态
+	 */
+	public boolean updateCodeReport(Map<String, String> mvm) {
+		CodeReport ce = null;
+		String examination = "";
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			ce = (CodeReport) super.dao.getEntityByPrimaryKey(new CodeReport(), GiantUtil.intOf(mvm.get("id"), 0));
+		} else {
+			return false;
+		}
+		if ("y".equals(mvm.get("isPass"))) {
+			examination = "2";
+		} else if ("n".equals(mvm.get("isPass"))) {
+			examination = "1";
+		}else {
+			examination = "0";
+		}
+		ce.setExamination(examination);
+		ce.setExaminationId(super.getMemberId());
+		return super.dao.saveUpdateOrDelete(ce, null);
+	}
+
 	
 	/**
 	 * [判断模块是否能进行关联操作] <br>

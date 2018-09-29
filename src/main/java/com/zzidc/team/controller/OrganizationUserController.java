@@ -59,7 +59,7 @@ public class OrganizationUserController extends GiantBaseController {
 			mvm.put("orderByValue", "DESC");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
-			mvm.put("type", "0");
+			mvm.put("type", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
 			mvm.put("search", "");

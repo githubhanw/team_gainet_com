@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
-import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.Task;
+import com.zzidc.team.entity.TestApply;
 import com.zzidc.team.service.TeamTaskService;
+import com.zzidc.team.service.TestApplyService;
 
 import net.sf.json.JSONObject;
 
@@ -29,7 +30,8 @@ import net.sf.json.JSONObject;
 public class MyTaskController extends GiantBaseController {
 	@Autowired
 	private TeamTaskService teamTaskService;
-	private GiantPager conditionPage = null;
+	@Autowired
+	private TestApplyService testApplyService;
 	private String requestURL = "my/task";
 
 	public void publicResult(Model model) {
@@ -92,10 +94,10 @@ public class MyTaskController extends GiantBaseController {
 			//同模块任务
 			if ("3".equals(taskDetail.get("task_type"))) {//测试任务
 				List<Map<String, Object>> needTask = teamTaskService.getRelationTaskList(null, GiantUtil.intOf(mvm.get("id"), 0), 2);
-				model.addAttribute("needTask", needTask);
+				model.addAttribute("needTask1", needTask);
 			} else {//非测试任务
 				List<Map<String, Object>> needTask = teamTaskService.getRelationTaskList(GiantUtil.intOf(taskDetail.get("need_id"), 0), GiantUtil.intOf(mvm.get("id"), 0), 1);
-				model.addAttribute("needTask", needTask);
+				model.addAttribute("needTask1", needTask);
 			}
 			//非测试任务对应的测试任务
 			if (!"3".equals(taskDetail.get("task_type"))) {
@@ -106,6 +108,13 @@ public class MyTaskController extends GiantBaseController {
 			if(taskDetail.get("link") != null && !"".equals(taskDetail.get("link"))) {
 				List<Map<String, Object>> linkTask = teamTaskService.getLinkTask(taskDetail.get("link").toString());
 				model.addAttribute("linkTask", linkTask);
+			}
+			if("2".equals(taskDetail.get("task_type").toString())) {
+				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(taskDetail.get("test_apply_id"), 0));
+				if(n != null) {
+					model.addAttribute("apply", n);
+					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", GiantUtil.intOf(taskDetail.get("assigned_id"), 0));
+				}
 			}
 			//日志
 			List<Map<String, Object>> logList = teamTaskService.getLogList(GiantUtil.intOf(mvm.get("id"), 0));
@@ -631,11 +640,15 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
-			if(!teamTaskService.isCurrentMember(t.getAssignedId())) {
-				return "nopower";
-			}
 			model.addAttribute("members", teamTaskService.getAllMember());
 			model.addAttribute("t", t);
+			if(t.getTaskType() == 2) {
+				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
+				if(n != null) {
+					model.addAttribute("apply", n);
+					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", t.getAssignedId());
+				}
+			}
 		}
 		publicResult(model);
 		return "my/task/finish";
@@ -689,10 +702,14 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
-			if(!teamTaskService.isCurrentMember(t.getCheckedId())) {
-				return "nopower";
-			}
 			model.addAttribute("t", t);
+			if(t.getTaskType() == 2) {
+				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
+				if(n != null) {
+					model.addAttribute("apply", n);
+					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", t.getAssignedId());
+				}
+			}
 		}
 		publicResult(model);
 		return "my/task/finishCheck";

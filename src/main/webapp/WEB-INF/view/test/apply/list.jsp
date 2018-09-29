@@ -148,7 +148,11 @@
 										<c:forEach items="${pageList.pageResult}" var="apply" varStatus="sta">
 										<tr>
 											<td class="c-id cell-id text-center">${apply.id}</td>
-											<td class="c-pri text-left"><a href="test/apply/detail?id=${apply.id}">${apply.task_name}</a></td>
+											<td class="c-pri text-left">
+												<a href="test/apply/detail?id=${apply.id}">
+													${apply.task_name != null ? apply.task_name : apply.test_name}
+												</a>
+											</td>
 											<td class="c-pri text-center">
 												<c:if test="${apply.state == 1}">
 													<span class="status-wait"><span class="label label-dot"></span> 待测试</span>

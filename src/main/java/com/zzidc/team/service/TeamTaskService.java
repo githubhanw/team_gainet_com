@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.service.GiantBaseService;
@@ -31,7 +30,6 @@ import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
-import com.zzidc.team.entity.TaskProduct;
 import com.zzidc.team.entity.TestApply;
 
 import net.sf.json.JSONObject;
@@ -1058,13 +1056,16 @@ public class TeamTaskService extends GiantBaseService {
 				//更新任务的父任务状态
 				this.updateParentTaskState(GiantUtil.intOf(mvm.get("id"), 0));
 				if (t.getTaskType() == 2) {
-					//修改测试单状态为：已测试
-					Map<String, Object> map = new HashMap<String, Object>();
-					map.put("taskId", t.getDeveloperTaskId());
-					TestApply test = (TestApply) super.getEntityByHQL("TestApply", map);
-					if (test != null) {
-						test.setState((short) 3);
-						super.dao.saveUpdateOrDelete(test, null);
+					//判断：如果测试单下其他测试任务都已完成，修改测试单状态为：已测试
+					//获取未完成条数
+					String sql = "SELECT 1 FROM task WHERE state IN (1,2,3) AND deleted=0 AND task_type=2 AND test_apply_id=" + t.getTestApplyId() + " AND id!=" + t.getId();
+					List<Map<String, Object>> list = super.getMapListBySQL(sql, null);
+					if(list == null || list.size() == 0) {
+						TestApply test = (TestApply) super.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
+						if (test != null) {
+							test.setState((short) 3);
+							super.dao.saveUpdateOrDelete(test, null);
+						}
 					}
 				}
 				return b;

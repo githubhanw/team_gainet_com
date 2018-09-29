@@ -37,7 +37,7 @@
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
 									<th>任务名称</th>
-									<td class="required">
+									<td class="required" style="width:70%">
 										<input type="hidden" name="id" value="${t.id}"/>
 										<input type="text" readonly name="task_name" id="task_name" value="${taskName}" class="form-control input-product-title" autocomplete="off">
 									</td>

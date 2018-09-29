@@ -15,18 +15,20 @@ import javax.persistence.TemporalType;
  * Task entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "task")
+@Table(name = "task", catalog = "team_gainet_com")
 public class Task implements java.io.Serializable {
 
 	// Fields
 
 	private Integer id;
+	private Integer productId;
 	private Integer projectId;
 	private Integer needId;
 	private String taskName;
 	private Integer taskType;
 	private Integer level;
 	private String remark;
+	private String executeSql;
 	private Timestamp startDate;
 	private Timestamp endDate;
 	private String interfaceImg;
@@ -67,6 +69,11 @@ public class Task implements java.io.Serializable {
 	private Integer finishedId;
 	private String finishedName;
 	private Timestamp finishedTime;
+	private Integer testApplyId;
+	private Integer testId;
+	private String testName;
+	private Timestamp testTime;
+	private Integer testState;
 	private Integer percent;
 	private Short resolved;
 	private Integer parentId;
@@ -77,7 +84,8 @@ public class Task implements java.io.Serializable {
 	private Short delay;
 	private Short overdue;
 	private Short deleted;
-	private Integer developerTaskId;
+	private String developerTaskId;
+	private String filePath;
 
 	// Constructors
 
@@ -86,9 +94,10 @@ public class Task implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Task(Integer projectId, Integer needId, String taskName,
-			Integer taskType, Integer level, String remark,
-			Timestamp startDate, Timestamp endDate, String interfaceImg, String flowImg,Timestamp planEndDate,
+	public Task(Integer productId, Integer projectId, Integer needId,
+			String taskName, Integer taskType, Integer level, String remark,
+			String executeSql, Timestamp startDate, Timestamp endDate,
+			String interfaceImg, String flowImg, Timestamp planEndDate,
 			Timestamp realStartDate, Timestamp realEndDate, Integer memberId,
 			String memberName, Integer openedId, String openedName,
 			Timestamp openedTime, Integer handoverId, String handoverName,
@@ -100,20 +109,24 @@ public class Task implements java.io.Serializable {
 			String closedName, Timestamp closedTime, String closedReason,
 			Integer checkedId, String checkedName, Integer checkedNum,
 			String checkedReason, Timestamp checkedTime, Integer finishedId,
-			String finishedName, Timestamp finishedTime, Integer percent,
-			Short resolved, Integer parentId, String link,
-			Timestamp createTime, Timestamp updateTime, Short state,
-			Short delay, Short overdue, Short deleted, Integer developerTaskId) {
+			String finishedName, Timestamp finishedTime, Integer testApplyId,
+			Integer testId, String testName, Timestamp testTime,
+			Integer testState, Integer percent, Short resolved,
+			Integer parentId, String link, Timestamp createTime,
+			Timestamp updateTime, Short state, Short delay, Short overdue,
+			Short deleted, String developerTaskId, String filePath) {
+		this.productId = productId;
 		this.projectId = projectId;
 		this.needId = needId;
 		this.taskName = taskName;
 		this.taskType = taskType;
 		this.level = level;
 		this.remark = remark;
+		this.executeSql = executeSql;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.interfaceImg=interfaceImg;
-		this.flowImg=flowImg;
+		this.interfaceImg = interfaceImg;
+		this.flowImg = flowImg;
 		this.planEndDate = planEndDate;
 		this.realStartDate = realStartDate;
 		this.realEndDate = realEndDate;
@@ -150,6 +163,11 @@ public class Task implements java.io.Serializable {
 		this.finishedId = finishedId;
 		this.finishedName = finishedName;
 		this.finishedTime = finishedTime;
+		this.testApplyId = testApplyId;
+		this.testId = testId;
+		this.testName = testName;
+		this.testTime = testTime;
+		this.testState = testState;
 		this.percent = percent;
 		this.resolved = resolved;
 		this.parentId = parentId;
@@ -161,6 +179,7 @@ public class Task implements java.io.Serializable {
 		this.overdue = overdue;
 		this.deleted = deleted;
 		this.developerTaskId = developerTaskId;
+		this.filePath = filePath;
 	}
 
 	// Property accessors
@@ -173,6 +192,15 @@ public class Task implements java.io.Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	@Column(name = "product_id")
+	public Integer getProductId() {
+		return this.productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
 	@Column(name = "project_id")
@@ -229,6 +257,15 @@ public class Task implements java.io.Serializable {
 		this.remark = remark;
 	}
 
+	@Column(name = "execute_sql", length = 65535)
+	public String getExecuteSql() {
+		return this.executeSql;
+	}
+
+	public void setExecuteSql(String executeSql) {
+		this.executeSql = executeSql;
+	}
+
 	@Column(name = "start_date", length = 19)
 	public Timestamp getStartDate() {
 		return this.startDate;
@@ -247,18 +284,18 @@ public class Task implements java.io.Serializable {
 		this.endDate = endDate;
 	}
 
-	@Column(name = "interface_img")
+	@Column(name = "interface_img", length = 65535)
 	public String getInterfaceImg() {
-		return interfaceImg;
+		return this.interfaceImg;
 	}
 
 	public void setInterfaceImg(String interfaceImg) {
 		this.interfaceImg = interfaceImg;
 	}
 
-	@Column(name = "flow_img")
+	@Column(name = "flow_img", length = 65535)
 	public String getFlowImg() {
-		return flowImg;
+		return this.flowImg;
 	}
 
 	public void setFlowImg(String flowImg) {
@@ -590,6 +627,51 @@ public class Task implements java.io.Serializable {
 		this.finishedTime = finishedTime;
 	}
 
+	@Column(name = "test_apply_id")
+	public Integer getTestApplyId() {
+		return this.testApplyId;
+	}
+
+	public void setTestApplyId(Integer testApplyId) {
+		this.testApplyId = testApplyId;
+	}
+
+	@Column(name = "test_id")
+	public Integer getTestId() {
+		return this.testId;
+	}
+
+	public void setTestId(Integer testId) {
+		this.testId = testId;
+	}
+
+	@Column(name = "test_name")
+	public String getTestName() {
+		return this.testName;
+	}
+
+	public void setTestName(String testName) {
+		this.testName = testName;
+	}
+
+	@Column(name = "test_time", length = 19)
+	public Timestamp getTestTime() {
+		return this.testTime;
+	}
+
+	public void setTestTime(Timestamp testTime) {
+		this.testTime = testTime;
+	}
+
+	@Column(name = "test_state")
+	public Integer getTestState() {
+		return this.testState;
+	}
+
+	public void setTestState(Integer testState) {
+		this.testState = testState;
+	}
+
 	@Column(name = "percent")
 	public Integer getPercent() {
 		return this.percent;
@@ -680,13 +762,22 @@ public class Task implements java.io.Serializable {
 		this.deleted = deleted;
 	}
 
-	@Column(name = "developer_task_id")
-	public Integer getDeveloperTaskId() {
+	@Column(name = "developer_task_id", length = 65535)
+	public String getDeveloperTaskId() {
 		return this.developerTaskId;
 	}
 
-	public void setDeveloperTaskId(Integer developerTaskId) {
+	public void setDeveloperTaskId(String developerTaskId) {
 		this.developerTaskId = developerTaskId;
+	}
+
+	@Column(name = "file_path", length = 200)
+	public String getFilePath() {
+		return this.filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 
 }

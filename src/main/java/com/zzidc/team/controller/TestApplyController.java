@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
-import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
-import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.entity.TestApply;
 import com.zzidc.team.service.TestApplyService;
 
@@ -85,16 +83,13 @@ public class TestApplyController extends GiantBaseController {
 
 	/**
 	 * 跳转到添加页面
+	 * 
 	 */
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		publicResult(model);
-		if (GiantUtils.isEmpty(mvm.get("id"))) {
-			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
-		}else {
-			model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
-			model.addAttribute("task_id", mvm.get("id"));
-		}
+		testApplyService.showTreeMsg(model, 0, GiantUtil.intOf(mvm.get("task_id"), 0), GiantUtil.intOf(mvm.get("need_id"), 0), 
+				GiantUtil.intOf(mvm.get("project_id"), 0), GiantUtil.intOf(mvm.get("product_id"), 0), "1", 0);
 		return "test/apply/add";
 	}
 
@@ -132,8 +127,8 @@ public class TestApplyController extends GiantBaseController {
 			//获取对象
 			TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("entity", n);
+			testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "1", 0);
 		}
-		model.addAttribute("tasks", testApplyService.getFinishedTasksByMember(GiantUtil.intOf(mvm.get("id"), 0)));
 		return "test/apply/add";
 	}
 
@@ -185,11 +180,16 @@ public class TestApplyController extends GiantBaseController {
 			TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(n != null) {
 				model.addAttribute("entity", n);
+				if(n.getState() == 1) {
+					testApplyService.showTreeMsg(model, n.getId(), 0, n.getNeedId(), n.getProjectId(), n.getProductId(), "2", 0);
+				} else if (n.getState() == 2) {
+					testApplyService.showTreeMsg(model, n.getId(), 0, n.getNeedId(), n.getProjectId(), n.getProductId(), "3", 0);
+				} else if (n.getState() == 3) {
+					testApplyService.showTreeMsg(model, n.getId(), 0, n.getNeedId(), n.getProjectId(), n.getProductId(), "4", 0);
+				}
 				Task task = (Task) testApplyService.getEntityByPrimaryKey(new Task(), n.getTaskId());
 				if(task != null) {
 					model.addAttribute("task", task);
-					model.addAttribute("project", testApplyService.getEntityByPrimaryKey(new TaskProject(), task.getProjectId()));
-					model.addAttribute("need", testApplyService.getEntityByPrimaryKey(new TaskNeed(), task.getNeedId()));
 				}
 			}
 		}
@@ -206,16 +206,23 @@ public class TestApplyController extends GiantBaseController {
 			TestApply apply = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(apply != null) {
 				model.addAttribute("t", apply);
-				Task task = (Task) testApplyService.getEntityByPrimaryKey(new Task(), apply.getTaskId());
-				if(task != null) {
-					model.addAttribute("taskName", task.getTaskName());
-					TaskNeed taskNeed = (TaskNeed) testApplyService.getEntityByPrimaryKey(new TaskNeed(),task.getNeedId());
-					if(taskNeed != null) {
-						model.addAttribute("needName", taskNeed.getNeedName());
-						model.addAttribute("needId", taskNeed.getId());
+				if(apply.getApplyType() == 1) {
+					Task task = (Task) testApplyService.getEntityByPrimaryKey(new Task(), apply.getTaskId());
+					if(task != null) {
+						model.addAttribute("taskName", task.getTaskName());
+						TaskNeed taskNeed = (TaskNeed) testApplyService.getEntityByPrimaryKey(new TaskNeed(),task.getNeedId());
+						if(taskNeed != null) {
+							model.addAttribute("needName", taskNeed.getNeedName());
+							model.addAttribute("needId", taskNeed.getId());
+						}
 					}
+					model.addAttribute("members", testApplyService.getAllMemberByRole("5,9"));
+				}else {
+					testApplyService.showTreeMsg(model, apply.getId(), 0, apply.getNeedId(), apply.getProjectId(), apply.getProductId(), "2", 0);
+					model.addAttribute("members", testApplyService.getAllMemberByRole("5,9"));
+					publicResult(model);
+					return "test/apply/receive2";
 				}
-				model.addAttribute("members", testApplyService.getAllMember());
 			}
 		}
 		publicResult(model);
@@ -237,6 +244,30 @@ public class TestApplyController extends GiantBaseController {
 		}
 		// 调用任务添加方法，页面上都做过处理了
 		boolean flag = testApplyService.receive(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	/**
+	 * 领取2
+	 */
+	@RequestMapping("/receive2")
+	public void receive2(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("task_name")) || 
+				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		// 调用任务添加方法，页面上都做过处理了
+		boolean flag = testApplyService.receive2(mvm);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

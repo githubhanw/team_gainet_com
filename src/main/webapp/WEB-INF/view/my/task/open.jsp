@@ -41,7 +41,7 @@
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
 									<th>计划结束日期</th>
-									<td class="required">
+									<td class="required" style="width:70%">
 										<input type="text" name="plan_end_date" id="plan_end_date" value="<fmt:formatDate value="${t.endDate}" pattern="yyyy-MM-dd HH:mm"/>" 
 												class="form-control form-date-limit" placeholder="计划结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
@@ -50,11 +50,12 @@
 								</tr>
 								<tr>
 									<th>备注</th>
-									<td colspan="2">
+									<td>
 										<div id="comment" style="width:100%;">
 											<input type="hidden" name="comment">
 										</div>
 									</td>
+									<td></td>
 								</tr>
 								</form>
 								<tr>

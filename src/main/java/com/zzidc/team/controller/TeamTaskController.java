@@ -1,5 +1,7 @@
 package com.zzidc.team.controller;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,13 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
-import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
-import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Task;
-import com.zzidc.team.entity.TaskProduct;
+import com.zzidc.team.entity.TestApply;
 import com.zzidc.team.service.TeamTaskService;
+import com.zzidc.team.service.TestApplyService;
 
 import net.sf.json.JSONObject;
 
@@ -32,6 +33,8 @@ import net.sf.json.JSONObject;
 public class TeamTaskController extends GiantBaseController {
 	@Autowired
 	private TeamTaskService teamTaskService;
+	@Autowired
+	private TestApplyService testApplyService;
 	private GiantPager conditionPage = null;
 	private String requestURL = "team/task/index";
 
@@ -96,10 +99,10 @@ public class TeamTaskController extends GiantBaseController {
 			//同模块任务
 			if ("2".equals(taskDetail.get("task_type"))) {//测试任务
 				List<Map<String, Object>> needTask = teamTaskService.getRelationTaskList(null, GiantUtil.intOf(mvm.get("id"), 0), 2);
-				model.addAttribute("needTask", needTask);
+				model.addAttribute("needTask1", needTask);
 			} else {//非测试任务
 				List<Map<String, Object>> needTask = teamTaskService.getRelationTaskList(GiantUtil.intOf(taskDetail.get("need_id"), 0), GiantUtil.intOf(mvm.get("id"), 0), 1);
-				model.addAttribute("needTask", needTask);
+				model.addAttribute("needTask1", needTask);
 			}
 			//非测试任务对应的测试任务
 			if (!"2".equals(taskDetail.get("task_type"))) {
@@ -111,6 +114,14 @@ public class TeamTaskController extends GiantBaseController {
 				List<Map<String, Object>> linkTask = teamTaskService.getLinkTask(taskDetail.get("link").toString());
 				model.addAttribute("linkTask", linkTask);
 			}
+			if("2".equals(taskDetail.get("task_type").toString())) {
+				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(taskDetail.get("test_apply_id"), 0));
+				if(n != null) {
+					model.addAttribute("apply", n);
+					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", GiantUtil.intOf(taskDetail.get("assigned_id"), 0));
+				}
+			}
+			
 			//日志
 			List<Map<String, Object>> logList = teamTaskService.getLogList(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("logList", logList);
@@ -626,6 +637,13 @@ public class TeamTaskController extends GiantBaseController {
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("members", teamTaskService.getAllMember());
 			model.addAttribute("t", t);
+			if(t.getTaskType() == 2) {
+				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
+				if(n != null) {
+					model.addAttribute("apply", n);
+					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", t.getAssignedId());
+				}
+			}
 		}
 		publicResult(model);
 		return "team/task/finish";
@@ -680,6 +698,13 @@ public class TeamTaskController extends GiantBaseController {
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("t", t);
+			if(t.getTaskType() == 2) {
+				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
+				if(n != null) {
+					model.addAttribute("apply", n);
+					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", t.getAssignedId());
+				}
+			}
 			List<Map<String, Object>> codeReport = teamTaskService.getCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("codeReport", codeReport);
 			List<Map<String, Object>> codeInterface = teamTaskService.getCodeInterface(GiantUtil.intOf(mvm.get("id"), 0));
@@ -932,6 +957,92 @@ public class TeamTaskController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-	
+
+	/**
+	 * 测试任务通过测试
+	 */
+	@RequestMapping("/adopt")
+	public void adopt(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取单个非测试任务对象
+			Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			task.setTestTime(new Timestamp(System.currentTimeMillis()));
+			task.setTestState(4);
+			boolean flag = teamTaskService.saveUpdateOrDelete(task, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "通过成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "通过失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+
+	/**
+	 * 一键通过测试任务下所有任务
+	 */
+	@RequestMapping("/adoptAll")
+	public void adoptAll(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取测试任务对象
+			Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			List<Object> list = new ArrayList<Object>();
+			if(task.getDeveloperTaskId() != null && !"".equals(task.getDeveloperTaskId())) {
+				String taskIdArray[] = task.getDeveloperTaskId().split(",");
+				for(String taskId: taskIdArray) {
+					Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(taskId, 0));
+					t.setTestTime(new Timestamp(System.currentTimeMillis()));
+					t.setTestState(4);
+					list.add(t);
+				}
+			}
+			boolean flag = teamTaskService.saveUpdateOrDelete(list, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "通过成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "通过失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+
+	/**
+	 * 测试任务驳回测试
+	 */
+	@RequestMapping("/reject")
+	public void reject(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			task.setTestTime(new Timestamp(System.currentTimeMillis()));
+			task.setTestState(5);
+			boolean flag = teamTaskService.saveUpdateOrDelete(task, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "驳回成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "驳回失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+
 
 }

@@ -6,7 +6,7 @@
 	session.setAttribute("appPath", path);
 %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 	<head>
 		<title>没有发现</title>
 	</head>

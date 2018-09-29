@@ -304,11 +304,13 @@
 												<c:if test="${task.deleted == '0'}">
 													<%-- 任务状态为待接收时，且是未分解任务 --%>
 													<c:if test="${task.state == 1 && task.resolved == 0}">
-													    <c:if test="${task.interface_img != null && task.flow_img != null}"> 
-														<a href="my/task/toOpen?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
-                                                        </c:if>
-                                                        <!-- chenmenghao -->														
-													    <a href="code/report/toMyAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
+													    <c:if test="${task.task_type == 2 || task.interface_img != null && task.interface_img != '' || task.flow_img != null && task.flow_img != ''}"> 
+															<a href="my/task/toOpen?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收任务"><i class='icon-task-start icon-play'></i></a>
+														</c:if>
+													</c:if>
+													<c:if test="${task.state == 2 && task.task_type == 1}">
+														<a href="test/case/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="编写测试用例">用例</a>
+														<a href="code/report/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
 													</c:if>
 													<%-- 任务状态为待接收和进行中时 --%>
 													<c:if test="${task.state == 1 || task.state == 2}">
@@ -329,8 +331,11 @@
 													<c:if test="${task.state == 1 || task.state == 2}">
 														<a href="my/task/toHandover?id=${task.id}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="任务交接"><i class="icon icon-exchange"></i></a>
 													</c:if>
-													<c:if test="${task.state == 4 && task.task_type != 2}">
-														<a href="my/test/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon icon-plus"></i></a>
+													<c:if test="${task.state == 4 && task.task_type != 2 && (task.test_state==null || task.test_state==1 || task.test_state==5)}">
+														<a href="my/test/toAdd?task_id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon icon-plus"></i></a>
+													</c:if>
+													<c:if test="${task.state == 4 && task.task_type != 2 && (task.test_state==2 || task.test_state==3  || task.test_state==4)}">
+														${task.test_state==2?'<span class="label label-info">已提测</span>':task.test_state==3?'<span class="label label-primary">测试中</span>':task.test_state==4?'<span class="label label-success">已测试</span>':'<span class="label label-warning">未知</span>'}
 													</c:if>
 													<%-- 任务状态为待接收、进行中时，且不为延期审核中 --%>
 													<c:if test="${task.state < 3 && task.delay != 1 && task.resolved == 0}">

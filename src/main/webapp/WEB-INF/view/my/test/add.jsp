@@ -34,6 +34,23 @@
 					<div class="center-block">
 						<div class="main-header">
 							<h2>
+								<c:if test="${applyType == 1}">
+									<span class="label label-id">${task.id}</span>
+									<a href="my/task/detail?id=${task.id}">${task.taskName}</a>
+								</c:if>
+								<c:if test="${applyType == 2}">
+									<span class="label label-id">${n.id}</span>
+									<a href="my/need/detail?id=${n.id}">${n.needName}</a>
+								</c:if>
+								<c:if test="${applyType == 3}">
+									<span class="label label-id">${p.id}</span>
+									<a href="my/project/detail?id=${p.id}">${p.projectName}</a>
+								</c:if>
+								<c:if test="${applyType == 4}">
+									<span class="label label-id">${product.id}</span>
+									<a href="my/product/detail?id=${product.id}">${product.productName}</a>
+								</c:if>
+								&nbsp;<i class="icon-angle-right"></i>&nbsp;
 								<c:if test="${entity.id==null}">创建测试单</c:if>
 								<c:if test="${entity.id > 0}">修改测试单</c:if>
 							</h2>
@@ -41,24 +58,316 @@
 						<table class="table table-form">
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+								<input type="hidden" name="applyType" value="${applyType}"/>
+								<c:if test="${applyType == 1}">
+									<tr>
+										<th>任务名称</th>
+										<td class="required" style="width:70%">
+											<select data-placeholder="请选择任务名称" class="form-control chosen chosen-select" name="task_id" id="task_id">
+												<option value=""></option>
+												<c:forEach items="${tasks}" var="task" varStatus="sta">
+													<option value="${task.id}" ${task.id==task_id?'selected="selected"':''}>${task.task_name}（任务编号:${task.id}）</option>
+												</c:forEach>
+											</select>
+											<input type="hidden" name="id" value="${entity.id}"/>
+										</td>
+										<td></td>
+									</tr>
+								</c:if>
+								<c:if test="${applyType != 1}">
+									<tr>
+										<th>测试名称</th>
+										<td class="required" style="width:70%">
+											<input type="text" name="test_name" id="test_name" value="${entity.testName }" class="form-control input-product-title" autocomplete="off"/>
+											<input type="hidden" name="need_id" value="${n.id}"/>
+											<input type="hidden" name="project_id" value="${p.id}"/>
+											<input type="hidden" name="product_id" value="${product.id}"/>
+											<input type="hidden" name="id" value="${entity.id}"/>
+										</td>
+										<td></td>
+									</tr>
+								</c:if>
+								<c:if test="${applyType == 2}">
 								<tr>
-									<th>任务名称</th>
-									<td class="required" style="width:60%">
-										<select class="form-control input-product-code" name="task_id" id="task_id">
-											<c:forEach items="${tasks}" var="task" varStatus="sta">
-												<option value="${task.id}" ${task.id==task_id?'selected="selected"':''}>${task.task_name }</option>
+									<th>模块详情</th>
+									<td style="width:70%">
+										<ul class="tree tree-lines" data-ride="tree">
+											<li class="has-list open in">&nbsp;<a target="_blank" href="my/need/detail?id=${n.id}">${n.needName }【模块】</a>
+												<ul>
+												<c:forEach items="${subNeed}" var="subNeed" varStatus="sta">
+													<li class="has-list open in"><a target="_blank" href="my/need/detail?id=${subNeed.id}">&nbsp;${subNeed.need_name }【子模块】</a>
+														<ul>
+														<c:forEach items="${subNeedTask}" var="task" varStatus="sta">
+														<c:if test="${subNeed.id == task.need_id }">
+															<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+																<ul>
+																	<li><a href="#">&nbsp;界面原型图</a>
+																		<ul>
+																			<c:forEach items="${fn:split(task.interface_img, ',')}" var="inter" varStatus="sta">
+																				<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【界面原型图】">
+																			</c:forEach>
+																		</ul>
+																	</li>
+																	<li><a href="#">&nbsp;流程图</a>
+																		<ul>
+																			<c:forEach items="${fn:split(task.flow_img, ',')}" var="flow" varStatus="sta">
+																				<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【流程图】">
+																			</c:forEach>
+																		</ul>
+																	</li>
+																	<li><a href="#">&nbsp;测试用例</a>
+																		<ul>
+																		<c:forEach items="${testCase}" var="case" varStatus="sta">
+																		<c:if test="${task.id == case.task_id }">
+																			<li><a href="#">&nbsp;${case.case_name}
+【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																				<ul>
+																					<table>
+																						<tr>
+																							<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																						</tr>
+																						<tr>
+																							<td style="border:1px solid #cbd0db">编号</td>
+																							<td style="border:1px solid #cbd0db">步骤</td>
+																							<td style="border:1px solid #cbd0db">预期</td>
+																						</tr>
+																						<c:set var="index" value="1"/>
+																						<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
+																						<c:if test="${case.id == step.case_id }">
+																						<tr>
+																							<td style="border:1px solid #cbd0db">${index}</td>
+																							<td style="border:1px solid #cbd0db">${step.step }</td>
+																							<td style="border:1px solid #cbd0db">${step.expect }</td>
+																						</tr>
+																						<c:set var="index" value="${index+1}"/>
+																						</c:if>
+																						</c:forEach>
+																					</table>
+																				</ul>
+																			</li>
+																		</c:if>
+																		</c:forEach>
+																		</ul>
+																	</li>
+																</ul>
+															</li>
+														</c:if>
+														</c:forEach>
+														</ul>
+													</li>
+												</c:forEach>
+												<c:forEach items="${needTask}" var="task" varStatus="sta">
+													<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+														<ul>
+															<li><a href="#">&nbsp;界面原型图</a>
+																<ul>
+																	<c:forEach items="${fn:split(task.interface_img, ',')}" var="inter" varStatus="sta">
+																		<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【界面原型图】">
+																	</c:forEach>
+																</ul>
+															</li>
+															<li><a href="#">&nbsp;流程图</a>
+																<ul>
+																	<c:forEach items="${fn:split(task.flow_img, ',')}" var="flow" varStatus="sta">
+																		<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【流程图】">
+																	</c:forEach>
+																</ul>
+															</li>
+															<li><a href="#">&nbsp;测试用例</a>
+																<ul>
+																<c:forEach items="${testCase}" var="case" varStatus="sta">
+																<c:if test="${task.id == case.task_id }">
+																	<li><a href="#">&nbsp;${case.case_name}
+【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																		<ul>
+																			<table>
+																				<tr>
+																					<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																				</tr>
+																				<tr>
+																					<td style="border:1px solid #cbd0db">编号</td>
+																					<td style="border:1px solid #cbd0db">步骤</td>
+																					<td style="border:1px solid #cbd0db">预期</td>
+																				</tr>
+																				<c:set var="index" value="1"/>
+																				<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
+																				<c:if test="${case.id == step.case_id }">
+																				<tr>
+																					<td style="border:1px solid #cbd0db">${index}</td>
+																					<td style="border:1px solid #cbd0db">${step.step }</td>
+																					<td style="border:1px solid #cbd0db">${step.expect }</td>
+																				</tr>
+																				<c:set var="index" value="${index+1}"/>
+																				</c:if>
+																				</c:forEach>
+																			</table>
+																		</ul>
+																	</li>
+																</c:if>
+																</c:forEach>
+																</ul>
+															</li>
+														</ul>
+													</li>
+												</c:forEach>
+												</ul>
+											</li>
+										</ul>
+									</td>
+									<td></td>
+								</tr>
+								</c:if>
+								<c:if test="${applyType == 3 || applyType == 4}">
+								<tr>
+									<th>模块详情</th>
+									<td>
+										<ul class="tree tree-lines" data-ride="tree">
+											<c:forEach items="${need}" var="need" varStatus="sta">
+												<li class="has-list open in">&nbsp;<a target="_blank" href="my/need/detail?id=${n.id}">${need.need_name }【模块】</a>
+													<ul>
+													<c:forEach items="${subNeed}" var="subNeed" varStatus="sta">
+													<c:if test="${need.id == subNeed.parent_id }">
+														<li class="has-list open in"><a target="_blank" href="my/need/detail?id=${subNeed.id}">&nbsp;${subNeed.need_name }【子模块】</a>
+															<ul>
+															<c:forEach items="${subNeedTask}" var="task" varStatus="sta">
+															<c:if test="${subNeed.id == task.need_id }">
+																<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+																	<ul>
+																		<li><a href="#">&nbsp;界面原型图</a>
+																			<ul>
+																				<c:forEach items="${fn:split(task.interface_img, ',')}" var="inter" varStatus="sta">
+																					<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【界面原型图】">
+																				</c:forEach>
+																			</ul>
+																		</li>
+																		<li><a href="#">&nbsp;流程图</a>
+																			<ul>
+																				<c:forEach items="${fn:split(task.flow_img, ',')}" var="flow" varStatus="sta">
+																					<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【流程图】">
+																				</c:forEach>
+																			</ul>
+																		</li>
+																		<li><a href="#">&nbsp;测试用例</a>
+																			<ul>
+																			<c:forEach items="${testCase}" var="case" varStatus="sta">
+																			<c:if test="${task.id == case.task_id }">
+																				<li><a href="#">&nbsp;${case.case_name}
+【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																					<ul>
+																						<table>
+																							<tr>
+																								<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																							</tr>
+																							<tr>
+																								<td style="border:1px solid #cbd0db">编号</td>
+																								<td style="border:1px solid #cbd0db">步骤</td>
+																								<td style="border:1px solid #cbd0db">预期</td>
+																							</tr>
+																							<c:set var="index" value="1"/>
+																							<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
+																							<c:if test="${case.id == step.case_id }">
+																							<tr>
+																								<td style="border:1px solid #cbd0db">${index}</td>
+																								<td style="border:1px solid #cbd0db">${step.step }</td>
+																								<td style="border:1px solid #cbd0db">${step.expect }</td>
+																							</tr>
+																							<c:set var="index" value="${index+1}"/>
+																							</c:if>
+																							</c:forEach>
+																						</table>
+																					</ul>
+																				</li>
+																			</c:if>
+																			</c:forEach>
+																			</ul>
+																		</li>
+																	</ul>
+																</li>
+															</c:if>
+															</c:forEach>
+															</ul>
+														</li>
+													</c:if>
+													</c:forEach>
+													<c:forEach items="${needTask}" var="task" varStatus="sta">
+													<c:if test="${need.id == task.need_id }">
+														<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+															<ul>
+																<li><a href="#">&nbsp;界面原型图</a>
+																	<ul>
+																		<c:forEach items="${fn:split(task.interface_img, ',')}" var="inter" varStatus="sta">
+																			<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【界面原型图】">
+																		</c:forEach>
+																	</ul>
+																</li>
+																<li><a href="#">&nbsp;流程图</a>
+																	<ul>
+																		<c:forEach items="${fn:split(task.flow_img, ',')}" var="flow" varStatus="sta">
+																			<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【流程图】">
+																		</c:forEach>
+																	</ul>
+																</li>
+																<li><a href="#">&nbsp;测试用例</a>
+																	<ul>
+																	<c:forEach items="${testCase}" var="case" varStatus="sta">
+																	<c:if test="${task.id == case.task_id }">
+																		<li><a href="#">&nbsp;${case.case_name}
+	【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																			<ul>
+																				<table>
+																					<tr>
+																						<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																					</tr>
+																					<tr>
+																						<td style="border:1px solid #cbd0db">编号</td>
+																						<td style="border:1px solid #cbd0db">步骤</td>
+																						<td style="border:1px solid #cbd0db">预期</td>
+																					</tr>
+																					<c:set var="index" value="1"/>
+																					<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
+																					<c:if test="${case.id == step.case_id }">
+																					<tr>
+																						<td style="border:1px solid #cbd0db">${index}</td>
+																						<td style="border:1px solid #cbd0db">${step.step }</td>
+																						<td style="border:1px solid #cbd0db">${step.expect }</td>
+																					</tr>
+																					<c:set var="index" value="${index+1}"/>
+																					</c:if>
+																					</c:forEach>
+																				</table>
+																			</ul>
+																		</li>
+																	</c:if>
+																	</c:forEach>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</c:if>
+													</c:forEach>
+													</ul>
+												</li>
 											</c:forEach>
-										</select>
-										<input type="hidden" name="id" value="${entity.id}"/>
+										</ul>
+									</td>
+									<td></td>
+								</tr>
+								</c:if>
+								<tr>
+									<th>测试内容</th>
+									<td class="required">
+										<input type="hidden" name="test_content">
+										<textarea id="test_content" name="details" placeholder="" style="width:100%;">${entity.testContent}</textarea>
+										<div id="test_content" value=""></div>
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>测试内容</th>
+									<th>要执行的SQL</th>
 									<td>
-										<input type="hidden" name="test_content">
-										<textarea id="test_content" name="details" placeholder="" style="width:100%;">${entity.testContent}</textarea>
-										<div id="test_content" value=""></div>
+										<input type="hidden" name="execute_sql">
+										<textarea id="execute_sql" name="details" placeholder="" style="width:100%;">${entity.executeSql}</textarea>
+										<div id="execute_sql" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -127,10 +436,11 @@ UE.Editor.prototype.getActionUrl = function(action){
 	}  
 };  
 UE.getEditor('test_content');
-
+UE.getEditor('execute_sql');
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
 	$("input[name='test_content']").val(UE.getEditor('test_content').getContent());
+	$("input[name='execute_sql']").val(UE.getEditor('execute_sql').getContent());
 	$.ajax({type:"POST",url:"my/test/addOrUpdate?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){

@@ -85,7 +85,6 @@ public class Task implements java.io.Serializable {
 	private Short overdue;
 	private Short deleted;
 	private String developerTaskId;
-	private String filePath;
 
 	// Constructors
 
@@ -114,7 +113,7 @@ public class Task implements java.io.Serializable {
 			Integer testState, Integer percent, Short resolved,
 			Integer parentId, String link, Timestamp createTime,
 			Timestamp updateTime, Short state, Short delay, Short overdue,
-			Short deleted, String developerTaskId, String filePath) {
+			Short deleted, String developerTaskId) {
 		this.productId = productId;
 		this.projectId = projectId;
 		this.needId = needId;
@@ -179,7 +178,6 @@ public class Task implements java.io.Serializable {
 		this.overdue = overdue;
 		this.deleted = deleted;
 		this.developerTaskId = developerTaskId;
-		this.filePath = filePath;
 	}
 
 	// Property accessors
@@ -769,15 +767,6 @@ public class Task implements java.io.Serializable {
 
 	public void setDeveloperTaskId(String developerTaskId) {
 		this.developerTaskId = developerTaskId;
-	}
-
-	@Column(name = "file_path", length = 200)
-	public String getFilePath() {
-		return this.filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
 	}
 
 }

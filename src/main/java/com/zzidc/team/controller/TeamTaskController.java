@@ -701,7 +701,11 @@ public class TeamTaskController extends GiantBaseController {
 		int codeNum = teamTaskService.getCodeNum(GiantUtil.intOf(mvm.get("id"), 0));
 		if(GiantUtil.isEmpty(mvm.get("id")) || codeNum>0){
 			json.put("code",1);
-			json.put("message", "有代码未审查 或 参数不足!");
+			if (codeNum > 0) {
+				json.put("message", "有"+codeNum+"个任务代码未审查!");
+			}else {
+				json.put("message", "参数不足!");
+			}
 			resultresponse(response,json);
 			return;
 		}

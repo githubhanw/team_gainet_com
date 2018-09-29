@@ -1374,6 +1374,7 @@ public class TeamTaskService extends GiantBaseService {
 			examination = "0";
 		}
 		ce.setExamination(examination);
+		ce.setExaminationId(super.getMemberId());
 		return super.dao.saveUpdateOrDelete(ce, null);
 	}
 

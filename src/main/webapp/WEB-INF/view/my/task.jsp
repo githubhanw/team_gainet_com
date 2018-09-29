@@ -313,9 +313,9 @@
 														<a href="code/report/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="填写代码审查"><i class="icon-story-review icon-glasses"></i></a>
 													</c:if>
 													<%-- 任务状态为待接收和进行中时 --%>
-													<c:if test="${task.state == 1 || task.state == 2}">
+													<%-- <c:if test="${task.state == 1 || task.state == 2}">
 														<a href="my/task/toClose?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭任务"><i class='icon-task-close icon-off'></i></a>
-													</c:if>
+													</c:if> --%>
 													<%-- 任务状态为进行中，且不为延期审核中，且是未分解任务 --%>
 													<c:if test="${task.state == 2 && task.delay != 1 && task.resolved == 0}">
 														<a href="my/task/toFinish?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="完成任务"><i class='icon-task-finish icon-checked'></i></a>
@@ -346,11 +346,11 @@
 														<a href="my/task/toDelay?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="延期任务"><i class='icon-task-recordEstimate icon-time'></i></a>
 													</c:if>
 													<%-- 状态不为完成审核中，且不为延期审核中 --%>
-													<c:if test="${task.state < 3 && task.delay != 1}">
+													<%-- <c:if test="${task.state < 3 && task.delay != 1}">
 														<c:if test="${task.parent_id == null || task.parent_id == ''}">
 															<a href="my/task/toBatchAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="分解任务"><i class='icon-task-batchCreate icon-branch'></i></a>
 														</c:if>
-													</c:if>
+													</c:if> --%>
 													<c:if test="${(task.state == 2 || task.state == 3 || task.state == 4) && task.task_type == 2}">
 														<a href="my/bug/toAdd?id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
 													</c:if>

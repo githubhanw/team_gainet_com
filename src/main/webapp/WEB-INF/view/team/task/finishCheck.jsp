@@ -85,14 +85,14 @@
 																			</li>
 																			<li><a href="#">&nbsp;测试用例</a>
 																				<ul>
-																				<c:forEach items="${testCase}" var="case" varStatus="sta">
-																				<c:if test="${task.id == case.task_id }">
-																					<li><a href="#">&nbsp;${case.case_name}
-		【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																				<c:forEach items="${testCase}" var="casess" varStatus="sta">
+																				<c:if test="${task.id == casess.task_id }">
+																					<li><a href="#">&nbsp;${casess.case_name}
+		【${casess.case_type==1?'功能测试':casess.case_type==2?'性能测试':casess.case_type==3?'配置相关':casess.case_type==4?'安装部署':casess.case_type==5?'安全相关':casess.case_type==6?'接口测试':'其他'}】</a>
 																						<ul>
 																							<table>
 																								<tr>
-																									<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																									<td style="border:1px solid #cbd0db" colspan="3">前提条件：${casess.precondition}</td>
 																								</tr>
 																								<tr>
 																									<td style="border:1px solid #cbd0db">编号</td>
@@ -101,7 +101,7 @@
 																								</tr>
 																								<c:set var="index" value="1"/>
 																								<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
-																								<c:if test="${case.id == step.case_id }">
+																								<c:if test="${casess.id == step.case_id }">
 																								<tr>
 																									<td style="border:1px solid #cbd0db">${index}</td>
 																									<td style="border:1px solid #cbd0db">${step.step }</td>
@@ -152,14 +152,14 @@
 																	</li>
 																	<li><a href="#">&nbsp;测试用例</a>
 																		<ul>
-																		<c:forEach items="${testCase}" var="case" varStatus="sta">
-																		<c:if test="${task.id == case.task_id }">
-																			<li><a href="#">&nbsp;${case.case_name}
-		【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																		<c:forEach items="${testCase}" var="casess" varStatus="sta">
+																		<c:if test="${task.id == casess.task_id }">
+																			<li><a href="#">&nbsp;${casess.case_name}
+		【${casess.case_type==1?'功能测试':casess.case_type==2?'性能测试':casess.case_type==3?'配置相关':casess.case_type==4?'安装部署':casess.case_type==5?'安全相关':casess.case_type==6?'接口测试':'其他'}】</a>
 																				<ul>
 																					<table>
 																						<tr>
-																							<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																							<td style="border:1px solid #cbd0db" colspan="3">前提条件：${casess.precondition}</td>
 																						</tr>
 																						<tr>
 																							<td style="border:1px solid #cbd0db">编号</td>
@@ -168,7 +168,7 @@
 																						</tr>
 																						<c:set var="index" value="1"/>
 																						<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
-																						<c:if test="${case.id == step.case_id }">
+																						<c:if test="${casess.id == step.case_id }">
 																						<tr>
 																							<td style="border:1px solid #cbd0db">${index}</td>
 																							<td style="border:1px solid #cbd0db">${step.step }</td>
@@ -229,14 +229,14 @@
 																				</li>
 																				<li><a href="#">&nbsp;测试用例</a>
 																					<ul>
-																					<c:forEach items="${testCase}" var="case" varStatus="sta">
-																					<c:if test="${task.id == case.task_id }">
-																						<li><a href="#">&nbsp;${case.case_name}
-		【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																					<c:forEach items="${testCase}" var="casess" varStatus="sta">
+																					<c:if test="${task.id == casess.task_id }">
+																						<li><a href="#">&nbsp;${casess.case_name}
+		【${casess.case_type==1?'功能测试':casess.case_type==2?'性能测试':casess.case_type==3?'配置相关':casess.case_type==4?'安装部署':casess.case_type==5?'安全相关':casess.case_type==6?'接口测试':'其他'}】</a>
 																							<ul>
 																								<table>
 																									<tr>
-																										<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																										<td style="border:1px solid #cbd0db" colspan="3">前提条件：${casess.precondition}</td>
 																									</tr>
 																									<tr>
 																										<td style="border:1px solid #cbd0db">编号</td>
@@ -245,7 +245,7 @@
 																									</tr>
 																									<c:set var="index" value="1"/>
 																									<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
-																									<c:if test="${case.id == step.case_id }">
+																									<c:if test="${casess.id == step.case_id }">
 																									<tr>
 																										<td style="border:1px solid #cbd0db">${index}</td>
 																										<td style="border:1px solid #cbd0db">${step.step }</td>
@@ -298,14 +298,14 @@
 																		</li>
 																		<li><a href="#">&nbsp;测试用例</a>
 																			<ul>
-																			<c:forEach items="${testCase}" var="case" varStatus="sta">
-																			<c:if test="${task.id == case.task_id }">
-																				<li><a href="#">&nbsp;${case.case_name}
-			【${case.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+																			<c:forEach items="${testCase}" var="casess" varStatus="sta">
+																			<c:if test="${task.id == casess.task_id }">
+																				<li><a href="#">&nbsp;${casess.case_name}
+			【${casess.case_type==1?'功能测试':casess.case_type==2?'性能测试':casess.case_type==3?'配置相关':casess.case_type==4?'安装部署':casess.case_type==5?'安全相关':casess.case_type==6?'接口测试':'其他'}】</a>
 																					<ul>
 																						<table>
 																							<tr>
-																								<td style="border:1px solid #cbd0db" colspan="3">前提条件：${case.precondition}</td>
+																								<td style="border:1px solid #cbd0db" colspan="3">前提条件：${casess.precondition}</td>
 																							</tr>
 																							<tr>
 																								<td style="border:1px solid #cbd0db">编号</td>
@@ -314,7 +314,7 @@
 																							</tr>
 																							<c:set var="index" value="1"/>
 																							<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
-																							<c:if test="${case.id == step.case_id }">
+																							<c:if test="${casess.id == step.case_id }">
 																							<tr>
 																								<td style="border:1px solid #cbd0db">${index}</td>
 																								<td style="border:1px solid #cbd0db">${step.step }</td>

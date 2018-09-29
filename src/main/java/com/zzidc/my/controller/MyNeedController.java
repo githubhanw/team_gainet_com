@@ -405,6 +405,10 @@ public class MyNeedController extends GiantBaseController {
 		}
 		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
 		model.addAttribute("needM", needDetail);
+		List<Map<String, Object>> codeReport = teamNeedService.getCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
+		model.addAttribute("codeReport", codeReport);
+		List<Map<String, Object>> codeInterface = teamNeedService.getCodeInterface(GiantUtil.intOf(mvm.get("id"), 0));
+		model.addAttribute("codeInterface", codeInterface);
 		publicResult(model);
 		return "my/need/check";
 	}
@@ -419,10 +423,14 @@ public class MyNeedController extends GiantBaseController {
 		JSONObject json=new JSONObject();
 		int id=baseService.getMemberId();	//登录id	        
         String name=baseService.getMemberName(); 
-        System.out.println("数据："+mvm);
-		if(GiantUtil.isEmpty(mvm.get("stage"))){
+        int codeNum = teamNeedService.getCodeNum(GiantUtil.intOf(mvm.get("id"), 0));
+		if(GiantUtil.isEmpty(mvm.get("stage")) || codeNum>0){
 			json.put("code",1);
-			json.put("message", "参数不足");
+			if (codeNum > 0) {
+				json.put("message", "有"+codeNum+"个任务代码未审查!");
+			}else {
+				json.put("message", "参数不足!");
+			}
 			resultresponse(response,json);
 			return;
 		}
@@ -458,6 +466,29 @@ public class MyNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
+
+	/**
+	 * 代码审查
+	 */
+	@RequestMapping("/exam")
+	public void exam(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			boolean flag = teamNeedService.updateCodeReport(mvm);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "操作成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "操作失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+	
 
 	/**
 	 * 跳转关联模块页面

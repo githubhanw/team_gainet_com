@@ -1,5 +1,7 @@
 package com.zzidc.my.controller;
 
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -940,6 +942,92 @@ public class MyTaskController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-	
+
+	/**
+	 * 测试任务通过测试
+	 */
+	@RequestMapping("/adopt")
+	public void adopt(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取单个非测试任务对象
+			Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			task.setTestTime(new Timestamp(System.currentTimeMillis()));
+			task.setTestState(4);
+			boolean flag = teamTaskService.saveUpdateOrDelete(task, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "通过成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "通过失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+
+	/**
+	 * 一键通过测试任务下所有任务
+	 */
+	@RequestMapping("/adoptAll")
+	public void adoptAll(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取测试任务对象
+			Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			List<Object> list = new ArrayList<Object>();
+			if(task.getDeveloperTaskId() != null && !"".equals(task.getDeveloperTaskId())) {
+				String taskIdArray[] = task.getDeveloperTaskId().split(",");
+				for(String taskId: taskIdArray) {
+					Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(taskId, 0));
+					t.setTestTime(new Timestamp(System.currentTimeMillis()));
+					t.setTestState(4);
+					list.add(t);
+				}
+			}
+			boolean flag = teamTaskService.saveUpdateOrDelete(list, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "通过成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "通过失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+
+	/**
+	 * 测试任务驳回测试
+	 */
+	@RequestMapping("/reject")
+	public void reject(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			task.setTestTime(new Timestamp(System.currentTimeMillis()));
+			task.setTestState(5);
+			boolean flag = teamTaskService.saveUpdateOrDelete(task, null);
+			if(flag){
+				json.put("code",0);
+				json.put("message", "驳回成功");
+			}else{
+				json.put("code",1);
+				json.put("message", "驳回失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
+		}
+		resultresponse(response,json);
+	}
+
 
 }

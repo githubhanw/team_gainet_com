@@ -818,4 +818,40 @@
 			$.ajaxSettings.async = true;
 		}
 	}
+	function adoptAll(id){
+		if(confirm("确认通过所有测试？")){
+			$.ajaxSettings.async = false;
+			$.getJSON("my/task/adoptAll?id=" + id + "&r=" + Math.random(), function(data) {
+				alert(data.message);
+				if(data.code == 0){
+					window.location.reload();
+				}
+			});
+			$.ajaxSettings.async = true;
+		}
+	}
+	function adopt(id){
+		if(confirm("确认通过测试？")){
+			$.ajaxSettings.async = false;
+			$.getJSON("my/task/adopt?id=" + id + "&r=" + Math.random(), function(data) {
+				alert(data.message);
+				if(data.code == 0){
+					window.location.reload();
+				}
+			});
+			$.ajaxSettings.async = true;
+		}
+	}
+	function reject(id){
+		if(confirm("确认驳回测试？")){
+			$.ajaxSettings.async = false;
+			$.getJSON("my/task/reject?id=" + id + "&r=" + Math.random(), function(data) {
+				alert(data.message);
+				if(data.code == 0){
+					window.location.reload();
+				}
+			});
+			$.ajaxSettings.async = true;
+		}
+	}
 </script>

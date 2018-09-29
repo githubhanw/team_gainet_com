@@ -891,7 +891,18 @@ public class GiantBaseService {
 		return sourcePage;
 	}
 
-
+	/**
+	 * 获取指定角色人员列表
+	 */
+	public List<Map<String, Object>> getAllMemberByRole(String roles){
+		String sql = "select m.id, m.name, m.number from member m,member_config mc where m.number=mc.number and status=0 and mc.role_ids in (" + roles + ")";
+		List<Map<String, Object>> list = dao.getMapListBySQL(sql, null);
+		if(list == null) {
+			list = new ArrayList<Map<String, Object>>();
+		}
+		return list;
+	}
+	
 	/**
 	 * 获取所有人员列表
 	 */

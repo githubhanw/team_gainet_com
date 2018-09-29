@@ -46,6 +46,13 @@
 									<td></td>
 								</tr>
 								<tr>
+									<th>状态</th>
+									<td class="required">
+										<label class="radio-inline"><input type="radio" name="stage" value="y" checked="checked" id="passy"> 通过</label>
+										<label class="radio-inline"><input type="radio" name="stage" value="n" id="passn"> 不通过</label>
+									</td>
+								</tr>
+								<tr>
 									<th>审核备注</th>
 									<td colspan="2">
 										<input type="hidden" name="checked_reason">
@@ -54,15 +61,96 @@
 									</td>
 								</tr>
 								</form>
-								<tr>
-									<td colspan="3" class="text-center form-actions">
-										<button id="submit_yes" class="btn btn-wide btn-primary" data-loading="稍候...">通过</button>
-										<button id="submit_no" class="btn btn-wide btn-primary" data-loading="稍候...">不通过</button>
-										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
-									</td>
-								</tr>
 							</tbody>
 						</table>
+						<br>
+						<br>
+						<br>
+						<div class="table-responsive">
+							<table class="table has-sort-head" id="taskList"
+								data-fixed-left-width="550" data-fixed-right-width="160">
+								<thead>
+								<tr>
+									<td style="font-size:15px;font-weight:bold;text-align:left;">代码审查-界面审核</td>
+								</tr>
+									<tr>
+										<th data-flex="false" data-width="90px" style="width:90px" class="c-id text-center" >界面ID</th>
+										<th data-flex="false" data-width="50px" style="width:250px" class="c-pri">入口点</th>
+										<th data-flex="false" data-width="50px" style="width:80px" class="c-pri">在线URL</th>
+										<th data-flex="false" data-width="auto" style="width:100px" class="c-pri">源文件</th>
+										<th data-flex="false" data-width="auto" style="width:100px" class="c-pri">审查</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${codeReport}" var="cr" varStatus="sta">
+									<tr>
+										<td class="c-id cell-id text-center">${cr.id}</td>
+										<td class="text-left">${cr.entry_point}</td>
+										<td class="c-name text-center">${cr.online_url}</td>
+										<td class="c-name text-center">${cr.source_file}</td>
+										<td class="c-name text-center">
+											<c:if test="${cr.examination == '0'}">
+												<span class="label">未审查</span>
+											</c:if>
+											<c:if test="${cr.examination == '1'}">
+												<span class="label label-danger">未通过</span>
+											</c:if>
+											<c:if test="${cr.examination == '2'}">
+												<span class="label label-success">通过</span>
+											</c:if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="javascript:void(0)" onclick="exam('${cr.id}','y')" class="btn btn-sm " type="button" title="审核通过">通过</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="javascript:void(0)" onclick="exam('${cr.id}','n')" class="btn btn-sm " type="button" title="审核不通过">不通过</a>
+										</td>
+									</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						
+						<div class="table-responsive">
+							<table class="table has-sort-head" id="taskList"
+								data-fixed-left-width="550" data-fixed-right-width="160">
+								<thead>
+								<tr>
+									<td style="font-size:15px;font-weight:bold;text-align:left;">代码审查-流程审核</td>
+								</tr>
+									<tr>
+										<th data-flex="false" data-width="90px" style="width:90px" class="c-id text-center" >流程ID</th>
+										<th data-flex="false" data-width="50px" style="width:250px" class="c-pri">对应界面入口点</th>
+										<th data-flex="false" data-width="50px" style="width:80px" class="c-pri">函数入口点</th>
+										<th data-flex="false" data-width="auto" style="width:100px" class="c-pri">文件名</th>
+										<th data-flex="false" data-width="auto" style="width:100px" class="c-pri">审查</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${codeInterface}" var="ci" varStatus="sta">
+									<tr>
+										<td class="c-id cell-id text-center">${ci.id}</td>
+										<td class="text-left">${ci.entry_point}</td>
+										<td class="c-name text-center">${ci.online_url}</td>
+										<td class="c-name text-center">${ci.source_file}</td>
+										<td class="c-name text-center">
+											<c:if test="${ci.examination == '0'}">
+												<span class="label">未审查</span>
+											</c:if>
+											<c:if test="${ci.examination == '1'}">
+												<span class="label label-danger">未通过</span>
+											</c:if>
+											<c:if test="${ci.examination == '2'}">
+												<span class="label label-success">通过</span>
+											</c:if>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="javascript:void(0)" onclick="exam('${ci.id}','y')" class="btn btn-sm " type="button" title="审核通过">通过</a>&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="javascript:void(0)" onclick="exam('${ci.id}','n')" class="btn btn-sm " type="button" title="审核不通过">不通过</a>
+										</td>
+									</tr>
+									</c:forEach>
+								</tbody>
+							</table>
+						</div>
+						<div colspan="3" class="text-center form-actions">
+							<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">提交</button>
+							<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -120,7 +208,23 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
+
 UE.getEditor('checked_reason');
+$("#submit").click(function(){
+	$.ajaxSettings.async = false;
+	$("input[name='checked_reason']").val(UE.getEditor('checked_reason').getContent());
+	$.ajax({type:"POST",url:"team/task/finishCheck?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
+		if(data.code == 0){
+			$("#msg").text(data.message);
+			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+		}else{
+			$("#errMsg").text(data.message);
+			$('#errModal').modal({keyboard: false,show: true, moveable: true});
+		}
+	}})
+	$.ajaxSettings.async = true;
+});
 
 function setStory(reason) {
 	if (reason == '重复') {
@@ -134,34 +238,18 @@ function setStory(reason) {
 		$('#childStoriesBox').hide();
 	}
 }
-$("#submit_yes").click(function(){
-	$.ajaxSettings.async = false;
-	$("input[name='checked_reason']").val(UE.getEditor('checked_reason').getContent());
-	$.ajax({type:"POST",url:"team/task/finishCheck?is=1&r=" + Math.random(),data:$("form").serialize(),
-			dataType:"json",success:function(data){
-		if(data.code == 0){
-			$("#msg").text(data.message);
-			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-		}else{
-			$("#errMsg").text(data.message);
-			$('#errModal').modal({keyboard: false,show: true, moveable: true});
-		}
-	}})
-	$.ajaxSettings.async = true;
-});
-$("#submit_no").click(function(){
-	$.ajaxSettings.async = false;
-	$("input[name='checked_reason']").val(UE.getEditor('checked_reason').getContent());
-	$.ajax({type:"POST",url:"team/task/finishCheck?is=0&r=" + Math.random(),data:$("form").serialize(),
-			dataType:"json",success:function(data){
-		if(data.code == 0){
-			$("#msg").text(data.message);
-			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-		}else{
-			$("#errMsg").text(data.message);
-			$('#errModal').modal({keyboard: false,show: true, moveable: true});
-		}
-	}})
-	$.ajaxSettings.async = true;
-});
+
+function exam(id,isPass){
+	var sname = isPass=='y'?"通过":"不通过";
+	if(confirm("确认"+sname+"?")){
+		$.ajaxSettings.async = false;
+		$.getJSON("team/task/exam?id="+id+"&isPass="+isPass+"&r=" + Math.random(), function(data) {
+			alert(data.message);
+			if(data.code == 0){
+				window.location.reload();
+			}
+		});
+		$.ajaxSettings.async = true;
+	}
+}
 </script>

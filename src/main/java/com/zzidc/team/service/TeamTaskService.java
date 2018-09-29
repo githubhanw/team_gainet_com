@@ -27,9 +27,11 @@ import com.giant.zzidc.base.utils.HttpUtils;
 import com.zzidc.log.LogMethod;
 import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
+import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
+import com.zzidc.team.entity.TaskProduct;
 import com.zzidc.team.entity.TestApply;
 
 import net.sf.json.JSONObject;
@@ -1028,8 +1030,8 @@ public class TeamTaskService extends GiantBaseService {
 	 */
 	public boolean finishCheck(Map<String, String> mvm) {
 		Task t = null;
-		String isPass = (mvm.get("is"))!=null? mvm.get("is"):"0";
-		if ("1".equals(isPass)) {//通过审核
+		String isPass = (mvm.get("stage"))!=null? mvm.get("stage"):"n";
+		if ("y".equals(isPass)) {//通过审核
 			if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
 				// 获取对象
 				t = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -1068,7 +1070,7 @@ public class TeamTaskService extends GiantBaseService {
 				return b;
 			}
 		}
-		if ("0".equals(isPass)) {//不通过审核
+		if ("n".equals(isPass)) {//不通过审核
 			if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
 				// 获取对象
 				t = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -1318,6 +1320,61 @@ public class TeamTaskService extends GiantBaseService {
 			return b;
 		}
 		return false;
+	}
+
+	/**
+	 * 任务审核,界面审核
+	 * @return
+	 */
+	public List<Map<String, Object>> getCodeReport(Integer taskId) {
+		List<Map<String, Object>> subTaskList = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT * FROM `code_report` WHERE report_type=0 AND task_id="+ taskId;
+		subTaskList = super.getMapListBySQL(sql, null);
+		return subTaskList;
+	}
+	
+	/**
+	 * 任务审核,流程审核
+	 * @return
+	 */
+	public List<Map<String, Object>> getCodeInterface(Integer taskId) {
+		List<Map<String, Object>> subTaskList = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT * FROM `code_report` WHERE report_type=1 AND task_id="+ taskId;
+		subTaskList = super.getMapListBySQL(sql, null);
+		return subTaskList;
+	}
+	
+	/**
+	 * 任务审核,查询代码审查状态未审查个数
+	 * @return
+	 */
+	public int getCodeNum(Integer taskId) {
+		String sql = "SELECT COUNT(0)codenum FROM `code_report` WHERE examination=0 AND task_id="+ taskId;
+		int subTaskList = Integer.parseInt(super.getMapListBySQL(sql, null).get(0).get("codenum").toString());
+		return subTaskList;
+	}
+	
+	/**
+	 * 代码审查-编辑状态
+	 */
+	public boolean updateCodeReport(Map<String, String> mvm) {
+		CodeReport ce = null;
+		String examination = "";
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			ce = (CodeReport) super.dao.getEntityByPrimaryKey(new CodeReport(), GiantUtil.intOf(mvm.get("id"), 0));
+		} else {
+			return false;
+		}
+		if ("y".equals(mvm.get("isPass"))) {
+			examination = "2";
+		} else if ("n".equals(mvm.get("isPass"))) {
+			examination = "1";
+		}else {
+			examination = "0";
+		}
+		ce.setExamination(examination);
+		return super.dao.saveUpdateOrDelete(ce, null);
 	}
 
 }

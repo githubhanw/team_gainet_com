@@ -127,13 +127,16 @@ public class TeamTaskService extends GiantBaseService {
 				}
 			}
 			String temp1 = "";
-			if (!StringUtils.isEmpty(temp1 = conditionPage.getQueryCondition().get("project_id"))) {
-				if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
-					if ("96".equals(temp)) {// 所属项目
-						sql += "AND t.project_id=:project_id ";
-						countSql += "AND t.project_id=:project_id ";
-						conditionMap.put("project_id", temp1);
-					}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type")) && "96".equals(temp)) {
+				if (!StringUtils.isEmpty(temp1 = conditionPage.getQueryCondition().get("project_id"))) {
+					sql += "AND t.project_id=:project_id ";
+					countSql += "AND t.project_id=:project_id ";
+					conditionMap.put("project_id", temp1);
+				}
+				if (!StringUtils.isEmpty(temp1 = conditionPage.getQueryCondition().get("product_id"))) {
+					sql += "AND tn.product_id=:product_id ";
+					countSql += "AND tn.product_id=:product_id ";
+					conditionMap.put("product_id", temp1);
 				}
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("need_id"))) {

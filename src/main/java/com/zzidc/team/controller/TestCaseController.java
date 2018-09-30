@@ -108,10 +108,10 @@ public class TestCaseController extends GiantBaseController {
 		boolean flag = testCaseService.add(mvm);
 		if(flag){
 			json.put("code",0);
-			json.put("message", "添加BUG成功");
+			json.put("message", "添加成功");
 		}else{
 			json.put("code",1);
-			json.put("message", "添加BUG失败");
+			json.put("message", "添加失败");
 		}
 		resultresponse(response,json);
 	}

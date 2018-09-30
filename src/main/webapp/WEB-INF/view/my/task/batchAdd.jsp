@@ -155,6 +155,7 @@ $("input[name='task_name']").focus(function(){
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
 	var flag = true;
+	$("#submit").hide();
 	for(var i=0;i<10;i++){
 		if(!!$($("input[name='task_name']").get(i)).val()){
 			if(!!$("#id").val()){
@@ -187,6 +188,8 @@ $("#submit").click(function(){
 		//卸载离开拦截事件
 		$(window).unbind('beforeunload');
 		window.location.href="my/task";
+	}else{
+		$("#submit").show();
 	}
 	$.ajaxSettings.async = true;
 });

@@ -312,8 +312,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="test/bug/toAdd" class="btn">继续提BUG</a>
-								<a href="test/bug/index" class="btn">返回BUG列表</a>
+								<a href="javascript:history.go(-1);" class="btn">返回</a>
 							</div>
 						</div>
 					</div>

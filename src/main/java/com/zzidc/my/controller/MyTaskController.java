@@ -111,6 +111,16 @@ public class MyTaskController extends GiantBaseController {
 				List<Map<String, Object>> linkTask = teamTaskService.getLinkTask(taskDetail.get("link").toString());
 				model.addAttribute("linkTask", linkTask);
 			}
+			//开发任务获取 测试用例和代码审查
+			if("1".equals(taskDetail.get("task_type").toString())) {
+				List<Map<String, Object>> testCase = teamTaskService.getTestCase(GiantUtil.intOf(mvm.get("id"), 0));
+				model.addAttribute("testCase", testCase);
+				List<Map<String, Object>> testCaseStep = teamTaskService.getTestCaseStep(GiantUtil.intOf(mvm.get("id"), 0));
+				model.addAttribute("testCaseStep", testCaseStep);
+				List<Map<String, Object>> codeReport = teamTaskService.getCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
+				model.addAttribute("codeReport", codeReport);
+			}
+			//测试任务获取 模块详情树
 			if("2".equals(taskDetail.get("task_type").toString())) {
 				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(taskDetail.get("test_apply_id"), 0));
 				if(n != null) {

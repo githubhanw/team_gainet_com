@@ -112,6 +112,68 @@
 									</div>
 								</div>
 							</c:if>
+							<c:if test="${taskM.task_type==1 && testCase != null}">
+								<div class="detail">
+									<div class="detail-title">测试用例</div>  
+									<div class="detail-content article-content">
+										<ul class="tree tree-lines" data-ride="tree">
+											<c:forEach items="${testCase}" var="casess" varStatus="sta">
+											<li><a href="#">&nbsp;${casess.case_name}
+【${casess.case_type==1?'功能测试':casess.case_type==2?'性能测试':casess.case_type==3?'配置相关':casess.case_type==4?'安装部署':casess.case_type==5?'安全相关':casess.case_type==6?'接口测试':'其他'}】</a>
+												<ul>
+													<table>
+														<tr>
+															<td style="border:1px solid #cbd0db" colspan="3">前提条件：${casess.precondition}</td>
+														</tr>
+														<tr>
+															<td style="border:1px solid #cbd0db">编号</td>
+															<td style="border:1px solid #cbd0db">步骤</td>
+															<td style="border:1px solid #cbd0db">预期</td>
+														</tr>
+														<c:set var="index" value="1"/>
+														<c:forEach items="${testCaseStep}" var="step" varStatus="sta">
+														<c:if test="${casess.id == step.case_id }">
+														<tr>
+															<td style="border:1px solid #cbd0db">${index}</td>
+															<td style="border:1px solid #cbd0db">${step.step }</td>
+															<td style="border:1px solid #cbd0db">${step.expect }</td>
+														</tr>
+														<c:set var="index" value="${index+1}"/>
+														</c:if>
+														</c:forEach>
+													</table>
+												</ul>
+											</li>
+											</c:forEach>
+										</ul>
+									</div>
+								</div>
+							</c:if>
+							<c:if test="${taskM.task_type==1 && codeReport != null}">
+								<div class="detail">
+									<div class="detail-title">代码审查</div>  
+									<div class="detail-content article-content">
+										<table>
+											<tr>
+												<th style="border:1px solid #cbd0db">类型</th>
+												<th style="border:1px solid #cbd0db">界面/流程名称</th>
+												<th style="border:1px solid #cbd0db">入口点/对应界面入口点</th>
+												<th style="border:1px solid #cbd0db">在线url/函数入口点</th>
+												<th style="border:1px solid #cbd0db">源文件/文件名</th>
+											</tr>
+											<c:forEach items="${codeReport}" var="code" varStatus="sta">
+												<tr>
+													<td style="border:1px solid #cbd0db">${code.report_type == 0 ? '界面' : '流程'}</td>
+													<td style="border:1px solid #cbd0db">${code.report_interface }</td>
+													<td style="border:1px solid #cbd0db">${code.entry_point }</td>
+													<td style="border:1px solid #cbd0db">${code.online_url }</td>
+													<td style="border:1px solid #cbd0db">${code.source_file }</td>
+												</tr>
+											</c:forEach>
+										</table>
+									</div>
+								</div>
+							</c:if>
 							<c:if test="${taskM.task_type==2 && taskM.parent_id==0}">
 								<div class="detail">
 									<div class="detail-title">模块详情

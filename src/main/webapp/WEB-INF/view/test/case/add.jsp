@@ -112,186 +112,188 @@
 								&nbsp;<i class="icon-angle-right"></i>&nbsp; 建用例
 							</h2>
 						</div>
+						<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+							<table class="table table-form">
+								<tbody>
+									<tr>
+										<th>用例名称</th>
+										<td class="required" width="1000px">
+											<input type="text" name="case_name" id="case_name" value="" class="form-control input-product-title" autocomplete="off"/>
+											<input type="hidden" name="task_id" value="${task.id}"/>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>用例类型</th>
+										<td class="required">
+											<select class="form-control chosen chosen-select" name="case_type" id="case_type">
+												<option value="1">功能测试</option>
+												<option value="2">性能测试</option>
+												<option value="3">配置相关</option>
+												<option value="4">安装部署</option>
+												<option value="5">安全相关</option>
+												<option value="6">接口测试</option>
+												<option value="7">其他</option>
+											</select>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>前置条件</th>
+										<td class="required">
+											<input type="text" name="condition" id="condition" value="" class="form-control input-product-title" autocomplete="off">
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>用例步骤</th>
+										<td class="required">
+											<table class="table table-form mg-0 table-bordered" style="border: 1px solid #ddd">
+												<thead>
+													<tr>
+														<th class="w-50px text-right">编号</th>
+														<th width="45%">步骤</th>
+														<th>预期</th>
+														<th class="step-actions">操作</th>
+													</tr>
+												</thead>
+												<tbody id='steps' class='sortable' data-group-name='分组名称'>
+													<tr class='template step' id='stepTemplate'>
+														<td class='step-id'></td>
+														<td>
+															<div class='input-group'>
+																<span class='input-group-addon step-item-id'></span>
+																<textarea rows='1' class='form-control autosize step-steps' name='steps[]'></textarea>
+															</div>
+														</td>
+														<td><textarea rows='1'
+																class='form-control autosize step-expects'
+																name='expects[]'></textarea></td>
+														<td class='step-actions'>
+															<div class='btn-group'>
+																<button type='button' class='btn btn-step-add'
+																	tabindex='-1'>
+																	<i class='icon icon-plus'></i>
+																</button>
+																<button type='button' class='btn btn-step-move'
+																	tabindex='-1'>
+																	<i class='icon icon-move'></i>
+																</button>
+																<button type='button' class='btn btn-step-delete'
+																	tabindex='-1'>
+																	<i class='icon icon-trash'></i>
+																</button>
+															</div>
+														</td>
+													</tr>
+													<tr class='step'>
+														<td class='step-id'></td>
+														<td>
+															<div class='input-group'>
+																<span class='input-group-addon step-item-id'></span>
+																<textarea name='steps[]' id='steps[]' rows='1'
+																	class='form-control autosize step-steps'></textarea>
+															</div>
+														</td>
+														<td><textarea name='expects[]' id='expects[]' rows='1'
+																class='form-control autosize step-expects'></textarea></td>
+														<td class='step-actions'>
+															<div class='btn-group'>
+																<button type='button' class='btn btn-step-add'
+																	tabindex='-1'>
+																	<i class='icon icon-plus'></i>
+																</button>
+																<button type='button' class='btn btn-step-move'
+																	tabindex='-1'>
+																	<i class='icon icon-move'></i>
+																</button>
+																<button type='button' class='btn btn-step-delete'
+																	tabindex='-1'>
+																	<i class='icon icon-trash'></i>
+																</button>
+															</div>
+														</td>
+													</tr>
+													<tr class='step'>
+														<td class='step-id'></td>
+														<td>
+															<div class='input-group'>
+																<span class='input-group-addon step-item-id'></span>
+																<textarea name='steps[]' id='steps[]' rows='1'
+																	class='form-control autosize step-steps'></textarea>
+															</div>
+														</td>
+														<td><textarea name='expects[]' id='expects[]' rows='1'
+																class='form-control autosize step-expects'></textarea></td>
+														<td class='step-actions'>
+															<div class='btn-group'>
+																<button type='button' class='btn btn-step-add'
+																	tabindex='-1'>
+																	<i class='icon icon-plus'></i>
+																</button>
+																<button type='button' class='btn btn-step-move'
+																	tabindex='-1'>
+																	<i class='icon icon-move'></i>
+																</button>
+																<button type='button' class='btn btn-step-delete'
+																	tabindex='-1'>
+																	<i class='icon icon-trash'></i>
+																</button>
+															</div>
+														</td>
+													</tr>
+													<tr class='step'>
+														<td class='step-id'></td>
+														<td>
+															<div class='input-group'>
+																<span class='input-group-addon step-item-id'></span>
+																<textarea name='steps[]' id='steps[]' rows='1'
+																	class='form-control autosize step-steps'></textarea>
+															</div>
+														</td>
+														<td><textarea name='expects[]' id='expects[]' rows='1'
+																class='form-control autosize step-expects'></textarea></td>
+														<td class='step-actions'>
+															<div class='btn-group'>
+																<button type='button' class='btn btn-step-add'
+																	tabindex='-1'>
+																	<i class='icon icon-plus'></i>
+																</button>
+																<button type='button' class='btn btn-step-move'
+																	tabindex='-1'>
+																	<i class='icon icon-move'></i>
+																</button>
+																<button type='button' class='btn btn-step-delete'
+																	tabindex='-1'>
+																	<i class='icon icon-trash'></i>
+																</button>
+															</div>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>备注</th>
+										<td>
+											<div id="remark" style="width:100%;">
+												<input type="hidden" name="remark">
+											</div>
+										</td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
 						<table class="table table-form">
-							<tbody>
-								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
-								<tr>
-									<th>用例名称</th>
-									<td class="required" width="1000px">
-										<input type="text" name="case_name" id="case_name" value="" class="form-control input-product-title" autocomplete="off"/>
-										<input type="hidden" name="task_id" value="${task.id}"/>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>用例类型</th>
-									<td class="required">
-										<select class="form-control chosen chosen-select" name="case_type" id="case_type">
-											<option value="1">功能测试</option>
-											<option value="2">性能测试</option>
-											<option value="3">配置相关</option>
-											<option value="4">安装部署</option>
-											<option value="5">安全相关</option>
-											<option value="6">接口测试</option>
-											<option value="7">其他</option>
-										</select>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>前置条件</th>
-									<td class="required">
-										<input type="text" name="condition" id="condition" value="" class="form-control input-product-title" autocomplete="off">
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>用例步骤</th>
-									<td class="required">
-										<table class="table table-form mg-0 table-bordered" style="border: 1px solid #ddd">
-											<thead>
-												<tr>
-													<th class="w-50px text-right">编号</th>
-													<th width="45%">步骤</th>
-													<th>预期</th>
-													<th class="step-actions">操作</th>
-												</tr>
-											</thead>
-											<tbody id='steps' class='sortable' data-group-name='分组名称'>
-												<tr class='template step' id='stepTemplate'>
-													<td class='step-id'></td>
-													<td>
-														<div class='input-group'>
-															<span class='input-group-addon step-item-id'></span>
-															<textarea rows='1' class='form-control autosize step-steps' name='steps[]'></textarea>
-														</div>
-													</td>
-													<td><textarea rows='1'
-															class='form-control autosize step-expects'
-															name='expects[]'></textarea></td>
-													<td class='step-actions'>
-														<div class='btn-group'>
-															<button type='button' class='btn btn-step-add'
-																tabindex='-1'>
-																<i class='icon icon-plus'></i>
-															</button>
-															<button type='button' class='btn btn-step-move'
-																tabindex='-1'>
-																<i class='icon icon-move'></i>
-															</button>
-															<button type='button' class='btn btn-step-delete'
-																tabindex='-1'>
-																<i class='icon icon-trash'></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr class='step'>
-													<td class='step-id'></td>
-													<td>
-														<div class='input-group'>
-															<span class='input-group-addon step-item-id'></span>
-															<textarea name='steps[]' id='steps[]' rows='1'
-																class='form-control autosize step-steps'></textarea>
-														</div>
-													</td>
-													<td><textarea name='expects[]' id='expects[]' rows='1'
-															class='form-control autosize step-expects'></textarea></td>
-													<td class='step-actions'>
-														<div class='btn-group'>
-															<button type='button' class='btn btn-step-add'
-																tabindex='-1'>
-																<i class='icon icon-plus'></i>
-															</button>
-															<button type='button' class='btn btn-step-move'
-																tabindex='-1'>
-																<i class='icon icon-move'></i>
-															</button>
-															<button type='button' class='btn btn-step-delete'
-																tabindex='-1'>
-																<i class='icon icon-trash'></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr class='step'>
-													<td class='step-id'></td>
-													<td>
-														<div class='input-group'>
-															<span class='input-group-addon step-item-id'></span>
-															<textarea name='steps[]' id='steps[]' rows='1'
-																class='form-control autosize step-steps'></textarea>
-														</div>
-													</td>
-													<td><textarea name='expects[]' id='expects[]' rows='1'
-															class='form-control autosize step-expects'></textarea></td>
-													<td class='step-actions'>
-														<div class='btn-group'>
-															<button type='button' class='btn btn-step-add'
-																tabindex='-1'>
-																<i class='icon icon-plus'></i>
-															</button>
-															<button type='button' class='btn btn-step-move'
-																tabindex='-1'>
-																<i class='icon icon-move'></i>
-															</button>
-															<button type='button' class='btn btn-step-delete'
-																tabindex='-1'>
-																<i class='icon icon-trash'></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-												<tr class='step'>
-													<td class='step-id'></td>
-													<td>
-														<div class='input-group'>
-															<span class='input-group-addon step-item-id'></span>
-															<textarea name='steps[]' id='steps[]' rows='1'
-																class='form-control autosize step-steps'></textarea>
-														</div>
-													</td>
-													<td><textarea name='expects[]' id='expects[]' rows='1'
-															class='form-control autosize step-expects'></textarea></td>
-													<td class='step-actions'>
-														<div class='btn-group'>
-															<button type='button' class='btn btn-step-add'
-																tabindex='-1'>
-																<i class='icon icon-plus'></i>
-															</button>
-															<button type='button' class='btn btn-step-move'
-																tabindex='-1'>
-																<i class='icon icon-move'></i>
-															</button>
-															<button type='button' class='btn btn-step-delete'
-																tabindex='-1'>
-																<i class='icon icon-trash'></i>
-															</button>
-														</div>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>备注</th>
-									<td>
-										<div id="remark" style="width:100%;">
-											<input type="hidden" name="remark">
-										</div>
-									</td>
-									<td></td>
-								</tr>
-								</form>
-								<tr>
-									<td colspan="3" class="text-center form-actions">
-										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
-										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
-									</td>
-								</tr>
-							</tbody>
+							<tr>
+								<td class="text-center form-actions">
+									<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
+									<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>

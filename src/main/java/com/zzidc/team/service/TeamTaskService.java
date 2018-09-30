@@ -340,6 +340,40 @@ public class TeamTaskService extends GiantBaseService {
 	}
 
 	/**
+	 * 任务详情页面获取测试用例
+	 * @return
+	 */
+	public List<Map<String, Object>> getTestCase(int taskId){
+		List<Map<String, Object>> testCase = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT id,case_name,case_type,precondition FROM test_case WHERE state=1 AND task_id=" + taskId;
+		testCase = super.getMapListBySQL(sql, null);
+		return testCase;
+	}
+
+	/**
+	 * 任务详情页面获取测试用例步骤
+	 * @return
+	 */
+	public List<Map<String, Object>> getTestCaseStep(int taskId){
+		List<Map<String, Object>> testCaseStep = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT case_id,step,expect FROM test_case_step tcs, test_case tc "
+				+ "WHERE tcs.case_id=tc.id AND tcs.`version`=tc.`version` AND task_id=" + taskId;
+		testCaseStep = super.getMapListBySQL(sql, null);
+		return testCaseStep;
+	}
+
+	/**
+	 * 任务详情页面获取代码审查
+	 * @return
+	 */
+	public List<Map<String, Object>> getCodeReport(int taskId){
+		List<Map<String, Object>> codeReport = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT report_type,report_interface,entry_point,online_url,source_file,examination FROM code_report WHERE task_id=" + taskId + " ORDER BY report_type";
+		codeReport = super.getMapListBySQL(sql, null);
+		return codeReport;
+	}
+
+	/**
 	 * 获取日志
 	 * @param taskId
 	 * @return

@@ -36,8 +36,8 @@ public class TestCaseController extends GiantBaseController {
 	private String requestURL = "test/case/index";
 	
 	public void publicResult(Model model) {
-		model.addAttribute("m", "apply");//模块
-		model.addAttribute("s", "case");//子模块
+		model.addAttribute("m", "task");//模块
+		model.addAttribute("s", "task");//子模块
 		model.addAttribute("u", requestURL);//请求地址
 	}
 	
@@ -87,7 +87,7 @@ public class TestCaseController extends GiantBaseController {
 		Task t = (Task) testCaseService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
 		model.addAttribute("task", t);
 		publicResult(model);
-		model.addAttribute("s", "add");//子模块
+		model.addAttribute("s", "task");//子模块
 		return "test/case/add";
 	}
 

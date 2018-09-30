@@ -304,8 +304,8 @@
 																			</li>
 																			<li><a href="#">&nbsp;测试用例</a>
 																				<ul>
-																				<c:forEach items="${testCase}" var="case" varStatus="sta">
-																				<c:if test="${task.id == case.task_id }">
+																				<c:forEach items="${testCase}" var="case1" varStatus="sta">
+																				<c:if test="${task.id == case1.task_id }">
 																					<li><a href="#">&nbsp;${case1.case_name}
 	【${case1.case_type==1?'功能测试':case1.case_type==2?'性能测试':case1.case_type==3?'配置相关':case1.case_type==4?'安装部署':case1.case_type==5?'安全相关':case1.case_type==6?'接口测试':'其他'}】</a>
 																						<ul>
@@ -375,10 +375,10 @@
 																	</li>
 																	<li><a href="#">&nbsp;测试用例</a>
 																		<ul>
-																		<c:forEach items="${testCase}" var="case" varStatus="sta">
-																		<c:if test="${task.id == case.task_id }">
+																		<c:forEach items="${testCase}" var="case1" varStatus="sta">
+																		<c:if test="${task.id == case1.task_id }">
 																			<li><a href="#">&nbsp;${case1.case_name}
-		【${case1.case_type==1?'功能测试':case.case_type==2?'性能测试':case.case_type==3?'配置相关':case.case_type==4?'安装部署':case.case_type==5?'安全相关':case.case_type==6?'接口测试':'其他'}】</a>
+		【${case1.case_type==1?'功能测试':case1.case_type==2?'性能测试':case1.case_type==3?'配置相关':case1.case_type==4?'安装部署':case1.case_type==5?'安全相关':case1.case_type==6?'接口测试':'其他'}】</a>
 																				<ul>
 																					<table>
 																						<tr>

@@ -308,6 +308,46 @@ public class MyNeedController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 
+
+	/**
+	 * 跳转安排页面
+	 */
+	@RequestMapping("/toArrange")
+	public String toArrange(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		model.addAttribute("members", teamNeedService.getAllMember());
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("n", n);
+		}
+		publicResult(model);
+		return "my/need/arrange";
+	}
+
+	/**
+	 * 安排给
+	 */
+	@RequestMapping("/arrange")
+	public void arrange(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("end_date")) ){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.arrange(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+
 	/**
 	 * 跳转变更模块页面
 	 */

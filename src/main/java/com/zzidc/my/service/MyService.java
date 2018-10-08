@@ -40,8 +40,8 @@ public class MyService extends GiantBaseService{
 	 */
 	public Map<String, Object> getNeedCount(){
 		String sql = "SELECT count(0) 'count',SUM(IF(state=3,1,0)) 'checking'," + 
-				"(SELECT count(0) FROM task_need WHERE state!=0 AND state=3 AND member_id=" + 
-				super.getMemberId() + ") 'wait_check' " + 
+				"(SELECT count(0) FROM task_need WHERE state!=0 AND state=3 AND member_id="+super.getMemberId()+") 'wait_check', " + 
+				"(SELECT count(0) FROM task_need WHERE state!=0 AND state=6 AND (department_id="+super.getMemberId()+" OR member_id="+super.getMemberId()+" OR create_id="+super.getMemberId()+")) 'wait_arrange' " +
 				"FROM task_need WHERE state!=0 AND state!=5 AND assigned_id=" + super.getMemberId();
 		List<Map<String, Object>> list = super.dao.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {

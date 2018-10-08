@@ -125,6 +125,12 @@
 													<div class="tile-amount">${needCount.wait_check > 0 ? needCount.wait_check : 0}</div>
 												</a>
 											</div>
+											<div class="col tile">
+												<a href="my/need?type=15">
+													<div class="tile-title">待安排</div>
+													<div class="tile-amount">${needCount.wait_arrange > 0 ? needCount.wait_arrange : 0}</div>
+												</a>
+											</div>
 										</div>
 									</div>
 								</div>

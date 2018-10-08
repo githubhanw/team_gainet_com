@@ -191,6 +191,81 @@ public class TeamNeedController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 	
+
+	/**
+	 * 跳转添加产品模块页面
+	 */
+	@RequestMapping("/toAddProduct")
+	public String toAddProduct(@RequestParam Map<String, String> mvm, Model model) {
+		String fenlei = "0";//0->项目 1->产品
+		if (!"".equals(mvm.get("fenlei"))) {
+			fenlei = mvm.get("fenlei").toString();
+		}
+		//添加模块页面的项目列表
+		model.addAttribute("fenlei", fenlei);
+		model.addAttribute("project", teamNeedService.getTeamProject());
+		model.addAttribute("product", teamNeedService.getTeamProduct());
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
+		model.addAttribute("members", teamNeedService.getAllMember());
+		model.addAttribute("departinfo", teamNeedService.getDepartmentInfo());
+		publicResult(model);
+		return "team/need/addproductneed";
+	}
+
+	/**
+	 * 添加产品需求
+	 */
+	@RequestMapping("/addproduct")
+	public void addProduct(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
+			@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
+		JSONObject json=new JSONObject();
+		int id=baseService.getMemberId();	//登录id	        
+        String name=baseService.getMemberName();   //登录姓名
+        if(name.equals("")){
+        	json.put("code", 4);
+        	json.put("message", "请重新登录");
+        	resultresponse(response,json);
+			return;
+        }
+        String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		if(prototypeName.equals("")){
+			json.put("code",2);
+			json.put("message", "请选择界面原型文件");
+			resultresponse(response,json);
+			return;
+		}
+		if(treeName.equals("")){
+			json.put("code",3);
+			json.put("message", "请选择流程图");
+			resultresponse(response,json);
+			return;
+		}
+		if(GiantUtil.isEmpty(mvm.get("project_id")==null?mvm.get("product_id"):mvm.get("project_id")) || 
+				GiantUtil.isEmpty(mvm.get("need_name")) || GiantUtil.isEmpty(mvm.get("level")) || 
+				GiantUtil.isEmpty(mvm.get("department_id")) || GiantUtil.isEmpty(mvm.get("start_date")) ||
+				GiantUtil.isEmpty(mvm.get("need_remark")) || GiantUtil.isEmpty(mvm.get("check_remark")) || 
+				GiantUtil.isEmpty(mvm.get("member_id")) || GiantUtil.isEmpty(mvm.get("src_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String needId=dfs.format(new Date());
+		boolean flag = teamNeedService.addProduct(mvm,id,name,file,filePrototype,filetree);
+	    if(flag){
+			json.put("code",0);
+			json.put("message", "添加成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "添加失败");
+		}
+		resultresponse(response,json);
+	}
+	
 	/**
 	 * 跳转添加子模块页面
 	 */
@@ -367,6 +442,45 @@ public class TeamNeedController extends GiantBaseController {
 			return;
 		}
 		boolean flag = teamNeedService.assign(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+
+	/**
+	 * 跳转安排页面
+	 */
+	@RequestMapping("/toArrange")
+	public String toArrange(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		model.addAttribute("members", teamNeedService.getAllMember());
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("n", n);
+		}
+		publicResult(model);
+		return "team/need/arrange";
+	}
+
+	/**
+	 * 安排给
+	 */
+	@RequestMapping("/arrange")
+	public void arrange(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("end_date")) ){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.arrange(mvm);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

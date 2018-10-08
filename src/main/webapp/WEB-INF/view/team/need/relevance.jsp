@@ -60,6 +60,7 @@
 										</select>
 										<input type="hidden" name="id" id="id" value="${n.id}"/>
 									</td>
+									<td></td>
 								</tr>
 								<tr>
 									<th>备注</th>

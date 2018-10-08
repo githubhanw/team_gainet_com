@@ -58,8 +58,9 @@
 												</c:if>
 											</c:forEach>
 										</select>
+										<input type="hidden" name="id" id="id" value="${n.id}"/>
 									</td>
-								<input type="hidden" name="id" id="id" value="${n.id}"/>
+									<td></td>
 								</tr>
 								<tr>
 									<th>备注</th>

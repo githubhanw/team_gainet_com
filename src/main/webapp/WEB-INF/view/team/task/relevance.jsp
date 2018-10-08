@@ -32,7 +32,6 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${t.id}</span>
-								<input type="hidden" name="id" id="id" value="${t.id}"/>
 								<a href="team/need/index">${t.taskName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 关联</small>
 							</h2>
@@ -43,6 +42,7 @@
 								<tr>
 									<th>任务名称</th>
 									<td class="required">
+										<input type="hidden" name="id" id="id" value="${t.id}"/>
 										<select data-placeholder="请选择要关联的任务" class="form-control chosen chosen-select" multiple name="needs" id="needs">
 											<option value=""></option>
 											<c:forEach items="${needs}" var="p" varStatus="sta">
@@ -59,7 +59,7 @@
 											</c:forEach>
 										</select>
 									</td>
-									</td>
+									<td></td>
 								</tr>
 								<tr>
 									<th>备注</th>

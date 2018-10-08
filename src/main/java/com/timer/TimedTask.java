@@ -42,7 +42,7 @@ public class TimedTask extends GiantBaseService {
 						+ ") late_remind group by id";
 		
 		List<Map<String, Object>> list = super.dao.getListMapBySql(querySql, null);
-		if (list != null && list.size() > 0) {
+		if (list != null && list.size() > 0) { 
 			for (int i = 0; i < list.size(); i++) {
 				Map<String, Object> map = list.get(i);
 				Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), map.get("id"));

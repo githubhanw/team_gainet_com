@@ -441,6 +441,20 @@ public class TeamNeedService extends GiantBaseService{
 				"SELECT id,name,number FROM member WHERE id=581";
 		return super.getMapListBySQL(sql, null);
 	}
+	
+
+	/**
+	 * 获取项目指派人列表【模块负责人/项目负责人/项目成员】
+	 */
+	public List<Map<String, Object>> getProjectMems( int projectId){
+		String sql = "SELECT m.id,m.number,m.name FROM member m, project_member pm, task_project tp" + 
+				" WHERE pm.project_id=tp.id AND (m.id=pm.member_id OR m.id=tp.member_id OR m.id=tp.demand_id) AND tp.id="+projectId+" GROUP BY m.id";
+		List<Map<String, Object>> list = dao.getMapListBySQL(sql, null);
+		if(list == null) {
+			list = new ArrayList<Map<String, Object>>();
+		}
+		return list;
+	}
 
 	/**
 	 * 添加模块信息

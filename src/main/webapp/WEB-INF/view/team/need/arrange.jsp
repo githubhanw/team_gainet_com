@@ -19,7 +19,7 @@
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
-	    <!--header start-->
+	    <!--header 产品安排页面 start-->
 	    <header id="header">
 	    	<%@ include file="/WEB-INF/view/comm/main_header.jsp" %>
 	    	<%@ include file="/WEB-INF/view/comm/sub_header.jsp" %>

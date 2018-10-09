@@ -221,6 +221,7 @@
 												  project.state == 8 ? '里程碑及概要设计已确认' : project.state == 9 ? '待测试' :
 												  project.state == 10 ? '已完成测试' : project.state == 11 ? '里程碑已验收' :
 												  project.state == 12 ? '里程碑报告待验收' : project.state == 13 ? '里程碑报告已验收' :
+												  project.state == 14 ? '验收不通过' :
 												  '未知'}
 											</td>
 											<td class="c-pri text-center" />${project.start_time}</td>
@@ -263,7 +264,7 @@
 												<c:if test="${project.state == '3' }">
 													<a href="team/project/toFinish?id=${project.id}" class="btn" title="确认项目完成"><i class="icon-task-finish icon-checked"></i></a>
 												</c:if>
-												<c:if test="${project.state == '1' || project.state == '2' || project.state == '5'}">
+												<c:if test="${project.state == '1' || project.state == '14'}">
 													<a href="team/need/toaddproject?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
 													<a href="team/need/toEachAdd?project_id=${project.id}" class="btn" title="拆分模块"><i class="icon-task-batchCreate icon-branch"></i></a>
 												</c:if>

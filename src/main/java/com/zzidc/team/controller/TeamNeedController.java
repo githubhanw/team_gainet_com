@@ -120,7 +120,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转添加项目模块页面
+	 * 跳转添加 项目模块页面
 	 */
 	@RequestMapping("/toaddproject")
 	public String toAddProject(@RequestParam Map<String, String> mvm, Model model) {
@@ -135,7 +135,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 添加项目模块
+	 * 添加 项目模块
 	 */
 	@RequestMapping("/addproject")
 	public void addProject(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
@@ -167,7 +167,7 @@ public class TeamNeedController extends GiantBaseController {
 				GiantUtil.isEmpty(mvm.get("level")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || 
 				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date")) || 
 				GiantUtil.isEmpty(mvm.get("need_remark")) || GiantUtil.isEmpty(mvm.get("check_remark")) || 
-				GiantUtil.isEmpty(mvm.get("member_id")) || GiantUtil.isEmpty(mvm.get("src_id"))){
+				GiantUtil.isEmpty(mvm.get("member_name")) || GiantUtil.isEmpty(mvm.get("src_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);
@@ -188,7 +188,7 @@ public class TeamNeedController extends GiantBaseController {
 	
 
 	/**
-	 * 跳转添加产品模块页面
+	 * 跳转添加 产品模块页面
 	 */
 	@RequestMapping("/toaddproduct")
 	public String toAddProduct(@RequestParam Map<String, String> mvm, Model model) {
@@ -203,7 +203,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 添加产品需求
+	 * 添加 产品需求
 	 */
 	@RequestMapping("/addproduct")
 	public void addProduct(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,

@@ -76,6 +76,7 @@
 												<option value="${member.id}">${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
+										<input type="hidden" name="department_id" value="0"/>
 									</td>
 									<td></td>
 								</tr>
@@ -244,7 +245,7 @@ $("#submit").click(function(){
 	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
-         url:"team/need/add?r=" + Math.random(),
+         url:"team/need/addproduct?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",

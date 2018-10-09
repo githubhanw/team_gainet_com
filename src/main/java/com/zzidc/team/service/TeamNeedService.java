@@ -507,9 +507,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());
 		//模块方
-		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
-		need.setMemberId(member == null ? 0 : member.getId());
-		need.setMemberName(member == null ? "" : member.getName());
+		need.setMemberName(GiantUtil.stringOf(mvm.get("member_name")));
 		//指派给
 		Member assign = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
 		need.setAssignedId(assign == null ? 0 : assign.getId());
@@ -623,7 +621,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());
-		//模块方
+		//需求方
 		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
 		need.setMemberId(member == null ? 0 : member.getId());
 		need.setMemberName(member == null ? "" : member.getName());

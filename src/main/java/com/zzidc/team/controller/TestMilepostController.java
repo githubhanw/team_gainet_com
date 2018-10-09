@@ -21,6 +21,7 @@ import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.MilepostManage;
 import com.zzidc.team.entity.MilepostTaskneed;
+import com.zzidc.team.entity.ProjectMember;
 import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.service.TestMilepostService;
@@ -195,7 +196,7 @@ public class TestMilepostController extends GiantBaseController {
 			return;
 		}
 		//比较时间
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		/*SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date sd1=df.parse(mvm.get("start_date")+":00");
 		Date sd2=df.parse(mvm.get("end_date")+":00");
 		if(sd2.before(sd1) || mvm.get("start_date").equals(mvm.get("end_date"))){
@@ -203,7 +204,7 @@ public class TestMilepostController extends GiantBaseController {
 			json.put("message", "结束时间必须在开始时间之后");
 			resultresponse(response,json);
 			return;
-		}
+		}*/
 		boolean flag=testMilepostService.add(mvm, id, name, request);
 		if(flag){
 			json.put("code",0);
@@ -221,7 +222,12 @@ public class TestMilepostController extends GiantBaseController {
 	public String toBatchAdd(@RequestParam Map<String, String> mvm, Model model) {
 		List<Map<String, Object>> taskNeedList = new ArrayList<Map<String, Object>>();
 		if(!GiantUtil.isEmpty(mvm.get("project_id"))){
-		String sql = "SELECT id,need_name FROM `task_need`";
+		String idsSql = "select taskneed_id from milepost_taskneed where milepost_id "
+				      + "in (select id from milepost_manage where project_id = ' " 
+				      + mvm.get("project_id") + "')";
+		String sql = "SELECT id,need_name,start_date, end_date FROM `task_need` "
+				   + "where project_id = '" + mvm.get("project_id") 
+				   + "' and state in(1,2,3) and id not in (" + idsSql + ")";
 		TaskProject tp = (TaskProject) testMilepostService.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(mvm.get("project_id"), 0));
 		taskNeedList = baseService.getMapListBySQL(sql, null);
 		model.addAttribute("taskNeed", taskNeedList);//查询出来的任务id和名称
@@ -557,5 +563,38 @@ public class TestMilepostController extends GiantBaseController {
 			
 		}
 		model.addAttribute("applyType", applyType);
+	}
+		
+	@RequestMapping("/getDate")
+	public void getDate(@RequestParam Map<String, String> mvm, HttpServletRequest request, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		String[] task_needid = request.getParameterValues("task_needid");
+		if (task_needid != null &&  task_needid.length > 0) {
+			String ids = "";
+			for (int i = 0; i < task_needid.length; i++) {
+				ids += task_needid[i] + ",";
+			}
+			ids = ids.substring(0, ids.length() - 1);
+			String querySql = "select min(start_date) startDate, max(end_date) endDate "
+					   + "from task_need where id in(" + ids + ")";
+			List<Map<String, Object>> list = testMilepostService.getMapListBySQL(querySql, null);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			if (list != null && list.size() > 0) {
+				Map<String, Object> map = list.get(0);
+				String startDate = map.get("startDate").toString();
+				String endDate = map.get("endDate").toString();
+				json.put("code",0);
+				json.put("message", "成功");
+				json.put("startDate",startDate);
+				json.put("endDate", endDate);
+			} else {
+				json.put("code",1);
+				json.put("message", "失败");
+			}
+		} else {
+			json.put("code",1);
+			json.put("message", "失败");
+		}
+		resultresponse(response,json);
 	}
 }

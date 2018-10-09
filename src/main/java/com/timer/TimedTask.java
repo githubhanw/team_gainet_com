@@ -25,7 +25,7 @@ import net.sf.json.JSONObject;
  */
 @Component
 public class TimedTask extends GiantBaseService {
-
+ 
 	@Scheduled(cron = "0 00 10 ? * *") // 每天17:50执行一次
 	@Scheduled(cron = "0 03 10 ? * *") // 每天18:20执行一次
 	public void overdueWarn() {

@@ -203,7 +203,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 添加 产品需求
+	 * 添加 产品模块
 	 */
 	@RequestMapping("/addproduct")
 	public void addProduct(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,

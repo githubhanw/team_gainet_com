@@ -1,5 +1,7 @@
 package com.zzidc.my.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.service.GiantBaseService;
+import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.service.FilemanageService;
@@ -109,24 +112,25 @@ public class MyNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转添加模块页面
+	 * 跳转添加 项目模块页面
 	 */
-	@RequestMapping("/toAdd")
-	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
+	@RequestMapping("/toaddproject")
+	public String toAddProject(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
 		model.addAttribute("project", teamNeedService.getTeamProject());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("projectmems", teamNeedService.getProjectMems( GiantUtil.intOf(mvm.get("project_id"), 0)));
 		model.addAttribute("members", teamNeedService.getAllMember());
 		publicResult(model);
-		return "my/need/add";
+		return "my/need/addproject";
 	}
 
 	/**
-	 * 添加模块
+	 * 添加 项目模块
 	 */
-	@RequestMapping("/add")
-	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
+	@RequestMapping("/addproject")
+	public void addProject(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
 			@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
 		JSONObject json=new JSONObject();
 		int id=baseService.getMemberId();	//登录id	        
@@ -151,18 +155,20 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		if(GiantUtil.isEmpty(mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("need_name")) || 
+		if(GiantUtil.isEmpty(mvm.get("project_id")==null?mvm.get("product_id"):mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("need_name")) || 
 				GiantUtil.isEmpty(mvm.get("level")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || 
 				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date")) || 
 				GiantUtil.isEmpty(mvm.get("need_remark")) || GiantUtil.isEmpty(mvm.get("check_remark")) || 
-				GiantUtil.isEmpty(mvm.get("member_id")) || GiantUtil.isEmpty(mvm.get("src_id"))){
+				GiantUtil.isEmpty(mvm.get("member_name")) || GiantUtil.isEmpty(mvm.get("src_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);
 			return;
 		}
-		boolean flag = teamNeedService.add(mvm,id,name,file,filePrototype,filetree);
-		if(flag){
+		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String needId=dfs.format(new Date());
+		boolean flag = teamNeedService.addproject(mvm,id,name,file,filePrototype,filetree);
+	    if(flag){
 			json.put("code",0);
 			json.put("message", "添加成功");
 		}else{
@@ -171,6 +177,141 @@ public class MyNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
+	
+
+	/**
+	 * 跳转添加 产品模块页面
+	 */
+	@RequestMapping("/toaddproduct")
+	public String toAddProduct(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		model.addAttribute("product", teamNeedService.getTeamProduct());
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
+		model.addAttribute("members", teamNeedService.getAllMember());
+		model.addAttribute("departinfo", teamNeedService.getDepartmentInfo());
+		publicResult(model);
+		return "my/need/addproduct";
+	}
+
+	/**
+	 * 添加 产品模块
+	 */
+	@RequestMapping("/addproduct")
+	public void addProduct(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
+			@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
+		JSONObject json=new JSONObject();
+		int id=baseService.getMemberId();	//登录id	        
+        String name=baseService.getMemberName();   //登录姓名
+        if(name.equals("")){
+        	json.put("code", 4);
+        	json.put("message", "请重新登录");
+        	resultresponse(response,json);
+			return;
+        }
+        String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		if(prototypeName.equals("")){
+			json.put("code",2);
+			json.put("message", "请选择界面原型文件");
+			resultresponse(response,json);
+			return;
+		}
+		if(treeName.equals("")){
+			json.put("code",3);
+			json.put("message", "请选择流程图");
+			resultresponse(response,json);
+			return;
+		}
+		if(GiantUtil.isEmpty(mvm.get("project_id")==null?mvm.get("product_id"):mvm.get("project_id")) || 
+				GiantUtil.isEmpty(mvm.get("need_name")) || GiantUtil.isEmpty(mvm.get("level")) || 
+				GiantUtil.isEmpty(mvm.get("department_id")) || GiantUtil.isEmpty(mvm.get("start_date")) ||
+				GiantUtil.isEmpty(mvm.get("need_remark")) || GiantUtil.isEmpty(mvm.get("check_remark")) || 
+				GiantUtil.isEmpty(mvm.get("member_id")) || GiantUtil.isEmpty(mvm.get("src_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String needId=dfs.format(new Date());
+		boolean flag = teamNeedService.addproduct(mvm,id,name,file,filePrototype,filetree);
+	    if(flag){
+			json.put("code",0);
+			json.put("message", "添加成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "添加失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	/**
+	 * 跳转添加 项目子模块页面
+	 */
+	@RequestMapping("/toAddPJSon")
+	public String toAddPJSon(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		model.addAttribute("need_id",GiantUtil.intOf(mvm.get("need_id"), 0));
+		model.addAttribute("project", teamNeedService.getTeamProject());
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("members", teamNeedService.getAllMember());
+		model.addAttribute("projectmems", teamNeedService.getProjectMems( GiantUtil.intOf(mvm.get("project_id"), 0)));
+		publicResult(model);
+		return "my/need/addpjson";
+	}
+
+	/**
+	 * 跳转添加 产品子模块页面
+	 */
+	@RequestMapping("/toAddPDSon")
+	public String toAddSon(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		model.addAttribute("need_id",GiantUtil.intOf(mvm.get("need_id"), 0));
+		model.addAttribute("product", teamNeedService.getTeamProduct());
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
+		model.addAttribute("members", teamNeedService.getAllMember());
+		publicResult(model);
+		return "my/need/addpdson";
+	}
+	
+	/**
+	 * [项目(拆分模块)]跳转到 选中项目的添加模块列表页面
+	 */
+	@RequestMapping("/toEachAdd")
+	public String toEachAdd(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		GiantPager conditionPage = new GiantPager();
+		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
+			mvm.put("orderColumn", "tn.update_time");
+			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
+			mvm.put("type", "");//未关闭
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
+			mvm.put("search", "");
+		}
+		Map<String, String> queryCondition = conditionPage.getQueryCondition();
+		//查询条件封装
+		queryCondition.clear();
+		queryCondition.putAll(mvm);
+		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
+		conditionPage.setPageSize(300);
+		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
+		pageList = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0),conditionPage);
+		model.addAttribute("project", teamNeedService.getTeamProjectByID(GiantUtil.intOf(mvm.get("project_id"), 0)));
+		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("pageList", pageList);
+		requestURL = "team/need/toEachAdd";
+		pageList.setDesAction(requestURL);
+		publicResult(model);
+		return "my/need/eachAdd";
+	}
+
 
 	/**
 	 * 跳转批量添加、分解模块页面
@@ -331,7 +472,7 @@ public class MyNeedController extends GiantBaseController {
 	@RequestMapping("/arrange")
 	public void arrange(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("end_date")) ){
+		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("plan_end_date")) ){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

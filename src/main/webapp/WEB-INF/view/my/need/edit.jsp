@@ -173,17 +173,31 @@
 													</td>
 												</tr>
 												<tr>
-													<th>开始日期</th>
-													<td>
+													<th>代码开始时间</th>
+													<td class="required">
 														<input type="text" name="start_date" id="start_date" value="<fmt:formatDate value="${n.startDate}" pattern="yyyy-MM-dd"/>" 
-															class="form-control form-date-limit" placeholder="模块开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+															class="form-control form-date-limit" placeholder="代码开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
-													<th>结束日期</th>
-													<td>
+													<th>代码结束时间</th>
+													<td class="required">
+														<input type="text" name="cend_date" id="cend_date" value="<fmt:formatDate value="${n.cendDate}" pattern="yyyy-MM-dd"/>" 
+															class="form-control form-date-limit" placeholder="代码结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<th>测试时间</th>
+													<td class="required">
+														<input type="text" name="tend_date" id="tend_date" value="<fmt:formatDate value="${n.tendDate}" pattern="yyyy-MM-dd"/>" 
+															class="form-control form-date-limit" placeholder="测试时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+													</td>
+												</tr>
+												<tr>
+													<th>上线时间</th>
+													<td class="required">
 														<input type="text" name="end_date" id="end_date" value="<fmt:formatDate value="${n.endDate}" pattern="yyyy-MM-dd"/>" 
-															class="form-control form-date-limit" placeholder="模块结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+															class="form-control form-date-limit" placeholder="上线时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 											</tbody>

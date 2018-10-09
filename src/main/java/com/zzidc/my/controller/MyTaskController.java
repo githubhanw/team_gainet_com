@@ -722,9 +722,9 @@ public class MyTaskController extends GiantBaseController {
 					testApplyService.showTreeMsg(model, n.getId(), n.getTaskId(), n.getNeedId(), n.getProjectId(), n.getProductId(), "3,4,5", t.getAssignedId());
 				}
 			}
-			List<Map<String, Object>> codeReport = teamTaskService.getCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
+			List<Map<String, Object>> codeReport = teamTaskService.getTaskCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("codeReport", codeReport);
-			List<Map<String, Object>> codeInterface = teamTaskService.getCodeInterface(GiantUtil.intOf(mvm.get("id"), 0));
+			List<Map<String, Object>> codeInterface = teamTaskService.getTaskCodeInterface(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("codeInterface", codeInterface);
 		}
 		publicResult(model);

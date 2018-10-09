@@ -26,6 +26,8 @@ public class TaskNeed implements java.io.Serializable {
 	private String interfaceImg;
 	private String flowImg;
 	private String needName;
+	private Integer departmentId;
+	private String departmentName;
 	private Integer memberId;
 	private String memberName;
 	private Integer createId;
@@ -78,8 +80,8 @@ public class TaskNeed implements java.io.Serializable {
 
 	/** full constructor */
 	public TaskNeed(Integer projectId, Integer productId, String interfaceImg,
-			String flowImg, String needName, Integer memberId,
-			String memberName, Integer createId, String createName,
+			String flowImg, String needName, Integer departmentId, String departmentName,
+			Integer memberId, String memberName, Integer createId, String createName,
 			Integer srcId, String srcRemark, Integer level, Date startDate,
 			Date endDate, Date planEndDate, String needRemark,
 			String checkRemark, Integer assignedId, String assignedName,
@@ -98,6 +100,8 @@ public class TaskNeed implements java.io.Serializable {
 		this.interfaceImg=interfaceImg;
 		this.flowImg=flowImg;
 		this.needName = needName;
+		this.departmentId = departmentId;
+		this.departmentName = departmentName;
 		this.memberId = memberId;
 		this.memberName = memberName;
 		this.createId = createId;
@@ -200,6 +204,26 @@ public class TaskNeed implements java.io.Serializable {
 	public void setNeedName(String needName) {
 		this.needName = needName;
 	}
+	
+
+	@Column(name = "department_id")
+	public Integer getDepartmentId() {
+		return this.departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	@Column(name = "department_name", length = 64)
+	public String getDepartmentName() {
+		return this.departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
 
 	@Column(name = "member_id")
 	public Integer getMemberId() {

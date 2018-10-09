@@ -27,6 +27,8 @@ import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskNeed;
+import com.zzidc.team.entity.TaskProduct;
+import com.zzidc.team.entity.TaskProject;
 
 import net.sf.json.JSONObject;
 
@@ -206,8 +208,8 @@ public class TeamNeedService extends GiantBaseService{
 				}
 					
 				if ("1".equals(temp)) {//未开始
-					sql += "AND tn.state=1 ";
-					countSql += "AND tn.state=1 ";
+					sql += "AND tn.state in (1,6) ";
+					countSql += "AND tn.state in (1,6) ";
 				} else if ("2".equals(temp)) {//进行中
 					sql += "AND tn.state=2 ";
 					countSql += "AND tn.state=2 ";
@@ -232,6 +234,9 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("21".equals(temp)) {//未关闭
 					sql += "AND tn.parent_id=0 AND tn.state!=5 ";
 					countSql += "AND tn.parent_id=0 AND tn.state!=5 ";
+				} else if ("24".equals(temp)) {//待安排
+					sql += "AND tn.state=6 ";
+					countSql += "AND tn.state=6 ";
 				}
 				
 				
@@ -257,6 +262,9 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("13".equals(temp)) {//指派给我，且待验收模块
 					sql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
 					countSql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
+				} else if ("15".equals(temp)) {//指派给我，且待验收模块
+					sql += "AND tn.state=6 AND (tn.assigned_id=" + memberId+" OR tn.department_id="+memberId+" OR tn.member_id="+memberId+" OR tn.create_id="+memberId+")";
+					countSql += "AND tn.state=6 AND (tn.assigned_id=" + memberId+" OR tn.department_id="+memberId+" OR tn.member_id="+memberId+" OR tn.create_id="+memberId+")";
 				}
 			}
 		}
@@ -300,31 +308,13 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * 项目划分模块时,同项目的模块列表
 	 */
-	public GiantPager getPageListThisProject(int project_id) {
-		GiantPager conditionPage = new GiantPager();
+	public GiantPager getPageListThisProject(int project_id,GiantPager conditionPage) {
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		String sql = "SELECT tn.*,tp.project_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
 				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
 				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id +" ORDER BY tn.update_time DESC";
 		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id;
-		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
-		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
-		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
-		return resultPage;
-	}
-	
-	/**
-	 * 产品划分模块时,同产品的模块列表
-	 */
-	public GiantPager getPageListThisProduct(int product_id) {
-		GiantPager conditionPage = new GiantPager();
-		conditionPage = this.filterStr(conditionPage);
-		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT tn.*,tp.product_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
-				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
-				+ "LEFT JOIN task_product tp ON tn.product_id=tp.id WHERE 1=1 AND tp.id="+product_id +" ORDER BY tn.update_time DESC";
-		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_product tp ON tn.product_id=tp.id  WHERE 1=1 AND tp.id="+product_id;
 		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
 		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
 		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
@@ -441,6 +431,16 @@ public class TeamNeedService extends GiantBaseService{
 		String sql = "select id,need_src from need_src order by sort";
 		return super.getMapListBySQL(sql, null);
 	}
+	
+	/**
+	 * 获取部门负责人信息
+	 * @return
+	 */
+	public List<Map<String, Object>> getDepartmentInfo(){
+		String sql = "SELECT m.id,m.name,m.number FROM member m,member_config mc WHERE mc.role_ids =2 AND mc.number=m.NUMBER UNION ALL \n" + 
+				"SELECT id,name,number FROM member WHERE id=581";
+		return super.getMapListBySQL(sql, null);
+	}
 
 	/**
 	 * 添加模块信息
@@ -466,7 +466,6 @@ public class TeamNeedService extends GiantBaseService{
 		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
-		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());
 		//模块方
@@ -501,6 +500,13 @@ public class TeamNeedService extends GiantBaseService{
 		need.setResolved((short)0);
 		need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
 		
+
+		TaskProject taskProject =  (TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), need.getProjectId());
+		if (taskProject.getState() == 1) {
+			taskProject.setState((short) 5);
+			super.dao.saveUpdateOrDelete(taskProject, null);
+		}
+		
 		//修改父类对象的resolved 状态改为已分解 
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
@@ -524,6 +530,111 @@ public class TeamNeedService extends GiantBaseService{
 			c.setTime(new Date());
 			c.add(Calendar.DATE, 1);
 			need.setEndDate(c.getTime());
+		}
+		need.setSrcRemark(GiantUtil.stringOf(mvm.get("src_remark")));
+		need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
+		need.setCheckRemark(GiantUtil.stringOf(mvm.get("check_remark")));
+		need.setFull((short) 1);
+		need.setChangedStatus((short) 0);
+		need.setOverdue((short) 0);
+		need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		boolean flag = super.dao.saveUpdateOrDelete(need, null);
+		
+		String fileName = file[0].getOriginalFilename();
+		if(fileName != null && !"".equals(fileName)) {
+			//创建文档
+			JSONObject jsonupload=new JSONObject();
+			jsonupload=filemanageService.uploadfiles(file);
+			if(jsonupload!=null){
+				filemanageService.addxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),need.getId());
+			}else{
+				return false;
+			}
+		}
+		
+		pmLog.setObjectId(need.getId());
+		this.log(pmLog);
+		return flag;
+	}
+
+
+	/**
+	 * 添加产品模块信息
+	 */
+	public boolean addProduct(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+		TaskNeed need = new TaskNeed();
+		//上传界面原型图和流程图文件
+		String interfaceImg="";//界面原型图（格式：url,url）
+		String flowImg="";//流程图（格式：url,url）
+		for (int i = 0; i < filePrototype.length; i++) {
+			MultipartFile file1 = filePrototype[i];
+			interfaceImg+=String.valueOf(FileUploadUtil.uploadFiles(file1))+",";
+		}
+		interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
+		for (int i = 0; i < filetree.length; i++) {
+			MultipartFile file2 = filetree[i];
+			flowImg+=FileUploadUtil.uploadFiles(file2).toString()+",";
+		}
+		flowImg = flowImg.substring(0,flowImg.length() - 1);
+		need.setInterfaceImg(interfaceImg);//界面原型图拼接路径
+		need.setFlowImg(flowImg);//流程图拼接路径
+		
+		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
+		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
+		need.setCreateId(super.getMemberId());
+		need.setCreateName(super.getMemberName());
+		//模块方
+		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
+		need.setMemberId(member == null ? 0 : member.getId());
+		need.setMemberName(member == null ? "" : member.getName());
+		//部门负责人
+		Member department = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("department_id"), 0));
+		need.setDepartmentId(department == null ? 0 : department.getId());
+		need.setDepartmentName(department == null ? "" : department.getName());
+		//指派给
+		Member assign = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
+		need.setAssignedId(assign == null ? 0 : assign.getId());
+		need.setAssignedName(assign == null ? "" : assign.getName());
+		need.setAssignedTime(new Timestamp(System.currentTimeMillis()));
+		//变更人
+		need.setChangedId(0);
+		need.setChangedName("");
+		need.setChangedTime(null);
+		need.setChangedCount((short) 0);
+		//关闭人
+		need.setClosedId(0);
+		need.setClosedName("");
+		need.setClosedTime(null);
+		need.setClosedReason("");
+		//验收人
+		need.setCheckedId(0);
+		need.setCheckedName("");
+		need.setCheckedTime(null);
+		need.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		need.setState((short)6);
+		
+		need.setSrcId(GiantUtil.intOf(mvm.get("src_id"), 0));
+		need.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
+		//分解
+		need.setResolved((short)0);
+		need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
+		
+		//修改父类对象的resolved 状态改为已分解 
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed parentNeed = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(parentNeed.getResolved() == 0) {
+				parentNeed.setResolved((short) 1);
+				parentNeed.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				super.dao.saveUpdateOrDelete(parentNeed, null);
+			}
+		}
+		
+		try {
+			need.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
+		} catch (ParseException e) {
+			need.setStartDate(new Date());
 		}
 		need.setSrcRemark(GiantUtil.stringOf(mvm.get("src_remark")));
 		need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
@@ -751,6 +862,43 @@ public class TeamNeedService extends GiantBaseService{
 			need.setAssignedId(assign == null ? 0 : assign.getId());
 			need.setAssignedName(assign == null ? "" : assign.getName());
 			need.setAssignedTime(new Timestamp(System.currentTimeMillis()));
+			need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			boolean b = super.dao.saveUpdateOrDelete(need, null);
+			if(b) {
+				pmLog.add(need.getId(), oldT, need, "assigned_name");
+				this.log(pmLog);
+			}
+			return b;
+		}
+		return false;
+	}
+
+	/**
+	 * 安排给
+	 */
+	public boolean arrange(Map<String, String> mvm) {
+		TaskNeed need = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ASSIGN, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+			TaskNeed oldT = new TaskNeed();
+			BeanUtils.copyProperties(need, oldT);
+			
+			Member assign = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
+			need.setAssignedId(assign == null ? 0 : assign.getId());
+			need.setAssignedName(assign == null ? "" : assign.getName());
+			need.setAssignedTime(new Timestamp(System.currentTimeMillis()));
+			//结束时间
+			try {
+				need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
+			} catch (ParseException e) {
+				Calendar c = Calendar.getInstance();
+				c.setTime(new Date());
+				c.add(Calendar.DATE, 1);
+				need.setEndDate(c.getTime());
+			}
+			need.setState((short)1);
 			need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 			boolean b = super.dao.saveUpdateOrDelete(need, null);
 			if(b) {

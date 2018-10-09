@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>添加子模块</title>
+		<title>项目提需求</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,20 +30,18 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>添加子模块</h2>
+							<h2>项目提需求</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 							<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th>子模块名称</th>
+									<th>模块名称</th>
 									<td class="required" style="width:60%">
 										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off">
-										<input type="hidden" name="id" value="${need_id}"/>
 									</td>
 									<td></td>
 								</tr>
-								<c:if test="${fenlei!='1'}">
 								<tr>
 									<th>所属项目</th>
 									<td class="required">
@@ -54,19 +52,6 @@
 										</select>
 									<td></td>
 								</tr>
-								</c:if>
-								<c:if test="${fenlei=='1'}">
-								<tr>
-									<th>所属产品</th>
-									<td class="required">
-										<select class="form-control chosen chosen-select"  name="product_id" id="product_id">
-											<c:forEach items="${product}" var="p" varStatus="sta">
-												<option value="${p.id}" ${p.id==product_id?'selected="selected"':''}>${p.product_name }</option>
-											</c:forEach>
-										</select>
-									<td></td>
-								</tr>
-								</c:if>
 								<tr>
 								    <th>原型图</th>
 								    <td class="required">
@@ -96,7 +81,7 @@
 								<tr>
 									<th>需求方</th>
 									<td class="required">
-										<select data-placeholder="请选模块方" class="form-control chosen-select" name="member_id" id="member_id">
+										<select data-placeholder="请选需求方" class="form-control chosen-select" name="member_id" id="member_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}">${member.name}(${member.number})</option>
@@ -203,9 +188,11 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
+								<a href="team/need/toaddproject?project_id=${project_id}" class="btn">继续创建模块</a> 
 								<a href="team/task/toAdd" class="btn">建任务</a> 
 								<a href="team/task/toAdd" class="btn">批量建任务</a> 
 								<a href="team/need/index" class="btn">返回模块列表</a>
+								<a href="team/need/toEachAdd?project_id=${project_id}" class="btn">返回本项目模块列表</a>
 							</div>
 						</div>
 					</div>
@@ -232,7 +219,6 @@
 	</body>
 </html>
 <script>
-
 var editor = new UE.ui.Editor();
 editor.render("content");
 
@@ -251,7 +237,6 @@ $("#submit").click(function(){
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
-	var fenlei=${fenlei};
 	var project_id = ${project_id};
 	
 	/* if(filesize==''){
@@ -259,7 +244,7 @@ $("#submit").click(function(){
 	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
-         url:"team/need/add?r=" + Math.random(),
+         url:"team/need/addproject?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",
@@ -267,6 +252,7 @@ $("#submit").click(function(){
          contentType:false,
          success:function(data){
         	 if(data.code == 0){
+       			 window.location.href="team/need/toEachAdd?project_id="+project_id;
      			$("#msg").text(data.message);
      			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
      		}else{

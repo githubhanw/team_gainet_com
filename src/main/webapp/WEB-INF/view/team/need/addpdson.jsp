@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>提需求</title>
+		<title>添加子模块</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,31 +30,19 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>提需求</h2>
+							<h2>添加子模块</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 							<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th>模块名称</th>
+									<th>子模块名称</th>
 									<td class="required" style="width:60%">
 										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off">
+										<input type="hidden" name="id" value="${need_id}"/>
 									</td>
 									<td></td>
 								</tr>
-								<c:if test="${fenlei != '1'}">
-								<tr>
-									<th>所属项目</th>
-									<td class="required">
-										<select class="form-control chosen chosen-select"  name="project_id" id="project_id">
-											<c:forEach items="${project}" var="p" varStatus="sta">
-												<option value="${p.id}" ${p.id==project_id?'selected="selected"':''}>${p.project_name }</option>
-											</c:forEach>
-										</select>
-									<td></td>
-								</tr>
-								</c:if>
-								<c:if test="${fenlei == '1'}">
 								<tr>
 									<th>所属产品</th>
 									<td class="required">
@@ -65,7 +53,6 @@
 										</select>
 									<td></td>
 								</tr>
-								</c:if>
 								<tr>
 								    <th>原型图</th>
 								    <td class="required">
@@ -95,7 +82,7 @@
 								<tr>
 									<th>需求方</th>
 									<td class="required">
-										<select data-placeholder="请选需求方" class="form-control chosen-select" name="member_id" id="member_id">
+										<select data-placeholder="请选模块方" class="form-control chosen-select" name="member_id" id="member_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}">${member.name}(${member.number})</option>
@@ -202,17 +189,9 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建模块</a> 
 								<a href="team/task/toAdd" class="btn">建任务</a> 
 								<a href="team/task/toAdd" class="btn">批量建任务</a> 
 								<a href="team/need/index" class="btn">返回模块列表</a>
-								<c:if test="${fenlei == '0'}">
-								<a href="team/need/toEachAdd?fenlei=0&project_id=${project_id}" class="btn">返回本项目模块列表</a>
-								</c:if>
-								<c:if test="${fenlei == '1'}">
-								<a href="team/need/toEachAdd?fenlei=1&product_id=${product_id}" class="btn">返回本产品模块列表</a>
-								</c:if>
-									
 							</div>
 						</div>
 					</div>
@@ -239,6 +218,7 @@
 	</body>
 </html>
 <script>
+
 var editor = new UE.ui.Editor();
 editor.render("content");
 
@@ -257,8 +237,6 @@ $("#submit").click(function(){
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
-	var fenlei=${fenlei};
-	var project_id = ${project_id};
 	var product_id = ${product_id};
 	
 	/* if(filesize==''){
@@ -274,14 +252,8 @@ $("#submit").click(function(){
          contentType:false,
          success:function(data){
         	 if(data.code == 0){
-        		 if (fenlei == 0) {
-        			 window.location.href="team/need/toEachAdd?fenlei=0&project_id="+project_id;
-				} else if(fenlei == 1){
-					 window.location.href="team/need/toEachAdd?fenlei=1&product_id="+product_id;
-				} else{
-	     			$("#msg").text(data.message);
-	     			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-				}
+     			$("#msg").text(data.message);
+     			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
      		}else{
      			$("#errMsg").text(data.message);
      			$('#errModal').modal({keyboard: false,show: true, moveable: true});

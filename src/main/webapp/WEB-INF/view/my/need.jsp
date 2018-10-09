@@ -36,6 +36,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a href="my/need?type=15" class="btn btn-link ${prm.type == 15 ? 'btn-active-text':''}">
+							<span class="text">待安排</span>
+							<c:if test="${prm.type == 15}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<a href="my/need?type=14" class="btn btn-link ${prm.type == 14 ? 'btn-active-text':''}">
 							<span class="text">待我验收</span>
 							<c:if test="${prm.type == 14}">
@@ -245,10 +251,18 @@
 											<td class="c-name text-left">${need.member_name}</td>
 											<td class="c-name text-left">
 												<c:if test="${need.assigned_name == '' || need.assigned_name == null}">
-													<a href="my/need/toAssign?id=${need.id}" class="btn btn-icon-left btn-sm">
-														<i class="icon icon-hand-right"></i>
-														<span class="text-primary">未指派</span>
-													</a>
+													<c:if test="${need.state != 6}">
+														<a href="my/need/toAssign?id=${need.id}" class="btn btn-icon-left btn-sm">
+															<i class="icon icon-hand-right"></i>
+															<span class="text-primary">未指派</span>
+														</a>
+													</c:if>
+													<c:if test="${need.state == 6}">
+														<a href="my/need/toArrange?id=${need.id}" class="btn btn-icon-left btn-sm">
+															<i class="icon icon-hand-right"></i>
+															<span class="text-primary">未安排</span>
+														</a>
+													</c:if>
 												</c:if>
 												<c:if test="${need.assigned_name != ''}">
 													<span class="text-red">${need.assigned_name}</span>
@@ -293,6 +307,9 @@
 												</c:if>
 												<c:if test="${need.state == 4}">
 													<a href="my/test/toAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交测试">提测</a>
+												</c:if>
+												<c:if test="${need.state == 6}">
+													<a href="my/need/toArrange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="安排模块"><i class='icon-task-close'>安排</i></a>
 												</c:if>
 											</td>
 										</tr>

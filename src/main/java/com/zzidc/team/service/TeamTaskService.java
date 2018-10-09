@@ -1364,7 +1364,7 @@ public class TeamTaskService extends GiantBaseService {
 	 * 任务审核,界面审核
 	 * @return
 	 */
-	public List<Map<String, Object>> getCodeReport(Integer taskId) {
+	public List<Map<String, Object>> getTaskCodeReport(Integer taskId) {
 		List<Map<String, Object>> subTaskList = new ArrayList<Map<String, Object>>();
 		String sql = "SELECT * FROM `code_report` WHERE report_type=0 AND task_id="+ taskId;
 		subTaskList = super.getMapListBySQL(sql, null);
@@ -1375,7 +1375,7 @@ public class TeamTaskService extends GiantBaseService {
 	 * 任务审核,流程审核
 	 * @return
 	 */
-	public List<Map<String, Object>> getCodeInterface(Integer taskId) {
+	public List<Map<String, Object>> getTaskCodeInterface(Integer taskId) {
 		List<Map<String, Object>> subTaskList = new ArrayList<Map<String, Object>>();
 		String sql = "SELECT * FROM `code_report` WHERE report_type=1 AND task_id="+ taskId;
 		subTaskList = super.getMapListBySQL(sql, null);

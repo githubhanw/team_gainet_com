@@ -194,7 +194,7 @@
 						<div class="divider"></div>
 						<a href="team/project/toedit?id=${p.id}" class='btn btn-link '><i class="icon-common-edit icon-edit"></i> 编辑</a>
 						<a href="javascript:void(0)" onclick="del(${p.id})" class='btn btn-link '><i class="icon-common-delete icon-trash"></i> 删除</a>
-						<a href="team/need/toAdd?project_id=${p.id}" class='btn btn-link '><i class="icon icon-plus"></i> 提需求</a>
+						<a href="team/need/toaddproject?project_id=${p.id}" class='btn btn-link '><i class="icon icon-plus"></i> 提需求</a>
 					</div>
 				</div>
 			</div>

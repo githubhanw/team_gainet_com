@@ -111,8 +111,7 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="team/product/toAdd" class="btn">继续创建产品</a> <a
-									href="team/need/toAdd" class="btn">提需求</a> <a
-									href="team/need/toAdd" class="btn">批量提需求</a> <a
+									href="team/need/toaddproduct?product_id=${p.id}" class="btn">提需求</a><a
 									href="team/product/index" class="btn">返回产品列表</a>
 							</div>
 						</div>

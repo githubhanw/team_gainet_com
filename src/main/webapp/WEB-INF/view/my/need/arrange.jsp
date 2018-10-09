@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>关闭：${n.needName }</title>
+		<title>安排：${n.needName }</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -32,49 +32,42 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 关闭</small>
+								<a href="team/need/index">${n.needName}</a>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 安排</small>
 							</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th class="w-80px">关闭原因</th>
-									<td class="w-p25-f required">
-										<select name="closedReason" id="closedReason" class="form-control chosen-select" onchange="setStory(this.value)">
-											<option value="已完成">已完成</option>
-											<option value="已细分">已细分</option>
-											<option value="重复">重复</option>
-											<option value="延期">延期</option>
-											<option value="不做">不做</option>
-											<option value="已取消">已取消</option>
-											<option value="设计如此">设计如此</option>
+									<th class="w-80px">安排给</th>
+									<td class="required"  style="width: 70%;" >
+										<select data-placeholder="安排给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
+											<option value=""></option>
+											<c:forEach items="${members}" var="member" varStatus="sta">
+												<option value="${member.id}">${member.name}(${member.number})</option>
+											</c:forEach>
 										</select>
 										<input type="hidden" name="id" value="${n.id}"/>
 									</td>
 									<td></td>
 								</tr>
-								<tr id="duplicateStoryBox" style="display: none">
-									<th>重复模块</th>
-									<td><input type="text" name="duplicateStory"
-										id="duplicateStory" value="" class="form-control"
-										autocomplete="off"></td>
-									<td></td>
-								</tr>
-								<tr id="childStoriesBox" style="display: none">
-									<th>细分模块</th>
-									<td><input type="text" name="childStories" id="childStories"
-										value="" class="form-control" autocomplete="off"></td>
+								<tr>
+									<th>结束日期</th>
+									<td class="required" style="width: 70%;" >
+										<input type="text" name="end_date" id="end_date"
+												class="form-control form-date-limit" placeholder="需求结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>备注</th>
-									<td colspan="2">
+									<td >
 										<div id="comment" style="width:100%;">
 											<input type="hidden" name="comment">
 										</div>
 									</td>
+									<td></td>
 								</tr>
 								</form>
 								<tr>
@@ -104,7 +97,8 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/task/toAdd" class="btn">建任务</a> <a
+								<a href="team/need/toAdd" class="btn">继续创建模块</a> <a
+									href="team/task/toAdd" class="btn">建任务</a> <a
 									href="team/task/toAdd" class="btn">批量建任务</a> <a
 									href="team/need/index" class="btn">返回模块列表</a>
 							</div>
@@ -145,22 +139,10 @@ UE.Editor.prototype.getActionUrl = function(action){
 };  
 UE.getEditor('comment');
 
-function setStory(reason) {
-	if (reason == '重复') {
-		$('#duplicateStoryBox').show();
-		$('#childStoriesBox').hide();
-	} else if (reason == '已细分') {
-		$('#duplicateStoryBox').hide();
-		$('#childStoriesBox').show();
-	} else {
-		$('#duplicateStoryBox').hide();
-		$('#childStoriesBox').hide();
-	}
-}
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
 	$("input[name='comment']").val(UE.getEditor('comment').getContent());
-	$.ajax({type:"POST",url:"team/need/close?r=" + Math.random(),data:$("form").serialize(),
+	$.ajax({type:"POST",url:"my/need/arrange?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);

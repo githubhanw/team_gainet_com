@@ -55,8 +55,51 @@
 									<td></td>
 								</tr>
 								<tr>
+									<th>客户名称(公司名称)</th>
+									<td>${p.customerName}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>项目工期</th>
+									<td>${p.timeLimit}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>项目预算</th>
+									<td>${p.budget}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>立项评估文件(路径)</th>
+									<td>${p.fileUrl}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>工作量评估</th>
+									<td>${p.assessment}</td>
+									<td></td>
+								</tr>
+								<tr>
 									<th>项目负责人</th>
 									<td>${member_name}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>项目人员</th>
+									<td>
+									  <c:forEach items="${testMembers }" var="testMember" varStatus="status">
+									     ${testMember.memberName }&nbsp;&nbsp;&nbsp;
+									  </c:forEach>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>测试人员</th>
+									<td>
+									  <c:forEach items="${devMembers }" var="devMember" varStatus="status">
+									  ${devMember.memberName }&nbsp;&nbsp;&nbsp;
+									  </c:forEach>
+									</td>
 									<td></td>
 								</tr>
 								<tr>
@@ -89,6 +132,14 @@
 									<th>备注</th>
 									<td>${p.remark}</td>
 									<td></td>
+								</tr>
+								<tr>
+									<th>项目内容</th>
+									<td class="required">
+										<input type="hidden" name="project_content">
+										<textarea id="project_content" name="details" placeholder="" style="width:100%;">${p.projectContent}</textarea>
+										<div id="project_content" value=""></div>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -152,6 +203,18 @@
 	</body>
 </html>
 <script>
+var editor = new UE.ui.Editor();
+editor.render("content");
+
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};
+UE.getEditor('project_content');
 function del(id){
 	if(confirm("确认删除？")){
 		$.ajaxSettings.async = false;

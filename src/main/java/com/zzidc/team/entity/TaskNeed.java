@@ -304,22 +304,22 @@ public class TaskNeed implements java.io.Serializable {
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "cend_date", length = 10)
-	public Date getCEndDate() {
+	public Date getCendDate() {
 		return this.cendDate;
 	}
 
-	public void setCEndDate(Date cendDate) {
+	public void setCendDate(Date cendDate) {
 		this.cendDate = cendDate;
 	}
 	
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "tend_date", length = 10)
-	public Date getTEndDate() {
+	public Date getTendDate() {
 		return this.tendDate;
 	}
 
-	public void setTEndDate(Date tendDate) {
+	public void setTendDate(Date tendDate) {
 		this.tendDate = tendDate;
 	}
 	

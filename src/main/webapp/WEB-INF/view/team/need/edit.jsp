@@ -173,14 +173,14 @@
 													</td>
 												</tr>
 												<tr>
-													<th>代码开始时间</th>
+													<th>代码开始</th>
 													<td class="required">
 														<input type="text" name="start_date" id="start_date" value="<fmt:formatDate value="${n.startDate}" pattern="yyyy-MM-dd"/>" 
 															class="form-control form-date-limit" placeholder="代码开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
 												<tr>
-													<th>代码结束时间</th>
+													<th>代码结束</th>
 													<td class="required">
 														<input type="text" name="cend_date" id="cend_date" value="<fmt:formatDate value="${n.cendDate}" pattern="yyyy-MM-dd"/>" 
 															class="form-control form-date-limit" placeholder="代码结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">

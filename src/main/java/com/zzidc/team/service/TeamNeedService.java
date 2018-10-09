@@ -560,14 +560,14 @@ public class TeamNeedService extends GiantBaseService{
 			need.setStartDate(new Date());
 		}
 		try {//代码结束时间
-			need.setCEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
+			need.setCendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
 		} catch (ParseException e) {
-			need.setCEndDate(new Date());
+			need.setCendDate(new Date());
 		}
 		try {//测试结束时间
-			need.setTEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
+			need.setTendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
 		} catch (ParseException e) {
-			need.setTEndDate(new Date());
+			need.setTendDate(new Date());
 		}
 		try {//上线时间
 			need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
@@ -695,14 +695,14 @@ public class TeamNeedService extends GiantBaseService{
 			need.setStartDate(new Date());
 		}
 		try {//代码结束时间
-			need.setCEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
+			need.setCendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
 		} catch (ParseException e) {
-			need.setCEndDate(new Date());
+			need.setCendDate(new Date());
 		}
 		try {//测试结束时间
-			need.setTEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
+			need.setTendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
 		} catch (ParseException e) {
-			need.setTEndDate(new Date());
+			need.setTendDate(new Date());
 		}
 		try {//上线时间
 			need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));

@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>提需求</title>
+		<title>项目提需求</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,7 +30,7 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>提需求</h2>
+							<h2>项目提需求</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
@@ -71,8 +71,8 @@
 									<td class="required">
 										<select data-placeholder="请选择被指派人员" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 											<option value=""></option>
-											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
+											<c:forEach items="${projectmems}" var="pjms" varStatus="sta">
+												<option value="${pjms.id}">${pjms.name}(${pjms.number})</option>
 											</c:forEach>
 										</select>
 									</td>
@@ -80,13 +80,8 @@
 								</tr>
 								<tr>
 									<th>需求方</th>
-									<td class="required">
-										<select data-placeholder="请选需求方" class="form-control chosen-select" name="member_id" id="member_id">
-											<option value=""></option>
-											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
-											</c:forEach>
-										</select>
+									<td class="required" style="width:60%">
+										<input type="text" name="member_name" id="member_name" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
 								</tr>
@@ -120,18 +115,34 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>模块开始日期</th>
+									<th>代码开始时间</th>
 									<td class="required">
 										<input type="text" name="start_date" id="start_date"
-												class="form-control form-date-limit" placeholder="模块开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="代码开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>模块结束日期</th>
+									<th>代码结束时间</th>
+									<td class="required">
+										<input type="text" name="cend_date" id="cend_date"
+												class="form-control form-date-limit" placeholder="代码结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>测试时间</th>
+									<td class="required">
+										<input type="text" name="tend_date" id="tend_date"
+												class="form-control form-date-limit" placeholder="测试时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>上线时间</th>
 									<td class="required">
 										<input type="text" name="end_date" id="end_date"
-												class="form-control form-date-limit" placeholder="模块结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="上线时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>
@@ -139,16 +150,16 @@
 									<th>模块描述</th>
 									<td class="required">
 										<input type="hidden" name="need_remark">
-										<textarea id="need_remark" name="details" placeholder="" style="width:100%;"></textarea>
+										<textarea id="need_remark" name="details" placeholder="" style="width:100%;">${n.needRemark}</textarea>
 										<div id="need_remark" value=""></div>
+										<span class="help-block">建议参考的模板：作为一名&lt;某种类型的用户&gt;，我希望&lt;达成某些目的&gt;，这样可以&lt;开发的价值&gt;。</span>
 									</td>
 								</tr>
-								
 								<tr>
 									<th>验收标准</th>
 									<td class="required">
 										<input type="hidden" name="check_remark">
-										<textarea id="check_remark" name="details" placeholder="" style="width:100%;"></textarea>
+										<textarea id="check_remark" name="details" placeholder="" style="width:100%;">${n.checkRemark}</textarea>
 										<div id="check_remark" value=""></div>
 									</td>
 									<td></td>
@@ -188,10 +199,11 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/need/toAdd" class="btn">继续创建模块</a> <a
-									href="my/task/toAdd" class="btn">建任务</a> <a
-									href="my/task/toBatchAdd" class="btn">批量建任务</a> <a
-									href="my/need" class="btn">返回模块列表</a>
+								<a href="team/need/toaddproject?project_id=${project_id}" class="btn">继续创建模块</a> 
+								<a href="team/task/toAdd" class="btn">建任务</a> 
+								<a href="team/task/toAdd" class="btn">批量建任务</a> 
+								<a href="team/need/index" class="btn">返回模块列表</a>
+								<a href="team/need/toEachAdd?project_id=${project_id}" class="btn">返回本项目模块列表</a>
 							</div>
 						</div>
 					</div>
@@ -232,56 +244,35 @@ UE.Editor.prototype.getActionUrl = function(action){
 UE.getEditor('need_remark');
 UE.getEditor('check_remark');
 $("#submit").click(function(){
-
-		
-	
 	$("input[name='need_remark']").val(UE.getEditor('need_remark').getContent());
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
+	var project_id = ${project_id};
 	
 	/* if(filesize==''){
 		alert("请选择文件");
 	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
-         url:"my/need/add?r=" + Math.random(),
+         url:"team/need/addproject?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",
          processData:false,
          contentType:false,
          success:function(data){
-        	if(data.code == 0){
- 				$("#msg").text(data.message);
- 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
- 			}else{
- 				$("#errMsg").text(data.message);
- 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
- 			}
+        	 if(data.code == 0){
+       			 window.location.href="my/need/toEachAdd?project_id="+project_id;
+     			$("#msg").text(data.message);
+     			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+     		}else{
+     			$("#errMsg").text(data.message);
+     			$('#errModal').modal({keyboard: false,show: true, moveable: true});
+     		}
          }
      });
 	$.ajaxSettings.async = true;
 	/* } */
 });
-
-
-//UMEditor("need_remark");
-//UMEditor("check_remark");
-//$("#submit").click(function(){
-//	$.ajaxSettings.async = false;
-//	$("input[name='need_remark']").val(UM.getEditor('need_remark').getContent());
-//	$("input[name='check_remark']").val(UM.getEditor('check_remark').getContent());
-//	$.ajax({type:"POST",url:"my/need/add?r=" + Math.random(),data:$("form").serialize(),
-//			dataType:"json",success:function(data){
-//		if(data.code == 0){
-//			$("#msg").text(data.message);
-//			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
-//		}else{
-//			$("#errMsg").text(data.message);
-//			$('#errModal').modal({keyboard: false,show: true, moveable: true});
-//		}
-//	}})
-//	$.ajaxSettings.async = true;
-//});
 </script>

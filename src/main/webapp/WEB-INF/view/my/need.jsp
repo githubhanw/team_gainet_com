@@ -90,9 +90,9 @@
 							</form>
 						</div>
 					</div>
-					<div class="btn-toolbar pull-right">
+					<!-- <div class="btn-toolbar pull-right">
 						<a href="my/need/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 提需求</a>
-					</div>
+					</div> -->
 				</div>
 				<!--mainMenu end-->
 				<div id="mainContent" class="main-row fade in">
@@ -246,7 +246,13 @@
 												</c:if>
 											</td>
 											<td class="text-left">
-												<a href="team/project/detail?id=${need.project_id}" data-toggle="tooltip" data-placement="top" title="${need.project_name}">${need.project_name}</a>
+												<c:if test="${need.project_id!='0'}">
+													<span class="label label-info" style="background-color: #00da88;" data-toggle="tooltip" data-placement="top" title="${need.project_name}">项目</span>
+												</c:if>
+												<c:if test="${need.project_id=='0'}">
+													<span class="label label-info" style="background-color: #03b8cf;" data-toggle="tooltip" data-placement="top" title="${need.product_name}">产品</span>
+												</c:if>
+												${need.project_id!='0'?need.project_name:need.product_name}
 											</td>
 											<td class="c-name text-left">${need.member_name}</td>
 											<td class="c-name text-left">
@@ -314,6 +320,12 @@
 												</c:if>
 												<c:if test="${need.full == 1 && need.state == 2}">
 												    <a href="my/task/toAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="建任务"><i class="icon icon-plus"></i></a>
+												</c:if>
+												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2) && need.project_id>0}">
+													<a href="team/need/toAddPJSon?need_id=${need.id}&project_id=${need.project_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
+												</c:if>
+												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2) && need.product_id>0}">
+													<a href="team/need/toAddPDSon?need_id=${need.id}&product_id=${need.product_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
 												</c:if>
 												<c:if test="${need.state == 4}">
 													<a href="my/test/toAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交测试">提测</a>

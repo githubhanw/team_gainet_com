@@ -275,11 +275,19 @@
 												</td>
 											</tr> --%>
 											<tr>
-												<th>开始日期</th>
+												<th>代码开始</th>
 												<td>${needM.start_date}</td>
 											</tr>
 											<tr>
-												<th>结束日期</th>
+												<th>代码结束</th>
+												<td>${needM.cend_date}</td>
+											</tr>
+											<tr>
+												<th>测试结束</th>
+												<td>${needM.tend_date}</td>
+											</tr>
+											<tr>
+												<th>上线时间</th>
 												<td>${needM.end_date}</td>
 											</tr>
 										</tbody>

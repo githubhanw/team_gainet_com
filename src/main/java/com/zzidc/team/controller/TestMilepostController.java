@@ -531,7 +531,7 @@ public class TestMilepostController extends GiantBaseController {
 		} else if (projectId != null && projectId > 0) {//项目：获取项目下所有模块，模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），任务下的测试用例；【获取已完成的任务、已验收的模块】
 			applyType = 3;
 			TaskProject p = (TaskProject) testMilepostService.getEntityByPrimaryKey(new TaskProject(), projectId);
-			if(p != null && p.getState() == 4) {
+			if(p != null && p.getState() > 8) {
 				//获取项目下所有模块
 				List<Map<String, Object>> need = testMilepostService.getNeedByProject(projectId);
 				//获取项目下所有子模块

@@ -177,7 +177,9 @@
 							<c:if test="${taskM.task_type==2 && taskM.parent_id==0}">
 								<div class="detail">
 									<div class="detail-title">模块详情
-										<a href="javascript:void(0)" onclick="adoptAll(${taskM.id})" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0, 0, 0, 0);">一键通过</a>
+										<c:if test="${taskM.state == 2}">
+											<a href="javascript:void(0)" onclick="adoptAll(${taskM.id})" class="btn btn-secondary" style="text-shadow:0 -1px 0 rgba(0, 0, 0, 0);">一键通过</a>
+										</c:if>
 									</div>
 									<div class="detail-content article-content">
 										<c:if test="${apply.applyType == 2}">
@@ -199,8 +201,10 @@
 																	<c:if test="${task.test_state==5}">
 																		<span class="label label-warning">已驳回</span>
 																	</c:if>
-																	<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
-																	<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+																	<c:if test="${taskM.state == 2}">
+																		<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
+																		<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+																	</c:if>
 																	<ul>
 																		<li><a href="#">&nbsp;界面原型图</a>
 																			<ul>
@@ -268,8 +272,10 @@
 															<c:if test="${task.test_state==5}">
 																<span class="label label-warning">已驳回</span>
 															</c:if>
-															<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
-															<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+															<c:if test="${taskM.state == 2}">
+																<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
+																<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+															</c:if>
 															<ul>
 																<li><a href="#">&nbsp;界面原型图</a>
 																	<ul>
@@ -347,8 +353,10 @@
 																		<c:if test="${task.test_state==5}">
 																			<span class="label label-warning">已驳回</span>
 																		</c:if>
-																		<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
-																		<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+																		<c:if test="${taskM.state == 2}">
+																			<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
+																			<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+																		</c:if>
 																		<ul>
 																			<li><a href="#">&nbsp;界面原型图</a>
 																				<ul>
@@ -418,8 +426,10 @@
 																<c:if test="${task.test_state==5}">
 																	<span class="label label-warning">已驳回</span>
 																</c:if>
-																<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
-																<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+																<c:if test="${taskM.state == 2}">
+																	<a href="javascript:void(0)" onclick="adopt(${task.id})" style="padding-left:12px">通过</a>
+																	<a href="javascript:void(0)" onclick="reject(${task.id})" style="padding-left:12px">驳回</a>
+																</c:if>
 																<ul>
 																	<li><a href="#">&nbsp;界面原型图</a>
 																		<ul>
@@ -830,7 +840,9 @@
 						<a href="javascript:history.go(-1);" id="back" class="btn btn-link"><i class="icon-goback icon-back"></i> 返回</a>
 						<div class="divider"></div>
 						<c:if test="${taskM.state == 1 && taskM.resolved == 0}">
-							<a href='my/task/toOpen?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-start icon-play'></i> 接收</a>
+						    <c:if test="${taskM.task_type == 2 || taskM.interface_img != null && taskM.interface_img != '' || taskM.flow_img != null && taskM.flow_img != ''}">
+								<a href='my/task/toOpen?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-start icon-play'></i> 接收</a>
+							</c:if>
 						</c:if>
 						<c:if test="${taskM.assigned_name == '' || taskM.assigned_name == null}">
 							<a href='my/task/toAssign?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-assignTo icon-hand-right'></i> 指派</a>

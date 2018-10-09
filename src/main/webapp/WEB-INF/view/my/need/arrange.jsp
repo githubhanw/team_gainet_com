@@ -40,15 +40,22 @@
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th class="w-80px">安排给</th>
-									<td class="required"  style="width: 70%;" >
+									<th>安排给</th>
+									<td class="required"  style="width:70%" >
 										<select data-placeholder="安排给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
+												<option value="${member.id}" ${member.id==n.assignedId?'selected="selected"':''}>${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 										<input type="hidden" name="id" value="${n.id}"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>开始日期</th>
+									<td>
+										${n.startDate }
 									</td>
 									<td></td>
 								</tr>
@@ -97,10 +104,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建模块</a> <a
-									href="team/task/toAdd" class="btn">建任务</a> <a
-									href="team/task/toAdd" class="btn">批量建任务</a> <a
-									href="team/need/index" class="btn">返回模块列表</a>
+								<a href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

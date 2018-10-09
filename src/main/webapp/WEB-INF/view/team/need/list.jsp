@@ -207,7 +207,7 @@
 												<a href="javascript:void(0)" onclick="pageOrder('id');" 
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:250px" class="c-pri " title="模块名称">
+											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="模块名称">
 												<a  href="javascript:void(0)" onclick="pageOrder('need_name');" 
 														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">模块名称</a>
 											</th>
@@ -313,39 +313,48 @@
 													<a href="team/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
 												</c:if>
 												<c:if test="${need.state == 1 || need.state == 2}">
-												<a href="team/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善模块':'模块变更'}"><i class="icon-story-change icon-fork"></i></a>
-											    <a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i></a>
+													<a href="team/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善模块':'模块变更'}"><i class="icon-story-change icon-fork"></i></a>
+												    <a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i></a>
 											    </c:if>
-												
 												<c:if test="${need.full == 1}">
-												  <c:if test="${need.state == 1}">
-												    <a href="team/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收模块"><i class="icon-task-start icon-play"></i></a>
-												    </c:if>
-												    <c:if test="${need.state == 2}">
-												          <c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
-												          <a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
-													      </c:if>
+													<c:if test="${need.state == 1}">
+														<a href="team/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收模块"><i class="icon-task-start icon-play"></i></a>
 													</c:if>
-													<c:if test="${need.state == 3}">
-														<c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
-															<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+													<c:if test="${need.resolved == 0}">
+														<c:if test="${need.task_sum > 0 && need.not_finish_task == 0}">
+													 		<c:if test="${need.state == 2}">
+																<a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.state == 3}">
+																<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+															</c:if>
 														</c:if>
-												    </c:if>
+													</c:if>
+													<c:if test="${need.resolved == 1 && need.sub_need_count > 0}">
+														<c:if test="${need.not_check_need == 0 && need.not_finish_task == 0}">
+													 		<c:if test="${need.state == 2}">
+																<a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.state == 3}">
+																<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+															</c:if>
+														</c:if>
+													</c:if>
 												</c:if>
 												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && need.state == 2}">
 													<a href="team/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 												</c:if>
-												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2 || need.state == 1) && need.project_id>0}">
+												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2) && need.project_id>0}">
 													<a href="team/need/toAddPJSon?need_id=${need.id}&project_id=${need.project_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
 												</c:if>
-												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2 || need.state == 1) && need.product_id>0}">
+												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2) && need.product_id>0}">
 													<a href="team/need/toAddPDSon?need_id=${need.id}&product_id=${need.product_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
 												</c:if>
 												<c:if test="${need.state == 4}">
 													<a href="test/apply/toAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交测试">提测</a>
 												</c:if>
 												<c:if test="${need.state == 6}">
-													<a href="team/need/toArrange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="安排模块"><i class='icon-task-close'>安排</i></a>
+													<a href="team/need/toArrange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="安排模块">安排</i></a>
 												</c:if>
 											</td>
 										</tr>
@@ -405,14 +414,16 @@
 																<c:if test="${subNeed.state == 1}">
 																	<a href="team/need/toOpen?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收模块"><i class="icon-task-start icon-play"></i></a>
 												                </c:if>
-												                <c:if test="${subNeed.state == 2}">
-												          			<a href="team/need/toSubmitCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
-																</c:if>
-													            <c:if test="${subNeed.state == 3}">
-																	<a href="team/need/toCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
-																</c:if>
-												           	</c:if>
-												           <c:if test="${subNeed.full == 1 && subNeed.state == 2}">
+																<c:if test="${subNeed.task_sum > 0 && subNeed.not_finish_task == 0}">
+													                <c:if test="${subNeed.state == 2}">
+													          			<a href="team/need/toSubmitCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+																	</c:if>
+														            <c:if test="${subNeed.state == 3}">
+																		<a href="team/need/toCheck?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+																	</c:if>
+													           	</c:if>
+															</c:if>
+															<c:if test="${subNeed.full == 1 && subNeed.state == 2}">
 																<a href="team/task/toBatchAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 															</c:if>
 															<c:if test="${subNeed.state == 0 || subNeed.state == 5}"></c:if>

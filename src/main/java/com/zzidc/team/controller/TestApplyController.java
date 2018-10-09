@@ -100,7 +100,7 @@ public class TestApplyController extends GiantBaseController {
 	public void addOrUpdate(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		// mvm eg :{r=0.29616789999172366, comment=, id=25}
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("test_content"))){
+		if(GiantUtil.isEmpty(mvm.get("test_name")) || GiantUtil.isEmpty(mvm.get("test_content"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

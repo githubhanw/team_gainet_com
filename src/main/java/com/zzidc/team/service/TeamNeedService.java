@@ -27,7 +27,6 @@ import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskNeed;
-import com.zzidc.team.entity.TaskProduct;
 import com.zzidc.team.entity.TaskProject;
 
 import net.sf.json.JSONObject;
@@ -51,8 +50,12 @@ public class TeamNeedService extends GiantBaseService{
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT tn.*,tp.project_name,tp.id proje_id,tpd.product_name,tpd.id produ_id,m.name meeting_name,(SELECT COUNT(0) FROM task t WHERE t.deleted=0 AND t.need_id = tn.id) task_sum,(SELECT COUNT(0) "
-				+ "FROM task t WHERE t.deleted=0 AND t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
+		String sql = "SELECT tn.*,tp.project_name,tp.id proje_id,tpd.product_name,tpd.id produ_id,m.name meeting_name,"
+				+ "(SELECT COUNT(0) FROM task t WHERE t.deleted=0 AND t.need_id = tn.id) task_sum,"
+				+ "(SELECT COUNT(0) FROM task t WHERE t.deleted=0 AND t.need_id = tn.id  AND t.state NOT IN (4,6,7)) not_finish_task,"
+				+ "(SELECT COUNT(0) FROM task_need n WHERE n.state>0 AND n.state!=5 AND n.parent_id=tn.id) sub_need_count,"
+				+ "(SELECT COUNT(0) FROM task_need n WHERE n.state!=4 AND n.parent_id=tn.id) not_check_need"
+				+ " FROM task_need tn "
 				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id "
 				+ "LEFT JOIN task_product tpd ON tn.product_id=tpd.id "
 				+ "LEFT JOIN month_meeting m ON tn.meeting_id=m.id WHERE 1=1 ";
@@ -308,7 +311,10 @@ public class TeamNeedService extends GiantBaseService{
 		for(Object obj: needList) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> needMap = (Map<String, Object>) obj;
-			String sql = "SELECT tn.*,tp.project_name FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE tn.parent_id=" + needMap.get("id");
+			String sql = "SELECT tn.*,tp.project_name, "
+					+ "(SELECT COUNT(0) FROM task t WHERE t.deleted=0 AND t.need_id = tn.id) task_sum,"
+					+ "(SELECT COUNT(0) FROM task t WHERE t.deleted=0 AND t.need_id = tn.id  AND t.state NOT IN (4,6,7)) not_finish_task"
+					+ " FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE tn.parent_id=" + needMap.get("id");
 			if("21".equals(type)) {
 				sql += " AND  tn.state>0 AND tn.state<5";
 			}
@@ -661,6 +667,16 @@ public class TeamNeedService extends GiantBaseService{
 				parentNeed.setResolved((short) 1);
 				parentNeed.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				super.dao.saveUpdateOrDelete(parentNeed, null);
+			}
+			
+			need.setState((short)1);
+			try {
+				need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
+			} catch (ParseException e) {
+				Calendar c = Calendar.getInstance();
+				c.setTime(new Date());
+				c.add(Calendar.DATE, 1);
+				need.setEndDate(c.getTime());
 			}
 		}
 		

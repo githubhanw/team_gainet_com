@@ -57,11 +57,11 @@
 									<td>
 										<ul class="tree tree-lines" data-ride="tree">
 											<c:forEach items="${need}" var="need" varStatus="sta">
-												<li>&nbsp;<a href="#">${need.need_name }【模块】</a>
+												<li class="has-list open in">&nbsp;<a href="#">${need.need_name }【模块】</a>
 													<ul>
 													<c:forEach items="${subNeed}" var="subNeed" varStatus="sta">
 													<c:if test="${need.id == subNeed.parent_id }">
-														<li><a href="#">&nbsp;${subNeed.need_name }【子模块】</a>
+														<li class="has-list open in"><a href="#">&nbsp;${subNeed.need_name }【子模块】</a>
 															<ul>
 															<c:forEach items="${subNeedTask}" var="task" varStatus="sta">
 															<c:if test="${subNeed.id == task.need_id }">

@@ -597,4 +597,9 @@ public class TestMilepostController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
+	
+	@RequestMapping("/downloadExcel")
+    public void setUpExcel(HttpServletRequest request, HttpServletResponse response) {
+        
+    }
 }

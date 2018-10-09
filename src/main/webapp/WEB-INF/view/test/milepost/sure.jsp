@@ -54,7 +54,7 @@
 									   <c:forEach items="${MilMan}" var="MilMan">
 									   <tr>
 									     <td>
-									     <a href="team/need/index?type=99&amp;id=${MilMan.id}">${MilMan.milepost_name}</a>
+									     <a href="team/need/index?type=99&id=${MilMan.id}">${MilMan.milepost_name}</a>
 									     </td>
 									     <td>${MilMan.start_time}</td>
 									     <td>${MilMan.end_time}</td>
@@ -78,6 +78,7 @@
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">确认</button>
 										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">驳回</a>
+										<a href="test/milepost/downloadExcel?projectId=${tp.id}" class="btn btn-wide btn-primary">导出里程碑</a>
 									</td>
 								</tr>
 							</tbody>

@@ -81,13 +81,8 @@
 								</tr>
 								<tr>
 									<th>需求方</th>
-									<td class="required">
-										<select data-placeholder="请选模块方" class="form-control chosen-select" name="member_id" id="member_id">
-											<option value=""></option>
-											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
-											</c:forEach>
-										</select>
+									<td class="required" style="width:60%">
+										<input type="text" name="member_name" id="member_name" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
 								</tr>

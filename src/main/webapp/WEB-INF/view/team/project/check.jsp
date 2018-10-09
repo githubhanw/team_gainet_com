@@ -198,7 +198,7 @@
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">验收</button>
-										<!-- <button id="notThrough" class="btn btn-wide" style="background-color: red;">不通过</button> -->
+										<button id="notThrough" class="btn btn-wide" style="background-color: red;">不通过</button>
 										<!-- <button id="export" class="btn btn-wide btn-primary">导出</button> -->
 									</td>
 								</tr>

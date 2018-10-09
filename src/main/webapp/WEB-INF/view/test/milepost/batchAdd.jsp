@@ -62,29 +62,38 @@
 													${tp.projectName}
 											</td>
 											<td>
-												<select data-placeholder="请选择模块" class="form-control chosen chosen-select" multiple name="task_needid" id="task_needid">
+												<select data-placeholder="请选择模块" class="form-control chosen chosen-select" 
+												multiple name="task_needid" id="task_needid" onchange="getDate('${status.index+1}')">
 													<option value=""></option>
 													<c:forEach items="${taskNeed}" var="taskNeed" varStatus="sta">
 														<c:set var="isSelected" value="0" />
 														<c:forEach items="${fn:split(t.link, ',')}" var="needId" varStatus="sta">
 															<c:if test="${taskNeed.id == needId }">
-																<option value="${taskNeed.id}" selected="selected">${taskNeed.need_name}</option>
+																<option value="${taskNeed.id}" selected="selected">${taskNeed.need_name}[${taskNeed.start_date}/${taskNeed.end_date}]</option>
 																<c:set var="isSelected" value="1" />
 															</c:if>
 														</c:forEach>
 														<c:if test="${isSelected == 0}">
-															<option value="${taskNeed.id}">${taskNeed.need_name}</option>
+															<option value="${taskNeed.id}">${taskNeed.need_name}[${taskNeed.start_date}/${taskNeed.end_date}]</option>
 														</c:if>
 													</c:forEach>
 												</select>
 											</td>
-											<td class="overflow: visible">
+											<!-- <td class="overflow: visible">
 										        <input type="text" name="start_date" id="start_date"
 												class="form-control form-date-limit" placeholder="请选择时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 											<td class="overflow: visible">
 											    <input type="text" name="end_date" id="end_date"
 												class="form-control form-date-limit" placeholder="请选择时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											</td> -->
+											<td class="overflow: visible">
+										        <input type="text" name="start_date" id="start_date${status.index+1}" 
+												class="form-control" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											</td>
+											<td class="overflow: visible">
+											    <input type="text" name="end_date" id="end_date${status.index+1}"
+												class="form-control" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 											</td>
 											<td style="overflow: visible">
 												<textarea name="need_remark" class="form-control title-import"></textarea>
@@ -167,4 +176,24 @@ $("#submit").click(function(){
 	}
 	$.ajaxSettings.async = true;
 });
+
+
+	function getDate(index) {
+		$("#start_date" + index).val('');
+		$("#end_date" + index).val('');
+		$.ajax({
+			type : "POST",
+			url : "test/milepost/getDate?r=" + Math.random(),
+			data:$("#addForm" + (index - 1)).serialize(),
+			dataType : "json",
+			success : function(data) {
+				if (data.code == 0) {
+					$("#start_date" + index).val(data.startDate);
+					$("#end_date" + index).val(data.endDate);
+				} else {
+					
+				}
+			}
+		})
+	}
 </script>

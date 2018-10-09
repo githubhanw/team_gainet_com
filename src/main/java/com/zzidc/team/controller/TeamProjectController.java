@@ -23,6 +23,7 @@ import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.StringUtil;
 import com.zzidc.team.entity.Member;
+import com.zzidc.team.entity.ProjectMember;
 import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.service.TeamProjectService;
 
@@ -96,6 +97,19 @@ public class TeamProjectController extends GiantBaseController {
 			
 			List<Map<String, Object>> needTask = teamProjectService.getRelationTaskList(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("needTask", needTask);
+			//测试人员
+			String testSql = "select m.id memberId, m.name memberName from project_member pm left join member m on pm.member_id = m.id "
+					       + "where pm.project_id = '" +  GiantUtil.intOf(mvm.get("id"), 0) 
+					       + "' and pm.state = 1 and pm.member_type = 2";
+			List<Map<String, Object>> testMembers = teamProjectService.getMapListBySQL(testSql, null);
+			//项目人员
+			String devSql = "select m.id memberId, m.name memberName from project_member pm left join member m on pm.member_id = m.id "
+				       + "where pm.project_id = '" +  GiantUtil.intOf(mvm.get("id"), 0) 
+				       + "' and pm.state = 1 and pm.member_type = 1";
+			List<Map<String, Object>> devMembers = teamProjectService.getMapListBySQL(devSql, null);
+			model.addAttribute("testMembers", testMembers);
+			model.addAttribute("devMembers", devMembers);
+			
 		}
 		publicResult(model);
 		return "team/project/detail";
@@ -379,14 +393,20 @@ public class TeamProjectController extends GiantBaseController {
 			TaskProject p = (TaskProject) teamProjectService.getEntityByPrimaryKey(new TaskProject(), GiantUtil.intOf(mvm.get("id"), 0));
 			String notThrough =  GiantUtil.stringOf(mvm.get("notThrough"));
 			//项目验收不通过的情况
-			/*if ("0".equals(notThrough)) {
-				
-			}*/
-			p.setState((short)3);
+			if ("0".equals(notThrough)) {
+				p.setState((short)14);
+			} else {
+				p.setState((short)3);
+			}
 			boolean flag = teamProjectService.saveUpdateOrDelete(p, null);
 			if(flag){
-				json.put("code",0);
-				json.put("message", "项目验收成功");
+				if ("0".equals(notThrough)) {
+					json.put("code",0);
+					json.put("message", "项目验收不通过");
+				} else {
+					json.put("code",0);
+					json.put("message", "项目验收成功");
+				}
 			}else{
 				json.put("code",1);
 				json.put("message", "项目验收失败");

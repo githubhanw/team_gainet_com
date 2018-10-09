@@ -175,7 +175,7 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String needId=dfs.format(new Date());
-		boolean flag = teamNeedService.add(mvm,id,name,file,filePrototype,filetree);
+		boolean flag = teamNeedService.addproject(mvm,id,name,file,filePrototype,filetree);
 	    if(flag){
 			json.put("code",0);
 			json.put("message", "添加成功");
@@ -243,7 +243,7 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String needId=dfs.format(new Date());
-		boolean flag = teamNeedService.addProduct(mvm,id,name,file,filePrototype,filetree);
+		boolean flag = teamNeedService.addproduct(mvm,id,name,file,filePrototype,filetree);
 	    if(flag){
 			json.put("code",0);
 			json.put("message", "添加成功");

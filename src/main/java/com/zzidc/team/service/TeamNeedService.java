@@ -457,9 +457,9 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 添加模块信息
+	 * 添加项目模块信息
 	 */
-	public boolean add(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+	public boolean addproject(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		TaskNeed need = new TaskNeed();
 		//上传界面原型图和流程图文件
@@ -480,6 +480,7 @@ public class TeamNeedService extends GiantBaseService{
 		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
+		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());
 		//模块方
@@ -575,7 +576,7 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * 添加产品模块信息
 	 */
-	public boolean addProduct(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+	public boolean addproduct(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		TaskNeed need = new TaskNeed();
 		//上传界面原型图和流程图文件
@@ -595,6 +596,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setFlowImg(flowImg);//流程图拼接路径
 		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
+		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
 		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());

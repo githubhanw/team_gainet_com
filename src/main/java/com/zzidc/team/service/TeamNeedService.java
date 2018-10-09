@@ -66,6 +66,23 @@ public class TeamNeedService extends GiantBaseService{
 					conditionMap.put("memberId", memberId);
 				}
 			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+				if ("99".equals(temp)) {//当前里程碑下的模块
+					String id = conditionPage.getQueryCondition().get("id");
+					String idsSql = "select taskneed_id from milepost_taskneed where milepost_id = " + id;
+					List<Map<String, Object>> list = getMapListBySQL(idsSql, null);
+					String ids = "";
+					if (list != null && list.size() > 0) {
+						for (Map<String, Object> map : list) {
+							ids += map.get("taskneed_id").toString() + ",";
+						}
+						ids = ids.substring(0, ids.length() - 1);
+					}
+					
+					sql += "AND tn.id in(" + ids + ") ";
+					countSql += "AND tn.id in(" + ids + ") ";
+				}
+			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("nameOrId"))) {
 				sql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
 				countSql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
@@ -441,11 +458,25 @@ public class TeamNeedService extends GiantBaseService{
 				"SELECT id,name,number FROM member WHERE id=581";
 		return super.getMapListBySQL(sql, null);
 	}
+	
 
 	/**
-	 * 添加模块信息
+	 * 获取项目指派人列表【模块负责人/项目负责人/项目成员】
 	 */
-	public boolean add(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+	public List<Map<String, Object>> getProjectMems( int projectId){
+		String sql = "SELECT m.id,m.number,m.name FROM member m, project_member pm, task_project tp" + 
+				" WHERE pm.project_id=tp.id AND (m.id=pm.member_id OR m.id=tp.member_id OR m.id=tp.demand_id) AND tp.id="+projectId+" GROUP BY m.id";
+		List<Map<String, Object>> list = dao.getMapListBySQL(sql, null);
+		if(list == null) {
+			list = new ArrayList<Map<String, Object>>();
+		}
+		return list;
+	}
+
+	/**
+	 * 添加项目模块信息
+	 */
+	public boolean addproject(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		TaskNeed need = new TaskNeed();
 		//上传界面原型图和流程图文件
@@ -466,6 +497,7 @@ public class TeamNeedService extends GiantBaseService{
 		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
+		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());
 		//模块方
@@ -561,7 +593,7 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * 添加产品模块信息
 	 */
-	public boolean addProduct(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+	public boolean addproduct(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 		TaskNeed need = new TaskNeed();
 		//上传界面原型图和流程图文件
@@ -581,6 +613,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setFlowImg(flowImg);//流程图拼接路径
 		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
+		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
 		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());

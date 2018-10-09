@@ -1,5 +1,6 @@
 package com.zzidc.team.controller;
 
+import java.nio.channels.GatheringByteChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -119,23 +120,22 @@ public class TeamNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转添加模块页面
+	 * 跳转添加项目模块页面
 	 */
 	@RequestMapping("/toaddproject")
 	public String toAddProject(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
 		model.addAttribute("project", teamNeedService.getTeamProject());
-		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
-		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
+		model.addAttribute("projectmems", teamNeedService.getProjectMems( GiantUtil.intOf(mvm.get("project_id"), 0)));
 		model.addAttribute("members", teamNeedService.getAllMember());
 		publicResult(model);
 		return "team/need/addproject";
 	}
 
 	/**
-	 * 添加模块
+	 * 添加项目模块
 	 */
 	@RequestMapping("/addproject")
 	public void addProject(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
@@ -175,7 +175,7 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String needId=dfs.format(new Date());
-		boolean flag = teamNeedService.add(mvm,id,name,file,filePrototype,filetree);
+		boolean flag = teamNeedService.addproject(mvm,id,name,file,filePrototype,filetree);
 	    if(flag){
 			json.put("code",0);
 			json.put("message", "添加成功");
@@ -243,7 +243,7 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String needId=dfs.format(new Date());
-		boolean flag = teamNeedService.addProduct(mvm,id,name,file,filePrototype,filetree);
+		boolean flag = teamNeedService.addproduct(mvm,id,name,file,filePrototype,filetree);
 	    if(flag){
 			json.put("code",0);
 			json.put("message", "添加成功");
@@ -255,7 +255,7 @@ public class TeamNeedController extends GiantBaseController {
 	}
 	
 	/**
-	 * 跳转添加项目子模块页面
+	 * 跳转添加 项目子模块页面
 	 */
 	@RequestMapping("/toAddPJSon")
 	public String toAddPJSon(@RequestParam Map<String, String> mvm, Model model) {
@@ -265,12 +265,13 @@ public class TeamNeedController extends GiantBaseController {
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
 		model.addAttribute("members", teamNeedService.getAllMember());
+		model.addAttribute("projectmems", teamNeedService.getProjectMems( GiantUtil.intOf(mvm.get("project_id"), 0)));
 		publicResult(model);
 		return "team/need/addpjson";
 	}
 
 	/**
-	 * 跳转添加产品子模块页面
+	 * 跳转添加 产品子模块页面
 	 */
 	@RequestMapping("/toAddPDSon")
 	public String toAddSon(@RequestParam Map<String, String> mvm, Model model) {

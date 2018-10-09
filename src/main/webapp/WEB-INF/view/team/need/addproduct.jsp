@@ -132,10 +132,34 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求开始日期</th>
+									<th>代码开始时间</th>
 									<td class="required">
 										<input type="text" name="start_date" id="start_date"
-												class="form-control form-date-limit" placeholder="需求开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="代码开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>代码结束时间</th>
+									<td class="required">
+										<input type="text" name="cend_date" id="cend_date"
+												class="form-control form-date-limit" placeholder="代码结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>测试时间</th>
+									<td class="required">
+										<input type="text" name="tend_date" id="tend_date"
+												class="form-control form-date-limit" placeholder="测试时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>上线时间</th>
+									<td class="required">
+										<input type="text" name="end_date" id="end_date"
+												class="form-control form-date-limit" placeholder="上线时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>

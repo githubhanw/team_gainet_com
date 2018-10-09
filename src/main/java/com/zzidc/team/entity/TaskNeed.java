@@ -36,6 +36,8 @@ public class TaskNeed implements java.io.Serializable {
 	private String srcRemark;
 	private Integer level;
 	private Date startDate;
+	private Date cendDate;
+	private Date tendDate;
 	private Date endDate;
 	private Date planEndDate;
 	private String needRemark;
@@ -82,7 +84,7 @@ public class TaskNeed implements java.io.Serializable {
 	public TaskNeed(Integer projectId, Integer productId, String interfaceImg,
 			String flowImg, String needName, Integer departmentId, String departmentName,
 			Integer memberId, String memberName, Integer createId, String createName,
-			Integer srcId, String srcRemark, Integer level, Date startDate,
+			Integer srcId, String srcRemark, Integer level, Date startDate, Date cendDate, Date tendDate,
 			Date endDate, Date planEndDate, String needRemark,
 			String checkRemark, Integer assignedId, String assignedName,
 			Timestamp assignedTime, Integer changedId, String changedName,
@@ -110,6 +112,8 @@ public class TaskNeed implements java.io.Serializable {
 		this.srcRemark = srcRemark;
 		this.level = level;
 		this.startDate = startDate;
+		this.cendDate = cendDate;
+		this.tendDate = tendDate;
 		this.endDate = endDate;
 		this.planEndDate = planEndDate;
 		this.needRemark = needRemark;
@@ -298,6 +302,27 @@ public class TaskNeed implements java.io.Serializable {
 		this.startDate = startDate;
 	}
 
+	@Temporal(TemporalType.DATE)
+	@Column(name = "cend_date", length = 10)
+	public Date getCEndDate() {
+		return this.cendDate;
+	}
+
+	public void setCEndDate(Date cendDate) {
+		this.cendDate = cendDate;
+	}
+	
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "tend_date", length = 10)
+	public Date getTEndDate() {
+		return this.tendDate;
+	}
+
+	public void setTEndDate(Date tendDate) {
+		this.tendDate = tendDate;
+	}
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "end_date", length = 10)
 	public Date getEndDate() {

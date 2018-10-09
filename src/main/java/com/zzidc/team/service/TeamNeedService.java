@@ -554,18 +554,29 @@ public class TeamNeedService extends GiantBaseService{
 			}
 		}
 		
-		try {
+		try {//代码开始时间
 			need.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
 		} catch (ParseException e) {
 			need.setStartDate(new Date());
 		}
-		try {
+		try {//代码结束时间
+			need.setCEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
+		} catch (ParseException e) {
+			need.setCEndDate(new Date());
+		}
+		try {//测试结束时间
+			need.setTEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
+		} catch (ParseException e) {
+			need.setTEndDate(new Date());
+		}
+		try {//上线时间
 			need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
 		} catch (ParseException e) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(new Date());
-			c.add(Calendar.DATE, 1);
-			need.setEndDate(c.getTime());
+			need.setEndDate(new Date());
+//			Calendar c = Calendar.getInstance();
+//			c.setTime(new Date());
+//			c.add(Calendar.DATE, 1);
+//			need.setEndDate(c.getTime());
 		}
 		need.setSrcRemark(GiantUtil.stringOf(mvm.get("src_remark")));
 		need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
@@ -678,10 +689,25 @@ public class TeamNeedService extends GiantBaseService{
 			}
 		}
 		
-		try {
+		try {//代码开始时间
 			need.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
 		} catch (ParseException e) {
 			need.setStartDate(new Date());
+		}
+		try {//代码结束时间
+			need.setCEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
+		} catch (ParseException e) {
+			need.setCEndDate(new Date());
+		}
+		try {//测试结束时间
+			need.setTEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
+		} catch (ParseException e) {
+			need.setTEndDate(new Date());
+		}
+		try {//上线时间
+			need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
+		} catch (ParseException e) {
+			need.setEndDate(new Date());
 		}
 		need.setSrcRemark(GiantUtil.stringOf(mvm.get("src_remark")));
 		need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
@@ -936,14 +962,14 @@ public class TeamNeedService extends GiantBaseService{
 			need.setAssignedId(assign == null ? 0 : assign.getId());
 			need.setAssignedName(assign == null ? "" : assign.getName());
 			need.setAssignedTime(new Timestamp(System.currentTimeMillis()));
-			//结束时间
+			//计划结束时间
 			try {
-				need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
+				need.setPlanEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("plan_end_date")));
 			} catch (ParseException e) {
 				Calendar c = Calendar.getInstance();
 				c.setTime(new Date());
 				c.add(Calendar.DATE, 1);
-				need.setEndDate(c.getTime());
+				need.setPlanEndDate(c.getTime());
 			}
 			need.setState((short)1);
 			need.setUpdateTime(new Timestamp(System.currentTimeMillis()));

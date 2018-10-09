@@ -53,16 +53,16 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>开始日期</th>
+									<th>代码开始</th>
 									<td>
 										${n.startDate }
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>结束日期</th>
+									<th>计划结束</th>
 									<td class="required">
-										<input type="text" name="end_date" id="end_date"
+										<input type="text" name="plan_end_date" id="plan_end_date"
 												class="form-control form-date-limit" placeholder="需求结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>

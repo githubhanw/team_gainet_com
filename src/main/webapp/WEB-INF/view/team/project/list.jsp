@@ -221,6 +221,7 @@
 												  project.state == 8 ? '里程碑及概要设计已确认' : project.state == 9 ? '待测试' :
 												  project.state == 10 ? '已完成测试' : project.state == 11 ? '里程碑已验收' :
 												  project.state == 12 ? '里程碑报告待验收' : project.state == 13 ? '里程碑报告已验收' :
+												  project.state == 14 ? '验收不通过' :
 												  '未知'}
 											</td>
 											<td class="c-pri text-center" />${project.start_time}</td>

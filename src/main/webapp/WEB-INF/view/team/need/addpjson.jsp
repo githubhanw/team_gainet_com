@@ -244,7 +244,7 @@ $("#submit").click(function(){
 	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
-         url:"team/need/add?r=" + Math.random(),
+         url:"team/need/addproject?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",

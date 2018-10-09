@@ -40,12 +40,12 @@
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th class="w-80px">安排给</th>
+									<th>安排给</th>
 									<td class="required"  style="width: 70%;" >
 										<select data-placeholder="安排给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
+												<option value="${member.id}" ${member.id==n.assignedId?'selected="selected"':''}>${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 										<input type="hidden" name="id" value="${n.id}"/>
@@ -53,16 +53,23 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>结束日期</th>
-									<td class="required" style="width: 70%;" >
-										<input type="text" name="end_date" id="end_date"
+									<th>代码开始</th>
+									<td>
+										${n.startDate }
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>计划结束</th>
+									<td class="required">
+										<input type="text" name="plan_end_date" id="plan_end_date"
 												class="form-control form-date-limit" placeholder="需求结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>备注</th>
-									<td >
+									<td>
 										<div id="comment" style="width:100%;">
 											<input type="hidden" name="comment">
 										</div>
@@ -97,9 +104,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/task/toAdd" class="btn">建任务</a> <a
-									href="team/task/toAdd" class="btn">批量建任务</a> <a
-									href="team/need/index" class="btn">返回模块列表</a>
+								<a href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>
 					</div>

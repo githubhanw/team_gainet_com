@@ -184,7 +184,7 @@
 												<a href="javascript:void(0)" onclick="pageOrder('id');" 
 														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:250px" class="c-pri " title="模块名称">
+											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="模块名称">
 												<a href="javascript:void(0)" onclick="pageOrder('need_name');" 
 														class="${prm.orderColumn=='need_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">模块名称</a>
 											</th>
@@ -288,19 +288,29 @@
 												<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i></a>
 												</c:if>
 												<c:if test="${need.full == 1}">
-												  <c:if test="${need.state == 1}">
-												    <a href="my/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收模块"><i class="icon-task-start icon-play"></i></a>
-												    </c:if>
-												    <c:if test="${need.state == 2}">
-												         <c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
-												         <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
-													     </c:if>
+													<c:if test="${need.state == 1}">
+														<a href="my/need/toOpen?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="接收模块"><i class="icon-task-start icon-play"></i></a>
 													</c:if>
-													<c:if test="${need.state == 3}">
-													     <c:if test="${need.task_sum >0 && need.notfinishtask ==0}">
-													     <a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
-												         </c:if>
-												</c:if>
+													<c:if test="${need.resolved == 0}">
+														<c:if test="${need.task_sum > 0 && need.not_finish_task == 0}">
+													 		<c:if test="${need.state == 2}">
+																<a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.state == 3}">
+																<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+															</c:if>
+														</c:if>
+													</c:if>
+													<c:if test="${need.resolved == 1 && need.sub_need_count > 0}">
+														<c:if test="${need.not_check_need == 0 && need.not_finish_task == 0}">
+													 		<c:if test="${need.state == 2}">
+																<a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.state == 3}">
+																<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+															</c:if>
+														</c:if>
+													</c:if>
 												</c:if>
 												<c:if test="${need.full == 1 && need.state == 2}">
 												    <a href="my/task/toAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="建任务"><i class="icon icon-plus"></i></a>

@@ -472,7 +472,7 @@ public class TeamNeedController extends GiantBaseController {
 	@RequestMapping("/arrange")
 	public void arrange(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("end_date")) ){
+		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("plan_end_date")) ){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

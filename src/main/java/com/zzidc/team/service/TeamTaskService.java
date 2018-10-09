@@ -30,6 +30,7 @@ import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
+import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.entity.TestApply;
 
 import net.sf.json.JSONObject;
@@ -572,6 +573,7 @@ public class TeamTaskService extends GiantBaseService {
 		task.setDeleted((short) 0);
 		task.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		task.setTestState(1);
 		
 		boolean b =  super.dao.saveUpdateOrDelete(task, null);
 		if(b) {
@@ -623,6 +625,7 @@ public class TeamTaskService extends GiantBaseService {
 		TaskNeed need = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("need_id"), 0));
 		task.setNeedId(need == null ? GiantUtil.intOf(mvm.get("need_id"), 0) : need.getId());
 		task.setProjectId(need == null ? 0 : need.getProjectId());
+		task.setProductId(need == null ? 0 : need.getProductId());
 		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
 		task.setTaskType(GiantUtil.intOf(mvm.get("task_type"), 0));
 		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
@@ -663,6 +666,7 @@ public class TeamTaskService extends GiantBaseService {
 		task.setDeleted((short) 0);
 		task.setCreateTime(new Timestamp(System.currentTimeMillis()));
 		task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		task.setTestState(1);
 		
 		boolean b =  super.dao.saveUpdateOrDelete(task, null);
 		if(b) {
@@ -1030,6 +1034,7 @@ public class TeamTaskService extends GiantBaseService {
 			t.setState((short) 3);
 			t.setRealEndDate(new Timestamp(System.currentTimeMillis()));
 			t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			t.setTestState(1);
 			boolean b = super.dao.saveUpdateOrDelete(t, null);
 			if(b) {
 				pmLog.add(t.getId(), oldTask, t, "state", "checked_name");
@@ -1085,6 +1090,7 @@ public class TeamTaskService extends GiantBaseService {
 				t.setFinishedName(t.getAssignedName());
 				t.setFinishedTime(new Timestamp(System.currentTimeMillis()));
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				t.setTestState(1);
 				boolean b = super.dao.saveUpdateOrDelete(t, null);
 				if(b) {
 					pmLog.add(t.getId(), oldTask, t, new String[] {"checked_reason"}, "state", "checked_num", "checked_reason", "finished_name", "real_end_date");
@@ -1103,6 +1109,14 @@ public class TeamTaskService extends GiantBaseService {
 							test.setState((short) 3);
 							super.dao.saveUpdateOrDelete(test, null);
 						}
+					}
+					//修改测试任务（项目提测）对应项目状态
+					TestApply test = (TestApply) super.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
+					if(test.getApplyType() == 3) {
+						TaskProject project = (TaskProject) super.getEntityByPrimaryKey(new TaskProject(), test.getProjectId());
+						project.setState((short) 10);
+						project.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+						super.saveUpdateOrDelete(project, null);
 					}
 				}
 				return b;
@@ -1124,6 +1138,7 @@ public class TeamTaskService extends GiantBaseService {
 				t.setCheckedTime(new Timestamp(System.currentTimeMillis()));
 				t.setRealEndDate(null);
 				t.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				t.setTestState(1);
 				boolean b = super.dao.saveUpdateOrDelete(t, null);
 				if(b) {
 					pmLog.add(t.getId(), oldTask, t, new String[] {"checked_reason"}, "state", "checked_num", "checked_reason");

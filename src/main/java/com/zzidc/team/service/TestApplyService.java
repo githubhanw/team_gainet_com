@@ -169,7 +169,7 @@ public class TestApplyService extends GiantBaseService {
 		} else if (projectId != null && projectId > 0) {//项目：获取项目下所有模块，模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），任务下的测试用例；【获取已完成的任务、已验收的模块】
 			applyType = 3;
 			TaskProject p = (TaskProject) getEntityByPrimaryKey(new TaskProject(), projectId);
-			if(p != null && p.getState() == 4) {
+			if(p != null && p.getState() > 8) {
 				//获取项目下所有模块
 				List<Map<String, Object>> need = getNeedByProject(projectId);
 				//获取项目下所有子模块
@@ -567,6 +567,11 @@ public class TestApplyService extends GiantBaseService {
 				Map<String, Object> prm = new HashMap<String, Object>();
 				prm.put("projectId", testApply.getProjectId());
 				list = super.getMapListBySQL(sql, prm);
+				
+				TaskProject project = (TaskProject) super.getEntityByPrimaryKey(new TaskProject(), testApply.getProjectId());
+				project.setState((short) 9);
+				project.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				super.saveUpdateOrDelete(project, null);
 			}
 			if(!GiantUtil.isEmpty(mvm.get("product_id"))) {
 				String sql = "select id from task WHERE test_state=1 AND state=4 AND product_id IN (:productId)";

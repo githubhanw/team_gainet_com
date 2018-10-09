@@ -66,6 +66,23 @@ public class TeamNeedService extends GiantBaseService{
 					conditionMap.put("memberId", memberId);
 				}
 			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
+				if ("99".equals(temp)) {//当前里程碑下的模块
+					String id = conditionPage.getQueryCondition().get("id");
+					String idsSql = "select taskneed_id from milepost_taskneed where milepost_id = " + id;
+					List<Map<String, Object>> list = getMapListBySQL(idsSql, null);
+					String ids = "";
+					if (list != null && list.size() > 0) {
+						for (Map<String, Object> map : list) {
+							ids += map.get("taskneed_id").toString() + ",";
+						}
+						ids = ids.substring(0, ids.length() - 1);
+					}
+					
+					sql += "AND tn.id in(" + ids + ") ";
+					countSql += "AND tn.id in(" + ids + ") ";
+				}
+			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("nameOrId"))) {
 				sql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";
 				countSql += "AND (tn.id=:id OR tn.need_name LIKE :name) ";

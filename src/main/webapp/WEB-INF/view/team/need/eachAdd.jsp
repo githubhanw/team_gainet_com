@@ -30,34 +30,19 @@
 				<!--mainMenu start-->
 				<div id="mainMenu" class="clearfix">
 					<!--btn-toolbar start-->
-					<c:if test="${fenlei == '0'}">
 					<div class="btn-toolbar pull-right">
-						<a href="team/need/toAdd?fenlei=0&project_id=${project_id}" class="btn btn-primary"><i class="icon icon-plus"></i> 新建模块</a>
+						<a href="team/need/toaddproject?project_id=${project_id}" class="btn btn-primary"><i class="icon icon-plus"></i> 新建模块</a>
 					</div>
-					</c:if>
-					<c:if test="${fenlei == '1'}">
-					<div class="btn-toolbar pull-right">
-						<a href="team/need/toAdd?fenlei=1&product_id=${product_id}" class="btn btn-primary"><i class="icon icon-plus"></i> 新建模块</a>
-					</div>
-					</c:if>
 					<!--btn-toolbar end-->
 				</div>
 				<!--mainMenu end-->
 				<div id="mainContent" class="main-row fade in">
 					<!--main-col start-->
 					<div class="main-col">
-						<c:if test="${fenlei == '0'}">
 						<div class="cell load-indicator">
 							<span  class="btn btn-wide btn-primary"  style="background-color: #00da88;" data-toggle="tooltip" data-placement="top">列表模块所属项目：</span>
 							${project.project_name}
 						</div>
-						</c:if>
-						<c:if test="${fenlei == '1'}">
-						<div class="cell load-indicator">
-							<span  class="btn btn-wide btn-primary"  style="background-color: #03b8cf;" data-toggle="tooltip" data-placement="top">列表模块所属产品：</span>
-							${product.product_name}
-						</div>
-						</c:if>
 						<form class="main-table table-task skip-iframe-modal" method="post"
 							id="projectTaskForm" data-ride="table">
 							<!--table-responsive start-->
@@ -142,6 +127,6 @@
 	    recPerPage: ${pageList.pageSize},
 	    pageSizeOptions: [10, 20, 30, 50, 100],
 	    lang: 'zh_cn',
-	    linkCreator: "team/project/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
+	    linkCreator: "team/project/toEachAdd?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
 	});
 </script>

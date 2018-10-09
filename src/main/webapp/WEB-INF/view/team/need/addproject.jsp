@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>提需求</title>
+		<title>项目提需求</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,30 +30,30 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>提需求</h2>
+							<h2>项目提需求</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 							<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th>需求名称</th>
+									<th>模块名称</th>
 									<td class="required" style="width:60%">
 										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>所属产品</th>
+									<th>所属项目</th>
 									<td class="required">
-										<select class="form-control chosen chosen-select"  name="product_id" id="product_id">
-											<c:forEach items="${product}" var="p" varStatus="sta">
-												<option value="${p.id}" ${p.id==product_id?'selected="selected"':''}>${p.product_name }</option>
+										<select class="form-control chosen chosen-select"  name="project_id" id="project_id">
+											<c:forEach items="${project}" var="p" varStatus="sta">
+												<option value="${p.id}" ${p.id==project_id?'selected="selected"':''}>${p.project_name }</option>
 											</c:forEach>
 										</select>
 									<td></td>
 								</tr>
 								<tr>
-								    <th>示意图</th>
+								    <th>原型图</th>
 								    <td class="required">
 									<input type="file" name="filePrototype" multiple="multiple" accept="image/*"/>
 								    </td>
@@ -68,23 +68,11 @@
 								</tr>
 								<tr>
 									<th>指派给</th>
-									<td>
+									<td class="required">
 										<select data-placeholder="请选择被指派人员" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}">${member.name}(${member.number})</option>
-											</c:forEach>
-										</select>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>部门负责人</th>
-									<td class="required">
-										<select data-placeholder="请选择部门负责人" class="form-control chosen-select" name="department_id" id="department_id">
-											<option value=""></option>
-											<c:forEach items="${departinfo}" var="depart" varStatus="sta">
-												<option value="${depart.id}">${depart.name}(${depart.number})</option>
 											</c:forEach>
 										</select>
 									</td>
@@ -103,9 +91,9 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求来源</th>
+									<th>模块来源</th>
 									<td class="required">
-										<select data-placeholder="请选择需求来源" class="form-control chosen-select" name="src_id" id="src_id">
+										<select data-placeholder="请选择模块来源" class="form-control chosen-select" name="src_id" id="src_id">
 											<option value=""></option>
 											<c:forEach items="${needSrc}" var="src" varStatus="sta">
 												<option value="${src.id}">${src.need_src}</option>
@@ -114,7 +102,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求来源备注</th>
+									<th>模块来源备注</th>
 									<td>
 										<input type="text" name="src_remark" id="src_remark" class="form-control input-product-title" autocomplete="off">
 									</td>
@@ -132,15 +120,23 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求开始日期</th>
+									<th>模块开始日期</th>
 									<td class="required">
 										<input type="text" name="start_date" id="start_date"
-												class="form-control form-date-limit" placeholder="需求开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+												class="form-control form-date-limit" placeholder="模块开始日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求描述</th>
+									<th>模块结束日期</th>
+									<td class="required">
+										<input type="text" name="end_date" id="end_date"
+												class="form-control form-date-limit" placeholder="模块结束日期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>模块描述</th>
 									<td class="required">
 										<input type="hidden" name="need_remark">
 										<textarea id="need_remark" name="details" placeholder="" style="width:100%;">${n.needRemark}</textarea>
@@ -158,7 +154,7 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>需求文档</th>
+									<th>模块文档</th>
 									<td>
 										<input type="file" name="file" id="file">
 									</td>
@@ -192,10 +188,11 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toAdd" class="btn">继续创建需求</a> 
+								<a href="team/need/toaddproject?project_id=${project_id}" class="btn">继续创建模块</a> 
 								<a href="team/task/toAdd" class="btn">建任务</a> 
 								<a href="team/task/toAdd" class="btn">批量建任务</a> 
-								<a href="team/need/index" class="btn">返回需求列表</a>	
+								<a href="team/need/index" class="btn">返回模块列表</a>
+								<a href="team/need/toEachAdd?project_id=${project_id}" class="btn">返回本项目模块列表</a>
 							</div>
 						</div>
 					</div>
@@ -224,6 +221,7 @@
 <script>
 var editor = new UE.ui.Editor();
 editor.render("content");
+
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -234,21 +232,19 @@ UE.Editor.prototype.getActionUrl = function(action){
 };  
 UE.getEditor('need_remark');
 UE.getEditor('check_remark');
-
 $("#submit").click(function(){
 	$("input[name='need_remark']").val(UE.getEditor('need_remark').getContent());
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
-	var fenlei=${fenlei};
-	var product_id = ${product_id};
+	var project_id = ${project_id};
 	
 	/* if(filesize==''){
 		alert("请选择文件");
 	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
-         url:"team/need/addproduct?r=" + Math.random(),
+         url:"team/need/addproject?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",
@@ -256,6 +252,7 @@ $("#submit").click(function(){
          contentType:false,
          success:function(data){
         	 if(data.code == 0){
+       			 window.location.href="team/need/toEachAdd?project_id="+project_id;
      			$("#msg").text(data.message);
      			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
      		}else{

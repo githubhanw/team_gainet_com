@@ -27,6 +27,8 @@ import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.TaskNeed;
+import com.zzidc.team.entity.TaskProduct;
+import com.zzidc.team.entity.TaskProject;
 
 import net.sf.json.JSONObject;
 
@@ -306,31 +308,13 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * 项目划分模块时,同项目的模块列表
 	 */
-	public GiantPager getPageListThisProject(int project_id) {
-		GiantPager conditionPage = new GiantPager();
+	public GiantPager getPageListThisProject(int project_id,GiantPager conditionPage) {
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		String sql = "SELECT tn.*,tp.project_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
 				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
 				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id +" ORDER BY tn.update_time DESC";
 		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id;
-		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
-		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
-		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
-		return resultPage;
-	}
-	
-	/**
-	 * 产品划分模块时,同产品的模块列表
-	 */
-	public GiantPager getPageListThisProduct(int product_id) {
-		GiantPager conditionPage = new GiantPager();
-		conditionPage = this.filterStr(conditionPage);
-		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT tn.*,tp.product_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
-				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
-				+ "LEFT JOIN task_product tp ON tn.product_id=tp.id WHERE 1=1 AND tp.id="+product_id +" ORDER BY tn.update_time DESC";
-		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_product tp ON tn.product_id=tp.id  WHERE 1=1 AND tp.id="+product_id;
 		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
 		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
 		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
@@ -482,7 +466,6 @@ public class TeamNeedService extends GiantBaseService{
 		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
 		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
-		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());
 		//模块方
@@ -516,6 +499,13 @@ public class TeamNeedService extends GiantBaseService{
 		//分解
 		need.setResolved((short)0);
 		need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
+		
+
+		TaskProject taskProject =  (TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), need.getProjectId());
+		if (taskProject.getState() == 1) {
+			taskProject.setState((short) 5);
+			super.dao.saveUpdateOrDelete(taskProject, null);
+		}
 		
 		//修改父类对象的resolved 状态改为已分解 
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
@@ -591,7 +581,6 @@ public class TeamNeedService extends GiantBaseService{
 		need.setFlowImg(flowImg);//流程图拼接路径
 		
 		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
-		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
 		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setCreateId(super.getMemberId());
 		need.setCreateName(super.getMemberName());

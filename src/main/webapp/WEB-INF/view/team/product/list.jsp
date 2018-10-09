@@ -211,7 +211,7 @@
 												<c:if test="${product.state == '1'}"> 
 													<a href="team/product/toedit?id=${product.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 													<a href="javascript:void(0)" onclick="del(${product.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
-													<a href="team/need/toAddProduct?fenlei=1&product_id=${product.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
+													<a href="team/need/toaddproduct?product_id=${product.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
 												</c:if>	
 												<c:if test="${product.state == '5' }">
 													<a href="test/apply/toAdd?product_id=${product.id}" class="btn" title="提交测试"><i class="icon-story-change icon-fork"></i></a>

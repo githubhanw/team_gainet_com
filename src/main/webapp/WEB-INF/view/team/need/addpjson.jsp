@@ -43,7 +43,6 @@
 									</td>
 									<td></td>
 								</tr>
-								<c:if test="${fenlei!='1'}">
 								<tr>
 									<th>所属项目</th>
 									<td class="required">
@@ -54,19 +53,6 @@
 										</select>
 									<td></td>
 								</tr>
-								</c:if>
-								<c:if test="${fenlei=='1'}">
-								<tr>
-									<th>所属产品</th>
-									<td class="required">
-										<select class="form-control chosen chosen-select"  name="product_id" id="product_id">
-											<c:forEach items="${product}" var="p" varStatus="sta">
-												<option value="${p.id}" ${p.id==product_id?'selected="selected"':''}>${p.product_name }</option>
-											</c:forEach>
-										</select>
-									<td></td>
-								</tr>
-								</c:if>
 								<tr>
 								    <th>原型图</th>
 								    <td class="required">
@@ -251,7 +237,6 @@ $("#submit").click(function(){
 	$("input[name='check_remark']").val(UE.getEditor('check_remark').getContent());
 	var form = new FormData(document.getElementById("createForm"));
 	var filesize=$("#file").val();
-	var fenlei=${fenlei};
 	var project_id = ${project_id};
 	
 	/* if(filesize==''){

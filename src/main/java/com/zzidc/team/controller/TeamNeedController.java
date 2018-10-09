@@ -121,14 +121,9 @@ public class TeamNeedController extends GiantBaseController {
 	/**
 	 * 跳转添加模块页面
 	 */
-	@RequestMapping("/toAdd")
-	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
-		String fenlei = "0";//0->项目 1->产品
-		if (!"".equals(mvm.get("fenlei"))) {
-			fenlei = mvm.get("fenlei").toString();
-		}
+	@RequestMapping("/toaddproject")
+	public String toAddProject(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
-		model.addAttribute("fenlei", fenlei);
 		model.addAttribute("project", teamNeedService.getTeamProject());
 		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
@@ -136,14 +131,14 @@ public class TeamNeedController extends GiantBaseController {
 		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
 		model.addAttribute("members", teamNeedService.getAllMember());
 		publicResult(model);
-		return "team/need/add";
+		return "team/need/addproject";
 	}
 
 	/**
 	 * 添加模块
 	 */
-	@RequestMapping("/add")
-	public void add(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
+	@RequestMapping("/addproject")
+	public void addProject(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
 			@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
 		JSONObject json=new JSONObject();
 		int id=baseService.getMemberId();	//登录id	        
@@ -195,23 +190,16 @@ public class TeamNeedController extends GiantBaseController {
 	/**
 	 * 跳转添加产品模块页面
 	 */
-	@RequestMapping("/toAddProduct")
+	@RequestMapping("/toaddproduct")
 	public String toAddProduct(@RequestParam Map<String, String> mvm, Model model) {
-		String fenlei = "0";//0->项目 1->产品
-		if (!"".equals(mvm.get("fenlei"))) {
-			fenlei = mvm.get("fenlei").toString();
-		}
 		//添加模块页面的项目列表
-		model.addAttribute("fenlei", fenlei);
-		model.addAttribute("project", teamNeedService.getTeamProject());
 		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
-		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
 		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
 		model.addAttribute("members", teamNeedService.getAllMember());
 		model.addAttribute("departinfo", teamNeedService.getDepartmentInfo());
 		publicResult(model);
-		return "team/need/addproductneed";
+		return "team/need/addproduct";
 	}
 
 	/**
@@ -267,59 +255,68 @@ public class TeamNeedController extends GiantBaseController {
 	}
 	
 	/**
-	 * 跳转添加子模块页面
+	 * 跳转添加项目子模块页面
 	 */
-	@RequestMapping("/toAddSon")
-	public String toAddSon(@RequestParam Map<String, String> mvm, Model model) {
-		String fenlei = "0";//0->项目 1->产品
-		if (!"".equals(mvm.get("fenlei"))) {
-			fenlei = mvm.get("fenlei").toString();
-		}
+	@RequestMapping("/toAddPJSon")
+	public String toAddPJSon(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
 		model.addAttribute("need_id",GiantUtil.intOf(mvm.get("need_id"), 0));
-		model.addAttribute("fenlei", fenlei);
 		model.addAttribute("project", teamNeedService.getTeamProject());
-		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
-		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
 		model.addAttribute("members", teamNeedService.getAllMember());
 		publicResult(model);
-		return "team/need/addson";
+		return "team/need/addpjson";
 	}
 
 	/**
-	 * [项目]跳转到 选中项目的添加模块列表页面
+	 * 跳转添加产品子模块页面
+	 */
+	@RequestMapping("/toAddPDSon")
+	public String toAddSon(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		model.addAttribute("need_id",GiantUtil.intOf(mvm.get("need_id"), 0));
+		model.addAttribute("product", teamNeedService.getTeamProduct());
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
+		model.addAttribute("members", teamNeedService.getAllMember());
+		publicResult(model);
+		return "team/need/addpdson";
+	}
+	
+	/**
+	 * [项目(拆分模块)]跳转到 选中项目的添加模块列表页面
 	 */
 	@RequestMapping("/toEachAdd")
 	public String toEachAdd(@RequestParam Map<String, String> mvm, Model model) {
-		String fenlei = "0";//0->项目 1->产品
-		if (!"".equals(mvm.get("fenlei"))) {
-			fenlei = mvm.get("fenlei").toString();
-		}
 		//添加模块页面的项目列表
 		if(conditionPage == null){
 			conditionPage = new GiantPager();
 		}
+		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
+			mvm.put("orderColumn", "tn.update_time");
+			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
+			mvm.put("type", "");//未关闭
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
+			mvm.put("search", "");
+		}
+		Map<String, String> queryCondition = conditionPage.getQueryCondition();
+		//查询条件封装
+		queryCondition.clear();
+		queryCondition.putAll(mvm);
 		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
-		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
+		conditionPage.setPageSize(300);
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
-		if (!GiantUtil.isEmpty(mvm.get("product_id")) || "1".equals(fenlei)) {
-			pageList = teamNeedService.getPageListThisProduct(GiantUtil.intOf(mvm.get("product_id"), 0));
-			model.addAttribute("product", teamNeedService.getTeamProductByID(GiantUtil.intOf(mvm.get("product_id"), 0)));
-			model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 1));
-			model.addAttribute("pageList", pageList);
-			model.addAttribute("fenlei", fenlei);
-			pageList.setDesAction(requestURL);
-		}
-		if (!GiantUtil.isEmpty(mvm.get("project_id")) || "0".equals(fenlei)){
-			pageList = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0));
-			model.addAttribute("project", teamNeedService.getTeamProjectByID(GiantUtil.intOf(mvm.get("project_id"), 0)));
-			model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
-			model.addAttribute("pageList", pageList);
-			model.addAttribute("fenlei", fenlei);
-			pageList.setDesAction(requestURL);
-		}
+		pageList = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0),conditionPage);
+		model.addAttribute("project", teamNeedService.getTeamProjectByID(GiantUtil.intOf(mvm.get("project_id"), 0)));
+		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("pageList", pageList);
+		requestURL = "team/need/toEachAdd";
+		pageList.setDesAction(requestURL);
 		publicResult(model);
 		return "team/need/eachAdd";
 	}

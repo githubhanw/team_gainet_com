@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
+import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.entity.TaskProject;
 
@@ -1374,6 +1377,104 @@ public class TeamNeedService extends GiantBaseService{
 			return b; 
 		}
 		return false;
+	}
+	
+
+	/**
+	 * 添加原型图和流程图
+	 */
+	public boolean addPicture(Map<String, String> mvm,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+		TaskNeed taskNeed = new TaskNeed();
+		String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		//上传界面原型图和流程图文件
+		String interfaceImg="";//界面原型图（格式：url,url）
+		String flowImg="";//流程图（格式：url,url）
+		if(!prototypeName.equals("")){
+			for (int i = 0; i < filePrototype.length; i++) {
+				MultipartFile file = filePrototype[i];
+				interfaceImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+			}
+			interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
+		}
+		if(!treeName.equals("")){
+			for (int i = 0; i < filetree.length; i++) {
+				MultipartFile file = filetree[i];
+				flowImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+			}
+			flowImg = flowImg.substring(0,flowImg.length() - 1);
+		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			taskNeed = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+		    if(!interfaceImg.equals("")){
+				if(taskNeed.getInterfaceImg()==null || taskNeed.getInterfaceImg().equals("")){
+					taskNeed.setInterfaceImg(interfaceImg);	
+			    }else{
+			    	taskNeed.setInterfaceImg(taskNeed.getInterfaceImg()+","+interfaceImg);	
+			    }
+		    }  
+		    if(!flowImg.equals("")){
+			    if(taskNeed.getFlowImg()==null || taskNeed.getFlowImg().equals("")){
+			    	taskNeed.setFlowImg(flowImg);	
+			    }else{
+			    	taskNeed.setFlowImg(taskNeed.getFlowImg()+","+flowImg);
+			    }
+		    }
+		}
+		boolean b =  super.dao.saveUpdateOrDelete(taskNeed, null);
+		return b;
+	}
+	
+	/**
+	 * 删除原型图和流程图
+	 */
+	public boolean delPicture(Map<String, String> mvm,HttpServletRequest request) {
+		TaskNeed taskNeed = new TaskNeed();
+		String [] interfaceImg=request.getParameterValues("checkinterface");//选中要删除的原型图数组
+		String [] flowImg=request.getParameterValues("checkfolw");//选中要删除的流程图数组
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			taskNeed = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+		    if(taskNeed.getInterfaceImg()!=null &&interfaceImg!=null){
+		      String [] stringInterfaceImg= taskNeed.getInterfaceImg().split(",");
+		      //删除选中的原型图
+		      List<String> list = new ArrayList<String>();
+		      for (int i=0; i<stringInterfaceImg.length; i++) {
+		          list.add(stringInterfaceImg[i]);
+		      }
+		      for (String string : interfaceImg) {
+		     	 list.remove(string);
+		 	  }
+		      String[] newStr =  list.toArray(new String[1]);
+		      String temp = String.join(",", newStr);
+		      if(temp.equals("null")){
+		    	  taskNeed.setInterfaceImg(null);
+		      }else{
+		    	  taskNeed.setInterfaceImg(temp);
+		      }
+		    }
+		    if(taskNeed.getFlowImg()!=null &&flowImg!=null){
+		      String [] stringFlowImg= taskNeed.getFlowImg().split(",");
+		      //删除选中的流程图
+		      List<String> list = new ArrayList<String>();
+		      for (int i=0; i<stringFlowImg.length; i++) {
+		          list.add(stringFlowImg[i]);
+		      }
+		      for (String string : flowImg) {
+		     	 list.remove(string);
+		 	  }
+		      String[] newStr =  list.toArray(new String[1]);
+		      String temp = String.join(",", newStr);
+		      if(temp.equals("null")){
+		    	  taskNeed.setFlowImg(null);
+		      }else{
+		    	  taskNeed.setFlowImg(temp);
+		      }
+		    }
+		}
+		boolean b =  super.dao.saveUpdateOrDelete(taskNeed, null);
+		return b;
 	}
 	
 }

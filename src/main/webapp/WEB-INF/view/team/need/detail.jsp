@@ -64,6 +64,36 @@
 									</c:if>
 								</div>
 							</div>
+							<c:if test="${needM.state!=0 }">
+								<div class="detail">
+									<div class="detail-title">原型图和流程图&nbsp;&nbsp;
+	                                <a href="team/need/toaddPicture?id=${needM.id }">添加</a>&nbsp;&nbsp;
+									<a href="team/need/todelPicture?id=${needM.id }">删除</a>
+									</div>  
+									<div class="detail-content article-content">
+									            原型图&nbsp;&nbsp;  
+									    <c:if test="${needM.interface_img !=null }">
+										<c:forEach items="${fn:split(needM.interface_img, ',')}" var="flow" varStatus="sta">
+											<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
+										</c:forEach> 
+										</c:if>
+										<c:if test="${needM.interface_img ==null }">
+										无图片
+										</c:if>
+									</div>
+									<div class="detail-content article-content">
+									            流程图&nbsp;&nbsp;
+									    <c:if test="${needM.flow_img != null}">
+										<c:forEach items="${fn:split(needM.flow_img, ',')}" var="flow" varStatus="sta">
+											<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【流程图】">&nbsp;&nbsp;
+										</c:forEach>
+										</c:if>
+										<c:if test="${needM.flow_img == null}">
+										无图片
+										</c:if>
+									</div>
+								</div>
+							</c:if>
 							<c:if test="${subNeed != null}">
 								<div class="detail">
 									<div class="detail-title">子模块</div>

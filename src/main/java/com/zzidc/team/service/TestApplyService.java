@@ -142,6 +142,8 @@ public class TestApplyService extends GiantBaseService {
 		int applyType = 0;
 		if (taskId != null && taskId > 0) {//原来的不动
 			applyType = 1;
+			Task task = (Task) getEntityByPrimaryKey(new Task(), taskId);
+			model.addAttribute("task", task);
 			model.addAttribute("tasks", getFinishedTasksByMember(taskId));
 			model.addAttribute("task_id", taskId);
 		} else if (needId != null && needId > 0) {//需求（模块）：获取模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），所有任务下的测试用例；【获取已完成的任务、已验收的模块】
@@ -169,7 +171,7 @@ public class TestApplyService extends GiantBaseService {
 		} else if (projectId != null && projectId > 0) {//项目：获取项目下所有模块，模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），任务下的测试用例；【获取已完成的任务、已验收的模块】
 			applyType = 3;
 			TaskProject p = (TaskProject) getEntityByPrimaryKey(new TaskProject(), projectId);
-			if(p != null && p.getState() > 8) {
+			if(p != null && (p.getState() > 8 || p.getState() == 2 || p.getState() == 3 || p.getState() == 4)) {
 				//获取项目下所有模块
 				List<Map<String, Object>> need = getNeedByProject(projectId);
 				//获取项目下所有子模块
@@ -194,7 +196,7 @@ public class TestApplyService extends GiantBaseService {
 		} else if (productId != null && productId > 0) {//产品：获取产品下所有模块，模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），任务下的测试用例；【获取已完成的任务、已验收的模块】
 			applyType = 4;
 			TaskProduct product = (TaskProduct) getEntityByPrimaryKey(new TaskProduct(), productId);
-			if(product != null && product.getState() == 4) {
+			if(product != null) {
 				//获取项目下所有模块
 				List<Map<String, Object>> need = getNeedByProduct(productId);
 				//获取项目下所有子模块
@@ -663,7 +665,7 @@ public class TestApplyService extends GiantBaseService {
 	public List<Map<String, Object>> getFinishedTasksByMember(int id){
 		// FIXME 如果测试申请单有删除操作时，此处的子查询中应该加上 删除状态判断
 		String sql = "select id, task_name from task where state = 4 and deleted = 0 and task_type != 2 " + 
-				"and id not in (select task_id from test_apply where state!=4 and id != :id) " + 
+				"and id not in (select task_id from test_apply where state!=4 and task_id != :id) " + 
 				"order by update_time desc";
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		conditionMap.put("id", id);

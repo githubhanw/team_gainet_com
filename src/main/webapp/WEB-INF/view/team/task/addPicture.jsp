@@ -39,13 +39,13 @@
 								<input type="hidden" id="task_id" name="task_id" value="${t.id}">
 								<tr>
 									<th>任务名称</th>
-									<td class="required">
-									${t.taskName}
+									<td>
+										${t.taskName}
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-								    <th>界面原型</th>
+								    <th>界面原型图</th>
 								    <td class="required">
 									<input type="file" name="filePrototype" multiple="multiple" accept="image/*"/>
 								    </td>
@@ -59,6 +59,34 @@
 								    <td></td>
 								</tr>
 								</form>
+								<tr>
+								    <th>现有界面原型图</th>
+								    <td>
+									    <c:if test="${t.interfaceImg !=null }">
+											<c:forEach items="${fn:split(t.interfaceImg, ',')}" var="flow" varStatus="sta">
+												<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
+											</c:forEach> 
+										</c:if>
+										<c:if test="${t.interfaceImg ==null }">
+											无图片
+										</c:if>
+								    </td>
+								    <td></td>
+								</tr>
+								<tr>
+								    <th>现有流程图</th>
+								    <td>
+									    <c:if test="${t.flowImg != null}">
+											<c:forEach items="${fn:split(t.flowImg, ',')}" var="flow" varStatus="sta">
+												<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【流程图】">&nbsp;&nbsp;
+											</c:forEach>
+										</c:if>
+										<c:if test="${t.flowImg == null}">
+											无图片
+										</c:if>
+									</td>
+								    <td></td>
+								</tr>
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">添加</button>

@@ -371,6 +371,20 @@
 									</td>
 									<td></td>
 								</tr>
+								<c:if test="${entity.id > 0}">
+									<tr class="nofixed">
+										<th>状态</th>
+										<td class="required">
+											<select class="form-control chosen chosen-select"  name="state" id="state">
+												<option ${entity.state=='1'?'selected="selected"':'' } value="1">待测试</option>
+												<option ${entity.state=='2'?'selected="selected"':'' } value="2">测试中</option>
+												<option ${entity.state=='3'?'selected="selected"':'' } value="3">已测试</option>
+												<option ${entity.state=='4'?'selected="selected"':'' } value="4">已驳回</option>
+											</select>
+										</td>
+										<td></td>
+									</tr>
+								</c:if>
 								</form>
 								<tr>
 									<td colspan="3" class="text-center form-actions">

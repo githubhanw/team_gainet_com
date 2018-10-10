@@ -498,24 +498,43 @@ public class TeamTaskService extends GiantBaseService {
 	 * 添加任务
 	 */
 	public boolean addTask(Map<String, String> mvm,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+		String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
 		//上传界面原型图和流程图文件
 		String interfaceImg="";//界面原型图（格式：url,url）
 		String flowImg="";//流程图（格式：url,url）
-		for (int i = 0; i < filePrototype.length; i++) {
-			MultipartFile file = filePrototype[i];
-			interfaceImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+		if(!prototypeName.equals("")){
+			for (int i = 0; i < filePrototype.length; i++) {
+				MultipartFile file = filePrototype[i];
+				interfaceImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+			}
+			interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
 		}
-		interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
-		for (int i = 0; i < filetree.length; i++) {
-			MultipartFile file = filetree[i];
-			flowImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+		if(!treeName.equals("")){
+			for (int i = 0; i < filetree.length; i++) {
+				MultipartFile file = filetree[i];
+				flowImg+=FileUploadUtil.uploadFiles(file).toString()+",";
+			}
+			flowImg = flowImg.substring(0,flowImg.length() - 1);
 		}
-		flowImg = flowImg.substring(0,flowImg.length() - 1);
+		
 		Task task = new Task();
 		task.setResolved((short) 0);
 		task.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
-		task.setInterfaceImg(interfaceImg);//界面原型图拼接路径
-		task.setFlowImg(flowImg);//流程图拼接路径
+		if(!interfaceImg.equals("")){
+			if(task.getInterfaceImg()==null || task.getInterfaceImg().equals("")){
+		    task.setInterfaceImg(interfaceImg);	
+		    }else{
+		    task.setInterfaceImg(task.getInterfaceImg()+","+interfaceImg);	
+		    }
+	    }  
+	    if(!flowImg.equals("")){
+		    if(task.getFlowImg()==null || task.getFlowImg().equals("")){
+		    task.setFlowImg(flowImg);	
+		    }else{
+		    task.setFlowImg(task.getFlowImg()+","+flowImg);
+		    }
+	    }
 		if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
 			// 获取对象
 			Task parentTask = (Task) super.dao.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));

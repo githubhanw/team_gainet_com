@@ -55,7 +55,7 @@
 									<th>备注</th>
 									<td>
 										<input type="hidden" name="comment">
-										<div id="comment"></div>
+										<div id="comment" style="width:100%;"></div>
 										<input type="hidden" name="id" value="${n.id}"/>
 									</td>
 									<td></td>

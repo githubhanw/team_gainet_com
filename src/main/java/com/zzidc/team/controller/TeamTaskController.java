@@ -234,18 +234,18 @@ public class TeamTaskController extends GiantBaseController {
 		JSONObject json=new JSONObject();
 		String prototypeName = filePrototype[0].getOriginalFilename();
 		String treeName = filetree[0].getOriginalFilename();
-		if(prototypeName.equals("")){
+		if(prototypeName.equals("") && treeName.equals("")){
 			json.put("code",2);
-			json.put("message", "请选择界面原型文件");
+			json.put("message", "请选择界面原型文件/流程图");
 			resultresponse(response,json);
 			return;
 		}
-		if(treeName.equals("")){
-			json.put("code",3);
-			json.put("message", "请选择流程图");
-			resultresponse(response,json);
-			return;
-		}
+//		if(treeName.equals("")){
+//			json.put("code",3);
+//			json.put("message", "请选择流程图");
+//			resultresponse(response,json);
+//			return;
+//		}
 		if(GiantUtil.isEmpty(mvm.get("task_name")) || GiantUtil.isEmpty(mvm.get("assigned_id")) || 
 				GiantUtil.isEmpty(mvm.get("task_type")) || GiantUtil.isEmpty(mvm.get("need_id"))){
 			json.put("code",1);

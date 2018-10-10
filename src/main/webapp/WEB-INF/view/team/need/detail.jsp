@@ -257,12 +257,22 @@
 								<div class="detail-content">
 									<table class="table table-data">
 										<tbody>
+											<c:if test="${needM.project_id!='0'}">
 											<tr class="nofixed">
 												<th>所属项目</th>
 												<td>
 													<a href="team/project/detail?id=${needM.project_id}" data-toggle="tooltip" data-placement="top" title="${needM.project_name}">${needM.project_name}</a>
 												</td>
 											</tr>
+											</c:if>
+											<c:if test="${needM.project_id=='0'}">
+											<tr class="nofixed">
+												<th>所属产品</th>
+												<td>
+													<a href="team/product/detail?id=${needM.product_id}" data-toggle="tooltip" data-placement="top" title="${needM.product_name}">${needM.product_name}</a>
+												</td>
+											</tr>
+											</c:if>
 											<tr>
 												<th>模块来源</th>
 												<td>${needM.need_src}</td>
@@ -271,6 +281,12 @@
 												<th>来源备注</th>
 												<td>${needM.leader_name}</td>
 											</tr>
+											<c:if test="${needM.project_id == '0' || needM.project_id == null}">
+											<tr>
+												<th>部门经理</th>
+												<td>${needM.department_name}</td>
+											</tr>
+											</c:if>
 											<tr>
 												<th>需求方</th>
 												<td>${needM.member_name}</td>
@@ -288,7 +304,7 @@
 												<th>当前状态</th>
 												<td>
 												     ${needM.state == 0 ? '已删除' : needM.state == 1 ? '未开始' : needM.state == 2 ? '进行中'
-													 : needM.state == 3 ? '待验收' : needM.state == 4 ? '已验收' : needM.state == 5 ? '已关闭' : '未知'}
+													 : needM.state == 3 ? '待验收' : needM.state == 4 ? '已验收' : needM.state == 5 ? '已关闭' : needM.state == 6 ? '待安排' : '未知'}
 												</td>
 											</tr>
 											<tr>

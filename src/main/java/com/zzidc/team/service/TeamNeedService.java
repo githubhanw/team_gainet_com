@@ -352,7 +352,11 @@ public class TeamNeedService extends GiantBaseService{
 	 * @return
 	 */
 	public Map<String, Object> getNeedDetail(Integer needId){
-		String sql = "SELECT tn.*,ns.need_src,tp.project_name FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id LEFT JOIN need_src ns ON tn.src_id=ns.id WHERE tn.id=" + needId;
+		String sql = "SELECT tn.*,ns.need_src,tpj.project_name,tpd.product_name "
+				+ "FROM task_need tn "
+				+ "LEFT JOIN task_project tpj ON tn.project_id=tpj.id "
+				+ "LEFT JOIN task_product tpd ON tn.product_id=tpd.id "
+				+ "LEFT JOIN need_src ns ON tn.src_id=ns.id WHERE tn.id=" + needId;
 		List<Map<String, Object>> list = super.getMapListBySQL(sql, null);
 		if(list != null && list.size() > 0) {
 			return list.get(0);

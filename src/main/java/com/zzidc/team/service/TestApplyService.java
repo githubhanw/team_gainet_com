@@ -512,8 +512,10 @@ public class TestApplyService extends GiantBaseService {
 			testApply.setTestContent(GiantUtil.stringOf(mvm.get("test_content"))); // 测试内容
 			testApply.setExecuteSql(GiantUtil.stringOf(mvm.get("execute_sql"))); // 要执行的sql
 			testApply.setUpdateTime(new Timestamp(System.currentTimeMillis())); // 修改时间
+			testApply.setState((short) GiantUtil.intOf(mvm.get("state"), 1));  // 1 表示待测试
+			
 			boolean b = super.dao.saveUpdateOrDelete(testApply, null);
-			pmLog.add(oldTestApply, testApply, new String[] {"test_content"}, "test_content");
+			pmLog.add(oldTestApply, testApply, new String[] {"test_content"}, "test_content", "state");
 			pmLog.setObjectId(testApply.getId());
 			this.log(pmLog);
 			return b;

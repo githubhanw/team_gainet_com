@@ -70,7 +70,7 @@ public class TeamNeedService extends GiantBaseService{
 				}
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("type"))) {
-				if ("99".equals(temp)) {//当前里程碑下的模块
+				if ("95".equals(temp)) {//当前里程碑下的模块
 					String id = conditionPage.getQueryCondition().get("id");
 					String idsSql = "select taskneed_id from milepost_taskneed where milepost_id = " + id;
 					List<Map<String, Object>> list = getMapListBySQL(idsSql, null);

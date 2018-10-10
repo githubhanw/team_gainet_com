@@ -54,7 +54,7 @@
 									   <c:forEach items="${MilMan}" var="MilMan">
 									   <tr>
 									     <td>
-									     <a href="team/need/index?type=99&id=${MilMan.id}">${MilMan.milepost_name}</a>
+									     <a href="team/need/index?type=95&id=${MilMan.id}">${MilMan.milepost_name}</a>
 									     </td>
 									     <td>${MilMan.start_time}</td>
 									     <td>${MilMan.end_time}</td>

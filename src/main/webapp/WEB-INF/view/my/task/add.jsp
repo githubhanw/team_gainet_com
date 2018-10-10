@@ -126,6 +126,13 @@
 								    <td></td>
 								</tr>
 								<tr>
+									<th></th>
+									<td>
+										<span class="help-block">【界面原型图】和【流程图】只需上传一种即可</span>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
 									<th>任务描述</th>
 									<td>
 										<div id="remark" style="width:100%;">

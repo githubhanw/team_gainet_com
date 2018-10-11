@@ -34,11 +34,11 @@ public class TimedTask extends GiantBaseService {
 		//进行中任务在计划结束时间的当天提醒
 		//待审核任务在计划结束时间的三天后提醒
 		String querySql = "select id from ( "
-						+ "select assigned_id id from task where DATE_FORMAT(end_date, '%Y-%m-%d') = CURDATE() and state=1 and overdue=0 "
+						+ "select assigned_id id from task where DATE_FORMAT(end_date, '%Y-%m-%d') = CURDATE() and state=1 and overdue=0 and deleted=0 "
 						+ "union all "
-						+ "select assigned_id id from task where DATE_FORMAT(plan_end_date, '%Y-%m-%d') = CURDATE() and state=2 and overdue=0 "
+						+ "select assigned_id id from task where DATE_FORMAT(plan_end_date, '%Y-%m-%d') = CURDATE() and state=2 and overdue=0 and deleted=0 "
 						+ "union all "
-						+ "select checked_id id from task where DATE_ADD(DATE_FORMAT(plan_end_date, '%Y-%m-%d'), INTERVAL 3 DAY) = CURDATE() and state=3 and overdue=0 "
+						+ "select checked_id id from task where DATE_ADD(DATE_FORMAT(plan_end_date, '%Y-%m-%d'), INTERVAL 3 DAY) = CURDATE() and state=3 and overdue=0 and deleted=0 "
 						+ ") late_remind group by id";
 		
 		List<Map<String, Object>> list = super.dao.getListMapBySql(querySql, null);

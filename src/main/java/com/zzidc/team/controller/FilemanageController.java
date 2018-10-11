@@ -276,6 +276,8 @@ public class FilemanageController extends GiantBaseController{
 			resultresponse(response,json);
 			return;
 		}else {
+			Map<String, String> conf = filemanageService.getSysConfig();
+			FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 			Object url=FileUploadUtil.uploadFile(file);
 			String fileName = file[0].getOriginalFilename();
 			MultipartFile f =file[0];

@@ -497,11 +497,15 @@ public class TeamNeedService extends GiantBaseService{
 		String flowImg="";//流程图（格式：url,url）
 		for (int i = 0; i < filePrototype.length; i++) {
 			MultipartFile file1 = filePrototype[i];
+			Map<String, String> conf = super.getSysConfig();
+			FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 			interfaceImg+=String.valueOf(FileUploadUtil.uploadFiles(file1))+",";
 		}
 		interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
 		for (int i = 0; i < filetree.length; i++) {
 			MultipartFile file2 = filetree[i];
+			Map<String, String> conf = super.getSysConfig();
+			FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 			flowImg+=FileUploadUtil.uploadFiles(file2).toString()+",";
 		}
 		flowImg = flowImg.substring(0,flowImg.length() - 1);

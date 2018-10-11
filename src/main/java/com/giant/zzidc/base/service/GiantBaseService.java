@@ -40,6 +40,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.giant.zzidc.base.dao.GiantBaseDao;
 import com.giant.zzidc.base.filter.WebUtil;
 import com.giant.zzidc.base.utils.GiantPager;
+import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.log.PMLog;
 import com.zzidc.log.PMLogItem;
@@ -147,6 +148,34 @@ public class GiantBaseService {
 		List<String> roleIdList = Arrays.asList(roleIdArray);
 		// 角色Id为5的是测试负责人
 		return roleIdList.contains("5");
+	}
+	
+	/**
+	 * 获取上传文件配置
+	 * @return
+	 */
+	public Map<String, String> getSysConfig(){
+		Map<String, String> conf = new HashMap<String, String>();
+		String sql = "select * from sysconfig";
+		List<Map<String, Object>> list = dao.getListMapBySql(sql, null);
+		if (list == null || list.size() == 0) {
+			return null;
+		}
+		for (Map<String, Object> map : list) {
+			try {
+				if(GiantUtil.stringOf(map.get("key")).equals("ACCESSKEY")) {
+					conf.put("accesskey", String.valueOf(map.get("value")));
+				}
+				if(GiantUtil.stringOf(map.get("key")).equals("SECRETKEY")) {
+					conf.put("secreteky", String.valueOf(map.get("value")));
+				}
+				if(GiantUtil.stringOf(map.get("key")).equals("RESOURCE")) {
+					conf.put("resource", String.valueOf(map.get("value")));
+				}
+			} catch (Exception exc) {
+			}
+		}
+		return conf;
 	}
 	
 	/**
@@ -1108,7 +1137,7 @@ public class GiantBaseService {
     	d.put("keyword3", keyword3);
     	d.put("remark", remark);
     	p.put("data", d);
-    	String a = p.toString();
+//    	String a = p.toString();
 		return value;
 	}
 

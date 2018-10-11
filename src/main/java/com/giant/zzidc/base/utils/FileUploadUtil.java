@@ -35,11 +35,15 @@ public class FileUploadUtil {
 	
 //	private final static String UPLOADURL = "http://lanapi.storagesdk.com/";
 	private final static String UPLOADURL = "http://api.storagesdk.com/";//测试使用
+
+	// 每次调用是赋值
+	private static String ACCESSKEY = null;
+	private static String SECRETKEY = null;
+	private static String RESOURCE = null;
 	
-	
-	private final static String ACCESSKEY = "W7O2M3KY4G5TLPN2URI1";//正式
-	private final static String SECRETKEY = "/rWk5zUcLyHSEobRz5ARM1zaVxqbt4ZLXVBBDHi7";//正式
-	private final static String RESOURCE = "VG3OQ81wtrNjl7GkAWD9LSNETSqlzykT";//正式RESOURCE值
+//	private static String ACCESSKEY = "W7O2M3KY4G5TLPN2URI1";//正式
+//	private static String SECRETKEY = "/rWk5zUcLyHSEobRz5ARM1zaVxqbt4ZLXVBBDHi7";//正式
+//	private static String RESOURCE = "VG3OQ81wtrNjl7GkAWD9LSNETSqlzykT";//正式RESOURCE值
 	
 //	private final static String SECRETKEY = "3rIpwa/5HNJpWkxtfsmaGeUVNX5kqQ04hJDBu5ya";//测试
 //	private final static String ACCESSKEY = "3M3JYO5HFN6RNO3Y5BGO";//测试
@@ -59,6 +63,12 @@ public class FileUploadUtil {
 		allowedMimeTypes.put("image/png", "image/png");
 		allowedMimeTypes.put("image/jpg", "image/jpg");	
 		allowedMimeTypes.put("application/octet-stream", "application/octet-stream");
+	}
+	
+	public static void SetParam(String accesskey, String secreteky, String resource) {
+		ACCESSKEY = accesskey;
+		SECRETKEY = secreteky;
+		RESOURCE = resource;
 	}
 	
 	/**
@@ -119,7 +129,7 @@ public class FileUploadUtil {
 	 * @param dirPath
 	 * @return <br>
 	 */
-	public static Result uploadFiles(MultipartFile[] files, String[] fileNames,
+	private static Result uploadFiles(MultipartFile[] files, String[] fileNames,
 			String dirPath) {
 		int size=0;
 		try {
@@ -174,7 +184,7 @@ public class FileUploadUtil {
 	 * @return <br>
 	 */
 	@SuppressWarnings("all")
-	public static boolean uploadFileToCloud(String fileName, InputStream input,
+	private static boolean uploadFileToCloud(String fileName, InputStream input,
 			String folder) {
 		try {
 			if(GiantUtil.isEmpty(folder)){

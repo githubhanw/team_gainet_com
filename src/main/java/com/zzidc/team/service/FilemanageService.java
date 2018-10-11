@@ -69,6 +69,8 @@ public class FilemanageService extends GiantBaseService{
 	//上传文件返回文件名字和格式和存储路径
 	public JSONObject uploadfiles(MultipartFile[] file){
 		JSONObject json =new JSONObject();
+		Map<String, String> conf = super.getSysConfig();
+		FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 		Object url=FileUploadUtil.uploadFile(file);
 		
 		if(url!=null){
@@ -234,6 +236,8 @@ public class FilemanageService extends GiantBaseService{
 		if(fileName.equals("")){
 			
 		}else{
+			Map<String, String> conf = super.getSysConfig();
+			FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 			Object url=FileUploadUtil.uploadFile(file);
 			if(url!=null){
 			String fileRealname = file[0].getOriginalFilename();

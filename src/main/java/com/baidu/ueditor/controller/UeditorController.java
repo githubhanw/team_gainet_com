@@ -1,11 +1,15 @@
 package com.baidu.ueditor.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.FileUploadUtil;
 
 /**
@@ -19,6 +23,8 @@ import com.giant.zzidc.base.utils.FileUploadUtil;
 @Controller
 @RequestMapping(value = "/ueditor")
 public class UeditorController {
+	@Autowired
+	public GiantBaseService baseService;
 	
 	/**
 	 * [上传百度编辑器中的文件到云存储] <br>
@@ -30,6 +36,10 @@ public class UeditorController {
 	@RequestMapping(value = "/upload")
 	@ResponseBody
     public Object config(HttpServletRequest request) {
+		System.out.println(System.currentTimeMillis());
+		Map<String, String> conf = baseService.getSysConfig();
+		FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
+		System.out.println(System.currentTimeMillis());
         return FileUploadUtil.uploadImage(request);
     }
 

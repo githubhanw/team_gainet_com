@@ -64,8 +64,19 @@
 								    <td>
 									    <c:if test="${t.interfaceImg !=null }">
 											<c:forEach items="${fn:split(t.interfaceImg, ',')}" var="flow" varStatus="sta">
+											<c:if test="${fn:contains(flow,'BMP')==true || fn:contains(flow,'JPEG')==true || fn:contains(flow,'GIF')==true || 
+															fn:contains(flow,'PNG')==true || fn:contains(flow,'JPG')==true ||
+														  fn:contains(flow,'bmp')==true || fn:contains(flow,'jpeg')==true || fn:contains(flow,'gif')==true || 
+															fn:contains(flow,'png')==true || fn:contains(flow,'jpg')==true }">
 												<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
-											</c:forEach> 
+											</c:if>
+											<c:if test="${fn:contains(flow,'BMP')!=true && fn:contains(flow,'JPEG')!=true && fn:contains(flow,'GIF')!=true && 
+															fn:contains(flow,'PNG')!=true && fn:contains(flow,'JPG')!=true &&
+														  fn:contains(flow,'bmp')!=true && fn:contains(flow,'jpeg')!=true && fn:contains(flow,'gif')!=true && 
+															fn:contains(flow,'png')!=true && fn:contains(flow,'jpg')!=true }">
+												<a href="${flow}">下载非图片文件</a>
+											</c:if>
+										</c:forEach> 
 										</c:if>
 										<c:if test="${t.interfaceImg ==null }">
 											无图片
@@ -78,7 +89,18 @@
 								    <td>
 									    <c:if test="${t.flowImg != null}">
 											<c:forEach items="${fn:split(t.flowImg, ',')}" var="flow" varStatus="sta">
+											<c:if test="${fn:contains(flow,'BMP')==true || fn:contains(flow,'JPEG')==true || fn:contains(flow,'GIF')==true || 
+															fn:contains(flow,'PNG')==true || fn:contains(flow,'JPG')==true ||
+														  fn:contains(flow,'bmp')==true || fn:contains(flow,'jpeg')==true || fn:contains(flow,'gif')==true || 
+															fn:contains(flow,'png')==true || fn:contains(flow,'jpg')==true }">
 												<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【流程图】">&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${fn:contains(flow,'BMP')!=true && fn:contains(flow,'JPEG')!=true && fn:contains(flow,'GIF')!=true && 
+															fn:contains(flow,'PNG')!=true && fn:contains(flow,'JPG')!=true &&
+														  fn:contains(flow,'bmp')!=true && fn:contains(flow,'jpeg')!=true && fn:contains(flow,'gif')!=true && 
+															fn:contains(flow,'png')!=true && fn:contains(flow,'jpg')!=true }">
+												<a href="${flow}">下载非图片文件</a>
+											</c:if>
 											</c:forEach>
 										</c:if>
 										<c:if test="${t.flowImg == null}">

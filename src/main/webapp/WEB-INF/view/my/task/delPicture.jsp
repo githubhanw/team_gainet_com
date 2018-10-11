@@ -49,7 +49,18 @@
 								    <td class="required">
 								    <c:if test="${t.interfaceImg !=null}">
 									<c:forEach items="${fn:split(t.interfaceImg, ',')}" var="flow" varStatus="sta">
-										<input type="checkbox" value="${flow}" name="checkinterface"><img src="${flow}" data-toggle="lightbox" height="80px" width="80px" data-caption="【原型图】">&nbsp;&nbsp;
+										<c:if test="${fn:contains(flow,'BMP')==true || fn:contains(flow,'JPEG')==true || fn:contains(flow,'GIF')==true || 
+														fn:contains(flow,'PNG')==true || fn:contains(flow,'JPG')==true ||
+													  fn:contains(flow,'bmp')==true || fn:contains(flow,'jpeg')==true || fn:contains(flow,'gif')==true || 
+														fn:contains(flow,'png')==true || fn:contains(flow,'jpg')==true }">
+											<input type="checkbox" value="${flow}" name="checkinterface"><img src="${flow}" data-toggle="lightbox" height="80px" width="80px" data-caption="【原型图】">&nbsp;&nbsp;
+										</c:if>
+										<c:if test="${fn:contains(flow,'BMP')!=true && fn:contains(flow,'JPEG')!=true && fn:contains(flow,'GIF')!=true && 
+														fn:contains(flow,'PNG')!=true && fn:contains(flow,'JPG')!=true &&
+													  fn:contains(flow,'bmp')!=true && fn:contains(flow,'jpeg')!=true && fn:contains(flow,'gif')!=true && 
+														fn:contains(flow,'png')!=true && fn:contains(flow,'jpg')!=true }">
+											<input type="checkbox" value="${flow}" name="checkinterface"><a href="${flow}">下载非图片文件</a>
+										</c:if>
 									</c:forEach>
 									</c:if>
 									<c:if test="${t.interfaceImg ==null}">
@@ -63,7 +74,18 @@
 								    <td class="required">
 								    <c:if test="${t.flowImg != null}">
 									<c:forEach items="${fn:split(t.flowImg, ',')}" var="flow" varStatus="sta">
-										<input type="checkbox" value="${flow}" name="checkfolw"><img src="${flow}" data-toggle="lightbox" height="80px" width="80px" data-caption="【流程图】">&nbsp;&nbsp;
+										<c:if test="${fn:contains(flow,'BMP')==true || fn:contains(flow,'JPEG')==true || fn:contains(flow,'GIF')==true || 
+														fn:contains(flow,'PNG')==true || fn:contains(flow,'JPG')==true ||
+													  fn:contains(flow,'bmp')==true || fn:contains(flow,'jpeg')==true || fn:contains(flow,'gif')==true || 
+														fn:contains(flow,'png')==true || fn:contains(flow,'jpg')==true }">
+											<input type="checkbox" value="${flow}" name="checkfolw"><img src="${flow}" data-toggle="lightbox" height="80px" width="80px" data-caption="【流程图】">&nbsp;&nbsp;
+										</c:if>
+										<c:if test="${fn:contains(flow,'BMP')!=true && fn:contains(flow,'JPEG')!=true && fn:contains(flow,'GIF')!=true && 
+														fn:contains(flow,'PNG')!=true && fn:contains(flow,'JPG')!=true &&
+													  fn:contains(flow,'bmp')!=true && fn:contains(flow,'jpeg')!=true && fn:contains(flow,'gif')!=true && 
+														fn:contains(flow,'png')!=true && fn:contains(flow,'jpg')!=true }">
+											<input type="checkbox" value="${flow}" name="checkfolw"><a href="${flow}">下载非图片文件</a>
+										</c:if>
 									</c:forEach>
 									</c:if>
 									<c:if test="${t.flowImg ==null}">

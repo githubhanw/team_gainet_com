@@ -53,6 +53,8 @@
 			</div>
 			<!--btn-toolbar start-->
 			<div class="btn-toolbar pull-right">
+			    <a href="organization/privilege/treeList" class="btn btn-primary"><i
+					class="icon"></i> 权限树状图</a>
 				<a href="organization/privilege/toAdd" class="btn btn-primary"><i
 					class="icon icon-plus"></i> 新建权限</a>
 			</div>

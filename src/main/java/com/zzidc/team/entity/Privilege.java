@@ -6,11 +6,14 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -110,7 +113,21 @@ public class Privilege implements java.io.Serializable {
 		this.parentId = parentId;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "privileges")
+	/*@ManyToMany(fetch = FetchType.LAZY, mappedBy = "privileges")
+	public Set<Role> getRoles() {
+		return this.roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}*/
+	
+	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+	@JoinTable(
+		name = "role_privilege", 
+		joinColumns = { @JoinColumn(name = "privilege_id", referencedColumnName = "id")},
+		inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName ="id")}
+	)
 	public Set<Role> getRoles() {
 		return this.roles;
 	}
@@ -118,7 +135,7 @@ public class Privilege implements java.io.Serializable {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+		
 	@Column(name = "rank", nullable = true)
 	public Integer getRank() {
 		return this.rank;

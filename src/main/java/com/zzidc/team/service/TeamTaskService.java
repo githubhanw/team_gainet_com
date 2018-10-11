@@ -411,6 +411,8 @@ public class TeamTaskService extends GiantBaseService {
 		String flowImg="";//流程图（格式：url,url）
 		if(!prototypeName.equals("")){
 			for (int i = 0; i < filePrototype.length; i++) {
+				Map<String, String> conf = super.getSysConfig();
+				FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 				MultipartFile file = filePrototype[i];
 				interfaceImg+=FileUploadUtil.uploadFiles(file).toString()+",";
 			}
@@ -418,6 +420,8 @@ public class TeamTaskService extends GiantBaseService {
 		}
 		if(!treeName.equals("")){
 			for (int i = 0; i < filetree.length; i++) {
+				Map<String, String> conf = super.getSysConfig();
+				FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 				MultipartFile file = filetree[i];
 				flowImg+=FileUploadUtil.uploadFiles(file).toString()+",";
 			}
@@ -505,6 +509,8 @@ public class TeamTaskService extends GiantBaseService {
 		String flowImg="";//流程图（格式：url,url）
 		if(!prototypeName.equals("")){
 			for (int i = 0; i < filePrototype.length; i++) {
+				Map<String, String> conf = super.getSysConfig();
+				FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 				MultipartFile file = filePrototype[i];
 				interfaceImg+=FileUploadUtil.uploadFiles(file).toString()+",";
 			}
@@ -512,6 +518,8 @@ public class TeamTaskService extends GiantBaseService {
 		}
 		if(!treeName.equals("")){
 			for (int i = 0; i < filetree.length; i++) {
+				Map<String, String> conf = super.getSysConfig();
+				FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
 				MultipartFile file = filetree[i];
 				flowImg+=FileUploadUtil.uploadFiles(file).toString()+",";
 			}

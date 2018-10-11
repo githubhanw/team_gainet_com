@@ -38,6 +38,54 @@
 						</div>
 						<table class="table table-form">
 							<tbody>
+								<div class="detail">
+								<div class="detail-title">模块描述</div>
+								<div class="detail-content article-content">
+									<c:if test="${n.needRemark != null && n.needRemark != ''}">
+										${n.needRemark}
+									</c:if>
+									<c:if test="${n.needRemark == null || n.needRemark == ''}">
+										<div class="text-center text-muted">暂无</div>
+									</c:if>
+								</div>
+								</div>
+								<div class="detail">
+									<div class="detail-title">验收标准</div>
+									<div class="detail-content article-content">
+										<c:if test="${n.checkRemark != null && n.checkRemark != ''}">
+											${n.checkRemark}
+										</c:if>
+										<c:if test="${n.checkRemark == null || n.checkRemark == ''}">
+											<div class="text-center text-muted">暂无</div>
+										</c:if>
+									</div>
+								</div>
+								<c:if test="${n.state!=0 }">
+									<div class="detail"> 
+										<div class="detail-content article-content">
+										            原型图&nbsp;&nbsp;  
+										    <c:if test="${n.interfaceImg !=null }">
+											<c:forEach items="${fn:split(n.interfaceImg, ',')}" var="flow" varStatus="sta">
+												<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
+											</c:forEach> 
+											</c:if>
+											<c:if test="${n.interfaceImg ==null }">
+											无图片
+											</c:if>
+										</div>
+										<div class="detail-content article-content">
+										            流程图&nbsp;&nbsp;
+										    <c:if test="${n.flowImg != null}">
+											<c:forEach items="${fn:split(n.flowImg, ',')}" var="flow" varStatus="sta">
+												<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【流程图】">&nbsp;&nbsp;
+											</c:forEach>
+											</c:if>
+											<c:if test="${n.flowImg == null}">
+											无图片
+											</c:if>
+										</div>
+									</div>
+								</c:if>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
 									<th>安排给</th>

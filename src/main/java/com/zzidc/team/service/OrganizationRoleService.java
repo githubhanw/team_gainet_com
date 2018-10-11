@@ -98,7 +98,7 @@ public class OrganizationRoleService extends GiantBaseService{
 	 * @return <br>
 	 */
 	public List<Map<String, Object>> getAllPrivileges() {
-		String sql = "select id, name, parent_id, url from privilege order by parent_id asc, rank asc";
+		String sql = "select id, name, parent_id, url from privilege where state = 1 order by parent_id asc, rank asc";
 		List<Map<String, Object>> list = dao.getMapListBySQL(sql, null);
 		if(list == null) {
 			list = new ArrayList<Map<String, Object>>();

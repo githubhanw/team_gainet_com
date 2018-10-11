@@ -2,6 +2,7 @@ package com.zzidc.team.service;
 
 import java.sql.Timestamp;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -77,6 +78,29 @@ public class OrganizationPrivilegeService extends GiantBaseService {
         	p.setRank(null);
 		}*/
 		return super.dao.saveUpdateOrDelete(p, null);
+	}
+	
+	public List<Map<String, Object>> getPrivileges() {
+		List<Map<String, Object>> result = getPrivilegesByParentId(0);
+		if(result == null) {
+			return result;
+		}
+		for(Map<String, Object> item : result) {
+			int parentId = GiantUtil.intOf(item.get("id"), 0);
+			if(parentId == 0) {
+				continue;
+			}
+			List<Map<String, Object>> childrens = getPrivilegesByParentId(parentId);
+			item.put("childrens", childrens);
+		}
+		return result;
+	}
+	
+	public List<Map<String, Object>> getPrivilegesByParentId(int parentId) {
+		String sql = "select * from privilege where parent_id = :parentId order by rank ";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("parentId", parentId);
+		return super.dao.getListMapBySql(sql, params);
 	}
 
 }

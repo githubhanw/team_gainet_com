@@ -1,8 +1,11 @@
 package com.zzidc.team.controller;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.zzidc.team.entity.Department;
 import com.zzidc.team.entity.MonthMeeting;
 import com.zzidc.team.entity.Privilege;
+import com.zzidc.team.entity.Role;
 import com.zzidc.team.service.OrganizationPrivilegeService;
 
 import net.sf.json.JSONObject;
@@ -154,5 +159,56 @@ public class OrganizationPrivilegeController extends GiantBaseController {
 		}
 		resultresponse(response, json);
 	}
+	
+	/**
+	 * 权限列表
+	 */
+	@RequestMapping("/treeList")
+	public String treeList(@RequestParam Map<String, String> mvm, Model model) {
+		model.addAttribute("privilegeTree", organizationPrivilegeService.getPrivileges());
+		model.addAttribute("parentList", organizationPrivilegeService.getPrivilegesByParentId(0));
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			Privilege p = (Privilege) organizationPrivilegeService.getEntityByPrimaryKey(new Privilege(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("entity", p);
+			String querySql = "select * from role where status = 1 and id in(select role_id from role_privilege where privilege_id = " + mvm.get("id") + ")";
+			List<Map<String, Object>> roleList = organizationPrivilegeService.dao.getMapListBySQL(querySql, null);
+			model.addAttribute("roleList", roleList);
+			String querySqls = "select * from role where status = 1";
+			List<Map<String, Object>> allRole = organizationPrivilegeService.dao.getMapListBySQL(querySqls, null);
+			model.addAttribute("allRole", allRole);
+		}
+		model.addAttribute("mvm", mvm);
+		publicResult(model);
+		return "organization/privilege/treeList";
+	}
+	
+	@RequestMapping("/saveRole")
+	public void saveRole(@RequestParam Map<String, String> mvm, HttpServletRequest request,HttpServletResponse response, Model model) {
+		JSONObject json = new JSONObject();
+		Privilege privilege = (Privilege) organizationPrivilegeService.getEntityByPrimaryKey(new Privilege(), GiantUtil.intOf(mvm.get("id"), 0));
+		if(privilege != null) {
+			Set<Role> set = new HashSet<Role>();
+			String[] roleIds = request.getParameterValues("allRole");
+			for(String roleId : roleIds) {
+				Role role = (Role) organizationPrivilegeService.getEntityByPrimaryKey(new Role(), GiantUtil.intOf(roleId, 0));
+				if(role != null) {
+					set.add(role);
+				}
+			}
+			privilege.setRoles(set);
+		}
+		boolean flag = organizationPrivilegeService.saveUpdateOrDelete(privilege, null);
+		if (flag) {
+			json.put("code", 0);
+			json.put("message", "成功");
+		} else {
+			json.put("code", 1);
+			json.put("message", "失败");
+		}
+		resultresponse(response, json);
+	}
+	
+	
 
 }

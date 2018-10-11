@@ -700,25 +700,27 @@ public class TeamNeedService extends GiantBaseService{
 			}
 		}
 		
-		try {//代码开始时间
-			need.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
-		} catch (ParseException e) {
-			need.setStartDate(new Date());
-		}
-		try {//代码结束时间
-			need.setCendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
-		} catch (ParseException e) {
-			need.setCendDate(new Date());
-		}
-		try {//测试结束时间
-			need.setTendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
-		} catch (ParseException e) {
-			need.setTendDate(new Date());
-		}
 		try {//上线时间
 			need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
 		} catch (ParseException e) {
 			need.setEndDate(new Date());
+		}
+		if (!GiantUtil.isEmpty(mvm.get("start_date")) && !GiantUtil.isEmpty(mvm.get("cend_date")) && !GiantUtil.isEmpty(mvm.get("tend_date"))) {
+			try {//代码开始时间
+				need.setStartDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("start_date")));
+			} catch (ParseException e) {
+				need.setStartDate(new Date());
+			}
+			try {//代码结束时间
+				need.setCendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("cend_date")));
+			} catch (ParseException e) {
+				need.setCendDate(new Date());
+			}
+			try {//测试结束时间
+				need.setTendDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("tend_date")));
+			} catch (ParseException e) {
+				need.setTendDate(new Date());
+			}
 		}
 		need.setSrcRemark(GiantUtil.stringOf(mvm.get("src_remark")));
 		need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
@@ -973,15 +975,18 @@ public class TeamNeedService extends GiantBaseService{
 			need.setAssignedId(assign == null ? 0 : assign.getId());
 			need.setAssignedName(assign == null ? "" : assign.getName());
 			need.setAssignedTime(new Timestamp(System.currentTimeMillis()));
-			//计划结束时间
+			//上线时间
 			try {
-				need.setPlanEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("plan_end_date")));
+				need.setPlanEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
 			} catch (ParseException e) {
 				Calendar c = Calendar.getInstance();
 				c.setTime(new Date());
 				c.add(Calendar.DATE, 1);
 				need.setPlanEndDate(c.getTime());
 			}
+			//代码开始时间
+			need.setStartDate(new Date());
+			
 			need.setState((short)1);
 			need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 			boolean b = super.dao.saveUpdateOrDelete(need, null);

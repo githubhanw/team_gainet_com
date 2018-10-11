@@ -308,13 +308,22 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		if(GiantUtil.isEmpty(mvm.get("project_id")==null?mvm.get("product_id"):mvm.get("project_id")) || 
 				GiantUtil.isEmpty(mvm.get("need_name")) || GiantUtil.isEmpty(mvm.get("level")) || 
-				GiantUtil.isEmpty(mvm.get("department_id")) || GiantUtil.isEmpty(mvm.get("start_date")) ||
+				GiantUtil.isEmpty(mvm.get("department_id")) || GiantUtil.isEmpty(mvm.get("end_date")) ||
 				GiantUtil.isEmpty(mvm.get("need_remark")) || GiantUtil.isEmpty(mvm.get("check_remark")) || 
 				GiantUtil.isEmpty(mvm.get("member_id")) || GiantUtil.isEmpty(mvm.get("src_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);
 			return;
+		}
+		if (!GiantUtil.isEmpty(mvm.get("id"))) {
+			if (GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("cend_date")) || 
+					GiantUtil.isEmpty(mvm.get("tend_date")) || GiantUtil.isEmpty(mvm.get("end_date"))) {
+				json.put("code",1);
+				json.put("message", "参数不足【有时间未填写】");
+				resultresponse(response,json);
+				return;
+			}
 		}
 		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 		String needId=dfs.format(new Date());
@@ -547,7 +556,7 @@ public class TeamNeedController extends GiantBaseController {
 	@RequestMapping("/arrange")
 	public void arrange(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("plan_end_date")) ){
+		if(GiantUtil.isEmpty(mvm.get("assigned_id")) || GiantUtil.isEmpty(mvm.get("end_date")) ){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

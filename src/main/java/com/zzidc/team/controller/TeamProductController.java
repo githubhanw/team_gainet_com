@@ -88,11 +88,11 @@ public class TeamProductController extends GiantBaseController {
 	}
 
 	/**
-	 * 项目详情
+	 * 产品详情
 	 */
 	@RequestMapping("/detail")
 	public String pro_detail(@RequestParam Map<String, String> mvm, Model model) {
-		//添加项目页面的项目列表
+		//添加产品页面的产品列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskProduct p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -108,12 +108,12 @@ public class TeamProductController extends GiantBaseController {
 	}
 
 	/**
-	 * 跳转添加项目页面
+	 * 跳转添加产品页面
 	 */
 	@RequestMapping("/toAdd")
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		model.addAttribute("members", teamProductService.getAllMember());
-		//添加项目页面的项目列表
+		//添加产品页面的产品列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskProduct p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -158,12 +158,12 @@ public class TeamProductController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 	/**
-	 * 跳转修改项目页面
+	 * 跳转修改产品页面
 	 */
 	@RequestMapping("/toedit")
 	public String toedit(@RequestParam Map<String, String> mvm, Model model) {
 		model.addAttribute("members", teamProductService.getAllMember());
-		//添加项目页面的项目列表
+		//添加产品页面的产品列表
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskProduct p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -173,30 +173,18 @@ public class TeamProductController extends GiantBaseController {
 		return "team/product/edit";
 	}
 	/**
-	 * 修改项目
+	 * 修改产品
 	 * @throws ParseException 
 	 */
 	@RequestMapping("/edit")
 	public void edit(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) throws ParseException {
 		JSONObject json=new JSONObject();
 		if(mvm.get("product_name") == null || mvm.get("company") == null || mvm.get("member_id") == null ||
-				"".equals(mvm.get("product_name")) || "".equals(mvm.get("company")) || "".equals(mvm.get("member_id"))
-				 || "".equals(mvm.get("start_date")) || "".equals(mvm.get("end_date")) ||
-					GiantUtil.isEmpty(mvm.get("type"))){
+				"".equals(mvm.get("product_name")) || "".equals(mvm.get("company")) || "".equals(mvm.get("member_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);
 			return;
-		}
-		//比较时间
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Date sd1=df.parse(mvm.get("start_date")+":00");
-		Date sd2=df.parse(mvm.get("end_date")+":00");
-		if(sd2.before(sd1) || mvm.get("start_date").equals(mvm.get("end_date"))){
-				json.put("code",3);
-				json.put("message", "结束时间必须在开始时间之后");
-				resultresponse(response,json);
-				return;
 		}
 		boolean flag = teamProductService.edit(mvm);
 		if(flag){
@@ -244,9 +232,9 @@ public class TeamProductController extends GiantBaseController {
 		if(p != null
 				/*&& p.getState() == 4*/
 				) {
-			//获取项目下所有模块
+			//获取产品下所有模块
 			List<Map<String, Object>> need = teamProductService.getNeedByProject(productId);
-			//获取项目下所有子模块
+			//获取产品下所有子模块
 			List<Map<String, Object>> subNeed = teamProductService.getSubNeedByProject(productId);
 			//获取所有模块下任务
 			List<Map<String, Object>> needTask = teamProductService.getNeedTaskByProject(productId);
@@ -303,9 +291,9 @@ public class TeamProductController extends GiantBaseController {
 		if(p != null
 				/*&& p.getState() == 4*/
 				) {
-			//获取项目下所有模块
+			//获取产品下所有模块
 			List<Map<String, Object>> need = teamProductService.getNeedByProject(productId);
-			//获取项目下所有子模块
+			//获取产品下所有子模块
 			List<Map<String, Object>> subNeed = teamProductService.getSubNeedByProject(productId);
 			//获取所有模块下任务
 			List<Map<String, Object>> needTask = teamProductService.getNeedTaskByProject(productId);
@@ -334,7 +322,7 @@ public class TeamProductController extends GiantBaseController {
 			//获取对象
 			TaskProduct p = (TaskProduct) teamProductService.getEntityByPrimaryKey(new TaskProduct(), GiantUtil.intOf(mvm.get("id"), 0));
 			String notThrough =  GiantUtil.stringOf(mvm.get("notThrough"));
-			//项目验收不通过的情况
+			//产品验收不通过的情况
 			/*if ("0".equals(notThrough)) {
 				
 			}*/
@@ -365,9 +353,9 @@ public class TeamProductController extends GiantBaseController {
 		if(p != null
 				/*&& p.getState() == 4*/
 				) {
-			//获取项目下所有模块
+			//获取产品下所有模块
 			List<Map<String, Object>> need = teamProductService.getNeedByProject(productId);
-			//获取项目下所有子模块
+			//获取产品下所有子模块
 			List<Map<String, Object>> subNeed = teamProductService.getSubNeedByProject(productId);
 			//获取所有模块下任务
 			List<Map<String, Object>> needTask = teamProductService.getNeedTaskByProject(productId);

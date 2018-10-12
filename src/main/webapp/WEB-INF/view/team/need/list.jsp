@@ -312,9 +312,16 @@
 											    </c:if>
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.create_time}" pattern="yyyy-MM-dd" /></td>
-											<td class="c-assignedTo has-btn text-center">
-												${need.prototype_figure == 0 ? '未确认' : need.prototype_figure == 1 ? '已确认' : '未知'}
-											</td>
+											<c:if test="${need.project_id=='0'}">
+												<td class="c-assignedTo has-btn text-center">
+													${need.prototype_figure == 0 ? '未确认' : need.prototype_figure == 1 ? '已确认' : '未知'}
+												</td>
+											</c:if>
+											<c:if test="${need.project_id!='0'}">
+												<td class="c-assignedTo has-btn text-center">
+													
+												</td>
+											</c:if>
 											<td class="c-actions text-right">
 												<c:if test="${need.state == 1 || need.state == 2 || need.state == 3 || need.state == 4}">
 													<a href="team/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>

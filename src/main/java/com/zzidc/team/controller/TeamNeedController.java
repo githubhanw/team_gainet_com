@@ -1122,7 +1122,6 @@ public class TeamNeedController extends GiantBaseController {
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			TaskNeed oldT = new TaskNeed();
 			BeanUtils.copyProperties(n, oldT);
-			n.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 			flag = teamNeedService.saveUpdateOrDelete(n, null);
 			if (flag) {
 				pmLog.add(n.getId(), oldT, n,"remark");

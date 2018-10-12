@@ -356,7 +356,7 @@
 													</c:if>
 												</c:if>
 												<c:if test="${need.project_id=='0' && need.state==2 && need.prototype_figure==0 && (need.parent_id == null || need.parent_id == 0)}">
-													<a href="team/need/toConfirmPrototypeFigure?id=${need.id}" class="btn" title="确认原型图"><i class="icon-task-finish icon-checked"></i></a>
+													<a href="team/need/toConfirmPrototypeFigure?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认原型图"><i class="icon-task-finish icon-checked"></i></a>
 												</c:if>
 												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && need.state == 2 && need.prototype_figure == 1}">
 													<a href="team/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>

@@ -110,7 +110,8 @@
 										<div class="detail-title">基本信息</div>
 										<table class="table table-form">
 											<tbody>
-												<tr>
+												<c:if test="${n.projectId!='0'}">
+												<tr class="nofixed">
 													<th class="w-80px">所属项目</th>
 													<td>
 														<div class="input-group">
@@ -122,6 +123,21 @@
 														</div>
 													</td>
 												</tr>
+												</c:if>
+												<c:if test="${n.projectId=='0'}">
+												<tr class="nofixed">
+													<th class="w-80px">所属产品</th>
+													<td>
+														<div class="input-group">
+															<select class="form-control chosen chosen-select"  name="product_id" id="product_id">
+																<c:forEach items="${product}" var="p" varStatus="sta">
+																<option value="${p.id}" ${p.id==n.productId?'selected="selected"':''}>${p.product_name }</option>
+																</c:forEach>
+															</select>
+														</div>
+													</td>
+												</tr>
+												</c:if>
 												<tr>
 													<th>模块来源</th>
 													<td>
@@ -139,6 +155,18 @@
 														<input type="text" name="src_remark" id="src_remark" value="${n.srcRemark}" class="form-control input-product-title" autocomplete="off">
 													</td>
 												</tr>
+												<!-- 需求方:只可以编辑属于项目 -->
+												<c:if test="${n.projectId!='0'}">
+												<tr>
+													<th>需求方</th>
+													<td class="required" style="width:60%">
+														<input type="text" name="member_name" id="member_name" class="form-control input-product-title" autocomplete="off" value="${n.memberName}">
+													</td>
+													<td></td>
+												</tr>
+												</c:if>
+												<!-- 需求方:只可以选择属于产品 -->
+												<c:if test="${n.projectId=='0'}">
 												<tr>
 													<th>需求方</th>
 													<td>
@@ -150,6 +178,7 @@
 														</select>
 													</td>
 												</tr>
+												</c:if>
 												<tr>
 													<th>指派给</th>
 													<td>

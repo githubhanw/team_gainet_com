@@ -456,6 +456,7 @@ public class TeamNeedController extends GiantBaseController {
 	public String toEdit(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
 		model.addAttribute("project", teamNeedService.getTeamProject());
+		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("members", teamNeedService.getAllMember());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
@@ -476,8 +477,8 @@ public class TeamNeedController extends GiantBaseController {
 	@RequestMapping("/edit")
 	public void edit(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		if(GiantUtil.isEmpty(mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("level")) || GiantUtil.intOf(mvm.get("id"), 0) == 0 ||
-				GiantUtil.isEmpty(mvm.get("src_id")) || GiantUtil.isEmpty(mvm.get("member_id"))){
+		if(GiantUtil.isEmpty(mvm.get("project_id")==null?mvm.get("product_id"):mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("level")) || GiantUtil.intOf(mvm.get("id"), 0) == 0 ||
+				GiantUtil.isEmpty(mvm.get("src_id")) || GiantUtil.isEmpty(mvm.get("member_id")==null?mvm.get("member_name"):mvm.get("member_id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

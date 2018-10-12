@@ -826,7 +826,7 @@ public class TeamNeedService extends GiantBaseService{
 	}
 
 	/**
-	 * 编辑项目信息
+	 * 编辑项目/产品->模块信息
 	 */
 	public boolean edit(Map<String, String> mvm) {
 		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.EDIT, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
@@ -835,10 +835,16 @@ public class TeamNeedService extends GiantBaseService{
 		TaskNeed oldNeed = new TaskNeed();
 		BeanUtils.copyProperties(need, oldNeed);
 		
-		//模块方
-		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
-		need.setMemberId(member == null ? 0 : member.getId());
-		need.setMemberName(member == null ? "" : member.getName());
+		//需求方
+		if (need.getProjectId()==null || 0==need.getProjectId()) {
+			Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
+			need.setMemberId(member == null ? 0 : member.getId());
+			need.setMemberName(member == null ? "" : member.getName());
+		} else if(need.getProjectId()!=null && 0!=need.getProjectId()) {
+			need.setMemberName(mvm.get("member_name"));
+		} else {
+			return false;
+		}
 		//指派给
 		Member assign = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
 		need.setAssignedId(assign == null ? 0 : assign.getId());
@@ -846,6 +852,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setAssignedTime(new Timestamp(System.currentTimeMillis()));
 		
 		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
+		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
 		need.setSrcId(GiantUtil.intOf(mvm.get("src_id"), 0));
 		need.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 		need.setSrcRemark(GiantUtil.stringOf(mvm.get("src_remark")));

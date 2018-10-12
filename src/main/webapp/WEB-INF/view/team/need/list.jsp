@@ -243,6 +243,10 @@
 												<a  href="javascript:void(0)" onclick="pageOrder('create_time');" 
 														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建时间</a>
 											</th>
+											<th data-flex="false" data-width="auto" style="width:110px" class="c-name text-center" title="确认原型图">
+												<a  href="javascript:void(0)" onclick="pageOrder('prototype_figure');" 
+														class="${prm.orderColumn=='prototype_figure'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">确认原型图</a>
+											</th>
 											<th data-flex="false" data-width="300px" style="width:200px"
 												class="c-actions text-center" title="操作">操作</th>
 										</tr>
@@ -308,6 +312,9 @@
 											    </c:if>
 											</td>
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.create_time}" pattern="yyyy-MM-dd" /></td>
+											<td class="c-assignedTo has-btn text-center">
+												${need.prototype_figure == 0 ? '未确认' : need.prototype_figure == 1 ? '已确认' : '未知'}
+											</td>
 											<td class="c-actions text-right">
 												<c:if test="${need.state == 1 || need.state == 2 || need.state == 3 || need.state == 4}">
 													<a href="team/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
@@ -341,7 +348,10 @@
 														</c:if>
 													</c:if>
 												</c:if>
-												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && need.state == 2}">
+												<c:if test="${need.project_id=='0' && need.state==2 && need.prototype_figure==0 && (need.parent_id == null || need.parent_id == 0)}">
+													<a href="team/need/toConfirmPrototypeFigure?id=${need.id}" class="btn" title="确认原型图"><i class="icon-task-finish icon-checked"></i></a>
+												</c:if>
+												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && need.state == 2 && need.prototype_figure == 1}">
 													<a href="team/task/toBatchAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 												</c:if>
 												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2) && need.project_id>0}">
@@ -405,6 +415,9 @@
 												                </c:if>
 														</td>
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.create_time}" pattern="yyyy-MM-dd" /></td>
+														<td class="c-assignedTo has-btn text-center">
+																${subNeed.prototype_figure == 0 ? '未确认' : subNeed.prototype_figure == 1 ? '已确认' : '未知'}
+														</td>
 														<td class="c-actions text-right">
 															<c:if test="${subNeed.state == 1 || subNeed.state == 2}">
 																<a href="team/need/toChange?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${subNeed.full == 0?'完善模块':'模块变更'}"><i class="icon-story-change icon-fork"></i></a>
@@ -423,7 +436,7 @@
 																	</c:if>
 													           	</c:if>
 															</c:if>
-															<c:if test="${subNeed.full == 1 && subNeed.state == 2}">
+															<c:if test="${subNeed.full == 1 && subNeed.state == 2 && subNeed.prototype_figure == 1}">
 																<a href="team/task/toBatchAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
 															</c:if>
 															<c:if test="${subNeed.state == 0 || subNeed.state == 5}"></c:if>

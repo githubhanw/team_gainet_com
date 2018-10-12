@@ -29,7 +29,8 @@ public enum LogMethod {
 	DELAYCHECK("延期审核"),
 	CHECK("验收"),
 	HANDOVER("交接"),
-	SUBMITCHECK("提交验收");
+	SUBMITCHECK("提交验收"),
+	REJECTED("驳回原型图");
 	
 	private LogMethod(String value) {
 		this.value = value;

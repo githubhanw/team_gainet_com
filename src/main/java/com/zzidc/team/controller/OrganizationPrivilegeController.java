@@ -90,7 +90,7 @@ public class OrganizationPrivilegeController extends GiantBaseController {
 					GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("p", p);
 		}
-		String querySql = "select id, name from privilege where parent_id = 0";
+		String querySql = "select id, name from privilege where parent_id = 0 and state = 1";
 		List<Map<String, Object>> parentList = organizationPrivilegeService.getMapListBySQL(querySql, null);
 		model.addAttribute("parentList", parentList);
 		publicResult(model);

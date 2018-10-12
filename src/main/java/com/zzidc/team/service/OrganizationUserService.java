@@ -44,7 +44,7 @@ public class OrganizationUserService extends GiantBaseService {
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "SELECT m.id, m.`name`, m.number, m.sex, m.status, m.phone, m.email, oad.`NAME` oldDptName,d.`name` dptName,r.`name` roleName "
+		String sql = "SELECT m.id, m.`name`, m.number, m.sex, m.status, m.phone, m.email,cnf.role_ids roleId, oad.`NAME` oldDptName,d.`name` dptName,r.`name` roleName "
 				+ "FROM member m LEFT JOIN oa_department oad ON m.deptID=oad.DEPARTMENT_ID LEFT JOIN member_config cnf ON m.NUMBER = cnf.number "
 				+ "LEFT JOIN department d ON cnf.department_id=d.id LEFT JOIN role r ON cnf.role_ids=r.id WHERE 1=1 ";
 		String countSql = "select count(0) from member m where 1=1 ";

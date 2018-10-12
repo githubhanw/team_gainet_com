@@ -151,7 +151,9 @@
 											<td class="c-pri text-center">${user.status==0?'正常':'<span class="text-red">已离职</span>'}</td>
 											<td class="c-pri text-center">${user.oldDptName}</td>
 											<td class="c-pri text-center">${user.dptName}</td>
-											<td class="c-pri text-center">${user.roleName}</td>
+											<td class="c-pri text-center">
+											<a href="organization/role/toAuth?id=${user.roleId }">${user.roleName}</a>
+											</td>
 											<td class="c-actions text-center">
 												<c:if test="${user.status==0}">
 													<a href="organization/user/toConfig?id=${user.id}" class="btn" title="设置部门">设置</a>

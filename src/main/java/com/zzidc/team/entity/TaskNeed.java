@@ -74,6 +74,8 @@ public class TaskNeed implements java.io.Serializable {
 	private Timestamp realStartDate;
 	private Timestamp realEndDate;
 	private Short changedStatus; 
+	private Short prototypeFigure;
+	private String remark;
 	// Constructors
 
 	/** default constructor */
@@ -96,7 +98,7 @@ public class TaskNeed implements java.io.Serializable {
 			Integer meetingId, Integer openedId, String openedName,
 			Timestamp openedTime, Integer finishedId, String finishedName,
 			Timestamp finishedTime, Short overdue, Timestamp realStartDate,
-			Timestamp realEndDate, Short changedStatus) {
+			Timestamp realEndDate, Short changedStatus, Short prototypeFigure,String remark) {
 		this.projectId = projectId;
 		this.productId = productId;
 		this.interfaceImg=interfaceImg;
@@ -150,6 +152,8 @@ public class TaskNeed implements java.io.Serializable {
 		this.realStartDate = realStartDate;
 		this.realEndDate = realEndDate;
 		this.changedStatus = changedStatus;
+		this.prototypeFigure = prototypeFigure;
+		this.remark = remark;
 	}
 
 	// Property accessors
@@ -647,6 +651,24 @@ public class TaskNeed implements java.io.Serializable {
 
 	public void setChangedStatus(Short changedStatus) {
 		this.changedStatus = changedStatus;
+	}
+	
+	@Column(name = "prototype_figure")
+	public Short getPrototypeFigure() {
+		return this.prototypeFigure;
+	}
+
+	public void setPrototypeFigure(Short prototypeFigure) {
+		this.prototypeFigure = prototypeFigure;
+	}
+	
+	@Column(name = "remark", length = 100)
+	public String getRemark() {
+		return this.remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

@@ -422,9 +422,16 @@
 												                </c:if>
 														</td>
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.create_time}" pattern="yyyy-MM-dd" /></td>
-														<td class="c-assignedTo has-btn text-center">
+														<c:if test="${subNeed.project_id=='0'}">
+															<td class="c-assignedTo has-btn text-center">
 																${subNeed.prototype_figure == 0 ? '未确认' : subNeed.prototype_figure == 1 ? '已确认' : '未知'}
-														</td>
+															</td>
+														</c:if>
+														<c:if test="${subNeed.project_id!='0'}">
+															<td class="c-assignedTo has-btn text-center">
+																
+															</td>
+														</c:if>
 														<td class="c-actions text-right">
 															<c:if test="${subNeed.state == 1 || subNeed.state == 2}">
 																<a href="team/need/toChange?id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${subNeed.full == 0?'完善模块':'模块变更'}"><i class="icon-story-change icon-fork"></i></a>

@@ -1,5 +1,6 @@
 package com.zzidc.my.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -659,9 +660,11 @@ public class MyNeedController extends GiantBaseController {
 	@RequestMapping("/toCheck")
 	public String toCheck(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
+		Integer parentId = 0;
+		TaskNeed n = new TaskNeed();
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
-			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(!teamNeedService.isCanOperation(mvm)) {
 				return "nopower";
 			}
@@ -669,6 +672,30 @@ public class MyNeedController extends GiantBaseController {
 				return "nopower";
 			}
 			model.addAttribute("n", n);
+			parentId = n.getParentId();
+		}
+		if (parentId == 0) {
+			if (!teamNeedService.isCurrentMember(n.getMemberId())) {
+				return "nopower";
+			}
+			Integer needId = n.getId();
+			//获取父模块下所有任务
+			List<Map<String, Object>> needTask = teamNeedService.getNeedTaskByProject(needId);
+			//获取父模块下所有子模块
+			List<Map<String, Object>> subNeed = teamNeedService.getSubNeedByProject(needId);
+			//获取所有子模块下任务
+			List<Map<String, Object>> subNeedTask = teamNeedService.getSubNeedTaskByProject(needId);
+			//获取所有任务下的所有测试用例列表
+			List<Map<String, Object>> testCase = teamNeedService.getTestCaseByProject(needId);
+			//获取所有测试用例下的所有步骤
+			List<Map<String, Object>> testCaseStep = teamNeedService.getTestCaseStepByProject(needId);
+			
+			model.addAttribute("needTask", needTask);
+			model.addAttribute("subNeed", subNeed);
+			model.addAttribute("subNeedTask", subNeedTask);
+			model.addAttribute("testCase", testCase);
+			model.addAttribute("testCaseStep", testCaseStep);
+			return "my/need/checkParent";
 		}
 		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
 		model.addAttribute("needM", needDetail);
@@ -730,6 +757,39 @@ public class MyNeedController extends GiantBaseController {
 		}else{
 			json.put("code",1);
 			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	@RequestMapping("/checkParent")
+	public void checkParent(@RequestParam Map<String, String> mvm, Model model, HttpServletRequest request, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) throws ParseException {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			String notThrough =  GiantUtil.stringOf(mvm.get("notThrough"));
+			//项目验收不通过的情况
+			if ("0".equals(notThrough)) {
+				n.setState((short)2);
+			} else {
+				n.setState((short)4);
+			}
+			boolean flag = teamNeedService.saveUpdateOrDelete(n, null);
+			if(flag){
+				if ("0".equals(notThrough)) {
+					json.put("code",0);
+					json.put("message", "模块验收不通过");
+				} else {
+					json.put("code",0);
+					json.put("message", "模块验收成功");
+				}
+			}else{
+				json.put("code",1);
+				json.put("message", "模块验收失败");
+			}
+		}else {
+			json.put("code",1);
+			json.put("message", "获取参数失败");
 		}
 		resultresponse(response,json);
 	}

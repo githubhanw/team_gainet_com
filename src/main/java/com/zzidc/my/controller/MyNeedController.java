@@ -2,6 +2,7 @@ package com.zzidc.my.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +22,9 @@ import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
+import com.zzidc.log.LogMethod;
+import com.zzidc.log.LogModule;
+import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.TaskNeed;
 import com.zzidc.team.service.FilemanageService;
 import com.zzidc.team.service.TeamNeedService;
@@ -1113,6 +1118,79 @@ public class MyNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-
+    
+	@RequestMapping("/toConfirmPrototypeFigure")
+	public String toConfirmPrototypeFigure(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("n", n);
+			if (!teamNeedService.isCurrentMember(n.getMemberId())) {
+				return "nopower";
+			}
+			String querySql = "select * from task_need where state!=0 and parent_id = " + mvm.get("id");
+			List<Map<String, Object>> subList = teamNeedService.getMapListBySQL(querySql, null);
+			model.addAttribute("subList", subList);
+			
+		}
+		publicResult(model);
+		return "my/need/confirmPrototypeFigure";
+	}
+    
+	@RequestMapping("/confirmPrototypeFigure")
+	public void confirmPrototypeFigure(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		List<TaskNeed> list = new ArrayList<TaskNeed>();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			n.setPrototypeFigure((short)1);
+			list.add(n);
+			String querySql = "select * from task_need where state!=0 and parent_id = " + mvm.get("id");
+			List<Object> object = teamNeedService.getEntityListBySQL(querySql, null, new TaskNeed());
+			if (object != null && object.size() > 0) {
+				for (Object o : object) {
+					TaskNeed taskNeed = (TaskNeed)o;
+					taskNeed.setPrototypeFigure((short)1);
+					list.add(taskNeed);
+				}
+			}
+		}
+		boolean flag = teamNeedService.saveUpdateOrDelete(list, null);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	@RequestMapping("/toRejected")
+	public void rejected(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		boolean flag = false;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.REJECTED, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			TaskNeed oldT = new TaskNeed();
+			BeanUtils.copyProperties(n, oldT);
+			flag = teamNeedService.saveUpdateOrDelete(n, null);
+			if (flag) {
+				pmLog.add(n.getId(), oldT, n,"remark");
+				teamNeedService.log(pmLog);
+			}
+		}
+		
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
 	
 }

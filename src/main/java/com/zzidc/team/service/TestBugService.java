@@ -259,7 +259,6 @@ public class TestBugService extends GiantBaseService {
 			//获取对象
 			t = (TestBug) super.dao.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
 			t.setTaskid(Integer.valueOf(mvm.get("taskid")));
-			t.setTasktype(mvm.get("tasktype"));
 			t.setBugproject(mvm.get("bugproject"));
 			t.setBugrank(Integer.valueOf(mvm.get("bugrank")));
 			t.setBugfen(Integer.valueOf(mvm.get("bugfen")));

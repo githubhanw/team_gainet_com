@@ -52,8 +52,20 @@
 									     <td>${n.needName }</td>
 									     <td>
 									     	<c:if test="${n.interfaceImg !=null }">
-										 		<c:forEach items="${fn:split(n.interfaceImg, ',')}" var="flow" varStatus="sta">
-													<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
+										 		<c:forEach items="${fn:split(n.interfaceImg, ',')}" var="inter" varStatus="sta">
+										 		    <c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
+														fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||
+													    fn:contains(inter,'.bmp')==true || fn:contains(inter,'.jpeg')==true || fn:contains(inter,'.gif')==true || 
+														fn:contains(inter,'.png')==true || fn:contains(inter,'.jpg')==true }">
+											            <img src="${inter}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
+													</c:if>
+													<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
+																	fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
+																  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
+																	fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+														<a href="${inter}">下载非图片文件</a>
+													</c:if>
+													
 												</c:forEach> 
 											</c:if>
 											<c:if test="${n.interfaceImg ==null }">
@@ -66,8 +78,20 @@
 									     <td>${sub.need_name }</td>
 									     <td>
 									     	<c:if test="${sub.interface_img !=null }">
-										 		<c:forEach items="${fn:split(sub.interface_img, ',')}" var="flow" varStatus="sta">
-													<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
+										 		<c:forEach items="${fn:split(sub.interface_img, ',')}" var="inter" varStatus="sta">
+													<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
+														fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||
+													    fn:contains(inter,'.bmp')==true || fn:contains(inter,'.jpeg')==true || fn:contains(inter,'.gif')==true || 
+														fn:contains(inter,'.png')==true || fn:contains(inter,'.jpg')==true }">
+											            <img src="${inter}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
+													</c:if>
+													<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
+																	fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
+																  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
+																	fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+														<a href="${inter}">下载非图片文件</a>
+													</c:if>
+													
 												</c:forEach> 
 											</c:if>
 											<c:if test="${sub.interface_img ==null }">

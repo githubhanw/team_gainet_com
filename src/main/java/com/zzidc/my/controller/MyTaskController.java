@@ -855,7 +855,7 @@ public class MyTaskController extends GiantBaseController {
 	 */
 	@RequestMapping("/toDelay")
 	public String toDelay(@RequestParam Map<String, String> mvm, Model model) {
-		model.addAttribute("members", teamTaskService.getAllMember());
+		model.addAttribute("members", teamTaskService.getAllMemberByRole("14"));
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));

@@ -147,40 +147,52 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="ID">
-												<a href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: 130px" class="c-pri " title="项目名称">
-												<a href="javascript:void(0)" onclick="pageOrder('project_name');">项目名称</a>
+												<a class="${prm.orderColumn=='project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('project_name');">项目名称</a>
 											</th>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="类型">
-												<a href="javascript:void(0)" onclick="pageOrder('project_type');">类型</a>
+												<a class="${prm.orderColumn=='project_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('project_type');">类型</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="所属公司">
-												<a href="javascript:void(0)" onclick="pageOrder('company');">所属公司</a>
+												<a class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('company');">所属公司</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:120px" class="c-pri " title="项目负责人">
-												<a href="javascript:void(0)" onclick="pageOrder('member_id');">项目负责人</a>
+												<a class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('member_id');">项目负责人</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: 200px" class="c-pri " title="备注">
-												<a href="javascript:void(0)" onclick="pageOrder('remark');">备注</a>
+												<a class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('remark');">备注</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:160px" class="c-name text-center" title="状态">
-												<a href="javascript:void(0)" onclick="pageOrder('state');">状态</a>
+												<a class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('state');">状态</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="开始时间">
-												<a href="javascript:void(0)" onclick="pageOrder('start_time');">开始时间</a>
+												<a class="${prm.orderColumn=='start_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('start_time');">开始时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="结束时间">
-												<a href="javascript:void(0)" onclick="pageOrder('end_time');">结束时间</a>
+												<a class="${prm.orderColumn=='end_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('end_time');">结束时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="项目创建时间">
-												<a href="javascript:void(0)" onclick="pageOrder('create_time');">项目创建时间</a>
+												<a class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('create_time');">项目创建时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="需求数">
-												<a href="javascript:void(0)" onclick="pageOrder('needCount');">需求数</a>
+												<a class="${prm.orderColumn=='needCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('needCount');">需求数</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="任务数">
-												<a href="javascript:void(0)" onclick="pageOrder('taskCount');">任务数</a>
+												<a class="${prm.orderColumn=='taskCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('taskCount');">任务数</a>
 											</th>
 											<th data-flex="false" data-width="160px" style="width:200px" class="c-actions text-center" title="操作">操作</th>
 										</tr>

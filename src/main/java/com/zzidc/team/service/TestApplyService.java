@@ -149,7 +149,7 @@ public class TestApplyService extends GiantBaseService {
 		} else if (needId != null && needId > 0) {//需求（模块）：获取模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），所有任务下的测试用例；【获取已完成的任务、已验收的模块】
 			applyType = 2;
 			TaskNeed n = (TaskNeed) getEntityByPrimaryKey(new TaskNeed(), needId);
-			if(n != null && n.getState() == 4) {
+			if(n != null && (n.getState() == 4 || n.getState() == 2 && n.getResolved() == 1)) {
 				//获取子模块
 				List<Map<String, Object>> subNeed = getSubNeedByNeed(needId);
 				//获取子模块下的任务

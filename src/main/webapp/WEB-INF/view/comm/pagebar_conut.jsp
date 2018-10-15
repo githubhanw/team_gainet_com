@@ -201,6 +201,7 @@
 	}
 	function meiYeSubmit(){
 		$("#pageForm").find("#pageSize").val($("#pageSize_cite").val());
+		$("input[name='currentPage']").val(1);
 		$("#pageForm").submit();
 	}
 	function goPage2(){

@@ -267,7 +267,7 @@ public class MyTestController extends GiantBaseController {
 		// 只有待测试的申请单才能领取
 		if(!testApplyService.checkState(mvm, 1)) {
 			json.put("code",1);
-			json.put("message", "只有待测试的测试单才能驳回");
+			json.put("message", "只有待测试的测试单才能领取");
 			resultresponse(response,json);
 			return;
 		}

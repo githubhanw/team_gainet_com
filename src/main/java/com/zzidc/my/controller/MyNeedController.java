@@ -701,6 +701,10 @@ public class MyNeedController extends GiantBaseController {
 			model.addAttribute("testCase", testCase);
 			model.addAttribute("testCaseStep", testCaseStep);
 			return "my/need/checkParent";
+		} else if (parentId > 0) {
+			if (!teamNeedService.isCurrentMember(n.getCreateId())) {
+				return "nopower";
+			}
 		}
 		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
 		model.addAttribute("needM", needDetail);

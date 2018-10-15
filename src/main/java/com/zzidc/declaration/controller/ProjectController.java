@@ -48,6 +48,7 @@ public class ProjectController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "id");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "2");
@@ -57,12 +58,13 @@ public class ProjectController extends GiantBaseController {
 		}
 		Map<String, String> queryCondition = conditionPage.getQueryCondition();
 		//查询条件封装
+		queryCondition.clear();
 		queryCondition.putAll(mvm);
 		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = projectService.getPageList(conditionPage);
-		requestURL = "declaration/project/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "declaration/project/index";
 		pageList.setDesAction(requestURL);
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);

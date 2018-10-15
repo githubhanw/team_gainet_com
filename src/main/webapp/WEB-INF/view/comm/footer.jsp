@@ -5,6 +5,9 @@
 		<div style="height:40px;line-height:40px;text-align:center;font-size:16px;">
 			<small>© Copyright 2015-2018. Power by <a href="http://www.zzidc.com/" target="_blank">郑州市景安网络科技股份有限公司</a></small>
 		</div>
+		<div id="poweredBy">
+			<a style="float:right;color:blue;text-decoration:blink" href="javascript:scrollTo(0,0);">回到顶部</a>
+		</div>
 	</div>
 </footer>
 <script>

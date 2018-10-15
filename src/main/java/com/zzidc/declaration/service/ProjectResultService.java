@@ -39,8 +39,8 @@ public class ProjectResultService extends GiantBaseService{
 				String nameType = "";
 				if (!StringUtils.isEmpty(nameType = conditionPage.getQueryCondition().get("nametype"))) {
 					if ("1".equals(nameType)) {//成果名称
-						sql += "AND pr.project_result_name LIKE :search ";
-						countSql += "AND pr.project_result_name LIKE :search ";
+						sql += "AND (pr.project_result_name LIKE :search OR pr.member_name LIKE :search)";
+						countSql += "AND (pr.project_result_name LIKE :search OR pr.member_name LIKE :search)";
 						conditionMap.put("search", "%" + temp + "%");
 					} else if("2".equals(nameType)) {//申请/专利/登记号
 						sql += "AND pr.registration_number=:search ";
@@ -67,6 +67,9 @@ public class ProjectResultService extends GiantBaseService{
 				sql += "AND pr.state=:state ";
 				countSql += "AND pr.state=:state ";
 				conditionMap.put("state", temp);
+			} else {
+				sql += "AND pr.state>0 ";
+				countSql += "AND pr.state>0 ";
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("start_date"))) {
 				String dateType = "";

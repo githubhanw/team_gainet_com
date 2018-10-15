@@ -69,7 +69,7 @@
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
-						<a href="declaration/project/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i>新建项目</a>
+						<a href="declaration/project/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 新建项目</a>
 					</div>
 					<!--btn-toolbar end-->
 				</div>
@@ -86,44 +86,44 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="ID">
-												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="项目申报号">
-												<a  href="${pageList.desAction}&orderColumn=declaration_number&orderByValue=${prm.orderColumn=='declaration_number'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='declaration_number'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目申报号</a>
+												<a class="${prm.orderColumn=='declaration_number'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('declaration_number');">项目申报号</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:300px" class="c-pri " title="项目名称">
-												<a  href="${pageList.desAction}&orderColumn=project_name&orderByValue=${prm.orderColumn=='project_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目名称</a>
+												<a class="${prm.orderColumn=='project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('project_name');">项目名称</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="成果个数">
-												<a  href="${pageList.desAction}&orderColumn=resultCount&orderByValue=${prm.orderColumn=='resultCount'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='resultCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">成果个数</a>
+												<a class="${prm.orderColumn=='resultCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('resultCount');">成果个数</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="所属公司">
-												<a  href="${pageList.desAction}&orderColumn=company&orderByValue=${prm.orderColumn=='company'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属公司</a>
+												<a class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('company');">所属公司</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="阶段">
-												<a  href="${pageList.desAction}&orderColumn=stage&orderByValue=${prm.orderColumn=='stage'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='stage'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">阶段</a>
+												<a class="${prm.orderColumn=='stage'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('stage');">阶段</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('state');">状态</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="项目开始时间">
-												<a  href="${pageList.desAction}&orderColumn=start_date&orderByValue=${prm.orderColumn=='start_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='start_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目开始时间</a>
+												<a class="${prm.orderColumn=='start_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('start_date');">项目开始时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="项目结束时间">
-												<a  href="${pageList.desAction}&orderColumn=end_date&orderByValue=${prm.orderColumn=='end_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='end_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目结束时间</a>
+												<a class="${prm.orderColumn=='end_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('end_date');">项目结束时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="项目创建时间">
-												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目创建时间</a>
+												<a class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('create_time');">项目创建时间</a>
 											</th>
 											<th data-flex="false" data-width="160px" style="width: 260px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -155,15 +155,15 @@
 								</table>
 							</div>
 							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!-- <ul class="pager"></ul> -->
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -174,14 +174,6 @@
 	</body>
 </html>
 <script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "declaration/project/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
 	function del(id){
 		$.ajaxSettings.async = false;
 		$.getJSON("declaration/project/del?id=" + id + "&r=" + Math.random(), function(data) {

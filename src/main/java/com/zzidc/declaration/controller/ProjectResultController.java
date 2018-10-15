@@ -47,6 +47,7 @@ public class ProjectResultController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "pr.id");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "2");
@@ -63,7 +64,7 @@ public class ProjectResultController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = projectResultService.getPageList(conditionPage);
-		requestURL = "declaration/result/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "declaration/result/index";
 		pageList.setDesAction(requestURL);
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);

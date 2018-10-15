@@ -99,7 +99,7 @@
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
-						<a href="declaration/result/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i>添加成果</a>
+						<a href="declaration/result/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i> 添加成果</a>
 					</div>
 					<!--btn-toolbar end-->
 				</div>
@@ -114,13 +114,13 @@
 										<tr>
 											<td class="w-180px">
 												<select class="form-control chosen chosen-select" name="nametype" id="nametype">
-													<option ${prm.nametype=='1'?'selected="selected"':'' } value="1">成果名称</option>
+													<option ${prm.nametype=='1'?'selected="selected"':'' } value="1">成果名称/撰写人</option>
 													<option ${prm.nametype=='2'?'selected="selected"':'' } value="2">申请/专利/登记号</option>
 													<option ${prm.nametype=='3'?'selected="selected"':'' } value="3">证书号</option>
 												</select>
 											</td>
 											<td>
-												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="请输入要查询的成果名称 或 申请号/登记号/专利号 或 证书号">
+												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="请输入要查询的成果名称/撰写人 或 申请号/登记号/专利号 或 证书号">
 											</td>
 											<td class="w-150px">
 												<select class="form-control chosen chosen-select" name="company" id="company">
@@ -183,52 +183,48 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="70px" style="width: 70px" class="c-id " title="ID">
-												<a href="${pageList.desAction}&orderColumn=pr.id&orderByValue=${prm.orderColumn=='pr.id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='pr.id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='pr.id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:150px" class="c-name" title="登记号">
-												<a href="${pageList.desAction}&orderColumn=registration_number&orderByValue=${prm.orderColumn=='registration_number'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='registration_number'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">登记号</a>
+												<a class="${prm.orderColumn=='registration_number'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('registration_number');">登记号</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:auto" class="c-name " title="项目成果名称">
-												<a href="${pageList.desAction}&orderColumn=pr.project_result_name&orderByValue=${prm.orderColumn=='pr.project_result_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.project_result_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"> 成果名称 </a>
+												<a class="${prm.orderColumn=='pr.project_result_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.project_result_name');"> 成果名称 </a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="所属项目">
-												<a href="${pageList.desAction}&orderColumn=p.project_name&orderByValue=${prm.orderColumn=='p.project_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='p.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属项目</a>
+												<a class="${prm.orderColumn=='p.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('p.project_name');">所属项目</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="成果类型">
-												<a href="${pageList.desAction}&orderColumn=pr.type&orderByValue=${prm.orderColumn=='pr.type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">成果类型</a>
+												<a class="${prm.orderColumn=='pr.type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.type');">成果类型</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:80px" class="c-name text-center" title="撰写人">
-												<a href="${pageList.desAction}&orderColumn=member_name&orderByValue=${prm.orderColumn=='member_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='member_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">撰写人</a>
+												<a class="${prm.orderColumn=='member_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('member_name');">撰写人</a>
 											</th>
 											<th data-flex="false" data-width="100px" style="width:90px" class="c-name text-center" title="申请日期">
-												<a href="${pageList.desAction}&orderColumn=apply_date&orderByValue=${prm.orderColumn=='apply_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='apply_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请日期</a>
+												<a class="${prm.orderColumn=='apply_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('apply_date');">申请日期</a>
 											</th>
 											<th data-flex="false" data-width="100px" style="width:90px" class="c-name text-center" title="受理日期">
-												<a href="${pageList.desAction}&orderColumn=accept_date&orderByValue=${prm.orderColumn=='accept_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='accept_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">受理日期</a>
+												<a class="${prm.orderColumn=='accept_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('accept_date');">受理日期</a>
 											</th>
 											<th data-flex="false" data-width="100px" style="width:90px" class="c-name text-center" title="下证日期">
-												<a href="${pageList.desAction}&orderColumn=down_date&orderByValue=${prm.orderColumn=='down_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='down_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">下证日期</a>
+												<a class="${prm.orderColumn=='down_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('down_date');">下证日期</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:90px" class="c-name text-center" title="所属公司">
-												<a href="${pageList.desAction}&orderColumn=company&orderByValue=${prm.orderColumn=='company'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属公司</a>
+												<a class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('company');">所属公司</a>
 											</th>
-											<%-- <th data-flex="false" data-width="auto" style="width:80px" class="c-name text-center" title="知识产权代理商">
-												<a href="${pageList.desAction}&orderColumn=agent&orderByValue=${prm.orderColumn=='agent'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='agent'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">代理商</a>
-											</th> --%>
 											<th data-flex="false" data-width="100px" style="width:80px" class="c-name text-center" title="状态">
-												<a href="${pageList.desAction}&orderColumn=pr.state&orderByValue=${prm.orderColumn=='pr.state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='pr.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.state');">状态</a>
 											</th>
 											<th data-flex="false" data-width="150px" style="width: 150px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -292,15 +288,15 @@
 								</table>
 							</div>
 							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!-- <ul class="pager"></ul> -->
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -311,14 +307,6 @@
 	</body>
 </html>
 <script>
-	$('.pager').pager({ 
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "declaration/result/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
 	function del(id){
 		$.ajaxSettings.async = false;
 		$.getJSON("declaration/result/del?id=" + id + "&r=" + Math.random(), function(data) {

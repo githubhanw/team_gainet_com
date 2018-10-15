@@ -183,6 +183,13 @@ public class OrganizationPrivilegeController extends GiantBaseController {
 		return "organization/privilege/treeList";
 	}
 	
+	/**
+	 * 给指定角色添加权限
+	 * @param mvm
+	 * @param request
+	 * @param response
+	 * @param model
+	 */
 	@RequestMapping("/saveRole")
 	public void saveRole(@RequestParam Map<String, String> mvm, HttpServletRequest request,HttpServletResponse response, Model model) {
 		JSONObject json = new JSONObject();

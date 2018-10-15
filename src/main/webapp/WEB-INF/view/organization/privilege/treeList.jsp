@@ -68,19 +68,22 @@
 						<ul class="tree tree-lines tree-angles" data-ride="tree">
 							<c:if test="${privilegeTree != null}">
 								<c:forEach items="${privilegeTree}" var="item">
-									<li class="has-list open in"><c:if
-											test="${item.childrens != null}">
+									<li class="has-list ${entity.parentId == item.id ? ' open in':''}">
+										<c:if test="${item.childrens != null}">
 											<i class="list-toggle icon"></i>
 											<a href="organization/privilege/treeList?id=${item.id}">${item.name}</a>
 											<ul data-idx="1">
 												<c:forEach items="${item.childrens}" var="chirden">
-													<li><a
-														href="organization/privilege/treeList?id=${chirden.id}">${chirden.name}</a></li>
+													<li>
+														<a ${chirden.id==entity.id?'style="font-weight:bold;color:red"':''} href="organization/privilege/treeList?id=${chirden.id}">${chirden.name}</a>
+													</li>
 												</c:forEach>
 											</ul>
-										</c:if> <c:if test="${item.childrens == null}">
+										</c:if>
+										<c:if test="${item.childrens == null}">
 											<a href="organization/privilege/treeList?id=${item.id}">${item.name}</a>
-										</c:if></li>
+										</c:if>
+									</li>
 								</c:forEach>
 							</c:if>
 						</ul>

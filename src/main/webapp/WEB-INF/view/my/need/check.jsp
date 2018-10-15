@@ -47,8 +47,19 @@
 								<tr>
 									<th>原型图</th>
 									<td class="required">
-										<c:forEach items="${fn:split(needM.interface_img, ',')}" var="flow" varStatus="sta">
-											<img src="${flow}" data-toggle="lightbox" height="25px" data-caption="${needM.need_name}【原型图】">
+										<c:forEach items="${fn:split(needM.interface_img, ',')}" var="inter" varStatus="sta">
+											<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
+															fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||
+														  fn:contains(inter,'.bmp')==true || fn:contains(inter,'.jpeg')==true || fn:contains(inter,'.gif')==true || 
+															fn:contains(inter,'.png')==true || fn:contains(inter,'.jpg')==true }">
+											<img src="${inter}" data-toggle="lightbox" height="25px" data-caption="${needM.need_name}【原型图】">
+											</c:if>
+											<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
+															fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
+														  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
+															fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+												<a href="${inter}">下载非图片文件</a>
+											</c:if>
 										</c:forEach>
 									</td>
 									<td></td>
@@ -57,7 +68,18 @@
 									<th>流程图</th>
 									<td class="required">
 										<c:forEach items="${fn:split(needM.flow_img, ',')}" var="flow" varStatus="sta">
+											<c:if test="${fn:contains(flow,'.BMP')==true || fn:contains(flow,'.JPEG')==true || fn:contains(flow,'.GIF')==true || 
+															fn:contains(flow,'.PNG')==true || fn:contains(flow,'.JPG')==true ||
+														  fn:contains(flow,'.bmp')==true || fn:contains(flow,'.jpeg')==true || fn:contains(flow,'.gif')==true || 
+															fn:contains(flow,'.png')==true || fn:contains(flow,'.jpg')==true }">
 												<img src="${flow}" data-toggle="lightbox" height="25px" data-caption="${needM.need_name}【流程图】">
+											</c:if>
+											<c:if test="${fn:contains(flow,'.BMP')!=true && fn:contains(flow,'.JPEG')!=true && fn:contains(flow,'.GIF')!=true && 
+															fn:contains(flow,'.PNG')!=true && fn:contains(flow,'.JPG')!=true &&
+														  fn:contains(flow,'.bmp')!=true && fn:contains(flow,'.jpeg')!=true && fn:contains(flow,'.gif')!=true && 
+															fn:contains(flow,'.png')!=true && fn:contains(flow,'.jpg')!=true }">
+												<a href="${flow}">下载非图片文件</a>
+											</c:if>
 										</c:forEach>
 									</td>
 									<td></td>

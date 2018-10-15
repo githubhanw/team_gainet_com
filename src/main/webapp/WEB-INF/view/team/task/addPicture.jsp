@@ -63,7 +63,6 @@
 								    <th>现有界面原型图</th>
 								    <td>
 									    <c:if test="${t.interfaceImg !=null }">
-											<c:forEach items="${fn:split(t.interfaceImg, ',')}" var="flow" varStatus="sta">
 										<c:forEach items="${fn:split(needM.interface_img, ',')}" var="inter" varStatus="sta">
 											<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
 															fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||

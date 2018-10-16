@@ -298,7 +298,7 @@
 $("#submit").click(function(){
 	var form = new FormData(document.getElementById("createForm"));
 	$.ajax({
-         url:"team/need/checkParent?r=" + Math.random(),
+         url:"my/need/checkParent?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",
@@ -320,7 +320,7 @@ $("#notThrough").click(function(){
 	var form = new FormData(document.getElementById("createForm"));
 	var notThrough = 0;
 	$.ajax({
-         url:"team/need/checkParent?r=" + Math.random() + "&notThrough=0",
+         url:"my/need/checkParent?r=" + Math.random() + "&notThrough=0",
          type:"post",
          data:form,
          dataType:"json",

@@ -297,7 +297,7 @@
 $("#submit").click(function(){
 	var form = new FormData(document.getElementById("createForm"));
 	$.ajax({
-         url:"team/need/submitCheckParent?r=" + Math.random(),
+         url:"my/need/submitCheckParent?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",

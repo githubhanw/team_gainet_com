@@ -241,10 +241,10 @@ public class TestApplyService extends GiantBaseService {
 	 * @return
 	 */
 	private List<Map<String, Object>> getSubNeedTaskByNeed(int testId, int needId, String testState, int tester){
-		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n WHERE t.need_id=n.id AND deleted=0 "
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n WHERE t.need_id=n.id AND deleted=0 "
 				+ "AND t.test_state in (" + testState + ") AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id=" + needId;
 		if(testId > 0) {
-			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n WHERE t.need_id=n.id AND deleted=0 "
+			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n WHERE t.need_id=n.id AND deleted=0 "
 					+ "AND t.test_apply_id=" + testId + " AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id=" + needId;
 		}
 		if(tester > 0) {
@@ -276,10 +276,10 @@ public class TestApplyService extends GiantBaseService {
 	 */
 	private List<Map<String, Object>> getTestCaseByNeed(int testId, int needId, String testState, int tester){
 		String sql = "SELECT c.id,c.task_id,c.case_name,c.case_type,c.precondition FROM task t, task_need n, test_case c WHERE c.task_id=t.id AND t.need_id=n.id "
-				+ "AND c.state=1 AND t.deleted=0 AND t.test_state in (" + testState + ") AND t.task_type!=2 AND t.state=4 AND n.state=4 AND (n.parent_id=" + needId + " OR n.id=" + needId + ")";
+				+ "AND c.state=1 AND t.deleted=0 AND t.test_state in (" + testState + ") AND t.task_type!=2 AND t.state=4 AND (n.state=4 AND n.parent_id=" + needId + " OR n.state=2 AND n.id=" + needId + ")";
 		if(testId > 0) {
 			sql = "SELECT c.id,c.task_id,c.case_name,c.case_type,c.precondition FROM task t, task_need n, test_case c WHERE c.task_id=t.id AND t.need_id=n.id "
-					+ "AND c.state=1 AND t.deleted=0 AND t.test_apply_id=" + testId + " AND t.task_type!=2 AND t.state=4 AND n.state=4 AND (n.parent_id=" + needId + " OR n.id=" + needId + ")";
+					+ "AND c.state=1 AND t.deleted=0 AND t.test_apply_id=" + testId + " AND t.task_type!=2 AND t.state=4 AND (n.state=4 AND n.parent_id=" + needId + " OR n.state=2 AND n.id=" + needId + ")";
 		}
 		if(tester > 0) {
 			sql += " and t.test_id=" + tester;
@@ -295,11 +295,11 @@ public class TestApplyService extends GiantBaseService {
 	private List<Map<String, Object>> getTestCaseStepByNeed(int testId, int needId, String testState, int tester){
 		String sql = "SELECT s.case_id,s.step,s.expect FROM task t, task_need n, test_case c, test_case_step s WHERE s.case_id=c.id AND s.version=c.version " + 
 				"AND c.task_id=t.id AND t.need_id=n.id AND c.state=1 AND t.deleted=0 AND t.test_state in (" + testState + ") "
-				+ "AND t.task_type!=2 AND t.state=4 AND n.state=4 AND (n.parent_id=" + needId + " OR n.id=" + needId + ")";
+				+ "AND t.task_type!=2 AND t.state=4 AND (n.state=4 AND n.parent_id=" + needId + " OR n.state=2 AND n.id=" + needId + ")";
 		if(testId > 0) {
 			sql = "SELECT s.case_id,s.step,s.expect FROM task t, task_need n, test_case c, test_case_step s WHERE s.case_id=c.id AND s.version=c.version " + 
 					"AND c.task_id=t.id AND t.need_id=n.id AND c.state=1 AND t.deleted=0 AND t.test_apply_id=" + testId
-					+ " AND t.task_type!=2 AND t.state=4 AND n.state=4 AND (n.parent_id=" + needId + " OR n.id=" + needId + ")";
+					+ " AND t.task_type!=2 AND t.state=4 AND (n.state=4 AND n.parent_id=" + needId + " OR n.state=2 AND n.id=" + needId + ")";
 		}
 		if(tester > 0) {
 			sql += " and t.test_id=" + tester;
@@ -333,10 +333,10 @@ public class TestApplyService extends GiantBaseService {
 	 * @return
 	 */
 	private List<Map<String, Object>> getNeedTaskByProject(int testId, int projectId, String testState, int tester){
-		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 				+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_state in (" + testState + ") AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.project_id=" + projectId;
 		if(testId > 0) {
-			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 					+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_apply_id=" + testId + " AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.project_id=" + projectId;
 		}
 		if(tester > 0) {
@@ -351,10 +351,10 @@ public class TestApplyService extends GiantBaseService {
 	 * @return
 	 */
 	private List<Map<String, Object>> getSubNeedTaskByProject(int testId, int projectId, String testState, int tester){
-		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 				+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_state in (" + testState + ") AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.project_id=" + projectId;
 		if(testId > 0) {
-			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 					+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_apply_id=" + testId + " AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.project_id=" + projectId;
 		}
 		if(tester > 0) {
@@ -425,10 +425,10 @@ public class TestApplyService extends GiantBaseService {
 	 * @return
 	 */
 	private List<Map<String, Object>> getNeedTaskByProduct(int testId, int productId, String testState, int tester){
-		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 				+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_state in (" + testState + ") AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.product_id=" + productId;
 		if(testId > 0) {
-			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 					+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_apply_id=" + testId + " AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id=0 AND n.product_id=" + productId;
 		}
 		if(tester > 0) {
@@ -443,10 +443,10 @@ public class TestApplyService extends GiantBaseService {
 	 * @return
 	 */
 	private List<Map<String, Object>> getSubNeedTaskByProduct(int testId, int productId, String testState, int tester){
-		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 				+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_state in (" + testState + ") AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.product_id=" + productId;
 		if(testId > 0) {
-			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,test_state FROM task t, task_need n "
+			sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img,t.test_state FROM task t, task_need n "
 					+ "WHERE t.need_id=n.id AND deleted=0 AND t.test_apply_id=" + testId + " AND t.task_type!=2 AND t.state=4 AND n.state=4 AND n.parent_id>0 AND n.product_id=" + productId;
 		}
 		if(tester > 0) {
@@ -560,7 +560,7 @@ public class TestApplyService extends GiantBaseService {
 				list = super.getMapListBySQL(sql, prm);
 			}
 			if(!GiantUtil.isEmpty(mvm.get("need_id"))) {
-				String sql = "select t.id from task t, task_need n WHERE t.need_id=n.id AND t.task_type=1 AND test_state=1 AND t.state=4 "
+				String sql = "select t.id from task t, task_need n WHERE t.need_id=n.id AND t.task_type=1 AND t.test_state=1 AND n.test_state=1 AND t.state=4 "
 						+ "AND (n.id IN (:needId) OR n.parent_id in (:needId))";
 				Map<String, Object> prm = new HashMap<String, Object>();
 				prm.put("needId", testApply.getNeedId());
@@ -589,6 +589,26 @@ public class TestApplyService extends GiantBaseService {
 					task.setTestState(2);
 					task.setTestApplyId(testApply.getId());
 					super.saveUpdateOrDelete(task, null);
+					/**
+					 * 1、模块、项目提交的测试单；
+					 * 2、模块，直接修改测试状态；子模块，获取模块修改测试状态；
+					 * 3、判断模块状态，等2，不修改。
+					 */
+					if(testApply.getApplyType() == 2 || testApply.getApplyType() == 3) {
+						TaskNeed need = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), task.getNeedId());
+						if(need.getParentId() > 0) {
+							TaskNeed parentNeed = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), need.getParentId());
+							if(parentNeed.getTestState() == 1) {
+								parentNeed.setTestState((short) 2);
+								super.saveUpdateOrDelete(parentNeed, null);
+							}
+						}else {
+							if(need.getTestState() == 1) {
+								need.setTestState((short) 2);
+								super.saveUpdateOrDelete(need, null);
+							}
+						}
+					}
 				}
 			}
 			return b;
@@ -717,6 +737,7 @@ public class TestApplyService extends GiantBaseService {
 			if(applyTask.getParentId() > 0) {
 				parentId = applyTask.getParentId();
 			}
+			task.setTestApplyId(apply.getApplyId());
 		}
 		task.setNeedId(GiantUtil.intOf(mvm.get("need_id"), 0));
 		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
@@ -761,6 +782,13 @@ public class TestApplyService extends GiantBaseService {
 		if(b) {
 			pmLog.setObjectId(task.getId());
 			this.log(pmLog);
+			Task developerTask = (Task) super.getEntityByPrimaryKey(new Task(), Integer.valueOf(developerTaskId));
+			developerTask.setTestApplyId(GiantUtil.intOf(mvm.get("id"), 0));
+			developerTask.setTestId(member.getId());
+			developerTask.setTestName(member.getName());
+			developerTask.setTestState(3);
+			developerTask.setTestTime(new Timestamp(System.currentTimeMillis()));
+			super.saveUpdateOrDelete(developerTask, null);
 		}
 		return b;
 	}
@@ -787,10 +815,11 @@ public class TestApplyService extends GiantBaseService {
 			}
 		}
 		int applyId = 0;
+		TestApply apply = null;
 		//2、修改测试单状态
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
-			TestApply apply = (TestApply) super.dao.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
+			apply = (TestApply) super.dao.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(apply == null) {
 				return false;
 			}
@@ -867,11 +896,34 @@ public class TestApplyService extends GiantBaseService {
 			if(testerTaskId.get(tester) != null && !"".equals(testerTaskId.get(tester))) {
 				for(String taskId: testerTaskId.get(tester).split(",")) {
 					Task task = (Task) super.getEntityByPrimaryKey(new Task(), Integer.valueOf(taskId));
+					task.setTestApplyId(GiantUtil.intOf(mvm.get("id"), 0));
 					task.setTestId(member.getId());
 					task.setTestName(member.getName());
 					task.setTestState(3);
 					task.setTestTime(new Timestamp(System.currentTimeMillis()));
 					super.saveUpdateOrDelete(task, null);
+					if(apply != null) {
+						/**
+						 * 1、模块、项目提交的测试单；
+						 * 2、模块，直接修改测试状态；子模块，获取模块修改测试状态；
+						 * 3、判断模块状态，等2，不修改。
+						 */
+						if(apply.getApplyType() == 2 || apply.getApplyType() == 3) {
+							TaskNeed need = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), task.getNeedId());
+							if(need.getParentId() > 0) {
+								TaskNeed parentNeed = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), need.getParentId());
+								if(parentNeed.getTestState() == 2) {
+									parentNeed.setTestState((short) 3);
+									super.saveUpdateOrDelete(parentNeed, null);
+								}
+							}else {
+								if(need.getTestState() == 2) {
+									need.setTestState((short) 3);
+									super.saveUpdateOrDelete(need, null);
+								}
+							}
+						}
+					}
 				}
 			}
 		}

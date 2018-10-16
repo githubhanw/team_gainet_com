@@ -1139,11 +1139,45 @@ public class TeamTaskService extends GiantBaseService {
 					}
 					//修改测试任务（项目提测）对应项目状态
 					TestApply test = (TestApply) super.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
-					if(test.getApplyType() == 3) {
+					if(test != null && test.getApplyType() == 3) {
 						TaskProject project = (TaskProject) super.getEntityByPrimaryKey(new TaskProject(), test.getProjectId());
 						project.setState((short) 10);
 						project.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 						super.saveUpdateOrDelete(project, null);
+					}
+					//修改开发任务测试状态
+					String developerTaskIds[] = t.getDeveloperTaskId().split(",");
+					for(String taskId: developerTaskIds) {
+						Task task = (Task) super.dao.getEntityByPrimaryKey(new Task(), Integer.valueOf(taskId));
+						if (task != null) {
+							if(task.getTestState() == 3) {
+								task.setTestState(4);
+								task.setTestTime(new Timestamp(System.currentTimeMillis()));
+								super.saveUpdateOrDelete(task, null);
+							}
+							if(test != null) {
+								/**
+								 * 1、模块、项目提交的测试单；
+								 * 2、模块，直接修改测试状态；子模块，获取模块修改测试状态；
+								 * 3、判断模块状态，等2，不修改。
+								 */
+								if(test.getApplyType() == 2 || test.getApplyType() == 3) {
+									TaskNeed need = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), task.getNeedId());
+									if(need.getParentId() > 0) {
+										TaskNeed parentNeed = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), need.getParentId());
+										if(parentNeed.getTestState() == 3) {
+											parentNeed.setTestState((short) 4);
+											super.saveUpdateOrDelete(parentNeed, null);
+										}
+									}else {
+										if(need.getTestState() == 3) {
+											need.setTestState((short) 4);
+											super.saveUpdateOrDelete(need, null);
+										}
+									}
+								}
+							}
+						}
 					}
 				}
 				return b;

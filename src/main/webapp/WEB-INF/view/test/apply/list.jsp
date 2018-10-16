@@ -123,20 +123,27 @@
 												<a  href="${pageList.desAction}&orderColumn=t.task_name&orderByValue=${prm.orderColumn=='t.task_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">测试名称</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="状态">
+											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="类型">
+												<a href="${pageList.desAction}&orderColumn=apply_type&orderByValue=${prm.orderColumn=='apply_type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='apply_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">类型</a>
+											</th>
+											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="状态">
 												<a href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:200px" class="c-pri text-center" title="申请人">
+											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="申请人">
 												<a  href="${pageList.desAction}&orderColumn=apply_name&orderByValue=${prm.orderColumn=='apply_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='apply_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请人</a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:200px" class="c-pri text-center" title="测试人">测试人</th>
-											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="申请时间">
+											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="测试人">
+												<a  href="${pageList.desAction}&orderColumn=tester&orderByValue=${prm.orderColumn=='tester'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
+														class="${prm.orderColumn=='tester'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">测试人</a>
+											</th>
+											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="申请时间">
 												<a href="${pageList.desAction}&orderColumn=apply_time&orderByValue=${prm.orderColumn=='apply_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='apply_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请时间</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width: auto" class="c-pri" title="驳回原因">
+											<th data-flex="false" data-width="auto" style="width:200px" class="c-pri" title="驳回原因">
 												<a href="${pageList.desAction}&orderColumn=dismissal&orderByValue=${prm.orderColumn=='dismissal'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
 														class="${prm.orderColumn=='dismissal'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">驳回原因</a>
 											</th>
@@ -152,6 +159,9 @@
 												<a href="test/apply/detail?id=${apply.id}">
 													${apply.task_name != null ? apply.task_name : apply.test_name}
 												</a>
+											</td>
+											<td class="c-pri text-center">
+												${apply.apply_type==1?'任务测试':apply.apply_type==2?'模块测试':apply.apply_type==3?'项目测试':apply.apply_type==4?'产品测试':'未知'}
 											</td>
 											<td class="c-pri text-center">
 												<c:if test="${apply.state == 1}">

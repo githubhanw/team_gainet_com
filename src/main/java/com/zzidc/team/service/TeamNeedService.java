@@ -1546,7 +1546,7 @@ public class TeamNeedService extends GiantBaseService{
 	public List<Map<String, Object>> getTestCaseByProject(int needId){
 		String sql = "SELECT c.id,c.task_id,c.case_name,c.case_type,c.precondition FROM task t, task_need n, test_case c WHERE c.task_id=t.id AND t.need_id=n.id "
 				+ "AND c.state=1 AND t.deleted=0 AND t.state=4 AND "
-				+ "((n.state=4 AND n.parent_id=" + needId + ") OR (n.state=3 AND n.id=" + needId + ")) ";
+				+ "((n.state=4 AND n.parent_id=" + needId + ") OR (n.state in (2,3) AND n.id=" + needId + ")) ";
 		return super.getMapListBySQL(sql, null);
 	}
 	
@@ -1558,7 +1558,7 @@ public class TeamNeedService extends GiantBaseService{
 	public List<Map<String, Object>> getTestCaseStepByProject(int needId){
 		String sql = "SELECT s.case_id,s.step,s.expect FROM task t, task_need n, test_case c, test_case_step s WHERE s.case_id=c.id AND s.version=c.version "
 			   + "AND c.task_id=t.id AND t.need_id=n.id AND c.state=1 AND t.deleted=0 AND t.state=4 AND "
-		       + "((n.state=4 AND n.parent_id=" + needId + ") OR (n.state=3 AND n.id=" + needId + ")) ";
+		       + "((n.state=4 AND n.parent_id=" + needId + ") OR (n.state in (2,3) AND n.id=" + needId + ")) ";
 		return super.getMapListBySQL(sql, null);
 	}
 	

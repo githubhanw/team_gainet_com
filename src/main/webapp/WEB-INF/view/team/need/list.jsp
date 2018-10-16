@@ -327,7 +327,6 @@
 													<a href="team/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
 												</c:if>
 												<c:if test="${need.state == 1 || need.state == 2}">
-													<a href="team/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善模块':'模块变更'}"><i class="icon-story-change icon-fork"></i></a>
 												    <a href="team/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i></a>
 											    </c:if>
 												<c:if test="${need.full == 1}">
@@ -336,20 +335,32 @@
 													</c:if>
 													<c:if test="${need.resolved == 0}">
 														<c:if test="${need.task_sum > 0 && need.not_finish_task == 0}">
-													 		<c:if test="${need.state == 2}">
+													 		<c:if test="${need.project_id=='0' && need.state == 2 && need.test_state == 4}">
 																<a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
 															</c:if>
-															<c:if test="${need.state == 3}">
+															<c:if test="${need.project_id=='0' && need.state == 3}">
+																<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+															</c:if>
+															<c:if test="${need.project_id!='0' && need.state == 2}">
+																<a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.project_id!='0' && need.state == 3}">
 																<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
 															</c:if>
 														</c:if>
 													</c:if>
 													<c:if test="${need.resolved == 1 && need.sub_need_count > 0}">
 														<c:if test="${need.not_check_need == 0 && need.not_finish_task == 0}">
-													 		<c:if test="${need.state == 2}">
+													 		<c:if test="${need.project_id=='0' && need.state == 2 && need.test_state == 4}">
 																<a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
 															</c:if>
-															<c:if test="${need.state == 3}">
+															<c:if test="${need.project_id=='0' && need.state == 3}">
+																<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
+															</c:if>
+															<c:if test="${need.project_id!='0' && need.state == 2}">
+																<a href="team/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+															</c:if>
+															<c:if test="${need.project_id!='0' && need.state == 3}">
 																<a href="team/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
 															</c:if>
 														</c:if>
@@ -367,7 +378,7 @@
 												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2) && need.product_id>0}">
 													<a href="team/need/toAddPDSon?need_id=${need.id}&product_id=${need.product_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
 												</c:if>
-												<c:if test="${need.state == 4}">
+												<c:if test="${need.state == 2 && need.test_state == 0 && need.task_sum > 0 && need.not_check_need == 0 && need.not_finish_task == 0 && (need.parent_id == null || need.parent_id == 0)}">
 													<a href="test/apply/toAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交测试">提测</a>
 												</c:if>
 												<c:if test="${need.state == 6}">

@@ -1512,7 +1512,7 @@ public class TeamNeedService extends GiantBaseService{
 	 */
 	public List<Map<String, Object>> getNeedTaskByProject(int needId){
 		String sql = "SELECT t.id,t.need_id,t.task_name,t.interface_img,t.flow_img FROM task t, task_need n "
-				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state=3 AND n.parent_id=0 AND n.id=" + needId;
+				+ "WHERE t.need_id=n.id AND deleted=0 AND t.state=4 AND n.state in(2,3) AND n.parent_id=0 AND n.id=" + needId;
 		return super.getMapListBySQL(sql, null);
 	}
 	

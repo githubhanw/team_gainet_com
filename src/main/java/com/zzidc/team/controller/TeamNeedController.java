@@ -1,6 +1,7 @@
 package com.zzidc.team.controller;
 
 import java.nio.channels.GatheringByteChannel;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -683,6 +684,7 @@ public class TeamNeedController extends GiantBaseController {
 			model.addAttribute("subNeedTask", subNeedTask);
 			model.addAttribute("testCase", testCase);
 			model.addAttribute("testCaseStep", testCaseStep);
+			publicResult(model);
 			return "team/need/checkParent";
 		}
 		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
@@ -758,8 +760,16 @@ public class TeamNeedController extends GiantBaseController {
 			String notThrough =  GiantUtil.stringOf(mvm.get("notThrough"));
 			//项目验收不通过的情况
 			if ("0".equals(notThrough)) {
+				n.setCheckedId(teamNeedService.getMemberId());
+				n.setCheckedName(teamNeedService.getMemberName());
+				n.setCheckedTime(new Timestamp(System.currentTimeMillis()));
+				n.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				n.setState((short)2);
 			} else {
+				n.setCheckedId(teamNeedService.getMemberId());
+				n.setCheckedName(teamNeedService.getMemberName());
+				n.setCheckedTime(new Timestamp(System.currentTimeMillis()));
+				n.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 				n.setState((short)4);
 			}
 			boolean flag = teamNeedService.saveUpdateOrDelete(n, null);
@@ -1032,10 +1042,34 @@ public class TeamNeedController extends GiantBaseController {
 	@RequestMapping("/toSubmitCheck")
 	public String toSubmitCheck(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
+		Integer parentId = 0;
+		TaskNeed n = new TaskNeed();
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
-			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("n", n);
+			parentId = n.getParentId();
+		}
+		if (parentId == 0) {
+			Integer needId = n.getId();
+			//获取父模块下所有任务
+			List<Map<String, Object>> needTask = teamNeedService.getNeedTaskByProject(needId);
+			//获取父模块下所有子模块
+			List<Map<String, Object>> subNeed = teamNeedService.getSubNeedByProject(needId);
+			//获取所有子模块下任务
+			List<Map<String, Object>> subNeedTask = teamNeedService.getSubNeedTaskByProject(needId);
+			//获取所有任务下的所有测试用例列表
+			List<Map<String, Object>> testCase = teamNeedService.getTestCaseByProject(needId);
+			//获取所有测试用例下的所有步骤
+			List<Map<String, Object>> testCaseStep = teamNeedService.getTestCaseStepByProject(needId);
+			
+			model.addAttribute("needTask", needTask);
+			model.addAttribute("subNeed", subNeed);
+			model.addAttribute("subNeedTask", subNeedTask);
+			model.addAttribute("testCase", testCase);
+			model.addAttribute("testCaseStep", testCaseStep);
+			publicResult(model);
+			return "team/need/submitCheckParent";
 		}
 		model.addAttribute("members", teamNeedService.getAllMember());
 		publicResult(model);
@@ -1051,6 +1085,31 @@ public class TeamNeedController extends GiantBaseController {
 		// mvm eg :{r=0.29616789999172366, stage=y, comment=, id=25}
 		JSONObject json=new JSONObject();
 		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("checked_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.submitCheck(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	/**
+	 * 提交验收
+	 */
+	@RequestMapping("/submitCheckParent")
+	public void submitCheckParent(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		// TODO 是否需要对模块的状态进行判断，例如：只有测试完成的模块才能进行验收操作，获取再toCheck中进行验证
+		// mvm eg :{r=0.29616789999172366, stage=y, comment=, id=25}
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("id"))){
 			json.put("code",1);
 			json.put("message", "参数不足");
 			resultresponse(response,json);

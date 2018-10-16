@@ -16,7 +16,7 @@
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta http-equiv="Content-Type" content="multipart/form-data;charset=utf-8" />
-		<title>验收项目</title>
+		<title>提交验收</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -34,7 +34,7 @@
 							<h2>
 								<span class="label label-id">${n.id}</span>
 								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 验收</small>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 提交验收</small>
 							</h2>
 						</div>
 						<table class="table table-form">
@@ -242,9 +242,7 @@
 								</tr>
 								<tr>
 									<td colspan="3" class="text-center form-actions">
-										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">验收</button>
-										<button id="notThrough" class="btn btn-wide" >不通过</button>
-										<!-- <button id="export" class="btn btn-wide btn-primary">导出</button> -->
+										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">提交</button>
 									</td>
 								</tr>
 							</tbody>
@@ -299,29 +297,7 @@
 $("#submit").click(function(){
 	var form = new FormData(document.getElementById("createForm"));
 	$.ajax({
-         url:"team/need/checkParent?r=" + Math.random(),
-         type:"post",
-         data:form,
-         dataType:"json",
-         processData:false,
-         contentType:false,
-         success:function(data){
-        	if(data.code == 0){
- 				$("#msg").text(data.message);
- 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
- 			}else{
- 				$("#errMsg").text(data.message);
- 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
- 			}
-         }
-     });
-});
-
-$("#notThrough").click(function(){
-	var form = new FormData(document.getElementById("createForm"));
-	var notThrough = 0;
-	$.ajax({
-         url:"team/need/checkParent?r=" + Math.random() + "&notThrough=0",
+         url:"team/need/submitCheckParent?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",

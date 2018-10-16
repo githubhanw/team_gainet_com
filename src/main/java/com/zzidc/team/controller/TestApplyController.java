@@ -99,6 +99,10 @@ public class TestApplyController extends GiantBaseController {
 	@RequestMapping("/addOrUpdate")
 	public void addOrUpdate(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		// mvm eg :{r=0.29616789999172366, comment=, id=25}
+		if (GiantUtil.intOf(mvm.get("need_id"), 0) !=0) {
+			TaskNeed need = (TaskNeed)testApplyService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("need_id"), 0));
+			need.setTestState((short)2);//模块已提测
+		}
 		JSONObject json=new JSONObject();
 		if(GiantUtil.isEmpty(mvm.get("test_name")) && GiantUtil.isEmpty(mvm.get("task_id")) || GiantUtil.isEmpty(mvm.get("test_content"))){
 			json.put("code",1);

@@ -75,6 +75,7 @@ public class TaskNeed implements java.io.Serializable {
 	private Timestamp realEndDate;
 	private Short changedStatus; 
 	private Short prototypeFigure;
+	private Short testState;
 	// Constructors
 
 	/** default constructor */
@@ -97,7 +98,7 @@ public class TaskNeed implements java.io.Serializable {
 			Integer meetingId, Integer openedId, String openedName,
 			Timestamp openedTime, Integer finishedId, String finishedName,
 			Timestamp finishedTime, Short overdue, Timestamp realStartDate,
-			Timestamp realEndDate, Short changedStatus, Short prototypeFigure) {
+			Timestamp realEndDate, Short changedStatus, Short prototypeFigure, Short testState) {
 		this.projectId = projectId;
 		this.productId = productId;
 		this.interfaceImg=interfaceImg;
@@ -152,6 +153,7 @@ public class TaskNeed implements java.io.Serializable {
 		this.realEndDate = realEndDate;
 		this.changedStatus = changedStatus;
 		this.prototypeFigure = prototypeFigure;
+		this.testState = testState;
 	}
 
 	// Property accessors
@@ -658,6 +660,15 @@ public class TaskNeed implements java.io.Serializable {
 
 	public void setPrototypeFigure(Short prototypeFigure) {
 		this.prototypeFigure = prototypeFigure;
+	}
+	
+	@Column(name = "test_state")
+	public Short getTestState() {
+		return this.testState;
+	}
+
+	public void setTestState(Short testState) {
+		this.testState = testState;
 	}
 
 }

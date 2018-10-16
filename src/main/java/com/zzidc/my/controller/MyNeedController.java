@@ -1124,7 +1124,7 @@ public class MyNeedController extends GiantBaseController {
 			publicResult(model);
 			return "my/need/submitCheckParent";
 		}
-		if (!teamNeedService.isCurrentMember(n.getAssignedId())) {
+		if (teamNeedService.isCurrentMember(n.getMemberId())) {
 			return "nopower";
 		}
 		model.addAttribute("members", teamNeedService.getAllMember());

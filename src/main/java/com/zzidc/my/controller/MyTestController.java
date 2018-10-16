@@ -213,13 +213,19 @@ public class MyTestController extends GiantBaseController {
 	 */
 	@RequestMapping("/toReceive")
 	public String toReceive(@RequestParam Map<String, String> mvm, Model model) {
-		// 只有测试负责人能领取
-		if(!testApplyService.isTestLeaderMember()) {
+		// 只有测试组成员能领取
+		if(!testApplyService.isTestMember()) {
 			return "nopower";
 		}
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			TestApply apply = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(apply != null) {
+				if(apply.getApplyType() == 2 || apply.getApplyType() == 3 || apply.getApplyType() == 4) {
+					// 只有测试负责人能领取
+					if(!testApplyService.isTestLeaderMember()) {
+						return "nopower";
+					}
+				}
 				model.addAttribute("t", apply);
 				if(apply.getApplyType() == 1) {
 					Task task = (Task) testApplyService.getEntityByPrimaryKey(new Task(), apply.getTaskId());
@@ -250,8 +256,8 @@ public class MyTestController extends GiantBaseController {
 	@RequestMapping("/receive")
 	public void receive(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
-		// 只有测试负责人能领取
-		if(!testApplyService.isTestLeaderMember()) {
+		// 只有测试组成员能领取
+		if(!testApplyService.isTestMember()) {
 			json.put("code",1);
 			json.put("message", "不能领取该测试单");
 			resultresponse(response,json);
@@ -288,6 +294,13 @@ public class MyTestController extends GiantBaseController {
 	@RequestMapping("/receive2")
 	public void receive2(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
+		// 只有测试负责人能领取
+		if(!testApplyService.isTestLeaderMember()) {
+			json.put("code",1);
+			json.put("message", "不能领取该测试单");
+			resultresponse(response,json);
+			return;
+		}
 		if(GiantUtil.isEmpty(mvm.get("id")) || GiantUtil.isEmpty(mvm.get("task_name")) || 
 				GiantUtil.isEmpty(mvm.get("start_date")) || GiantUtil.isEmpty(mvm.get("end_date"))){
 			json.put("code",1);

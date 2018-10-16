@@ -381,7 +381,7 @@
 												<c:if test="${(need.parent_id == null || need.parent_id == 0) && need.full == 1 && (need.state == 2) && need.product_id>0}">
 													<a href="team/need/toAddPDSon?need_id=${need.id}&product_id=${need.product_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
 												</c:if>
-												<c:if test="${need.state == 2 && need.test_state == 0 && need.task_sum > 0 && need.not_check_need == 0 && need.not_finish_task == 0 && (need.parent_id == null || need.parent_id == 0)}">
+												<c:if test="${need.state == 2 && need.test_state == 1 && need.task_sum > 0 && need.not_check_need == 0 && need.not_finish_task == 0 && (need.parent_id == null || need.parent_id == 0)}">
 													<a href="test/apply/toAdd?need_id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交测试">提测</a>
 												</c:if>
 												<c:if test="${need.state == 6}">

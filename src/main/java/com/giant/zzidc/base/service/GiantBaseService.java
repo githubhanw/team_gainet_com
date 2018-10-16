@@ -149,6 +149,29 @@ public class GiantBaseService {
 		// 角色Id为5的是测试负责人
 		return roleIdList.contains("5");
 	}
+
+	/**
+	 * 当前用户是否为测试组成员
+	 * @param 
+	 * @return
+	 */
+	public boolean isTestMember() {
+		if(getSession() == null || getSession().getAttribute("roleIds") == null) {
+			return false;
+		}
+		int memberId = getMemberId();
+		if(memberId == 0) {
+			return false;
+		}
+		String roleIds = String.valueOf(getSession().getAttribute("roleIds"));
+		if(roleIds == null || roleIds.trim().length() == 0) {
+			return false;
+		}
+		String[] roleIdArray = roleIds.split(",");
+		List<String> roleIdList = Arrays.asList(roleIdArray);
+		// 角色Id为5的是测试负责人，角色Id为9的是测试
+		return roleIdList.contains("5") || roleIdList.contains("9");
+	}
 	
 	/**
 	 * 获取上传文件配置

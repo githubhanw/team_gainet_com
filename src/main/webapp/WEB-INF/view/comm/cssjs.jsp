@@ -11,7 +11,7 @@
 <script type="text/javascript" src="static/umeditor1.2.3/lang/zh-cn/zh-cn.js"></script> -->
 
 <script type="text/javascript" charset="utf-8" src="static/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="static/ueditor/ueditor.all.js"></script>
+<script type="text/javascript" charset="utf-8" src="static/ueditor/ueditor.all.min.js"></script>
 
 <style type="text/css" media="screen">
     @font-face {

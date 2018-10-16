@@ -1096,13 +1096,14 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			if (!teamNeedService.isCurrentMember(n.getAssignedId())) {
-				return "nopower";
-			}
+			
 			parentId = n.getParentId();
 			model.addAttribute("n", n);
 		}
 		if (parentId == 0) {
+			if (!teamNeedService.isCurrentMember(n.getMemberId())) {
+				return "nopower";
+			}
 			Integer needId = n.getId();
 			//获取父模块下所有任务
 			List<Map<String, Object>> needTask = teamNeedService.getNeedTaskByProject(needId);
@@ -1122,6 +1123,9 @@ public class MyNeedController extends GiantBaseController {
 			model.addAttribute("testCaseStep", testCaseStep);
 			publicResult(model);
 			return "my/need/submitCheckParent";
+		}
+		if (!teamNeedService.isCurrentMember(n.getAssignedId())) {
+			return "nopower";
 		}
 		model.addAttribute("members", teamNeedService.getAllMember());
 		publicResult(model);

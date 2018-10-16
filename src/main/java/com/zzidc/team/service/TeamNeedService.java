@@ -683,6 +683,7 @@ public class TeamNeedService extends GiantBaseService{
 		need.setResolved((short)0);
 		need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
 		need.setPrototypeFigure((short)0);
+		need.setTestState((short)1);//未提测
 		//修改父类对象的resolved 状态改为已分解 
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象

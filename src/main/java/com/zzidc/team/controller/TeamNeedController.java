@@ -30,6 +30,7 @@ import com.zzidc.log.LogMethod;
 import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.TaskNeed;
+import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.service.FilemanageService;
 import com.zzidc.team.service.TeamNeedService;
 
@@ -344,6 +345,114 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
+	
+
+	/**
+	 * 跳转【项目提需求】页面
+	 */
+	@RequestMapping("/toaddneed")
+	public String toAddNeed(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		model.addAttribute("project", teamNeedService.getTeamProject());
+		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
+		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
+		model.addAttribute("members", teamNeedService.getAllMember());
+		model.addAttribute("departinfo", teamNeedService.getDepartmentInfo());
+		publicResult(model);
+		return "team/need/addneed";
+	}
+
+	/**
+	 * 添加 项目的新需求
+	 */
+	@RequestMapping("/addneed")
+	public void addNeed(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file,
+			@RequestParam("filePrototype")MultipartFile[] filePrototype,@RequestParam("filetree")MultipartFile[] filetree) {
+		JSONObject json=new JSONObject();
+		int id=baseService.getMemberId();	//登录id	        
+        String name=baseService.getMemberName();   //登录姓名
+        if(name.equals("")){
+        	json.put("code", 4);
+        	json.put("message", "请重新登录");
+        	resultresponse(response,json);
+			return;
+        }
+        String prototypeName = filePrototype[0].getOriginalFilename();
+		String treeName = filetree[0].getOriginalFilename();
+		if(prototypeName.equals("")){
+			json.put("code",2);
+			json.put("message", "请选择界面原型文件");
+			resultresponse(response,json);
+			return;
+		}
+		if(treeName.equals("")){
+			json.put("code",3);
+			json.put("message", "请选择流程图");
+			resultresponse(response,json);
+			return;
+		}
+		if(GiantUtil.isEmpty(mvm.get("project_id")) || GiantUtil.isEmpty(mvm.get("need_name")) ||  GiantUtil.isEmpty(mvm.get("workload")) || 
+				GiantUtil.isEmpty(mvm.get("end_date")) || GiantUtil.isEmpty(mvm.get("need_remark")) || GiantUtil.isEmpty(mvm.get("check_remark")) 
+				|| GiantUtil.isEmpty(mvm.get("department_id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.addneed(mvm,id,name,file,filePrototype,filetree);
+	    if(flag){
+			json.put("code",0);
+			json.put("message", "添加成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "添加失败");
+		}
+		resultresponse(response,json);
+	}
+	
+
+	/**
+	 * 跳转确认需求页面
+	 */
+	@RequestMapping("/toSure")
+	public String toSure(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			TaskProject tp =  (TaskProject) teamNeedService.getEntityByPrimaryKey(new TaskProject(),n.getProjectId());
+			List<Map<String, Object>> needList = teamNeedService.getNeedList(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("needList", needList);
+			model.addAttribute("tp", tp);
+			model.addAttribute("n", n);
+		}
+		publicResult(model);
+		return "team/need/sure";
+	}
+
+	/**
+	 * 确认需求
+	 */
+	@RequestMapping("/sure")
+	public void sure(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("offer")) || GiantUtil.isEmpty(mvm.get("cost")) || GiantUtil.isEmpty(mvm.get("period"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.sure(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	
 	
 	/**
 	 * 跳转添加 项目子模块页面

@@ -263,7 +263,7 @@
 													<a href="team/project/toFinish?id=${project.id}" class="btn" title="确认项目完成"><i class="icon-task-finish icon-checked"></i></a>
 												</c:if>
 												<c:if test="${project.state == '1' || project.state == '14'}">
-													<a href="team/need/toaddproject?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
+													<a href="team/need/toaddneed?project_id=${project.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
 													<a href="team/need/toEachAdd?project_id=${project.id}" class="btn" title="拆分模块"><i class="icon-task-batchCreate icon-branch"></i></a>
 												</c:if>
 											</td>

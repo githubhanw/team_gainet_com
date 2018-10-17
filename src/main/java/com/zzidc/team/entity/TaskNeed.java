@@ -21,8 +21,8 @@ public class TaskNeed implements java.io.Serializable {
 	// Fields
 
 	private Integer id;
-	private Integer projectId;
 	private Integer productId;
+	private Integer projectId;
 	private String interfaceImg;
 	private String flowImg;
 	private String needName;
@@ -41,6 +41,13 @@ public class TaskNeed implements java.io.Serializable {
 	private Date endDate;
 	private Date planEndDate;
 	private String needRemark;
+	private Integer workload;
+	private Double cost;
+	private Double offer;
+	private Double confirmOffer;
+	private Date period;
+	private Date confirmPeriod;
+	private String confirmNeedRemark;
 	private String checkRemark;
 	private Integer assignedId;
 	private String assignedName;
@@ -73,9 +80,11 @@ public class TaskNeed implements java.io.Serializable {
 	private Short overdue;
 	private Timestamp realStartDate;
 	private Timestamp realEndDate;
-	private Short changedStatus; 
+	private Short changedStatus;
+	private Short stage;
 	private Short prototypeFigure;
 	private Short testState;
+
 	// Constructors
 
 	/** default constructor */
@@ -83,11 +92,14 @@ public class TaskNeed implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TaskNeed(Integer projectId, Integer productId, String interfaceImg,
-			String flowImg, String needName, Integer departmentId, String departmentName,
-			Integer memberId, String memberName, Integer createId, String createName,
-			Integer srcId, String srcRemark, Integer level, Date startDate, Date cendDate, Date tendDate,
-			Date endDate, Date planEndDate, String needRemark,
+	public TaskNeed(Integer productId, Integer projectId, String interfaceImg,
+			String flowImg, String needName, Integer departmentId,
+			String departmentName, Integer memberId, String memberName,
+			Integer createId, String createName, Integer srcId,
+			String srcRemark, Integer level, Date startDate, Date cendDate,
+			Date tendDate, Date endDate, Date planEndDate, String needRemark,
+			Integer workload, Double cost, Double offer, Double confirmOffer,
+			Date period, Date confirmPeriod, String confirmNeedRemark,
 			String checkRemark, Integer assignedId, String assignedName,
 			Timestamp assignedTime, Integer changedId, String changedName,
 			Timestamp changedTime, Short changedCount, Integer closedId,
@@ -98,11 +110,12 @@ public class TaskNeed implements java.io.Serializable {
 			Integer meetingId, Integer openedId, String openedName,
 			Timestamp openedTime, Integer finishedId, String finishedName,
 			Timestamp finishedTime, Short overdue, Timestamp realStartDate,
-			Timestamp realEndDate, Short changedStatus, Short prototypeFigure, Short testState) {
-		this.projectId = projectId;
+			Timestamp realEndDate, Short changedStatus, Short stage,
+			Short prototypeFigure, Short testState) {
 		this.productId = productId;
-		this.interfaceImg=interfaceImg;
-		this.flowImg=flowImg;
+		this.projectId = projectId;
+		this.interfaceImg = interfaceImg;
+		this.flowImg = flowImg;
 		this.needName = needName;
 		this.departmentId = departmentId;
 		this.departmentName = departmentName;
@@ -119,6 +132,13 @@ public class TaskNeed implements java.io.Serializable {
 		this.endDate = endDate;
 		this.planEndDate = planEndDate;
 		this.needRemark = needRemark;
+		this.workload = workload;
+		this.cost = cost;
+		this.offer = offer;
+		this.confirmOffer = confirmOffer;
+		this.period = period;
+		this.confirmPeriod = confirmPeriod;
+		this.confirmNeedRemark = confirmNeedRemark;
 		this.checkRemark = checkRemark;
 		this.assignedId = assignedId;
 		this.assignedName = assignedName;
@@ -152,6 +172,7 @@ public class TaskNeed implements java.io.Serializable {
 		this.realStartDate = realStartDate;
 		this.realEndDate = realEndDate;
 		this.changedStatus = changedStatus;
+		this.stage = stage;
 		this.prototypeFigure = prototypeFigure;
 		this.testState = testState;
 	}
@@ -168,15 +189,6 @@ public class TaskNeed implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "project_id")
-	public Integer getProjectId() {
-		return this.projectId;
-	}
-
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
-	}
-
 	@Column(name = "product_id")
 	public Integer getProductId() {
 		return this.productId;
@@ -186,18 +198,27 @@ public class TaskNeed implements java.io.Serializable {
 		this.productId = productId;
 	}
 
-	@Column(name = "interface_img")
+	@Column(name = "project_id")
+	public Integer getProjectId() {
+		return this.projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+
+	@Column(name = "interface_img", length = 65535)
 	public String getInterfaceImg() {
-		return interfaceImg;
+		return this.interfaceImg;
 	}
 
 	public void setInterfaceImg(String interfaceImg) {
 		this.interfaceImg = interfaceImg;
 	}
 
-	@Column(name = "flow_img")
+	@Column(name = "flow_img", length = 65535)
 	public String getFlowImg() {
-		return flowImg;
+		return this.flowImg;
 	}
 
 	public void setFlowImg(String flowImg) {
@@ -212,7 +233,6 @@ public class TaskNeed implements java.io.Serializable {
 	public void setNeedName(String needName) {
 		this.needName = needName;
 	}
-	
 
 	@Column(name = "department_id")
 	public Integer getDepartmentId() {
@@ -231,7 +251,6 @@ public class TaskNeed implements java.io.Serializable {
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
 	}
-
 
 	@Column(name = "member_id")
 	public Integer getMemberId() {
@@ -315,7 +334,6 @@ public class TaskNeed implements java.io.Serializable {
 	public void setCendDate(Date cendDate) {
 		this.cendDate = cendDate;
 	}
-	
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "tend_date", length = 10)
@@ -326,7 +344,7 @@ public class TaskNeed implements java.io.Serializable {
 	public void setTendDate(Date tendDate) {
 		this.tendDate = tendDate;
 	}
-	
+
 	@Temporal(TemporalType.DATE)
 	@Column(name = "end_date", length = 10)
 	public Date getEndDate() {
@@ -354,6 +372,71 @@ public class TaskNeed implements java.io.Serializable {
 
 	public void setNeedRemark(String needRemark) {
 		this.needRemark = needRemark;
+	}
+
+	@Column(name = "workload")
+	public Integer getWorkload() {
+		return this.workload;
+	}
+
+	public void setWorkload(Integer workload) {
+		this.workload = workload;
+	}
+
+	@Column(name = "cost")
+	public Double getCost() {
+		return this.cost;
+	}
+
+	public void setCost(Double cost) {
+		this.cost = cost;
+	}
+
+	@Column(name = "offer")
+	public Double getOffer() {
+		return this.offer;
+	}
+
+	public void setOffer(Double offer) {
+		this.offer = offer;
+	}
+
+	@Column(name = "confirm_offer")
+	public Double getConfirmOffer() {
+		return this.confirmOffer;
+	}
+
+	public void setConfirmOffer(Double confirmOffer) {
+		this.confirmOffer = confirmOffer;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "period", length = 10)
+	public Date getPeriod() {
+		return this.period;
+	}
+
+	public void setPeriod(Date period) {
+		this.period = period;
+	}
+
+	@Temporal(TemporalType.DATE)
+	@Column(name = "confirm_period", length = 10)
+	public Date getConfirmPeriod() {
+		return this.confirmPeriod;
+	}
+
+	public void setConfirmPeriod(Date confirmPeriod) {
+		this.confirmPeriod = confirmPeriod;
+	}
+
+	@Column(name = "confirm_need_remark", length = 16777215)
+	public String getConfirmNeedRemark() {
+		return this.confirmNeedRemark;
+	}
+
+	public void setConfirmNeedRemark(String confirmNeedRemark) {
+		this.confirmNeedRemark = confirmNeedRemark;
 	}
 
 	@Column(name = "check_remark", length = 16777215)
@@ -652,7 +735,16 @@ public class TaskNeed implements java.io.Serializable {
 	public void setChangedStatus(Short changedStatus) {
 		this.changedStatus = changedStatus;
 	}
-	
+
+	@Column(name = "stage")
+	public Short getStage() {
+		return this.stage;
+	}
+
+	public void setStage(Short stage) {
+		this.stage = stage;
+	}
+
 	@Column(name = "prototype_figure")
 	public Short getPrototypeFigure() {
 		return this.prototypeFigure;
@@ -661,7 +753,7 @@ public class TaskNeed implements java.io.Serializable {
 	public void setPrototypeFigure(Short prototypeFigure) {
 		this.prototypeFigure = prototypeFigure;
 	}
-	
+
 	@Column(name = "test_state")
 	public Short getTestState() {
 		return this.testState;

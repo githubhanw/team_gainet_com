@@ -753,6 +753,164 @@ public class TeamNeedService extends GiantBaseService{
 		return flag;
 	}
 
+
+	/**
+	 * 添加项目提需求信息
+	 */
+	public boolean addneed(Map<String, String> mvm,int id,String name,MultipartFile[] file,MultipartFile[] filePrototype,MultipartFile[] filetree) {
+		PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+		TaskNeed need = new TaskNeed();
+		//上传界面原型图和流程图文件
+		String interfaceImg="";//界面原型图（格式：url,url）
+		String flowImg="";//流程图（格式：url,url）
+		for (int i = 0; i < filePrototype.length; i++) {
+			MultipartFile file1 = filePrototype[i];
+			Map<String, String> conf = super.getSysConfig();
+			FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
+			interfaceImg+=String.valueOf(FileUploadUtil.uploadFiles(file1))+",";
+		}
+		interfaceImg = interfaceImg.substring(0,interfaceImg.length() - 1);
+		for (int i = 0; i < filetree.length; i++) {
+			MultipartFile file2 = filetree[i];
+			Map<String, String> conf = super.getSysConfig();
+			FileUploadUtil.SetParam(conf.get("accesskey"), conf.get("secreteky"), conf.get("resource"));
+			flowImg+=FileUploadUtil.uploadFiles(file2).toString()+",";
+		}
+		flowImg = flowImg.substring(0,flowImg.length() - 1);
+		need.setInterfaceImg(interfaceImg);//界面原型图拼接路径
+		need.setFlowImg(flowImg);//流程图拼接路径
+		
+		need.setNeedName(GiantUtil.stringOf(mvm.get("need_name")));
+		need.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
+		need.setProductId(GiantUtil.intOf(mvm.get("product_id"), 0));
+		need.setCreateId(super.getMemberId());
+		need.setCreateName(super.getMemberName());
+		
+		//指派给
+		Member assign = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
+		need.setAssignedId(assign == null ? 0 : assign.getId());
+		need.setAssignedName(assign == null ? "" : assign.getName());
+		need.setAssignedTime(new Timestamp(System.currentTimeMillis()));
+		//变更人
+		need.setChangedId(0);
+		need.setChangedName("");
+		need.setChangedTime(null);
+		need.setChangedCount((short) 0);
+		//关闭人
+		need.setClosedId(0);
+		need.setClosedName("");
+		need.setClosedTime(null);
+		need.setClosedReason("");
+		//验收人
+		need.setCheckedId(0);
+		need.setCheckedName("");
+		need.setCheckedTime(null);
+		need.setCreateTime(new Timestamp(System.currentTimeMillis()));
+		need.setState((short)7);
+		//部门负责人
+		Member department = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("department_id"), 0));
+		need.setDepartmentId(department == null ? 0 : department.getId());
+		need.setDepartmentName(department == null ? "" : department.getName());
+		
+		need.setSrcId(GiantUtil.intOf(mvm.get("src_id"), 0));
+		need.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
+		//分解
+		need.setResolved((short)0);
+		need.setParentId(GiantUtil.intOf(mvm.get("id"), 0));
+		need.setPrototypeFigure((short)0);
+
+		TaskProject taskProject =  (TaskProject) super.dao.getEntityByPrimaryKey(new TaskProject(), need.getProjectId());
+		//需求方
+		Member demand = (Member) super.dao.getEntityByPrimaryKey(new Member(),taskProject.getDemandId());
+		need.setMemberId(demand == null ? 0 : demand.getId());
+		need.setMemberName(demand == null ? "" : demand.getName());
+		if (taskProject.getState() == 1) {
+			taskProject.setState((short) 5);
+			super.dao.saveUpdateOrDelete(taskProject, null);
+		}
+		
+		//修改父类对象的resolved 状态改为已分解 
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed parentNeed = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(parentNeed.getResolved() == 0) {
+				parentNeed.setResolved((short) 1);
+				parentNeed.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				super.dao.saveUpdateOrDelete(parentNeed, null);
+			}
+		}
+		try {//上线时间
+			need.setEndDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("end_date")));
+		} catch (ParseException e) {
+			need.setEndDate(new Date());
+		}
+		need.setNeedRemark(GiantUtil.stringOf(mvm.get("need_remark")));
+		need.setCheckRemark(GiantUtil.stringOf(mvm.get("check_remark")));
+		need.setFull((short) 1);
+		need.setChangedStatus((short) 0);
+		need.setOverdue((short) 0);
+		need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		boolean flag = super.dao.saveUpdateOrDelete(need, null);
+		
+		String fileName = file[0].getOriginalFilename();
+		if(fileName != null && !"".equals(fileName)) {
+			//创建文档
+			JSONObject jsonupload=new JSONObject();
+			jsonupload=filemanageService.uploadfiles(file);
+			if(jsonupload!=null){
+				filemanageService.addxq(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),need.getId());
+			}else{
+				return false;
+			}
+		}
+		
+		pmLog.setObjectId(need.getId());
+		this.log(pmLog);
+		return flag;
+	}
+	
+	
+	/**
+	 * 项目提需求确认页面模块列表
+	 * @return
+	 */
+	public List<Map<String, Object>> getNeedList(int needId){
+		List<Map<String, Object>> testCase = new ArrayList<Map<String, Object>>();
+		String sql = "SELECT need_name,interface_img,flow_img FROM task_need WHERE state!=0 AND parent_id=" + needId;
+		testCase = super.getMapListBySQL(sql, null);
+		return testCase;
+	}
+	
+	/**
+	 * 确认需求
+	 */
+	public boolean sure(Map<String, String> mvm) {
+		TaskNeed n = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			n = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.SURENEED, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+			TaskNeed oldT = new TaskNeed();
+			BeanUtils.copyProperties(n, oldT);
+			try {//上线时间
+				n.setPeriod(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("period")));
+			} catch (ParseException e) {
+				n.setPeriod(new Date());
+			}
+			n.setCost(Double.parseDouble(mvm.get("cost")));
+			n.setOffer(Double.parseDouble(mvm.get("offer")));
+			n.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			n.setState((short)8);
+			boolean b = super.dao.saveUpdateOrDelete(n, null);
+			if (b) {
+				pmLog.add(n.getId(), oldT, n,"cost","offer","period");
+				this.log(pmLog);
+			}
+			return b; 
+		}
+		return false;
+	}
+	
 	/**
 	 * 批量添加、分解模块信息
 	 */

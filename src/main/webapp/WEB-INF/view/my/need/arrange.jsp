@@ -38,77 +38,83 @@
 						</div>
 						<table class="table table-form">
 							<tbody>
-								<div class="detail">
-								<div class="detail-title">模块描述</div>
-								<div class="detail-content article-content">
-									<c:if test="${n.needRemark != null && n.needRemark != ''}">
-										${n.needRemark}
-									</c:if>
-									<c:if test="${n.needRemark == null || n.needRemark == ''}">
-										<div class="text-center text-muted">暂无</div>
-									</c:if>
-								</div>
-								</div>
-								<div class="detail">
-									<div class="detail-title">验收标准</div>
-									<div class="detail-content article-content">
+								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+								<tr>
+									<th>模块描述</th>
+									<td style="width:70%" >
+										<c:if test="${n.needRemark != null && n.needRemark != ''}">
+											${n.needRemark}
+										</c:if>
+										<c:if test="${n.needRemark == null || n.needRemark == ''}">
+											<div class="text-center text-muted">暂无</div>
+										</c:if>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>验收标准</th>
+									<td>
 										<c:if test="${n.checkRemark != null && n.checkRemark != ''}">
 											${n.checkRemark}
 										</c:if>
 										<c:if test="${n.checkRemark == null || n.checkRemark == ''}">
 											<div class="text-center text-muted">暂无</div>
 										</c:if>
-									</div>
-								</div>
+									</td>
+									<td></td>
+								</tr>
 								<c:if test="${n.state!=0 }">
-									<div class="detail"> 
-										<div class="detail-content article-content">
-										            原型图&nbsp;&nbsp;  
-										    <c:if test="${n.interfaceImg !=null }">
-											<c:forEach items="${fn:split(n.interfaceImg, ',')}" var="inter" varStatus="sta">
-												<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
-																fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||
-															  fn:contains(inter,'.bmp')==true || fn:contains(inter,'.jpeg')==true || fn:contains(inter,'.gif')==true || 
-																fn:contains(inter,'.png')==true || fn:contains(inter,'.jpg')==true }">
-													<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
-												</c:if>
-												<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
-																fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
-															  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
-																fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
-													<a href="${inter}">下载非图片文件</a>
-												</c:if>
-											</c:forEach> 
+								<tr>
+								    <th>原型图&nbsp;&nbsp;</th>
+								    <td>
+									    <c:if test="${n.interfaceImg !=null }">
+										<c:forEach items="${fn:split(n.interfaceImg, ',')}" var="inter" varStatus="sta">
+											<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
+															fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||
+														  fn:contains(inter,'.bmp')==true || fn:contains(inter,'.jpeg')==true || fn:contains(inter,'.gif')==true || 
+															fn:contains(inter,'.png')==true || fn:contains(inter,'.jpg')==true }">
+												<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="【原型图】">&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${n.interfaceImg ==null }">
-											无图片
+											<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
+															fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
+														  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
+															fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+												<a href="${inter}">下载非图片文件</a>
 											</c:if>
-										</div>
-										<div class="detail-content article-content">
-										            流程图&nbsp;&nbsp;
-										    <c:if test="${n.flowImg != null}">
-											<c:forEach items="${fn:split(n.flowImg, ',')}" var="flow" varStatus="sta">
-												<c:if test="${fn:contains(flow,'.BMP')==true || fn:contains(flow,'.JPEG')==true || fn:contains(flow,'.GIF')==true || 
-																fn:contains(flow,'.PNG')==true || fn:contains(flow,'.JPG')==true ||
-															  fn:contains(flow,'.bmp')==true || fn:contains(flow,'.jpeg')==true || fn:contains(flow,'.gif')==true || 
-																fn:contains(flow,'.png')==true || fn:contains(flow,'.jpg')==true }">
-													<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${task.task_name}【流程图】">
-												</c:if>
-												<c:if test="${fn:contains(flow,'.BMP')!=true && fn:contains(flow,'.JPEG')!=true && fn:contains(flow,'.GIF')!=true && 
-																fn:contains(flow,'.PNG')!=true && fn:contains(flow,'.JPG')!=true &&
-															  fn:contains(flow,'.bmp')!=true && fn:contains(flow,'.jpeg')!=true && fn:contains(flow,'.gif')!=true && 
-																fn:contains(flow,'.png')!=true && fn:contains(flow,'.jpg')!=true }">
-													<a href="${flow}">下载非图片文件</a>
-												</c:if>
-											</c:forEach>
+										</c:forEach> 
+										</c:if>
+										<c:if test="${n.interfaceImg ==null }">
+										无图片
+										</c:if>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+								    <th>流程图&nbsp;&nbsp;</th>
+								    <td>
+									    <c:if test="${n.flowImg != null}">
+										<c:forEach items="${fn:split(n.flowImg, ',')}" var="flow" varStatus="sta">
+											<c:if test="${fn:contains(flow,'.BMP')==true || fn:contains(flow,'.JPEG')==true || fn:contains(flow,'.GIF')==true || 
+															fn:contains(flow,'.PNG')==true || fn:contains(flow,'.JPG')==true ||
+														  fn:contains(flow,'.bmp')==true || fn:contains(flow,'.jpeg')==true || fn:contains(flow,'.gif')==true || 
+															fn:contains(flow,'.png')==true || fn:contains(flow,'.jpg')==true }">
+												<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="【流程图】">&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${n.flowImg == null}">
-											无图片
+											<c:if test="${fn:contains(flow,'.BMP')!=true && fn:contains(flow,'.JPEG')!=true && fn:contains(flow,'.GIF')!=true && 
+															fn:contains(flow,'.PNG')!=true && fn:contains(flow,'.JPG')!=true &&
+														  fn:contains(flow,'.bmp')!=true && fn:contains(flow,'.jpeg')!=true && fn:contains(flow,'.gif')!=true && 
+															fn:contains(flow,'.png')!=true && fn:contains(flow,'.jpg')!=true }">
+												<a href="${flow}">下载非图片文件</a>
 											</c:if>
-										</div>
-									</div>
+										</c:forEach>
+										</c:if>
+										<c:if test="${n.flowImg == null}">
+										无图片
+										</c:if>
+									</td>
+									<td></td>
+								</tr>
 								</c:if>
-								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
 									<th>安排给</th>
 									<td class="required"  style="width: 70%;" >
@@ -125,8 +131,8 @@
 								<tr>
 									<th>上线时间</th>
 									<td class="required">
-										<input type="text" name="end_date" id="end_date"
-												class="form-control form-date-limit" placeholder="上线时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+										<input type="text" name="end_date" id="end_date" value="<fmt:formatDate value="${n.endDate}" pattern="yyyy-MM-dd"/>" 
+											class="form-control form-date-limit" placeholder="上线时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 									</td>
 									<td></td>
 								</tr>

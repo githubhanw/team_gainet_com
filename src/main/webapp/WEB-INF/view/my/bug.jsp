@@ -162,51 +162,54 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id text-center" title="ID">
-												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri" title="bug标题">
-												<a  href="${pageList.desAction}&orderColumn=bugdes&orderByValue=${prm.orderColumn=='bugdes'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='bugdes'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">bug标题</a>
+												<a class="${prm.orderColumn=='bugdes'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('bugdes');">bug标题</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:80px" class="c-name text-center" title="任务ID">
-												<a  href="${pageList.desAction}&orderColumn=task_name&orderByValue=${prm.orderColumn=='task_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务ID</a>
+												<a class="${prm.orderColumn=='task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('task_name');">任务ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name" title="bug状态">
-												<a  href="${pageList.desAction}&orderColumn=solvestatus&orderByValue=${prm.orderColumn=='solvestatus'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='solvestatus'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">bug状态</a>
+												<a class="${prm.orderColumn=='solvestatus'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('solvestatus');">bug状态</a>
+											</th>
+											<th data-flex="false" data-width="auto" style="width:100px" class="c-name" title="bug状态">
+												<a class="${prm.orderColumn=='solution'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('solution');">解决方案</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:120px" class="c-pri text-center" title="bug产品">
-												<a href="${pageList.desAction}&orderColumn=bugproject&orderByValue=${prm.orderColumn=='bugproject'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='bugproject'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">bug产品</a>
+												<a class="${prm.orderColumn=='bugproject'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('bugproject');">bug产品</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:90px" class="c-pri text-center" title="bug等级">
-												<a href="${pageList.desAction}&orderColumn=bugrank&orderByValue=${prm.orderColumn=='bugrank'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='bugrank'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">bug等级</a>
+												<a class="${prm.orderColumn=='bugrank'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('bugrank');">bug等级</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="创建时间">
-												<a href="${pageList.desAction}&orderColumn=createtime&orderByValue=${prm.orderColumn=='createtime'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='createtime'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建时间</a>
+												<a class="${prm.orderColumn=='createtime'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('createtime');">创建时间</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri text-center" title="创建者">
-												<a href="${pageList.desAction}&orderColumn=creater&orderByValue=${prm.orderColumn=='creater'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='creater'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建者</a>
+												<a class="${prm.orderColumn=='creater'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('creater');">创建者</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri text-center" title="开发者">
-												<a href="${pageList.desAction}&orderColumn=developer&orderByValue=${prm.orderColumn=='developer'&&prm.developer=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='developer'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">开发者</a>
+												<a class="${prm.orderColumn=='developer'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('developer');">开发者</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:80px" class="c-pri text-center" title="解决者">
-												<a href="${pageList.desAction}&orderColumn=solver&orderByValue=${prm.orderColumn=='solver'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='solver'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">解决者</a>
+												<a class="${prm.orderColumn=='solver'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('solver');">解决者</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-pri text-center" title="解决时间">
-												<a href="${pageList.desAction}&orderColumn=solvetime&orderByValue=${prm.orderColumn=='solvetime'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='solvetime'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">解决时间</a>
+												<a class="${prm.orderColumn=='solvetime'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('solvetime');">解决时间</a>
 											</th>
-											<th data-flex="false" data-width="300px" style="width:160px"
-												class="c-actions text-center" title="操作">操作</th>
+											<th data-flex="false" data-width="300px" style="width:160px" class="c-actions text-center" title="操作">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -222,6 +225,11 @@
 													<span class="label label-dot"></span>
 													${bug.solvestatus == 0 ? '待处理' : bug.solvestatus == 1 ? '待验证' : bug.solvestatus == 2 ? '已验证' : bug.solvestatus == 3 ? '已删除':'未知'}
 												</span>
+											</td>
+											<td class="c-pri text-center">
+												<c:if test="${bug.solvestatus > 0}">
+													${bug.solution==0?'问题已修复':bug.solution==1?'重复问题':bug.solution==2?'不是问题':bug.solution==3?'需求如此':bug.solution==4?'延期处理':'未知'}
+												</c:if>
 											</td>
 											<td class="c-pri text-center">${bug.bugproject}</td>
 											<td class="c-pri text-center">
@@ -251,15 +259,15 @@
 								</table>
 							</div>
 							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!-- <ul class="pager"></ul> -->
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -278,14 +286,6 @@
 			$(this).addClass("querybox-opened")
 			$("#queryBox").addClass("show")
 		}
-	});
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "my/bug?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
 	});
 </script>
 </html>

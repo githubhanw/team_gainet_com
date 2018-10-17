@@ -15,15 +15,11 @@ import javax.persistence.TemporalType;
  * DeclarationProjectResult entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "declaration_project_result")
+@Table(name = "declaration_project_result", catalog = "team_gainet_com")
 public class DeclarationProjectResult implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * serialVersionUID long
-	 */
-	private static final long serialVersionUID = -2159736644389539943L;
 	private Integer id;
 	private Short type;
 	private String certNumber;
@@ -36,6 +32,10 @@ public class DeclarationProjectResult implements java.io.Serializable {
 	private Date downDate;
 	private String company;
 	private Integer projectId;
+	private Integer payment;
+	private Integer invoice;
+	private Integer receipt;
+	private Integer isAllDoc;
 	private String agent;
 	private String version;
 	private String inventor;
@@ -55,7 +55,8 @@ public class DeclarationProjectResult implements java.io.Serializable {
 			String registrationNumber, String projectResultName,
 			Integer memberId, String memberName, Date applyDate,
 			Date acceptDate, Date downDate, String company, Integer projectId,
-			String agent, String version, String inventor,
+			Integer payment, Integer invoice, Integer receipt,
+			Integer isAllDoc, String agent, String version, String inventor,
 			Timestamp createTime, Timestamp updateTime, String remark,
 			Short state) {
 		this.type = type;
@@ -69,6 +70,10 @@ public class DeclarationProjectResult implements java.io.Serializable {
 		this.downDate = downDate;
 		this.company = company;
 		this.projectId = projectId;
+		this.payment = payment;
+		this.invoice = invoice;
+		this.receipt = receipt;
+		this.isAllDoc = isAllDoc;
 		this.agent = agent;
 		this.version = version;
 		this.inventor = inventor;
@@ -192,6 +197,42 @@ public class DeclarationProjectResult implements java.io.Serializable {
 		this.projectId = projectId;
 	}
 
+	@Column(name = "payment")
+	public Integer getPayment() {
+		return this.payment;
+	}
+
+	public void setPayment(Integer payment) {
+		this.payment = payment;
+	}
+
+	@Column(name = "invoice")
+	public Integer getInvoice() {
+		return this.invoice;
+	}
+
+	public void setInvoice(Integer invoice) {
+		this.invoice = invoice;
+	}
+
+	@Column(name = "receipt")
+	public Integer getReceipt() {
+		return this.receipt;
+	}
+
+	public void setReceipt(Integer receipt) {
+		this.receipt = receipt;
+	}
+
+	@Column(name = "is_all_doc")
+	public Integer getIsAllDoc() {
+		return this.isAllDoc;
+	}
+
+	public void setIsAllDoc(Integer isAllDoc) {
+		this.isAllDoc = isAllDoc;
+	}
+
 	@Column(name = "agent", length = 32)
 	public String getAgent() {
 		return this.agent;
@@ -210,7 +251,7 @@ public class DeclarationProjectResult implements java.io.Serializable {
 		this.version = version;
 	}
 
-	@Column(name = "inventor", length = 16)
+	@Column(name = "inventor", length = 128)
 	public String getInventor() {
 		return this.inventor;
 	}

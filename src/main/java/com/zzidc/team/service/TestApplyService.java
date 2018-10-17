@@ -149,7 +149,7 @@ public class TestApplyService extends GiantBaseService {
 		} else if (needId != null && needId > 0) {//需求（模块）：获取模块下所有子模块，模块、子模块下所有任务（包含原型图、流程图），所有任务下的测试用例；【获取已完成的任务、已验收的模块】
 			applyType = 2;
 			TaskNeed n = (TaskNeed) getEntityByPrimaryKey(new TaskNeed(), needId);
-			if(n != null && (n.getState() == 4 || n.getState() == 2 && n.getResolved() == 1)) {
+			if(n != null && n.getState() == 2) {
 				//获取子模块
 				List<Map<String, Object>> subNeed = getSubNeedByNeed(needId);
 				//获取子模块下的任务
@@ -649,19 +649,87 @@ public class TestApplyService extends GiantBaseService {
 	 */
 	public boolean dismissal(Map<String, String> mvm) {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
-			TestApply testApply = (TestApply) super.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
-			if(testApply != null) {
+			TestApply test = (TestApply) super.getEntityByPrimaryKey(new TestApply(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(test != null) {
 				PMLog pmLog = new PMLog(LogModule.TEST, LogMethod.DISMISSAL, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 				TestApply oldTestApply = new TestApply();
-				BeanUtils.copyProperties(testApply, oldTestApply);
-				pmLog.setObjectId(testApply.getApplyId());
-				testApply.setState((short) 4);  // 4 表示驳回
-				testApply.setDismissal(GiantUtil.stringOf(mvm.get("comment")));
-				testApply.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-				boolean b = super.dao.saveUpdateOrDelete(testApply, null);
+				BeanUtils.copyProperties(test, oldTestApply);
+				pmLog.setObjectId(test.getId());
+				test.setState((short) 4);  // 4 表示驳回
+				test.setDismissal(GiantUtil.stringOf(mvm.get("comment")));
+				test.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				boolean b = super.dao.saveUpdateOrDelete(test, null);
 				if(b) {
-					pmLog.add(oldTestApply, testApply, new String[] {"dismissal"}, "state", "dismissal");
+					pmLog.add(oldTestApply, test, new String[] {"dismissal"}, "state", "dismissal");
 					this.log(pmLog);
+					//删除测试任务，还原模块、任务的测试状态、项目状态
+					//修改项目状态
+					if(test.getApplyType() == 3) {
+						TaskProject project = (TaskProject) super.getEntityByPrimaryKey(new TaskProject(), test.getProjectId());
+						if(project != null && project.getState() == 9) {
+							project.setState((short) 8);
+							project.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+							super.saveUpdateOrDelete(project, null);
+						}
+					}
+					//获取并删除测试任务
+					String querySql = "select * from task where task_type=2 and test_apply_id=" + test.getId();
+					List<Object> testList = super.getEntityListBySQL(querySql, null, new Task());
+					if(testList != null && testList.size() > 0) {
+						super.saveUpdateOrDelete(null, testList);
+					}
+					//获取非测试任务（一般是开发任务）
+					querySql = "select * from task where task_type!=2 and test_apply_id=" + test.getId();
+					List<Object> taskList = super.getEntityListBySQL(querySql, null, new Task());
+					for (Object obj: taskList) {
+						Task task = (Task) obj;
+						//修改任务测试状态
+						if(task.getTestState() == 2 || task.getTestState() == 3) {
+							PMLog pm = new PMLog(LogModule.TASK, LogMethod.DISMISSAL, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+							Task oldTask = new Task();
+							BeanUtils.copyProperties(task, oldTask);
+							pm.setObjectId(task.getId());
+							task.setTestState(1);
+							task.setTestApplyId(null);
+							task.setTestId(null);
+							task.setTestName(null);
+							task.setTestTime(null);
+							task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+							super.saveUpdateOrDelete(task, null);
+							pm.add(oldTask, task, "test_state");
+							this.log(pm);
+							//修改模块测试状态
+							if(test.getApplyType() == 2) {
+								TaskNeed need = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), task.getNeedId());
+								if(need.getParentId() > 0) {
+									TaskNeed parentNeed = (TaskNeed) super.getEntityByPrimaryKey(new TaskNeed(), need.getParentId());
+									if(parentNeed.getTestState() == 2) {
+										PMLog needLog = new PMLog(LogModule.NEED, LogMethod.DISMISSAL, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+										TaskNeed oldTaskNeed = new TaskNeed();
+										BeanUtils.copyProperties(parentNeed, oldTaskNeed);
+										needLog.setObjectId(parentNeed.getId());
+										parentNeed.setTestState((short) 1);
+										parentNeed.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+										super.saveUpdateOrDelete(parentNeed, null);
+										needLog.add(oldTaskNeed, parentNeed, "test_state");
+										this.log(needLog);
+									}
+								}else {
+									if(need.getTestState() == 2 || need.getTestState() == 3) {
+										PMLog needLog = new PMLog(LogModule.NEED, LogMethod.DISMISSAL, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+										TaskNeed oldTaskNeed = new TaskNeed();
+										BeanUtils.copyProperties(need, oldTaskNeed);
+										needLog.setObjectId(need.getId());
+										need.setTestState((short) 1);
+										need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+										super.saveUpdateOrDelete(need, null);
+										needLog.add(oldTaskNeed, need, "test_state");
+										this.log(needLog);
+									}
+								}
+							}
+						}
+					}
 				}
 				return b;
 			}
@@ -720,7 +788,7 @@ public class TestApplyService extends GiantBaseService {
 			PMLog pmLog = new PMLog(LogModule.TEST, LogMethod.RECEIVE, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			TestApply oldTestApply = new TestApply();
 			BeanUtils.copyProperties(apply, oldTestApply);
-			pmLog.setObjectId(apply.getApplyId());
+			pmLog.setObjectId(apply.getId());
 			// 设置测试申请单的状态
 			apply.setState((short) 2);
 			// 更新测试申请单
@@ -737,7 +805,7 @@ public class TestApplyService extends GiantBaseService {
 			if(applyTask.getParentId() > 0) {
 				parentId = applyTask.getParentId();
 			}
-			task.setTestApplyId(apply.getApplyId());
+			task.setTestApplyId(apply.getId());
 		}
 		task.setNeedId(GiantUtil.intOf(mvm.get("need_id"), 0));
 		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));

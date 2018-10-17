@@ -186,17 +186,17 @@
 												<a class="${prm.orderColumn=='pr.id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('pr.id');">ID</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:150px" class="c-name" title="登记号">
+											<th data-flex="false" data-width="auto" style="width:100px" class="c-name" title="登记号">
 												<a class="${prm.orderColumn=='registration_number'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('registration_number');">登记号</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:auto" class="c-name " title="项目成果名称">
 												<a class="${prm.orderColumn=='pr.project_result_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
-													href="javascript:void(0)" onclick="pageOrder('pr.project_result_name');"> 成果名称 </a>
+													href="javascript:void(0)" onclick="pageOrder('pr.project_result_name');">成果名称 </a>
 											</th>
-											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri " title="所属项目">
+											<th data-flex="false" data-width="50px" style="width:70px" class="c-pri " title="所属项目">
 												<a class="${prm.orderColumn=='p.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
-													href="javascript:void(0)" onclick="pageOrder('p.project_name');">所属项目</a>
+													href="javascript:void(0)" onclick="pageOrder('p.project_name');">项目ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="成果类型">
 												<a class="${prm.orderColumn=='pr.type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
@@ -218,16 +218,23 @@
 												<a class="${prm.orderColumn=='down_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('down_date');">下证日期</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:90px" class="c-name text-center" title="所属公司">
+											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="所属公司">
 												<a class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
-													href="javascript:void(0)" onclick="pageOrder('company');">所属公司</a>
+													href="javascript:void(0)" onclick="pageOrder('company');">公司</a>
 											</th>
-											<th data-flex="false" data-width="100px" style="width:80px" class="c-name text-center" title="状态">
+											<th data-flex="false" data-width="100px" style="width:70px" class="c-name text-center" title="状态">
 												<a class="${prm.orderColumn=='pr.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('pr.state');">状态</a>
 											</th>
-											<th data-flex="false" data-width="150px" style="width: 150px"
-												class="c-actions text-center" title="操作">操作</th>
+											<th data-flex="false" data-width="100px" style="width:70px" class="c-name text-center" title="代理公司开具的收据">
+												<a class="${prm.orderColumn=='pr.invoice'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.invoice');">发票</a>
+											</th>
+											<th data-flex="false" data-width="100px" style="width:70px" class="c-name text-center" title="国家知识产权局开具的收据">
+												<a class="${prm.orderColumn=='pr.receipt'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.receipt');">收据</a>
+											</th>
+											<th data-flex="false" data-width="150px" style="width:110px"class="c-actions text-center" title="操作">操作</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -235,15 +242,27 @@
 										<tr>
 											<td class="c-id cell-id">${result.id}</td>
 											<td class="c-assignedTo has-btn">${result.registration_number}</td>
-											<td class="c-pri text-left" title="${result.project_result_name}">
+											<td class="text-left" title="${result.project_result_name}">
+												<c:if test="${result.payment == 1}">
+													<span class="label label-danger" data-toggle="tooltip" data-placement="top" title="付款状态：未付款、未提交申请">未申请</span>
+												</c:if>
+												<c:if test="${result.payment == 2}">
+													<span class="label label-info" data-toggle="tooltip" data-placement="top" title="付款状态：未付款、已提交申请">已申请</span>
+												</c:if>
+												<c:if test="${result.payment == 3}">
+													<span class="label label-success" data-toggle="tooltip" data-placement="top" title="付款状态：已付款">已付款</span>
+												</c:if>
 												<a href="declaration/result/detail?id=${result.id}">${result.project_result_name}</a>
+												<c:if test="${result.is_all_doc == 2}">
+													<span class="label label-badge label-success" data-toggle="tooltip" data-placement="top" title="相关文档已全部提供">全</span>
+												</c:if>
 											</td>
-											<td class="c-pri text-left">
+											<td class="text-center">
 												<c:if test="${result.project_name == null}">
-													暂无
+													无
 												</c:if>
 												<c:if test="${result.project_name != null}">
-													<a href="declaration/project/detail?id=${result.project_id}" title="${result.project_name}">${result.project_name}</a>
+													<a href="declaration/project/detail?id=${result.project_id}" data-toggle="tooltip" data-placement="top" title="${result.project_name}">${result.project_id}</a>
 												</c:if>
 											</td>
 											<td class="c-assignedTo has-btn text-center">${result.type == 1 ? '软著' : result.type == 2 ? '发明专利' : result.type == 3 ? '实用新型专利' : result.type == 4 ? '外观专利' : result.type == 5 ? '商标' : '未知'}</td>
@@ -273,8 +292,18 @@
 												</c:if>
 											</td>
 											<td class="c-assignedTo has-btn text-center">${result.company}</td>
-											<%-- <td class="c-assignedTo has-btn text-center">${result.agent}</td> --%>
-											<td class="c-assignedTo has-btn text-center">${result.state == 5 ? '已下证' : result.state == 1 ? '待撰写' : result.state == 2 ? '撰写中' : result.state == 3 ? '已提交' : result.state == 4 ? '已受理' : result.state == 0 ? '已删除' : '未知'}</td>
+											<td class="c-assignedTo has-btn text-center">
+												<span class="${result.state == 1 ? 'status-wait' : result.state == 2 ? 'status-doing' : result.state == 3 ? 'status-pause' : result.state == 4 ? 'status-postpone' : result.state == 5 ? 'status-done' : 'status-cancel'}">
+													<span class="label label-dot"></span>
+													${result.state == 5 ? '已下证' : result.state == 1 ? '待撰写' : result.state == 2 ? '撰写中' : result.state == 3 ? '已提交' : result.state == 4 ? '已受理' : result.state == 0 ? '已删除' : '未知'}
+												</span>
+											</td>
+											<td class="c-assignedTo has-btn text-center">
+												${result.invoice == 1 ? '<span class="label label-dot label-danger"></span> 未开' : result.invoice == 2 ? '<span class="label label-dot label-success"></span> 已开' : '未知'}
+											</td>
+											<td class="c-assignedTo has-btn text-center">
+												${result.receipt == 1 ? '<span class="label label-dot label-danger"></span> 未开' : result.receipt == 2 ? '<span class="label label-dot label-success"></span> 已开' : '未知'}
+											</td>
 											<td class="c-actions text-center">
 												<c:if test="${result.state>0 && result.state<6}">
 													<a href="declaration/result/toAdd?id=${result.id}" class="btn" title="修改">修改</a>

@@ -98,6 +98,7 @@ public class ProjectResultController extends GiantBaseController {
 	public String toAdd(@RequestParam Map<String, String> mvm, Model model) {
 		//添加项目成果页面的项目列表
 		model.addAttribute("project", projectResultService.getDeclarationProject());
+		model.addAttribute("members", projectResultService.getAllMembers());
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取成果对象
 			DeclarationProjectResult pr = (DeclarationProjectResult) projectResultService.getEntityByPrimaryKey(new DeclarationProjectResult(), GiantUtil.intOf(mvm.get("id"), 0));
@@ -115,7 +116,7 @@ public class ProjectResultController extends GiantBaseController {
 		JSONObject json=new JSONObject();
 		if(GiantUtils.isEmpty(mvm.get("type")) || GiantUtils.isEmpty(mvm.get("company")) || GiantUtils.isEmpty(mvm.get("agent")) || GiantUtils.isEmpty(mvm.get("state")) || 
 				GiantUtils.isEmpty(mvm.get("registration_number")) || GiantUtils.isEmpty(mvm.get("project_id")) || GiantUtils.isEmpty(mvm.get("project_result_name")) || 
-				GiantUtils.isEmpty(mvm.get("member_name")) || GiantUtils.isEmpty(mvm.get("apply_date"))){
+				GiantUtils.isEmpty(mvm.get("member_id")) || GiantUtils.isEmpty(mvm.get("apply_date"))){
 			json.put("code",1);
 			json.put("message", "参数不完整！！");
 			resultresponse(response,json);

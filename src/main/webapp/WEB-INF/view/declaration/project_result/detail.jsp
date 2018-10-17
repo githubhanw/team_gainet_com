@@ -142,15 +142,15 @@
 								<div class="detail-content">
 									<table class="table table-data">
 										<tbody>
+											<tr class="nofixed">
+												<th style="width:100px">所属项目</th>
+												<td><a href="declaration/project/detail?id=${pr.project_id}" target="_blank">${pr.project_name}</a></td>
+											</tr>
 											<tr>
 												<th>成果类型</th>
 												<td>
 													${pr.type == 1 ? '软著' : pr.type == 2 ? '发明专利' : pr.type == 3 ? '实用新型专利' : pr.type == 4 ? '外观专利' : pr.type == 5 ? '商标' : '未知'}
 												</td>
-											</tr>
-											<tr class="nofixed">
-												<th>所属项目</th>
-												<td>${pr.project_name}</td>
 											</tr>
 											<tr>
 												<th>证书号</th>
@@ -174,7 +174,44 @@
 											</tr>
 											<tr>
 												<th>状态</th>
-												<td>${pr.state == 1 ? '已下证' : pr.state == 2 ? '待撰写' : pr.state == 3 ? '撰写中' : pr.state == 4 ? '已提交' : pr.state == 5 ? '已受理' : pr.state == 0 ? '已删除' : '未知'}</td>
+												<td>
+													<span class="${pr.state == 1 ? 'status-wait' : pr.state == 2 ? 'status-doing' : pr.state == 3 ? 'status-pause' : pr.state == 4 ? 'status-postpone' : pr.state == 5 ? 'status-done' : 'status-cancel'}">
+														<span class="label label-dot"></span>
+														${pr.state == 5 ? '已下证' : pr.state == 1 ? '待撰写' : pr.state == 2 ? '撰写中' : pr.state == 3 ? '已提交' : pr.state == 4 ? '已受理' : pr.state == 0 ? '已删除' : '未知'}
+													</span>
+												</td>
+											</tr>
+											<tr>
+												<th>付款状态</th>
+												<td>
+													<c:if test="${pr.payment == 1}">
+														<span class="label label-danger" data-toggle="tooltip" data-placement="top" title="付款状态：未申请">未付款、未提交申请</span>
+													</c:if>
+													<c:if test="${pr.payment == 2}">
+														<span class="label label-info" data-toggle="tooltip" data-placement="top" title="付款状态：已申请">未付款、已提交申请</span>
+													</c:if>
+													<c:if test="${pr.payment == 3}">
+														<span class="label label-success" data-toggle="tooltip" data-placement="top" title="付款状态：已付款">已付款</span>
+													</c:if>
+												</td>
+											</tr>
+											<tr>
+												<th>发票状态</th>
+												<td>
+													${pr.invoice == 1 ? '<span class="label label-dot label-danger"></span> 未开发票' : pr.invoice == 2 ? '<span class="label label-dot label-success"></span> 已开发票' : '未知'}
+												</td>
+											</tr>
+											<tr>
+												<th>收据状态</th>
+												<td>
+													${pr.receipt == 1 ? '<span class="label label-dot label-danger"></span> 未开收据' : pr.receipt == 2 ? '<span class="label label-dot label-success"></span> 已开收据' : '未知'}
+												</td>
+											</tr>
+											<tr>
+												<th>是否有全部文档</th>
+												<td>
+													${pr.is_all_doc == 1 ? '否' : pr.is_all_doc == 2 ? '是' : '未知'}
+												</td>
 											</tr>
 											<c:if test="${pr.type == 1}">
 												<tr>
@@ -235,16 +272,24 @@
 									<table class="table table-data">
 										<tbody>
 											<tr>
-												<th>由谁创建</th>
-												<td>${pr.member_name } 于 <fmt:formatDate value="${pr.create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+												<th>创建时间</th>
+												<td><fmt:formatDate value="${pr.create_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 											<tr>
 												<th>申请日期</th>
-												<td>${pr.application_date }</td>
+												<td>${pr.apply_date }</td>
 											</tr>
 											<tr>
 												<th>受理日期</th>
-												<td>${pr.acceptance_date }</td>
+												<td>${pr.accept_date }</td>
+											</tr>
+											<tr>
+												<th>下证日期</th>
+												<td>${pr.down_date }</td>
+											</tr>
+											<tr>
+												<th>更新时间</th>
+												<td><fmt:formatDate value="${pr.update_time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 										</tbody>
 									</table>

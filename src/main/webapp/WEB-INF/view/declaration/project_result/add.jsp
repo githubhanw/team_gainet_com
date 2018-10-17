@@ -67,6 +67,7 @@
 										<td class="required">
 											<select class="form-control chosen chosen-select" name="project_id" id="projectId">
 												<option value=""></option>
+												<option value="0" ${pr.projectId==0?'selected="selected"':''}>无项目</option>
 												<c:forEach items="${project}" var="p" varStatus="sta">
 													<option value="${p.id}" ${p.id==pr.projectId?'selected="selected"':''}>${p.project_name }</option>
 												</c:forEach>
@@ -88,9 +89,14 @@
 									<tr>
 										<th>撰写人</th>
 										<td class="required">
-											<input type="text" name="member_name" id="member_name" value="${pr.memberName}" class="form-control input-product-title" autocomplete="off">
+											<select data-placeholder="撰写人" class="form-control chosen-select" name="member_id" id="member_id">
+												<option value=""></option>
+												<c:forEach items="${members}" var="member" varStatus="sta">
+													<option value="${member.id}" ${member.id==pr.memberId?'selected="selected"':''}>${member.name}(${member.number})${member.status==1?'(已离职)':'' }</option>
+												</c:forEach>
+											</select>
 										</td>
-										<td></td>
+										<td><c:if test="${pr.id > 0}">原撰写人：${pr.memberName}</c:if></td>
 									</tr>
 									<tr>
 										<th>申请日期</th>
@@ -102,7 +108,7 @@
 									</tr>
 									<tr>
 										<th>受理日期</th>
-										<td class="required">
+										<td>
 											<input type="text" name="accept_date" id="accept_date" value="<fmt:formatDate value="${pr.acceptDate}" pattern="yyyy-MM-dd"/>" 
 													class="form-control form-date" placeholder="受理时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 										</td>
@@ -110,7 +116,7 @@
 									</tr>
 									<tr>
 										<th>下证日期</th>
-										<td class="required">
+										<td>
 											<input type="text" name="down_date" id="down_date" value="<fmt:formatDate value="${pr.downDate}" pattern="yyyy-MM-dd"/>" 
 													class="form-control form-date" placeholder="下证时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 										</td>
@@ -144,6 +150,43 @@
 												<option ${pr.state=='4'?'selected="selected"':'' } value="4">已受理</option>
 												<option ${pr.state=='5'?'selected="selected"':'' } value="5">已下证</option>
 												<option ${pr.state=='0'?'selected="selected"':'' } value="0">已删除</option>
+											</select>
+										<td></td>
+									</tr>
+									<tr>
+										<th>付款状态</th>
+										<td class="required">
+											<select class="form-control chosen chosen-select" name="payment" id="payment">
+												<option ${pr.payment=='1'?'selected="selected"':'' } value="1">未付款、未提交申请</option>
+												<option ${pr.payment=='2'?'selected="selected"':'' } value="2">未付款、已提交申请</option>
+												<option ${pr.payment=='3'?'selected="selected"':'' } value="2">已付款</option>
+											</select>
+										<td></td>
+									</tr>
+									<tr>
+										<th>发票状态</th>
+										<td class="required">
+											<select class="form-control chosen chosen-select" name="invoice" id="invoice">
+												<option ${pr.invoice=='1'?'selected="selected"':'' } value="1">未开发票</option>
+												<option ${pr.invoice=='2'?'selected="selected"':'' } value="2">已开发票</option>
+											</select>
+										<td>注：发票为代理公司开具的收据。</td>
+									</tr>
+									<tr>
+										<th>收据状态</th>
+										<td class="required">
+											<select class="form-control chosen chosen-select" name="receipt" id="receipt">
+												<option ${pr.receipt=='1'?'selected="selected"':'' } value="1">未开收据</option>
+												<option ${pr.receipt=='2'?'selected="selected"':'' } value="2">已开收据</option>
+											</select>
+										<td>注：收据为国家知识产权局开具的收据。</td>
+									</tr>
+									<tr>
+										<th>是否有全部文档</th>
+										<td class="required">
+											<select class="form-control chosen chosen-select" name="is_all_doc" id="is_all_doc">
+												<option ${pr.isAllDoc=='1'?'selected="selected"':'' } value="1">否</option>
+												<option ${pr.isAllDoc=='2'?'selected="selected"':'' } value="2">是</option>
 											</select>
 										<td></td>
 									</tr>

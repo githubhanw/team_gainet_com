@@ -146,11 +146,8 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toaddproject?project_id=${project_id}" class="btn">继续创建模块</a> 
 								<a href="team/task/toAdd" class="btn">建任务</a> 
-								<a href="team/task/toAdd" class="btn">批量建任务</a> 
 								<a href="team/need/index" class="btn">返回模块列表</a>
-								<a href="team/need/toEachAdd?project_id=${project_id}" class="btn">返回本项目模块列表</a>
 							</div>
 						</div>
 					</div>
@@ -210,7 +207,7 @@ $("#submit").click(function(){
          contentType:false,
          success:function(data){
         	 if(data.code == 0){
-       			 window.location.href="team/need/toEachAdd?project_id="+project_id;
+       			 window.location.href="team/need/index";
      			$("#msg").text(data.message);
      			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
      		}else{

@@ -304,8 +304,7 @@
 													<a href="my/need/toRelate?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关联月会议"><i class='icon icon-sitemap'></i></a>
 												</c:if>
 												<c:if test="${need.state == 1 || need.state == 2}">
-												<a href="my/need/toChange?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="${need.full == 0?'完善模块':'模块变更'}"><i class="icon-story-change icon-fork"></i></a>
-												<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i></a>
+													<a href="my/need/toClose?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="关闭模块"><i class='icon-task-close icon-off'></i></a>
 												</c:if>
 												<c:if test="${need.full == 1}">
 													<c:if test="${need.state == 1}">

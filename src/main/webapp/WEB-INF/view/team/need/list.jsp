@@ -306,7 +306,9 @@
 											<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${need.checked_time}" pattern="yyyy-MM-dd HH:mm" /></td>
 											<td class="c-assignedTo has-btn text-center">
 												${need.state == 0 ? '已删除' : need.state == 1 ? '未开始' : need.state == 2 ? '进行中'
-												 : need.state == 3 ? '待验收' : need.state == 4 ? '已验收' : need.state == 5 ? '已关闭' : need.state == 6 ? '待安排' : '未知'}
+												 : need.state == 3 ? '待验收' : need.state == 4 ? '已验收' : need.state == 5 ? '已关闭' 
+												 : need.state == 6 ? '待安排' : need.state == 7 ? '待确定' : need.state == 8 ? '待谈判' 
+												 : need.state == 9 ? '谈判失败' : '未知'}
 										        <c:if test="${need.overdue==1}">
 												    <span class="label label-danger" title="任务已逾期">逾</span>
 											    </c:if>
@@ -394,10 +396,10 @@
 													<a href="team/need/toSure?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认新需求">确认</i></a>
 													<a href="team/need/toAddPJSon?need_id=${need.id}&project_id=${need.project_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
 												</c:if>
-												<c:if test="${need.state == 8}">
+												<%-- <c:if test="${need.state == 8}">
 													<a href="team/need/toTalk?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认谈判结果">谈判</i></a>
 													<a href="team/need/toAddPJSon?need_id=${need.id}&project_id=${need.project_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
-												</c:if>
+												</c:if> --%>
 											</td>
 										</tr>
 										<c:if test="${need.resolved == 1 && (prm.type == 20 || prm.type == 21)}">
@@ -441,7 +443,9 @@
 														<td class="c-assignedTo has-btn text-center"><fmt:formatDate value="${subNeed.checked_time}" pattern="yyyy-MM-dd HH:mm" /></td>
 														<td class="c-assignedTo has-btn text-center">
 														        ${subNeed.state == 0 ? '已删除' : subNeed.state == 1 ? '未开始' : subNeed.state == 2 ? '进行中'
-													            : subNeed.state == 3 ? '待验收' : subNeed.state == 4 ? '已验收' : subNeed.state == 5 ? '已关闭' : subNeed.state == 6 ? '待安排' : '未知'}
+													            : subNeed.state == 3 ? '待验收' : subNeed.state == 4 ? '已验收' : subNeed.state == 5 ? '已关闭'
+													            : subNeed.state == 6 ? '待安排' : subNeed.state == 7 ? '待确定' : subNeed.state == 8 ? '待谈判' 
+													            : subNeed.state == 9 ? '谈判失败' : '未知'}
 													            <c:if test="${subNeed.overdue==1}">
 													               <span class="label label-danger" title="任务已逾期">逾</span>
 												                </c:if>

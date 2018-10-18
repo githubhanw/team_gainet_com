@@ -41,6 +41,25 @@ public class MyBugController extends GiantBaseController {
 	}
 	
 	/**
+	 * 跳转详情页面
+	 */
+	@RequestMapping("/toDetail")
+	public String toDetail(@RequestParam Map<String, String> mvm, Model model) {
+		model.addAttribute("need", testBugService.getNeed());
+		model.addAttribute("need_id", GiantUtil.intOf(mvm.get("need_id"), 0));
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("t", t);
+			Task task = (Task) testBugService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(t.getTaskid(), 0));
+			model.addAttribute("taskName", task.getTaskName());
+		}
+		publicResult(model);
+		model.addAttribute("s", "add");//子模块
+		return "test/bug/detail";
+	}
+	
+	/**
 	 * 跳转添加BUG页面
 	 */
 	@RequestMapping("/toAdd")

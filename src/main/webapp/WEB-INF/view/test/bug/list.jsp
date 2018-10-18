@@ -221,7 +221,9 @@
 										<c:forEach items="${pageList.pageResult}" var="bug" varStatus="sta">
 										<tr>
 											<td class="c-id cell-id text-center">${bug.id}</td>
-											<td class="c-pri text-left">${bug.bugdes}</td>
+											<td class="c-pri text-left">
+												<a href="test/bug/toDetail?id=${bug.id}">${bug.bugdes}</a>
+											</td>
 											<td class="c-pri text-center">
 												<a href="team/task/detail?id=${bug.taskid}">${bug.taskid}</a>
 											</td>

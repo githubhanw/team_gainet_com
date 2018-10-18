@@ -122,6 +122,18 @@
 									<td>${t.kaifamark}</td>
 									<td></td>
 								</tr>
+								<c:if test="${t.checkId != null && t.checkId!= ''}">
+								<tr>
+									<th>解决方案【不是问题】审核人:</th>
+									<td>${t.checkName}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>解决方案【不是问题】审核人描述:</th>
+									<td>${t.checkmark}</td>
+									<td></td>
+								</tr>
+								</c:if>
 								<tr>
 									<th>BUG创建时间:</th>
 									<td>${t.createtime}</td>
@@ -130,6 +142,11 @@
 								<tr>
 									<th>BUG解决时间:</th>
 									<td>${t.solvetime}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>BUG验证时间:</th>
+									<td>${t.validatetime}</td>
 									<td></td>
 								</tr>
 								</form>

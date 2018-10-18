@@ -72,11 +72,36 @@ public class ProjectResultService extends GiantBaseService{
 				arr[6] = map.get("down_date") != null ? map.get("down_date").toString() : "";
 				arr[7] = map.get("company") != null ? map.get("company").toString() : "";
 				String state = map.get("state") != null ? map.get("state").toString() : "";
-				arr[8] = "".equals(state) ? ""
-						: "0".equals(state) ? "已删除"
-								: "1".equals(state) ? "待撰写"
-										: "2".equals(state) ? "撰写中"
-												: "3".equals(state) ? "已提交" : "4".equals(state) ? "已受理" : "未知";
+				arr[8] = "已删除";
+				switch(state) {
+				case "1":
+					arr[8] = "待撰写";
+					break;
+				case "2":
+					arr[8] = "撰写中";
+					break;
+				case "3":
+					arr[8] = "已撰写";
+					break;
+				case "4":
+					arr[8] = "已提综管";
+					break;
+				case "5":
+					arr[8] = "已提代理";
+					break;
+				case "6":
+					arr[8] = "代理受理";
+					break;
+				case "7":
+					arr[8] = "代理完成";
+					break;
+				case "8":
+					arr[8] = "受理通知书";
+					break;
+				case "9":
+					arr[8] = "已下证";
+					break;
+				}
 				HSSFRow rowRow = sheet.createRow(i + 1);
 				rowRow.setHeightInPoints(20);
 				for (int j = 0; j < arr.length; j++) {

@@ -738,10 +738,17 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		if(!teamNeedService.isCanOperation(mvm)) {
-			json.put("code",1);
-			json.put("message", "不能对该模块进行验收操作");
-			return;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			Integer parentId = n.getParentId();
+			TaskNeed parentNeed = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), parentId);
+			Integer assignedId = parentNeed.getAssignedId();
+			//子模块的验收人需为父模块的指派人
+			if (!teamNeedService.isCurrentMember(assignedId)) {
+				json.put("code",1);
+				json.put("message", "不能对该模块进行验收操作");
+				return;
+			}
 		}
 		
 		boolean flag = teamNeedService.check(mvm);

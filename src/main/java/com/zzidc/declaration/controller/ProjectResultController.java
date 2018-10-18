@@ -1,9 +1,13 @@
 package com.zzidc.declaration.controller;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +38,48 @@ public class ProjectResultController extends GiantBaseController {
 		model.addAttribute("m", "pd");//模块
 		model.addAttribute("s", "result");//子模块
 		model.addAttribute("u", requestURL);//请求地址
+	}
+	
+	/**
+	 * 成果列表导出为excel
+	 * @param mvm
+	 * @param response
+	 */
+	@RequestMapping("/exportResult")
+	public void exportResult(@RequestParam Map<String, String> mvm, HttpServletResponse response) {
+		if(conditionPage == null){
+			conditionPage = new GiantPager();
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
+			mvm.put("orderColumn", "pr.id");
+			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
+			mvm.put("type", "2");
+		}
+		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
+			mvm.put("search", "");
+		}
+		
+		Map<String, String> queryCondition = conditionPage.getQueryCondition();
+		//查询条件封装
+		queryCondition.clear();
+		queryCondition.putAll(mvm);
+		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
+		conditionPage.setPageSize(10000);
+		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
+		pageList = projectResultService.getPageList(conditionPage);
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		projectResultService.exportResult(pageList, workbook);////导出excel表格       
+        try {
+			response.setHeader("Content-disposition", "attachment; filename=" + new String("成果列表".getBytes("gb2312" ), "ISO8859-1") + ".xls");
+			response.setContentType("application/msexcel");
+			OutputStream out = response.getOutputStream();
+			workbook.write(out);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

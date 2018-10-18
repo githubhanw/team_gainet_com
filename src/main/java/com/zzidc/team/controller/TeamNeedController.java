@@ -410,7 +410,6 @@ public class TeamNeedController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 	
-
 	/**
 	 * 跳转确认需求页面
 	 */
@@ -443,6 +442,49 @@ public class TeamNeedController extends GiantBaseController {
 			return;
 		}
 		boolean flag = teamNeedService.sure(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
+	
+	/**
+	 * 跳转谈判页面
+	 */
+	@RequestMapping("/toTalk")
+	public String toTalk(@RequestParam Map<String, String> mvm, Model model) {
+		//添加模块页面的项目列表
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			TaskProject tp =  (TaskProject) teamNeedService.getEntityByPrimaryKey(new TaskProject(),n.getProjectId());
+			List<Map<String, Object>> needList = teamNeedService.getNeedList(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("needList", needList);
+			model.addAttribute("tp", tp);
+			model.addAttribute("n", n);
+		}
+		publicResult(model);
+		return "team/need/talk";
+	}
+
+	/**
+	 * 确认谈判结果
+	 */
+	@RequestMapping("/talk")
+	public void talk(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("isSuccess")) || GiantUtil.isEmpty(mvm.get("confirm_need_remark")) || GiantUtil.isEmpty(mvm.get("confirm_period")) 
+				|| GiantUtil.isEmpty(mvm.get("confirm_offer"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = teamNeedService.talk(mvm);
 		if(flag){
 			json.put("code",0);
 			json.put("message", "操作成功");

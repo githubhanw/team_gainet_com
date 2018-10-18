@@ -41,7 +41,7 @@
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
 									<th>模块描述</th>
-									<td class="required"  style="width: 70%;" >
+									<td style="width:70%" >
 										<c:if test="${n.needRemark != null && n.needRemark != ''}">
 											${n.needRemark}
 										</c:if>
@@ -53,7 +53,7 @@
 								</tr>
 								<tr>
 									<th>验收标准</th>
-									<td class="required"  style="width: 70%;" >
+									<td>
 										<c:if test="${n.checkRemark != null && n.checkRemark != ''}">
 											${n.checkRemark}
 										</c:if>
@@ -66,7 +66,7 @@
 								<c:if test="${n.state!=0 }">
 								<tr>
 								    <th>原型图&nbsp;&nbsp;</th>
-								    <td class="required"  style="width: 70%;" >
+								    <td>
 									    <c:if test="${n.interfaceImg !=null }">
 										<c:forEach items="${fn:split(n.interfaceImg, ',')}" var="inter" varStatus="sta">
 											<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
@@ -91,7 +91,7 @@
 								</tr>
 								<tr>
 								    <th>流程图&nbsp;&nbsp;</th>
-								    <td class="required"  style="width: 70%;" >
+								    <td>
 									    <c:if test="${n.flowImg != null}">
 										<c:forEach items="${fn:split(n.flowImg, ',')}" var="flow" varStatus="sta">
 											<c:if test="${fn:contains(flow,'.BMP')==true || fn:contains(flow,'.JPEG')==true || fn:contains(flow,'.GIF')==true || 
@@ -117,7 +117,7 @@
 								</c:if>
 								<tr>
 									<th>安排给</th>
-									<td class="required"  style="width: 70%;" >
+									<td class="required">
 										<select data-placeholder="安排给" class="form-control chosen-select" name="assigned_id" id="assigned_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">

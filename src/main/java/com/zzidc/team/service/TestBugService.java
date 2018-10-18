@@ -48,8 +48,7 @@ public class TestBugService extends GiantBaseService {
 		}
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
-		String sql = "select tb.id, tb.taskid,tb.bugproject,tb.bugdes,tb.bugrank,tb.creater,"
-				+ "tb.developer,tb.solver,tb.solvestatus,tb.createtime,tb.solvetime,t.task_name "
+		String sql = "select tb.*,t.task_name "
 				+ "from test_bug tb left join task t on t.id = tb.taskid where 1=1 ";
 		String countSql = "SELECT COUNT(0) from test_bug tb left join task t on t.id = tb.taskid where 1=1 ";
 		if (conditionPage.getQueryCondition() != null) {

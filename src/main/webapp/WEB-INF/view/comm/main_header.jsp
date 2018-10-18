@@ -16,7 +16,7 @@
 				<li class="divider"></li>
 				<li ${m=='project' || m=='product' || m=='need' || m=='release' || m=='meeting' || m=='task' || m=='apply'?'class="active"':'' } data-id="my"><a href="team/task/index"><span>管理中心</span></a></li> 
 				<li class="divider"></li>
-				<li ${m=='pd'?'class="active"':'' } data-id="doc"><a href="declaration/project/index" ${m=='pd'?'class="active"':'' }>科技申报</a></li>
+				<li ${m=='pd'?'class="active"':'' } data-id="doc"><a href="declaration/result/index" ${m=='pd'?'class="active"':'' }>科技申报</a></li>
 				<li class="divider"></li>
 				<li ${m=='filemanage'?'class="active"':'' } data-id="doc"><a href="filemanage/manage/index" ${m=='filemanage'?'class="active"':'' }>文档</a></li>
 				<!--<li ${(m=='filemanage' && s=='manage')?'class="active"':'' }data-id="filemanage"><a href="filemanage/manage">文档</a></li>

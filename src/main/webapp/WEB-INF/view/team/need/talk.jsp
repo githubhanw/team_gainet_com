@@ -33,7 +33,7 @@
 							<h2>
 								<span class="label label-id">${n.id}</span>
 								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 确认</small>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 谈判</small>
 							</h2>
 						</div>
 						<table class="table table-form">
@@ -78,36 +78,36 @@
 													<c:if test="${n.id!=step.id}">【子模块】${step.need_name}</c:if>
 												</td>
 												<td style="border:1px solid #cbd0db">
-												<c:forEach items="${fn:split(step.interface_img, ',')}" var="inter" varStatus="sta">
-													<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
-																	fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||
-																  fn:contains(inter,'.bmp')==true || fn:contains(inter,'.jpeg')==true || fn:contains(inter,'.gif')==true || 
-																	fn:contains(inter,'.png')==true || fn:contains(inter,'.jpg')==true }">
-														<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${n.needName}【界面原型图】">
-													</c:if>
-													<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
-																	fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
-																  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
-																	fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
-														<a href="${inter}">下载非图片文件</a>
-													</c:if>
-												</c:forEach>
+													<c:forEach items="${fn:split(step.interface_img, ',')}" var="inter" varStatus="sta">
+														<c:if test="${fn:contains(inter,'.BMP')==true || fn:contains(inter,'.JPEG')==true || fn:contains(inter,'.GIF')==true || 
+																		fn:contains(inter,'.PNG')==true || fn:contains(inter,'.JPG')==true ||
+																	  fn:contains(inter,'.bmp')==true || fn:contains(inter,'.jpeg')==true || fn:contains(inter,'.gif')==true || 
+																		fn:contains(inter,'.png')==true || fn:contains(inter,'.jpg')==true }">
+															<img src="${inter}" data-toggle="lightbox" height="50px" data-caption="${n.needName}【界面原型图】">
+														</c:if>
+														<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
+																		fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
+																	  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
+																		fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+															<a href="${inter}">下载非图片文件</a>
+														</c:if>
+													</c:forEach>
 												</td>
 												<td  style="border:1px solid #cbd0db">
-												<c:forEach items="${fn:split(step.flow_img, ',')}" var="flow" varStatus="sta">
-													<c:if test="${fn:contains(flow,'.BMP')==true || fn:contains(flow,'.JPEG')==true || fn:contains(flow,'.GIF')==true || 
-																	fn:contains(flow,'.PNG')==true || fn:contains(flow,'.JPG')==true ||
-																  fn:contains(flow,'.bmp')==true || fn:contains(flow,'.jpeg')==true || fn:contains(flow,'.gif')==true || 
-																	fn:contains(flow,'.png')==true || fn:contains(flow,'.jpg')==true }">
-														<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${n.needName}【流程图】">
-													</c:if>
-													<c:if test="${fn:contains(flow,'.BMP')!=true && fn:contains(flow,'.JPEG')!=true && fn:contains(flow,'.GIF')!=true && 
-																	fn:contains(flow,'.PNG')!=true && fn:contains(flow,'.JPG')!=true &&
-																  fn:contains(flow,'.bmp')!=true && fn:contains(flow,'.jpeg')!=true && fn:contains(flow,'.gif')!=true && 
-																	fn:contains(flow,'.png')!=true && fn:contains(flow,'.jpg')!=true }">
-														<a href="${flow}">下载非图片文件</a>
-													</c:if>
-												</c:forEach>
+													<c:forEach items="${fn:split(step.flow_img, ',')}" var="flow" varStatus="sta">
+														<c:if test="${fn:contains(flow,'.BMP')==true || fn:contains(flow,'.JPEG')==true || fn:contains(flow,'.GIF')==true || 
+																		fn:contains(flow,'.PNG')==true || fn:contains(flow,'.JPG')==true ||
+																	  fn:contains(flow,'.bmp')==true || fn:contains(flow,'.jpeg')==true || fn:contains(flow,'.gif')==true || 
+																		fn:contains(flow,'.png')==true || fn:contains(flow,'.jpg')==true }">
+															<img src="${flow}" data-toggle="lightbox" height="50px" data-caption="${n.needName}【流程图】">
+														</c:if>
+														<c:if test="${fn:contains(flow,'.BMP')!=true && fn:contains(flow,'.JPEG')!=true && fn:contains(flow,'.GIF')!=true && 
+																		fn:contains(flow,'.PNG')!=true && fn:contains(flow,'.JPG')!=true &&
+																	  fn:contains(flow,'.bmp')!=true && fn:contains(flow,'.jpeg')!=true && fn:contains(flow,'.gif')!=true && 
+																		fn:contains(flow,'.png')!=true && fn:contains(flow,'.jpg')!=true }">
+															<a href="${flow}">下载非图片文件</a>
+														</c:if>
+													</c:forEach>
 												</td>
 											</tr>
 											<c:set var="index" value="${index+1}"/>
@@ -129,22 +129,51 @@
 								</tr>
 								<tr>
 									<th>预计工期</th>
-									<td class="required">
-										<input type="text" name="period" id="period" value="<fmt:formatDate value="${n.endDate}" pattern="yyyy-MM-dd"/>" 
-											class="form-control form-date-limit" placeholder="预计工期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									<td>
+										<fmt:formatDate value="${n.endDate}" pattern="yyyy-MM-dd"/>
 									</td>
 								</tr>
 								<tr>
 									<th>成本</th>
-									<td class="required">
-										<input type="text" name="cost" id="cost" class="form-control input-product-title" autocomplete="off">
+									<td>
+										${n.cost}
 									</td>
 									<td></td>
 								</tr>
 								<tr>
 									<th>报价</th>
+									<td>
+										${n.offer}
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>谈判结果</th>
 									<td class="required">
-										<input type="text" name="offer" id="offer" class="form-control input-product-title" autocomplete="off">
+										<label class="radio-inline"><input type="radio" name="isSuccess" value="y" checked="checked" id="passy"> 成功</label>
+										<label class="radio-inline"><input type="radio" name="isSuccess" value="n" id="passn"> 失败</label>
+									</td>
+								</tr>
+								<tr>
+									<th>确认工期</th>
+									<td class="required">
+										<input type="text" name="confirm_period" id="confirm_period" value="<fmt:formatDate value="${n.endDate}" pattern="yyyy-MM-dd"/>" 
+											class="form-control form-date-limit" placeholder="预计工期" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<th>确认报价</th>
+									<td class="required">
+										<input type="text" name="confirm_offer" id="confirm_offer" class="form-control input-product-title" autocomplete="off" value="${n.offer}">
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>确认需求内容</th>
+									<td class="required">
+										<input type="hidden" name="confirm_need_remark">
+										<textarea id="confirm_need_remark" name="details" placeholder="" style="width:100%;">${n.needRemark}</textarea>
+										<div id="confirm_need_remark" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -160,7 +189,7 @@
 								</form>
 								<tr>
 									<td colspan="3" class="text-center form-actions">
-										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
+										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">提交</button>
 										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
 									</td>
 								</tr>
@@ -223,11 +252,13 @@ UE.Editor.prototype.getActionUrl = function(action){
 	}  
 };  
 UE.getEditor('comment');
+UE.getEditor('confirm_need_remark');
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
 	$("input[name='comment']").val(UE.getEditor('comment').getContent());
-	$.ajax({type:"POST",url:"team/need/sure?r=" + Math.random(),data:$("form").serialize(),
+	$("input[name='confirm_need_remark']").val(UE.getEditor('confirm_need_remark').getContent());
+	$.ajax({type:"POST",url:"team/need/talk?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);

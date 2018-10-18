@@ -74,7 +74,6 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="my/test" class="btn">返回测试单列表</a>
-								<a href="my/test/detail" class="btn">测试单详情</a>
 							</div>
 						</div>
 					</div>

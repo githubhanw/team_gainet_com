@@ -966,6 +966,18 @@ public class GiantBaseService {
 		}
 		return list;
 	}
+
+	/**
+	 * 获取所有人员列表(包含已离职)
+	 */
+	public List<Map<String, Object>> getAllMembers(){
+		String sql = "select id, name, number, status from member";
+		List<Map<String, Object>> list = dao.getMapListBySQL(sql, null);
+		if(list == null) {
+			list = new ArrayList<Map<String, Object>>();
+		}
+		return list;
+	}
 	
 	/**
 	 * [更新任务的父任务状态] <br>

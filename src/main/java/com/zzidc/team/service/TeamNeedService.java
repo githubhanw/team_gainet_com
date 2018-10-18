@@ -876,7 +876,7 @@ public class TeamNeedService extends GiantBaseService{
 	 */
 	public List<Map<String, Object>> getNeedList(int needId){
 		List<Map<String, Object>> testCase = new ArrayList<Map<String, Object>>();
-		String sql = "SELECT need_name,interface_img,flow_img FROM task_need WHERE state!=0 AND parent_id=" + needId;
+		String sql = "SELECT id,need_name,interface_img,flow_img FROM task_need WHERE state!=0 AND (id="+needId+" OR parent_id=" + needId+")";
 		testCase = super.getMapListBySQL(sql, null);
 		return testCase;
 	}
@@ -907,6 +907,50 @@ public class TeamNeedService extends GiantBaseService{
 				this.log(pmLog);
 			}
 			return b; 
+		}
+		return false;
+	}
+	
+	
+	/**
+	 * 确认谈判
+	 */
+	public boolean talk(Map<String, String> mvm) {
+		TaskNeed n = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			n = (TaskNeed) super.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.SURETALK, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+			TaskNeed oldT = new TaskNeed();
+			BeanUtils.copyProperties(n, oldT);
+			if (GiantUtil.isEmpty(mvm.get("isSuccess")) || "n".equals(mvm.get("isSuccess"))) {
+				try {//确认工期时间
+					n.setConfirmPeriod(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("confirm_period")));
+				} catch (ParseException e) {
+					n.setConfirmPeriod(new Date());
+				}
+				n.setConfirmOffer(Double.parseDouble(mvm.get("confirm_offer")));
+				n.setConfirmNeedRemark(String.valueOf(mvm.get("confirm_need_remark")));
+				n.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				n.setState((short)9);
+				return super.dao.saveUpdateOrDelete(n, null);
+			} else {
+				try {//确认工期时间
+					n.setConfirmPeriod(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("confirm_period")));
+				} catch (ParseException e) {
+					n.setConfirmPeriod(new Date());
+				}
+				n.setConfirmOffer(Double.parseDouble(mvm.get("confirm_offer")));
+				n.setConfirmNeedRemark(String.valueOf(mvm.get("confirm_need_remark")));
+				n.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				n.setState((short)6);
+				boolean b = super.dao.saveUpdateOrDelete(n, null);
+				if (b) {
+					pmLog.add(n.getId(), oldT, n,"confirm_need_remark","confirm_period","confirm_offer");
+					this.log(pmLog);
+				}
+				return b; 
+			}
 		}
 		return false;
 	}

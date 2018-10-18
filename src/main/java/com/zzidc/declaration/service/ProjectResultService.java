@@ -67,9 +67,6 @@ public class ProjectResultService extends GiantBaseService{
 				sql += "AND pr.state=:state ";
 				countSql += "AND pr.state=:state ";
 				conditionMap.put("state", temp);
-			} else {
-				sql += "AND pr.state>0 ";
-				countSql += "AND pr.state>0 ";
 			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("start_date"))) {
 				String dateType = "";
@@ -133,6 +130,11 @@ public class ProjectResultService extends GiantBaseService{
 				} else if ("9".equals(temp)) {//专利
 					sql += "AND pr.type IN (2,3,4)";
 					countSql += "AND pr.type IN (2,3,4)";
+				} else {
+					if (StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("state"))) {
+						sql += "AND pr.state>0 ";
+						countSql += "AND pr.state>0 ";
+					}
 				}
 			}
 		}

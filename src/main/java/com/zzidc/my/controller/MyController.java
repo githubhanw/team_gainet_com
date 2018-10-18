@@ -130,6 +130,7 @@ public class MyController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "tb.id");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "6");
@@ -145,7 +146,7 @@ public class MyController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = testBugService.getPageList(conditionPage);
-		requestURL = "my/bug?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "my/bug";
 		pageList.setDesAction(requestURL);
 		model.addAttribute("members", testBugService.getAllMember());
 		model.addAttribute("pageList", pageList);

@@ -362,11 +362,11 @@
 												${result.receipt == 1 ? '<span class="label label-dot label-danger"></span> 未开' : result.receipt == 2 ? '<span class="label label-dot label-success"></span> 已开' : '未知'}
 											</td>
 											<td class="c-actions text-center">
-												<c:if test="${result.state>0 && result.state<6}">
+												<c:if test="${result.state>0 && result.state<10}">
 													<a href="declaration/result/toAdd?id=${result.id}" class="btn" title="修改">修改</a>
 													<a href="javascript:void(0)" onclick="del(${result.id})" class="btn" title="删除">删除</a>
 												</c:if>
-												<c:if test="${result.state<1 || result.state>5}">--</c:if>
+												<c:if test="${result.state<1 || result.state>9}">--</c:if>
 											</td>
 										</tr>
 										</c:forEach>

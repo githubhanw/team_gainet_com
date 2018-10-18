@@ -38,10 +38,10 @@
 								<tr>
 									<th>解决方案</th>
 									<td class="required">
-										<select class="form-control chosen chosen-select" name="solution" id="solution">
+										<select class="form-control chosen chosen-select" name="solution" id="solution" onchange="gradeChange()">
 											<option ${t.solution=='0'?'selected="selected"':'' } value="0">问题已修复</option>
 											<option ${t.solution=='1'?'selected="selected"':'' } value="1">重复问题</option>
-											<option ${t.solution=='2'?'selected="selected"':'' } value="2">不是问题</option>
+											<option ${t.solution=='2'?'selected="selected"':'' } value="2">不是问题【需审核】</option>
 											<option ${t.solution=='3'?'selected="selected"':'' } value="3">需求如此</option>
 											<option ${t.solution=='4'?'selected="selected"':'' } value="4">延期处理</option>
 										</select>
@@ -58,6 +58,18 @@
 										</select>
 										<span class="help-block">(注意:解决人应是修复bug的开发人员。)</span>
 										<input type="hidden" name="id" value="${t.id}"/>
+									</td>
+									<td></td>
+								</tr>
+								<tr id="hid">
+									<th>审核人</th>
+									<td class="required">
+										<select data-placeholder="请选择不是问题的BUG审核人" class="form-control chosen-select" name="check_id" id="check_id">
+											<option value=""></option>
+											<c:forEach items="${members}" var="member" varStatus="sta">
+												<option value="${member.id}">${member.name}(${member.number})</option>
+											</c:forEach>
+										</select>
 									</td>
 									<td></td>
 								</tr>
@@ -135,6 +147,20 @@ UE.Editor.prototype.getActionUrl = function(action){
 	}  
 };  
 UE.getEditor('kaifamark');
+
+//判断是否隐藏-不是问题的bug审核人
+$(function(){
+	$("#hid").hide();
+})
+function gradeChange(){
+    var objS = $("#solution").val();
+    var id = ${t.id};
+    if (objS == 2) {
+    	$("#hid").show();
+	}else{
+		$("#hid").hide();
+	}
+}
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;

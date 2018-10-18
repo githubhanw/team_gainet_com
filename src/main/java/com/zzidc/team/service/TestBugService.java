@@ -298,19 +298,38 @@ public class TestBugService extends GiantBaseService {
 	 */
 	public boolean solve(Map<String, String> mvm) {
 		TestBug t = null;
-		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
-			//获取对象
-			t = (TestBug) super.dao.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
-			Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("solver_id"), 0));
-			t.setSolverId(member == null ? 0 : member.getId());
-			t.setSolver(member == null ? "" : member.getName());
-			t.setSolution(Integer.valueOf(mvm.get("solution")));
-			t.setSolvestatus(1);
-			t.setKaifamark(mvm.get("kaifamark"));
-			t.setSolvetime(new Timestamp(System.currentTimeMillis()));
-			return super.dao.saveUpdateOrDelete(t, null);
+		if ("2".equals(mvm.get("solution")) && !GiantUtil.isEmpty(mvm.get("check_id"))) {
+			if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+				//获取对象 
+				t = (TestBug) super.dao.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
+				Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("solver_id"), 0));
+				t.setSolverId(member == null ? 0 : member.getId());
+				t.setSolver(member == null ? "" : member.getName());
+				t.setSolution(Integer.valueOf(mvm.get("solution")));
+				t.setSolvestatus(4);
+				t.setKaifamark(mvm.get("kaifamark"));
+				t.setSolvetime(new Timestamp(System.currentTimeMillis()));
+				Member check = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("check_id"), 0));
+				t.setCheckId(check == null ? 0 : check.getId());
+				t.setCheckName(check == null ? "" : check.getName());
+				return super.dao.saveUpdateOrDelete(t, null);
+			}
+			return false;
+		}else {
+			if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+				//获取对象
+				t = (TestBug) super.dao.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
+				Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("solver_id"), 0));
+				t.setSolverId(member == null ? 0 : member.getId());
+				t.setSolver(member == null ? "" : member.getName());
+				t.setSolution(Integer.valueOf(mvm.get("solution")));
+				t.setSolvestatus(1);
+				t.setKaifamark(mvm.get("kaifamark"));
+				t.setSolvetime(new Timestamp(System.currentTimeMillis()));
+				return super.dao.saveUpdateOrDelete(t, null);
+			}
+			return false;
 		}
-		return false;
 	}
 
 	/**
@@ -323,6 +342,22 @@ public class TestBugService extends GiantBaseService {
 			t = (TestBug) super.dao.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
 			t.setSolvestatus(2);
 			t.setValidatetime(new Timestamp(System.currentTimeMillis()));
+			return super.dao.saveUpdateOrDelete(t, null);
+		}
+		return false;
+	}
+
+	/**
+	 * 审核不是问题的BUG
+	 */
+	public boolean checkbug(Map<String, String> mvm) {
+		TestBug t = null;
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			t = (TestBug) super.dao.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
+			t.setSolution(Integer.parseInt(mvm.get("solution")));
+			t.setSolvestatus(1);
+			t.setCheckmark(mvm.get("checkmark"));
 			return super.dao.saveUpdateOrDelete(t, null);
 		}
 		return false;

@@ -228,7 +228,9 @@
 											<td class="c-name text-left">
 												<span class="${bug.solvestatus == 0 ? 'status-wait' : bug.solvestatus == 1 ? 'status-doing' : bug.solvestatus == 2 ? 'status-done' : bug.solvestatus == 3 ? 'status-cancel':''}">
 													<span class="label label-dot"></span>
-													${bug.solvestatus == 0 ? '待处理' : bug.solvestatus == 1 ? '待验证' : bug.solvestatus == 2 ? '已验证' : bug.solvestatus == 3 ? '已删除':'未知'}
+													${bug.solvestatus == 0 ? '待处理' : bug.solvestatus == 1 ? '待验证' 
+													: bug.solvestatus == 2 ? '已验证' : bug.solvestatus == 3 ? '已删除'
+													: bug.solvestatus == 4 ? '待审核':'未知'}
 												</span>
 											</td>
 											<td class="c-pri text-center">
@@ -262,6 +264,9 @@
 											</c:if>
 											<c:if test="${bug.solvestatus==3}">
 												无操作
+											</c:if>
+											<c:if test="${bug.solvestatus==4}">
+												<a href="test/bug/toCheckBug?id=${bug.id}" class="btn" title="审核"><i class='icon-task-close'>审</i></a>
 											</c:if>
 											</td>
 										</tr>

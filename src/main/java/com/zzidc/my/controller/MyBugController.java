@@ -109,6 +109,12 @@ public class MyBugController extends GiantBaseController {
 			json.put("message", "参数不足");
 			resultresponse(response,json);
 			return;
+		}		
+		if (!GiantUtil.isEmpty(mvm.get("solution")) && "2".equals(mvm.get("solution")) && GiantUtil.isEmpty(mvm.get("check_id"))) {
+			json.put("code",1);
+			json.put("message", "不是问题的BUG,必须选定审核人!");
+			resultresponse(response,json);
+			return;
 		}
 		boolean flag = testBugService.solve(mvm);
 		if(flag){
@@ -216,6 +222,48 @@ public class MyBugController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-
+	
+	/**
+	 * bug审核(不是问题的bug)
+	 */
+	@RequestMapping("/toCheckBug")
+	public String toCheckBug(@RequestParam Map<String, String> mvm, Model model) {
+		model.addAttribute("task", testBugService.getFinishedTasksByMember());
+		model.addAttribute("members", testBugService.getAllMember());
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TestBug t = (TestBug) testBugService.getEntityByPrimaryKey(new TestBug(), GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("t", t);
+			model.addAttribute("taskId", t.getTaskid());
+			Task task = (Task) testBugService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(t.getTaskid(), 0));
+			model.addAttribute("taskName", task.getTaskName());
+		}
+		publicResult(model);
+		model.addAttribute("s", "add");//子模块
+		return "my/bug/checkbug";
+	}
+	
+	/**
+	 * 审核bug
+	 */
+	@RequestMapping("/checkbug")
+	public void checkBug(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.isEmpty(mvm.get("solution")) || GiantUtil.isEmpty(mvm.get("checkmark"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
+		}
+		boolean flag = testBugService.checkbug(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "审核成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "审核失败");
+		}
+		resultresponse(response,json);
+	}
 
 }

@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * TestBug entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "test_bug")
+@Table(name = "test_bug", catalog = "team_gainet_com")
 public class TestBug implements java.io.Serializable {
 
 	// Fields
@@ -20,6 +20,7 @@ public class TestBug implements java.io.Serializable {
 	private Integer id;
 	private Integer taskid;
 	private String tasktype;
+	private Integer productId;
 	private Integer projectId;
 	private Integer needId;
 	private String bugproject;
@@ -28,6 +29,9 @@ public class TestBug implements java.io.Serializable {
 	private Integer bugtype;
 	private String bugtypefen;
 	private String bugdes;
+	private Integer checkId;
+	private String checkName;
+	private String checkmark;
 	private Integer createrId;
 	private String creater;
 	private Integer developerId;
@@ -52,16 +56,18 @@ public class TestBug implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public TestBug(Integer taskid, String tasktype, Integer projectId,
-			Integer needId, String bugproject, Integer bugrank, Integer bugfen,
-			Integer bugtype, String bugtypefen, String bugdes,
-			Integer createrId, String creater, Integer developerId,
-			String developer, Integer solverId, String solver,
-			Integer solution, Integer solvestatus, String mark,
+	public TestBug(Integer taskid, String tasktype, Integer productId,
+			Integer projectId, Integer needId, String bugproject,
+			Integer bugrank, Integer bugfen, Integer bugtype,
+			String bugtypefen, String bugdes, Integer checkId, String checkName,
+			String checkmark, Integer createrId, String creater,
+			Integer developerId, String developer, Integer solverId,
+			String solver, Integer solution, Integer solvestatus, String mark,
 			String kaifamark, Timestamp createtime, Timestamp solvetime,
 			Timestamp validatetime, String header, String leader, String taskdes) {
 		this.taskid = taskid;
 		this.tasktype = tasktype;
+		this.productId = productId;
 		this.projectId = projectId;
 		this.needId = needId;
 		this.bugproject = bugproject;
@@ -70,6 +76,9 @@ public class TestBug implements java.io.Serializable {
 		this.bugtype = bugtype;
 		this.bugtypefen = bugtypefen;
 		this.bugdes = bugdes;
+		this.checkId = checkId;
+		this.checkName = checkName;
+		this.checkmark = checkmark;
 		this.createrId = createrId;
 		this.creater = creater;
 		this.developerId = developerId;
@@ -116,6 +125,15 @@ public class TestBug implements java.io.Serializable {
 
 	public void setTasktype(String tasktype) {
 		this.tasktype = tasktype;
+	}
+
+	@Column(name = "product_id")
+	public Integer getProductId() {
+		return this.productId;
+	}
+
+	public void setProductId(Integer productId) {
+		this.productId = productId;
 	}
 
 	@Column(name = "project_id")
@@ -188,6 +206,33 @@ public class TestBug implements java.io.Serializable {
 
 	public void setBugdes(String bugdes) {
 		this.bugdes = bugdes;
+	}
+
+	@Column(name = "check_id")
+	public Integer getCheckId() {
+		return this.checkId;
+	}
+
+	public void setCheckId(Integer checkId) {
+		this.checkId = checkId;
+	}
+
+	@Column(name = "check_name", length = 32)
+	public String getCheckName() {
+		return this.checkName;
+	}
+
+	public void setCheckName(String checkName) {
+		this.checkName = checkName;
+	}
+
+	@Column(name = "checkmark")
+	public String getCheckmark() {
+		return this.checkmark;
+	}
+
+	public void setCheckmark(String checkmark) {
+		this.checkmark = checkmark;
 	}
 
 	@Column(name = "creater_id")

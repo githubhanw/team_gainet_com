@@ -15,7 +15,7 @@
 		<base href="<%=basePath%>" />
 		<meta name="renderer" content="webkit">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>解决BUG</title>
+		<title>不是问题的BUG审核</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
 	</head>
 	<body>
@@ -30,61 +30,106 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>解决BUG</h2>
+							<h2>不是问题的BUG审核</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
+								<tr>
+									<th>任务id:</th>
+									<td class="required">${t.taskid}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>任务名称:</th>
+									<td>${taskName}<input type="hidden" name="id" value="${t.id}"/></td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>BUG标题:</th>
+									<td class="required">${t.bugdes}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>bug产品:</th>
+									<td class="required">${t.bugproject}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>BUG描述</th>
+									<td>${t.mark}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>BUG等级:</th>
+									<td class="required">
+										<c:if test="${t.bugrank=='0'}">A</c:if>
+										<c:if test="${t.bugrank=='1'}">B</c:if>
+										<c:if test="${t.bugrank=='2'}">C</c:if>
+										</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>BUG分类:</th>
+									<td class="required">
+										<c:if test="${t.bugfen=='0'}">正常</c:if>
+										<c:if test="${t.bugfen=='1'}">线上bug</c:if>
+										<c:if test="${t.bugfen=='2'}">线上线下bug</c:if>
+										</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>BUG类型:</th>
+									<td class="required">
+										<c:if test="${t.bugtype=='0'}">功能类</c:if>
+										<c:if test="${t.bugtype=='1'}">安全类</c:if>
+										<c:if test="${t.bugtype=='2'}">界面类</c:if>
+										<c:if test="${t.bugtype=='3'}">信息类</c:if>
+										<c:if test="${t.bugtype=='4'}">数据类</c:if>
+										<c:if test="${t.bugtype=='5'}">流程类</c:if>
+										<c:if test="${t.bugtype=='6'}">需求问题</c:if>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>创建者:</th>
+									<td class="required">${t.creater}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>开发者:</th>
+									<td class="required">${t.developer}</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>解决人:</th>
+									<td class="required">${t.solver}</td>
+									<td></td>
+								</tr>
 								<tr>
 									<th>解决方案</th>
 									<td class="required">
 										<select class="form-control chosen chosen-select" name="solution" id="solution" onchange="gradeChange()">
 											<option ${t.solution=='0'?'selected="selected"':'' } value="0">问题已修复</option>
 											<option ${t.solution=='1'?'selected="selected"':'' } value="1">重复问题</option>
-											<option ${t.solution=='2'?'selected="selected"':'' } value="2">不是问题【需审核】</option>
+											<option ${t.solution=='2'?'selected="selected"':'' } value="2">不是问题</option>
 											<option ${t.solution=='3'?'selected="selected"':'' } value="3">需求如此</option>
 											<option ${t.solution=='4'?'selected="selected"':'' } value="4">延期处理</option>
 										</select>
 									<td></td>
 								</tr>
 								<tr>
-									<th>解决人</th>
+									<th>审核描述</th>
 									<td class="required">
-										<select data-placeholder="请选择bug解决人" class="form-control chosen-select" name="solver_id" id="solver_id">
-											<option value=""></option>
-											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}" ${member.id==loginId?'selected="selected"':''}>${member.name}(${member.number})</option>
-											</c:forEach>
-										</select>
-										<span class="help-block">(注意:解决人应是修复bug的开发人员。)</span>
-									</td>
-									<td></td>
-								<input type="hidden" name="id" value="${t.id}"/>
-								</tr>
-								<tr id="hid">
-									<th>审核人</th>
-									<td class="required">
-										<select data-placeholder="请选择不是问题的BUG审核人" class="form-control chosen-select" name="check_id" id="check_id">
-											<option value=""></option>
-											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
-											</c:forEach>
-										</select>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>描述</th>
-									<td colspan="2">
-										<div id="kaifamark" style="width:100%;">
-											<input type="hidden" name="kaifamark">
+										<div id="checkmark" style="width:100%;">
+											<input type="hidden" name="checkmark">
 										</div>
 									</td>
 								</tr>
 								</form>
 								<tr>
 									<td colspan="3" class="text-center form-actions">
-										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">确认</button>
+										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
 										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
 									</td>
 								</tr>
@@ -109,7 +154,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/bug" class="btn">返回BUG列表</a>
+								<a href="test/bug/index" class="btn">返回BUG列表</a>
 							</div>
 						</div>
 					</div>
@@ -137,7 +182,7 @@
 </html>
 <script>
 var editor = new UE.ui.Editor();
-editor.render("kaifamark");
+editor.render("content");
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
 UE.Editor.prototype.getActionUrl = function(action){  
 	if(action == 'uploadimage' || action == 'uploadscrawl'){  
@@ -146,27 +191,12 @@ UE.Editor.prototype.getActionUrl = function(action){
 		return this._bkGetActionUrl.call(this, action);  
 	}  
 };  
-UE.getEditor('kaifamark');
-
-//判断是否隐藏-不是问题的bug审核人
-$(function(){
-	$("#hid").hide();
-})
-function gradeChange(){
-    var objS = $("#solution").val();
-    var id = ${t.id};
-    if (objS == 2) {
-    	$("#hid").show();
-	}else{
-		$("#hid").hide();
-	}
-}
-
+UE.getEditor('checkmark');
 
 $("#submit").click(function(){
 	$.ajaxSettings.async = false;
-	$("input[name='kaifamark']").val(UE.getEditor('kaifamark').getContent());
-	$.ajax({type:"POST",url:"my/bug/solve?r=" + Math.random(),data:$("form").serialize(),
+	$("input[name='checkmark']").val(UE.getEditor('checkmark').getContent());
+	$.ajax({type:"POST",url:"my/bug/checkbug?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);

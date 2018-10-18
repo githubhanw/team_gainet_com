@@ -14,7 +14,8 @@ import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
-import com.zzidc.team.entity.DeclarationProjectResult;;
+import com.zzidc.team.entity.DeclarationProjectResult;
+import com.zzidc.team.entity.Member;;
 
 /**
  * [说明/描述]
@@ -68,6 +69,26 @@ public class ProjectResultService extends GiantBaseService{
 				countSql += "AND pr.state=:state ";
 				conditionMap.put("state", temp);
 			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("payment"))) {
+				sql += "AND pr.payment=:payment ";
+				countSql += "AND pr.payment=:payment ";
+				conditionMap.put("payment", temp);
+			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("invoice"))) {
+				sql += "AND pr.invoice=:invoice ";
+				countSql += "AND pr.invoice=:invoice ";
+				conditionMap.put("invoice", temp);
+			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("receipt"))) {
+				sql += "AND pr.receipt=:receipt ";
+				countSql += "AND pr.receipt=:receipt ";
+				conditionMap.put("receipt", temp);
+			}
+			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("is_all_doc"))) {
+				sql += "AND pr.is_all_doc=:is_all_doc ";
+				countSql += "AND pr.is_all_doc=:is_all_doc ";
+				conditionMap.put("is_all_doc", temp);
+			}
 			if (!StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("start_date"))) {
 				String dateType = "";
 				if (!StringUtils.isEmpty(dateType = conditionPage.getQueryCondition().get("datetype"))) {
@@ -109,27 +130,39 @@ public class ProjectResultService extends GiantBaseService{
 				} else if ("1".equals(temp)) {//正常
 					sql += "AND pr.state IN (1,2,3,4,5)";
 					countSql += "AND pr.state IN (1,2,3,4,5)";
-				} else if ("3".equals(temp)) {//已下证
-					sql += "AND pr.state=5";
-					countSql += "AND pr.state=5";
-				} else if ("4".equals(temp)) {//待撰写
+				} else if ("11".equals(temp)) {//待撰写
 					sql += "AND pr.state=1";
 					countSql += "AND pr.state=1";
-				} else if ("5".equals(temp)) {//撰写中
+				} else if ("12".equals(temp)) {//撰写中
 					sql += "AND pr.state=2";
 					countSql += "AND pr.state=2";
-				} else if ("6".equals(temp)) {//已提交
+				} else if ("13".equals(temp)) {//已撰写
 					sql += "AND pr.state=3";
 					countSql += "AND pr.state=3";
-				} else if ("7".equals(temp)) {//已受理
+				} else if ("14".equals(temp)) {//已提综管
 					sql += "AND pr.state=4";
 					countSql += "AND pr.state=4";
+				} else if ("15".equals(temp)) {//已提代理
+					sql += "AND pr.state=5";
+					countSql += "AND pr.state=5";
+				} else if ("16".equals(temp)) {//代理受理
+					sql += "AND pr.state=6";
+					countSql += "AND pr.state=6";
+				} else if ("17".equals(temp)) {//代理完成
+					sql += "AND pr.state=7";
+					countSql += "AND pr.state=7";
+				} else if ("18".equals(temp)) {//下通知书
+					sql += "AND pr.state=8";
+					countSql += "AND pr.state=8";
+				} else if ("19".equals(temp)) {//已下证
+					sql += "AND pr.state=9";
+					countSql += "AND pr.state=9";
 				} else if ("8".equals(temp)) {//软著
-					sql += "AND pr.type=1";
-					countSql += "AND pr.type=1";
+					sql += "AND pr.state>0 AND pr.type=1";
+					countSql += "AND pr.state>0 AND pr.type=1";
 				} else if ("9".equals(temp)) {//专利
-					sql += "AND pr.type IN (2,3,4)";
-					countSql += "AND pr.type IN (2,3,4)";
+					sql += "AND pr.state>0 AND pr.type IN (2,3,4)";
+					countSql += "AND pr.state>0 AND pr.type IN (2,3,4)";
 				} else {
 					if (StringUtils.isEmpty(temp = conditionPage.getQueryCondition().get("state"))) {
 						sql += "AND pr.state>0 ";
@@ -173,8 +206,9 @@ public class ProjectResultService extends GiantBaseService{
 		pr.setProjectResultName(GiantUtil.stringOf(mvm.get("project_result_name")));
 		pr.setProjectId(GiantUtil.intOf(mvm.get("project_id"), 0));
 		pr.setType((short)GiantUtil.intOf(mvm.get("type"), 0));
-		pr.setMemberId(GiantUtil.intOf(mvm.get("member_id"), 0));
-		pr.setMemberName(GiantUtil.stringOf(mvm.get("member_name")));
+		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("member_id"), 0));
+		pr.setMemberId(member == null ? 0 : member.getId());
+		pr.setMemberName(member == null ? "" : member.getName());
 		try {
 			pr.setApplyDate(new SimpleDateFormat("yyyy-MM-dd").parse(mvm.get("apply_date")));	
 		} catch (ParseException e) {
@@ -191,7 +225,12 @@ public class ProjectResultService extends GiantBaseService{
 		pr.setAgent(GiantUtil.stringOf(mvm.get("agent")));
 		pr.setVersion(GiantUtil.stringOf(mvm.get("version")));
 		pr.setInventor(GiantUtil.stringOf(mvm.get("inventor")));
+		pr.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		pr.setState((short)GiantUtil.intOf(mvm.get("state"), 0));
+		pr.setPayment(GiantUtil.intOf(mvm.get("payment"), 0));
+		pr.setInvoice(GiantUtil.intOf(mvm.get("invoice"), 0));
+		pr.setReceipt(GiantUtil.intOf(mvm.get("receipt"), 0));
+		pr.setIsAllDoc(GiantUtil.intOf(mvm.get("is_all_doc"), 0));
 		return super.dao.saveUpdateOrDelete(pr, null);
 	}
 

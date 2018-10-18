@@ -38,9 +38,9 @@
 								<c:if test="${pr.id > 0}">修改成果</c:if>
 							</h2>
 						</div>
-						<form class="load-indicator main-form form-ajax" id="createForm" method="post">
-							<table class="table table-form">
-								<tbody>
+						<table class="table table-form">
+							<tbody>
+								<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 									<tr>
 										<th>证书号</th>
 										<td>
@@ -51,6 +51,7 @@
 									<tr>
 										<th>登记号</th>
 										<td class="required">
+											<input type="hidden" name="result_id" value="${pr.id}"/>
 											<input type="text" name="registration_number" id="number" value="${pr.registrationNumber == null ? '无' : pr.registrationNumber}" class="form-control input-product-title" autocomplete="off">
 										</td>
 										<td></td>
@@ -146,9 +147,13 @@
 											<select class="form-control chosen chosen-select" name="state" id="state">
 												<option ${pr.state=='1'?'selected="selected"':'' } value="1">待撰写</option>
 												<option ${pr.state=='2'?'selected="selected"':'' } value="2">撰写中</option>
-												<option ${pr.state=='3'?'selected="selected"':'' } value="3">已提交</option>
-												<option ${pr.state=='4'?'selected="selected"':'' } value="4">已受理</option>
-												<option ${pr.state=='5'?'selected="selected"':'' } value="5">已下证</option>
+												<option ${pr.state=='3'?'selected="selected"':'' } value="3">已撰写</option>
+												<option ${pr.state=='4'?'selected="selected"':'' } value="4">已提综管</option>
+												<option ${pr.state=='5'?'selected="selected"':'' } value="5">已提代理</option>
+												<option ${pr.state=='6'?'selected="selected"':'' } value="6">代理受理</option>
+												<option ${pr.state=='7'?'selected="selected"':'' } value="7">代理完成</option>
+												<option ${pr.state=='8'?'selected="selected"':'' } value="8">受理通知书</option>
+												<option ${pr.state=='9'?'selected="selected"':'' } value="9">已下证</option>
 												<option ${pr.state=='0'?'selected="selected"':'' } value="0">已删除</option>
 											</select>
 										<td></td>
@@ -159,7 +164,7 @@
 											<select class="form-control chosen chosen-select" name="payment" id="payment">
 												<option ${pr.payment=='1'?'selected="selected"':'' } value="1">未付款、未提交申请</option>
 												<option ${pr.payment=='2'?'selected="selected"':'' } value="2">未付款、已提交申请</option>
-												<option ${pr.payment=='3'?'selected="selected"':'' } value="2">已付款</option>
+												<option ${pr.payment=='3'?'selected="selected"':'' } value="3">已付款</option>
 											</select>
 										<td></td>
 									</tr>
@@ -205,15 +210,23 @@
 										<td>专利专用</td>
 									</tr>
 									<tr>
-										<td colspan="3" class="text-center form-actions">
-											<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
-											<input type="hidden" name="result_id" value="${pr.id}"/>
-											<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
+										<th>备注</th>
+										<td>
+											<input type="hidden" name="remark">
+											<textarea id="remark" name="details" placeholder="" style="width:100%;">${t.remark}</textarea>
+											<div id="remark" value=""></div>
 										</td>
+										<td></td>
 									</tr>
-								</tbody>
-							</table>
-						</form>
+								</form>
+								<tr>
+									<td colspan="3" class="text-center form-actions">
+										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
+										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</div>
@@ -222,16 +235,26 @@
 	</body>
 </html>
 <script>
+var editor = new UE.ui.Editor();
+editor.render("remark");
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;  
+UE.Editor.prototype.getActionUrl = function(action){  
+	if(action == 'uploadimage' || action == 'uploadscrawl'){  
+		return '<%=basePath%>ueditor/upload';  
+	}else{  
+		return this._bkGetActionUrl.call(this, action);  
+	}  
+};  
+UE.getEditor('remark');
 $("#submit").click(function(){
-	var projectResultName = encodeURI(encodeURI($("#name").val()));
-	var projectId = $("#projectId").val();
 	$.ajaxSettings.async = false;
+	$("input[name='remark']").val(UE.getEditor('remark').getContent());
 	$.ajax({type:"POST",url:"declaration/result/addOrUpd?r=" + Math.random(),data:$("form").serialize(),dataType:"json",success:function(data){
 		alert(data.message);
+		if(data.code == 0){
+			window.location.href="declaration/result/index";
+		}
 	}})
-	/* $.getJSON("declaration/result/addOrUpd?r=" + Math.random(), $("form").serialize(), function(data) {
-		alert(data.message);
-	}); */
 	$.ajaxSettings.async = true;
 });
 </script>

@@ -48,33 +48,27 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="declaration/result/index?type=3" class="btn btn-link ${prm.type == 3 ? 'btn-active-text':''}">
-							<span class="text">已下证</span>
-							<c:if test="${prm.type == 3}">
-								<span class="label label-light label-badge">${pageList.totalCounts}</span>
-							</c:if>
-						</a>
-						<a href="declaration/result/index?type=4" class="btn btn-link ${prm.type == 4 ? 'btn-active-text':''}">
+						<a href="declaration/result/index?type=11" class="btn btn-link ${prm.type == 11 ? 'btn-active-text':''}">
 							<span class="text">待撰写</span>
-							<c:if test="${prm.type == 4}">
+							<c:if test="${prm.type == 11}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="declaration/result/index?type=5" class="btn btn-link ${prm.type == 5 ? 'btn-active-text':''}">
+						<a href="declaration/result/index?type=12" class="btn btn-link ${prm.type == 12 ? 'btn-active-text':''}">
 							<span class="text">撰写中</span>
-							<c:if test="${prm.type == 5}">
+							<c:if test="${prm.type == 12}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="declaration/result/index?type=6" class="btn btn-link ${prm.type == 6 ? 'btn-active-text':''}">
-							<span class="text">已提交</span>
-							<c:if test="${prm.type == 6}">
+						<a href="declaration/result/index?type=18" class="btn btn-link ${prm.type == 18 ? 'btn-active-text':''}">
+							<span class="text">受理通知书</span>
+							<c:if test="${prm.type == 18}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
-						<a href="declaration/result/index?type=7" class="btn btn-link ${prm.type == 7 ? 'btn-active-text':''}">
-							<span class="text">已受理</span>
-							<c:if test="${prm.type == 7}">
+						<a href="declaration/result/index?type=19" class="btn btn-link ${prm.type == 19 ? 'btn-active-text':''}">
+							<span class="text">已下证</span>
+							<c:if test="${prm.type == 19}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
@@ -90,6 +84,25 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<div class="btn-group">
+							<a href="javascript:;" data-toggle="dropdown" class="btn btn-link btn-active-text" style="border-radius: 2px;">
+								<c:if test="${prm.type > 12 && prm.type < 18}">
+									<span class="text">${prm.type == 13 ? '已撰写': prm.type == 14 ? '已提综管': prm.type == 15 ? '已提代理': prm.type == 16 ? '代理受理': prm.type == 17 ? '代理完成': ''}</span>
+									<span class="label label-light label-badge">${pageList.totalCounts}</span>
+								</c:if>
+								<c:if test="${prm.type < 13 || prm.type > 17}">
+									更多
+								</c:if>
+								<span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu">
+								<li ${prm.type == 13 ? 'class="active"':''}><a href="declaration/result/index?type=13">已撰写</a></li>
+								<li ${prm.type == 14 ? 'class="active"':''}><a href="declaration/result/index?type=14">已提综管</a></li>
+								<li ${prm.type == 15 ? 'class="active"':''}><a href="declaration/result/index?type=15">已提代理</a></li>
+								<li ${prm.type == 16 ? 'class="active"':''}><a href="declaration/result/index?type=16">代理受理</a></li>
+								<li ${prm.type == 17 ? 'class="active"':''}><a href="declaration/result/index?type=17">代理完成</a></li>
+							</ul>
+						</div>
 						<a class="btn btn-link querybox-toggle ${prm.type == 10 ? 'querybox-opened':''}" id="bysearchTab"><i class="icon icon-search muted"></i> 搜索
 							<c:if test="${prm.type == 10}">
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
@@ -119,10 +132,26 @@
 													<option ${prm.nametype=='3'?'selected="selected"':'' } value="3">证书号</option>
 												</select>
 											</td>
-											<td>
+											<td colspan="3">
 												<input type="text" name="search" id="search" value="${prm.search}" class="form-control  searchInput" placeholder="请输入要查询的成果名称/撰写人 或 申请号/登记号/专利号 或 证书号">
 											</td>
-											<td class="w-150px">
+											<td class="w-180px">
+												<select class="form-control chosen chosen-select" name="datetype" id="datetype">
+													<option value="">请选择日期</option>
+													<option ${prm.datetype=='1'?'selected="selected"':'' } value="1">申请日期</option>
+													<option ${prm.datetype=='2'?'selected="selected"':'' } value="2">受理日期</option>
+													<option ${prm.datetype=='3'?'selected="selected"':'' } value="3">下证日期</option>
+												</select>
+											</td>
+											<td class="w-180px">
+												<input type="text" name="start_date" id="start_date" value="${prm.start_date}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											</td>
+											<td class="w-180px">
+												<input type="text" name="end_date" id="end_date" value="${prm.end_date}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											</td>
+										</tr>
+										<tr>
+											<td>
 												<select class="form-control chosen chosen-select" name="company" id="company">
 													<option value="">请选择公司</option>
 													<option ${prm.company=='景安'?'selected="selected"':'' } value="景安">景安</option>
@@ -131,7 +160,7 @@
 													<option ${prm.company=='大数据'?'selected="selected"':'' } value="大数据">大数据</option>
 												</select>
 											</td>
-											<td class="w-150px">
+											<td>
 												<select class="form-control chosen chosen-select" name="result_type" id="result_type">
 													<option value="">请选择类型</option>
 													<option ${prm.result_type=='1'?'selected="selected"':'' } value="1">软著</option>
@@ -141,35 +170,55 @@
 													<option ${prm.result_type=='5'?'selected="selected"':'' } value="5">商标</option>
 												</select>
 											</td>
-											<td class="w-150px">
+											<td>
 												<select class="form-control chosen chosen-select" name="state" id="state">
 													<option value="">请选择状态</option>
 													<option ${prm.state=='1'?'selected="selected"':'' } value="1">待撰写</option>
 													<option ${prm.state=='2'?'selected="selected"':'' } value="2">撰写中</option>
-													<option ${prm.state=='3'?'selected="selected"':'' } value="3">已提交</option>
-													<option ${prm.state=='4'?'selected="selected"':'' } value="4">已受理</option>
-													<option ${prm.state=='5'?'selected="selected"':'' } value="5">已下证</option>
+													<option ${prm.state=='3'?'selected="selected"':'' } value="3">已撰写</option>
+													<option ${prm.state=='4'?'selected="selected"':'' } value="4">已提综管</option>
+													<option ${prm.state=='5'?'selected="selected"':'' } value="5">已提代理</option>
+													<option ${prm.state=='6'?'selected="selected"':'' } value="6">代理受理</option>
+													<option ${prm.state=='7'?'selected="selected"':'' } value="7">代理完成</option>
+													<option ${prm.state=='8'?'selected="selected"':'' } value="8">受理通知书</option>
+													<option ${prm.state=='9'?'selected="selected"':'' } value="9">已下证</option>
 													<option ${prm.state=='0'?'selected="selected"':'' } value="0">已删除</option>
 												</select>
 											</td>
-											<td class="w-140px">
-												<select class="form-control chosen chosen-select" name="datetype" id="datetype">
-													<option value="">请选择日期</option>
-													<option ${prm.datetype=='1'?'selected="selected"':'' } value="1">申请日期</option>
-													<option ${prm.datetype=='2'?'selected="selected"':'' } value="2">受理日期</option>
-													<option ${prm.datetype=='3'?'selected="selected"':'' } value="3">下证日期</option>
+											<td>
+												<select class="form-control chosen chosen-select" name="payment" id="payment">
+													<option value="">请选择付款状态</option>
+													<option ${prm.payment=='1'?'selected="selected"':'' } value="1">未付款、未提交申请</option>
+													<option ${prm.payment=='2'?'selected="selected"':'' } value="2">未付款、已提交申请</option>
+													<option ${prm.payment=='3'?'selected="selected"':'' } value="3">已付款</option>
 												</select>
 											</td>
-											<td class="w-150px">
-												<input type="text" name="start_date" id="start_date" value="${prm.start_date}" class="form-control form-date" placeholder="开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											<td>
+												<select class="form-control chosen chosen-select" name="invoice" id="invoice">
+													<option value="">请选择发票状态</option>
+													<option ${prm.invoice=='1'?'selected="selected"':'' } value="1">未开发票</option>
+													<option ${prm.invoice=='2'?'selected="selected"':'' } value="2">已开发票</option>
+												</select>
 											</td>
-											<td class="w-150px">
-												<input type="text" name="end_date" id="end_date" value="${prm.end_date}" class="form-control form-date" placeholder="结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
+											<td>
+												<select class="form-control chosen chosen-select" name="receipt" id="receipt">
+													<option value="">请选择收据状态</option>
+													<option ${prm.receipt=='1'?'selected="selected"':'' } value="1">已开收据</option>
+													<option ${prm.receipt=='2'?'selected="selected"':'' } value="2">未开收据</option>
+												</select>
+											</td>
+											<td>
+												<select class="form-control chosen chosen-select" name="is_all_doc" id="is_all_doc">
+													<option value="">请选择是否全文档</option>
+													<option ${prm.is_all_doc=='1'?'selected="selected"':'' } value="1">否</option>
+													<option ${prm.is_all_doc=='2'?'selected="selected"':'' } value="2">是</option>
+												</select>
 											</td>
 										</tr>
 										<tr>
-											<td colspan="8" class="text-center form-actions">
+											<td colspan="7" class="text-center form-actions">
 												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
+											</td>
 										</tr>
 									</tbody>
 								</table>
@@ -218,19 +267,19 @@
 												<a class="${prm.orderColumn=='down_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('down_date');">下证日期</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="所属公司">
+											<th data-flex="false" data-width="auto" style="width:60px" class="c-name text-center" title="所属公司">
 												<a class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('company');">公司</a>
 											</th>
-											<th data-flex="false" data-width="100px" style="width:70px" class="c-name text-center" title="状态">
+											<th data-flex="false" data-width="100px" style="width:95px" class="c-name text-center" title="状态">
 												<a class="${prm.orderColumn=='pr.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('pr.state');">状态</a>
 											</th>
-											<th data-flex="false" data-width="100px" style="width:70px" class="c-name text-center" title="代理公司开具的收据">
+											<th data-flex="false" data-width="100px" style="width:60px" class="c-name text-center" title="代理公司开具的收据">
 												<a class="${prm.orderColumn=='pr.invoice'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('pr.invoice');">发票</a>
 											</th>
-											<th data-flex="false" data-width="100px" style="width:70px" class="c-name text-center" title="国家知识产权局开具的收据">
+											<th data-flex="false" data-width="100px" style="width:60px" class="c-name text-center" title="国家知识产权局开具的收据">
 												<a class="${prm.orderColumn=='pr.receipt'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('pr.receipt');">收据</a>
 											</th>
@@ -293,9 +342,14 @@
 											</td>
 											<td class="c-assignedTo has-btn text-center">${result.company}</td>
 											<td class="c-assignedTo has-btn text-center">
-												<span class="${result.state == 1 ? 'status-wait' : result.state == 2 ? 'status-doing' : result.state == 3 ? 'status-pause' : result.state == 4 ? 'status-postpone' : result.state == 5 ? 'status-done' : 'status-cancel'}">
+												<span class="${(result.state == 1 || result.state == 2 || result.state == 3) ? 'status-wait' : 
+														(result.state == 4 || result.state == 5) ? 'status-doing' : 
+														(result.state == 6 || result.state == 7) ? 'status-pause' : 
+														result.state == 8 ? 'status-postpone' : 
+														result.state == 9 ? 'status-done' : 'status-cancel'}">
 													<span class="label label-dot"></span>
-													${result.state == 5 ? '已下证' : result.state == 1 ? '待撰写' : result.state == 2 ? '撰写中' : result.state == 3 ? '已提交' : result.state == 4 ? '已受理' : result.state == 0 ? '已删除' : '未知'}
+													${result.state == 1 ? '待撰写' : result.state == 2 ? '撰写中' : result.state == 3 ? '已撰写' : result.state == 4 ? '已提综管' : result.state == 5 ? '已提代理' : 
+													result.state == 6 ? '代理受理' : result.state == 7 ? '代理完成' : result.state == 8 ? '受理通知书' : result.state == 9 ? '已下证' : result.state == 0 ? '已删除' : '未知'}
 												</span>
 											</td>
 											<td class="c-assignedTo has-btn text-center">

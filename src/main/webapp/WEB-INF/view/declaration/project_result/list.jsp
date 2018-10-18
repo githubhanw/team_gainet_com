@@ -217,7 +217,6 @@
 										</tr>
 										<tr>
 											<td colspan="7" class="text-center form-actions">
-												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
 												<button id="submit" class="btn btn-wide btn-primary" 
 														data-loading="稍候..." onclick="javascript:document.searchForm.action='declaration/result/index?type=10';document.searchForm.submit();">搜索</button>
 												<button id="exportResult" class="btn btn-wide btn-primary" 

@@ -81,7 +81,7 @@
 								<tr>
 									<th>工作量</th>
 									<td class="required" style="width:60%">
-										<input type="text" name="workload" id="workload" class="form-control input-product-title" autocomplete="off" placeholder="请输入参与的人数【整数】">
+										<input type="text" name="workload" id="workload" class="form-control input-product-title" autocomplete="off" placeholder="多少人/天【整数】">
 									</td>
 									<td></td>
 								</tr>

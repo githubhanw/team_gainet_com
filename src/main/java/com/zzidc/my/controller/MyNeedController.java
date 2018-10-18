@@ -700,17 +700,20 @@ public class MyNeedController extends GiantBaseController {
 			model.addAttribute("testCaseStep", testCaseStep);
 			publicResult(model);
 			return "my/need/checkParent";
+		} else {
+			TaskNeed parentNeed = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), parentId);
+			Integer assignedId = parentNeed.getAssignedId();//父模块的ID
+			if (!teamNeedService.isCurrentMember(assignedId)) {
+				return "nopower";
+			}
+			Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("needM", needDetail);
+			List<Map<String, Object>> codeReport = teamNeedService.getCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("codeReport", codeReport);
+			List<Map<String, Object>> codeInterface = teamNeedService.getCodeInterface(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("codeInterface", codeInterface);
+			publicResult(model);
 		}
-		if (teamNeedService.isCurrentMember(n.getMemberId())) {
-			return "nopower";
-		}
-		Map<String, Object> needDetail = teamNeedService.getNeedDetail(GiantUtil.intOf(mvm.get("id"), 0));
-		model.addAttribute("needM", needDetail);
-		List<Map<String, Object>> codeReport = teamNeedService.getCodeReport(GiantUtil.intOf(mvm.get("id"), 0));
-		model.addAttribute("codeReport", codeReport);
-		List<Map<String, Object>> codeInterface = teamNeedService.getCodeInterface(GiantUtil.intOf(mvm.get("id"), 0));
-		model.addAttribute("codeInterface", codeInterface);
-		publicResult(model);
 		return "my/need/check";
 	}
 

@@ -162,9 +162,9 @@
 										<th>付款状态</th>
 										<td class="required">
 											<select class="form-control chosen chosen-select" name="payment" id="payment">
-												<option ${pr.payment=='1'?'selected="selected"':'' } value="1">未付款、未提交申请</option>
-												<option ${pr.payment=='2'?'selected="selected"':'' } value="2">未付款、已提交申请</option>
-												<option ${pr.payment=='3'?'selected="selected"':'' } value="3">已付款</option>
+												<option ${pr.payment=='1'?'selected="selected"':'' } value="1">未付款：未向财务提交付款申请</option>
+												<option ${pr.payment=='2'?'selected="selected"':'' } value="2">待付款：已向财务提交付款申请</option>
+												<option ${pr.payment=='3'?'selected="selected"':'' } value="3">已付款：财务已向代理商付款</option>
 											</select>
 										<td></td>
 									</tr>

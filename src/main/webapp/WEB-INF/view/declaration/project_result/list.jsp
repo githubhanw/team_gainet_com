@@ -188,9 +188,9 @@
 											<td>
 												<select class="form-control chosen chosen-select" name="payment" id="payment">
 													<option value="">请选择付款状态</option>
-													<option ${prm.payment=='1'?'selected="selected"':'' } value="1">未付款、未提交申请</option>
-													<option ${prm.payment=='2'?'selected="selected"':'' } value="2">未付款、已提交申请</option>
-													<option ${prm.payment=='3'?'selected="selected"':'' } value="3">已付款</option>
+													<option ${prm.payment=='1'?'selected="selected"':'' } value="1">未付款：未向财务提交付款申请</option>
+													<option ${prm.payment=='2'?'selected="selected"':'' } value="2">待付款：已向财务提交付款申请</option>
+													<option ${prm.payment=='3'?'selected="selected"':'' } value="3">已付款：财务已向代理商付款</option>
 												</select>
 											</td>
 											<td>
@@ -296,13 +296,13 @@
 											<td class="c-assignedTo has-btn">${result.registration_number}</td>
 											<td class="text-left" title="${result.project_result_name}">
 												<c:if test="${result.payment == 1}">
-													<span class="label label-danger" data-toggle="tooltip" data-placement="top" title="付款状态：未付款、未提交申请">未申请</span>
+													<span class="label label-danger" data-toggle="tooltip" data-placement="top" title="付款状态：未向财务提交付款申请">未付款</span>
 												</c:if>
 												<c:if test="${result.payment == 2}">
-													<span class="label label-info" data-toggle="tooltip" data-placement="top" title="付款状态：未付款、已提交申请">已申请</span>
+													<span class="label label-info" data-toggle="tooltip" data-placement="top" title="付款状态：已向财务提交付款申请">待付款</span>
 												</c:if>
 												<c:if test="${result.payment == 3}">
-													<span class="label label-success" data-toggle="tooltip" data-placement="top" title="付款状态：已付款">已付款</span>
+													<span class="label label-success" data-toggle="tooltip" data-placement="top" title="付款状态：财务已向代理商付款">已付款</span>
 												</c:if>
 												<a href="declaration/result/detail?id=${result.id}">${result.project_result_name}</a>
 												<c:if test="${result.is_all_doc == 2}">

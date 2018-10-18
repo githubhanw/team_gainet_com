@@ -36,7 +36,7 @@
 							<tbody>
 								<form>
 								<tr>
-									<th style="width: 50%;">任务id:</th>
+									<th style="width: 20%;">任务id:</th>
 									<td>${t.taskid}</td>
 									<td></td>
 								</tr>

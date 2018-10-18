@@ -396,10 +396,10 @@
 													<a href="team/need/toSure?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认新需求">确认</i></a>
 													<a href="team/need/toAddPJSon?need_id=${need.id}&project_id=${need.project_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
 												</c:if>
-												<%-- <c:if test="${need.state == 8}">
+												<c:if test="${need.state == 8}">
 													<a href="team/need/toTalk?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="确认谈判结果">谈判</i></a>
 													<a href="team/need/toAddPJSon?need_id=${need.id}&project_id=${need.project_id}" class="btn" data-toggle="tooltip" data-placement="top" title="添加子模块"><i class='icon-task-close'>子</i></a>
-												</c:if> --%>
+												</c:if>
 											</td>
 										</tr>
 										<c:if test="${need.resolved == 1 && (prm.type == 20 || prm.type == 21)}">

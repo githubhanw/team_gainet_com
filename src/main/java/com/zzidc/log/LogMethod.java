@@ -31,6 +31,7 @@ public enum LogMethod {
 	HANDOVER("交接"),
 	SUBMITCHECK("提交验收"),
 	SURENEED("确认需求"),
+	SURETALK("确认谈判"),
 	REJECTED("驳回原型图");
 	
 	private LogMethod(String value) {

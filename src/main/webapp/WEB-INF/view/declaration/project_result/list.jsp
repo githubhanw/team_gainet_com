@@ -121,7 +121,7 @@
 					<!--main-col start-->
 					<div class="main-col">
 						<div class="cell load-indicator ${prm.type == 10 ? 'show':''}" id="queryBox">
-							<form method="post" action="declaration/result/index?type=10" id="searchForm" class="search-form">
+							<form method="post" action="declaration/result/index?type=10" id="searchForm" name="searchForm" class="search-form">
 								<table class="table table-condensed table-form" id="task-search">
 									<tbody>
 										<tr>
@@ -218,6 +218,10 @@
 										<tr>
 											<td colspan="7" class="text-center form-actions">
 												<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
+												<button id="submit" class="btn btn-wide btn-primary" 
+														data-loading="稍候..." onclick="javascript:document.searchForm.action='declaration/result/index?type=10';document.searchForm.submit();">搜索</button>
+												<button id="exportResult" class="btn btn-wide btn-primary" 
+														data-loading="稍候..." onclick="javascript:document.searchForm.action='declaration/result/exportResult?type=10';document.searchForm.submit();">导出</button>
 											</td>
 										</tr>
 									</tbody>

@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.springframework.stereotype.Service;
 
 import com.giant.zzidc.base.service.GiantBaseService;
@@ -22,6 +29,104 @@ import com.zzidc.team.entity.Member;;
  */
 @Service("projectResultService")
 public class ProjectResultService extends GiantBaseService{
+	
+	/**
+	 * 成果列表导出为excel
+	 * @param pageList
+	 * @param workbook
+	 */
+	public void exportResult(GiantPager pageList, HSSFWorkbook workbook) {
+		String title = "成果列表";
+		String[] rowsName = new String[] { "登记号", "成果名称", "成果类型", "撰写人", "申请日期", "受理日期", "下证日期", "所属公司", "状态" };
+		HSSFSheet sheet = workbook.createSheet(title); // 创建工作表
+		// 定义所需列数
+		int columnNum = rowsName.length;
+		HSSFRow rowRowName = sheet.createRow(0);
+		rowRowName.setHeightInPoints(20);
+		HSSFCellStyle columnTopStyle = this.getColumnTopStyle(workbook);// 获取列头样式对象
+		HSSFCellStyle style = this.getStyle(workbook);
+		// 将列头设置到sheet的单元格中
+		for (int n = 0; n < columnNum; n++) {
+			HSSFCell cellRowName = rowRowName.createCell(n); // 创建列头对应个数的单元格
+			cellRowName.setCellValue(rowsName[n]); // 设置列头单元格的值
+			cellRowName.setCellStyle(columnTopStyle);
+			sheet.autoSizeColumn(n);
+			sheet.setColumnWidth(n, sheet.getColumnWidth(n));
+		}
+		List<Map<String, Object>> dataList = (List<Map<String, Object>>) pageList.getPageResult();
+		if (dataList != null && dataList.size() > 0) {
+			for (int i = 0; i < dataList.size(); i++) {
+				String[] arr = new String[columnNum];
+				Map<String, Object> map = dataList.get(i);
+				arr[0] = map.get("registration_number") != null ? map.get("registration_number").toString() : "";
+				arr[1] = map.get("project_result_name") != null ? map.get("project_result_name").toString() : "";
+				String type = map.get("type") != null ? map.get("type").toString() : "";
+				arr[2] = "".equals(type) ? ""
+						: "1".equals(type) ? "软著"
+								: "2".equals(type) ? "发明专利"
+										: "3".equals(type) ? "实用新型专利"
+												: "4".equals(type) ? "外观专利" : "5".equals(type) ? "商标" : "未知";
+				arr[3] = map.get("member_name") != null ? map.get("member_name").toString() : "";
+				arr[4] = map.get("apply_date") != null ? map.get("apply_date").toString() : "";
+				arr[5] = map.get("accept_date") != null ? map.get("accept_date").toString() : "";
+				arr[6] = map.get("down_date") != null ? map.get("down_date").toString() : "";
+				arr[7] = map.get("company") != null ? map.get("company").toString() : "";
+				String state = map.get("state") != null ? map.get("state").toString() : "";
+				arr[8] = "".equals(state) ? ""
+						: "0".equals(state) ? "已删除"
+								: "1".equals(state) ? "待撰写"
+										: "2".equals(state) ? "撰写中"
+												: "3".equals(state) ? "已提交" : "4".equals(state) ? "已受理" : "未知";
+				HSSFRow rowRow = sheet.createRow(i + 1);
+				rowRow.setHeightInPoints(20);
+				for (int j = 0; j < arr.length; j++) {
+					HSSFCell cellRowName = rowRow.createCell(j);
+					cellRowName.setCellValue(arr[j]);
+					cellRowName.setCellStyle(style);
+					sheet.autoSizeColumn(j);
+					sheet.setColumnWidth(j, sheet.getColumnWidth(j));
+
+				}
+			}
+		}
+	}
+    
+	/*
+	 * 列数据信息标题行样式
+	 */
+	public HSSFCellStyle getColumnTopStyle(HSSFWorkbook workbook) {
+		// 设置字体
+		HSSFFont font = workbook.createFont();
+		font.setFontHeightInPoints((short) 16);
+		font.setFontName("宋体");
+		font.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+		font.setColor(HSSFColor.BLACK.index);
+		// 设置样式
+		HSSFCellStyle style = workbook.createCellStyle();
+
+		style.setFont(font);
+		style.setWrapText(false);
+		return style;
+
+	}
+
+	/*
+	 * 列数据信息单元格样式
+	 */
+	public HSSFCellStyle getStyle(HSSFWorkbook workbook) {
+		// 设置字体
+		HSSFFont font = workbook.createFont();
+		font.setFontHeightInPoints((short) 16);
+		font.setFontName("宋体");
+		// font.setColor(HSSFColor.BLUE.index);
+		// 设置样式
+		HSSFCellStyle style = workbook.createCellStyle();
+
+		style.setFont(font);
+		style.setWrapText(false);
+		return style;
+
+	}
 	
 	public GiantPager getPageList(GiantPager conditionPage) {
 		if (conditionPage == null) {

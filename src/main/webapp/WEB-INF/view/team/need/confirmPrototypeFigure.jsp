@@ -62,7 +62,7 @@
 													<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
 																	fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
 																  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
-																	fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+																	fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true && inter!=null && inter!='' }">
 														<a href="${inter}">下载非图片文件</a>
 													</c:if>
 													
@@ -88,7 +88,7 @@
 													<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
 																	fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
 																  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
-																	fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+																	fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true && inter!=null && inter!='' }">
 														<a href="${inter}">下载非图片文件</a>
 													</c:if>
 													

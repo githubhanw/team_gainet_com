@@ -56,7 +56,7 @@
 											<c:if test="${fn:contains(inter,'.BMP')!=true && fn:contains(inter,'.JPEG')!=true && fn:contains(inter,'.GIF')!=true && 
 															fn:contains(inter,'.PNG')!=true && fn:contains(inter,'.JPG')!=true &&
 														  fn:contains(inter,'.bmp')!=true && fn:contains(inter,'.jpeg')!=true && fn:contains(inter,'.gif')!=true && 
-															fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true }">
+															fn:contains(inter,'.png')!=true && fn:contains(inter,'.jpg')!=true && inter!=null && inter!='' }">
 												<a href="${inter}">下载非图片文件</a>
 											</c:if>
 										</c:forEach>
@@ -76,7 +76,7 @@
 											<c:if test="${fn:contains(flow,'.BMP')!=true && fn:contains(flow,'.JPEG')!=true && fn:contains(flow,'.GIF')!=true && 
 															fn:contains(flow,'.PNG')!=true && fn:contains(flow,'.JPG')!=true &&
 														  fn:contains(flow,'.bmp')!=true && fn:contains(flow,'.jpeg')!=true && fn:contains(flow,'.gif')!=true && 
-															fn:contains(flow,'.png')!=true && fn:contains(flow,'.jpg')!=true }">
+															fn:contains(flow,'.png')!=true && fn:contains(flow,'.jpg')!=true && flow!=null && flow!='' }">
 												<a href="${flow}">下载非图片文件</a>
 											</c:if>
 										</c:forEach>

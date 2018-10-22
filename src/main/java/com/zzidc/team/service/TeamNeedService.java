@@ -285,9 +285,12 @@ public class TeamNeedService extends GiantBaseService{
 				} else if ("13".equals(temp)) {//指派给我，且待验收模块
 					sql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
 					countSql += "AND tn.state=3 AND tn.assigned_id=" + memberId;
-				} else if ("15".equals(temp)) {//指派给我，且待验收模块
+				} else if ("15".equals(temp)) {//待安排
 					sql += "AND tn.state=6 AND (tn.assigned_id=" + memberId+" OR tn.department_id="+memberId+" OR tn.member_id="+memberId+" OR tn.create_id="+memberId+")";
 					countSql += "AND tn.state=6 AND (tn.assigned_id=" + memberId+" OR tn.department_id="+memberId+" OR tn.member_id="+memberId+" OR tn.create_id="+memberId+")";
+				} else if ("16".equals(temp)) {//由我安排
+					sql += "AND tn.state!=6 AND tn.state!=0 AND tn.department_id=" + memberId;
+					countSql += "AND tn.state!=6 AND tn.state!=0 AND tn.department_id=" + memberId;
 				}
 			}
 		}

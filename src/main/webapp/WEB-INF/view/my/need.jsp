@@ -72,6 +72,12 @@
 								<span class="label label-light label-badge">${pageList.totalCounts}</span>
 							</c:if>
 						</a>
+						<a href="my/need?type=16" class="btn btn-link ${prm.type == 16? 'btn-active-text':''}">
+							<span class="text">由我安排</span>
+							<c:if test="${prm.type == 16}">
+								<span class="label label-light label-badge">${pageList.totalCounts}</span>
+							</c:if>
+						</a>
 						<a href="my/need?type=8" class="btn btn-link ${prm.type == 8 ? 'btn-active-text':''}">
 							<span class="text">由我关闭</span>
 							<c:if test="${prm.type == 8}">

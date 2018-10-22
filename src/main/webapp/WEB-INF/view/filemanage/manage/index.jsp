@@ -175,16 +175,14 @@
 									</tbody>
 								</table>
 							</div>
-							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -203,14 +201,6 @@
 			$(this).addClass("querybox-opened")
 			$("#queryBox").addClass("show")
 		}
-	});
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "filemanage/manage/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
 	});
 	function del(id){
 			if(confirm("确认删除？")){

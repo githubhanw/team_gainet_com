@@ -60,6 +60,7 @@ public class FilemanageController extends GiantBaseController{
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "id");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "0");
@@ -74,7 +75,7 @@ public class FilemanageController extends GiantBaseController{
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = filemanageService.getPageList(conditionPage);
-		requestURL = "filemanage/manage/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "filemanage/manage/index";
 		System.out.println("路径:"+requestURL);
 		pageList.setDesAction(requestURL);
 		model.addAttribute("members", filemanageService.getAllMember());

@@ -78,28 +78,28 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id text-center" title="ID">
-												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="角色名称">
-												<a  href="${pageList.desAction}&orderColumn=name&orderByValue=${prm.orderColumn=='name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">角色名称</a>
+												<a class="${prm.orderColumn=='name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('name');">角色名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="角色描述">
-												<a  href="${pageList.desAction}&orderColumn=remark&orderByValue=${prm.orderColumn=='remark'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">角色描述</a>
+												<a class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('remark');">角色描述</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="创建时间">
-												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建时间</a>
+												<a class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('create_time');">创建时间</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="修改时间">
-												<a  href="${pageList.desAction}&orderColumn=update_time&orderByValue=${prm.orderColumn=='update_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='update_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">修改时间</a>
+												<a class="${prm.orderColumn=='update_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('update_time');">修改时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=status&orderByValue=${prm.orderColumn=='status'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='status'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='status'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('status');">状态</a>
 											</th>
 											<th data-flex="false" data-width="360px" style="width:360px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -126,16 +126,14 @@
 									</tbody>
 								</table>
 							</div>
-							<!--table-responsive end-->
+							</form>
 							<!--table-footer start-->
 							<div class="table-footer" style="left: 0px; bottom: 0px;">
 								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
+								<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
 								<!--pager end-->
 							</div>
 							<!--table-footer end-->
-						</form>
 					</div>
 					<!--main-col end-->
 				</div>
@@ -145,15 +143,6 @@
 	</body>
 </html>
 <script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "organization/role/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
-
 	$("#bysearchTab").click(function(){
 		if($(this).hasClass("querybox-opened")){
 			$(this).removeClass("querybox-opened")

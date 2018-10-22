@@ -334,17 +334,15 @@ public class TeamNeedService extends GiantBaseService{
 	/**
 	 * 项目划分模块时,同项目的模块列表
 	 */
-	public GiantPager getPageListThisProject(int project_id,GiantPager conditionPage) {
+	public List<Map<String, Object>> getPageListThisProject(int project_id,GiantPager conditionPage) {
 		conditionPage = this.filterStr(conditionPage);
 		Map<String, Object> conditionMap = new HashMap<String, Object>();
 		String sql = "SELECT tn.*,tp.project_name,(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id) task_sum,"
 				+ "(SELECT COUNT(0) FROM task t WHERE t.need_id = tn.id  AND t.state NOT IN (4,6,7)) notfinishtask  FROM task_need tn "
 				+ "LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id +" ORDER BY tn.update_time DESC";
 		String countSql = "SELECT COUNT(0) FROM task_need tn LEFT JOIN task_project tp ON tn.project_id=tp.id WHERE 1=1 AND tp.id="+project_id;
-		GiantPager resultPage = super.dao.getPage(sql, conditionPage.getCurrentPage(), conditionPage.getPageSize(), conditionMap);
-		resultPage.setQueryCondition(GiantUtils.filterSQLMap(conditionPage.getQueryCondition()));
-		resultPage.setTotalCounts(super.dao.getGiantCounts(countSql, conditionMap));
-		return resultPage;
+		List<Map<String, Object>> result = super.dao.getListMapBySql(sql, conditionMap);
+		return result;
 	}
 	
 	/**

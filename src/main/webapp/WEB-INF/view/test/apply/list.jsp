@@ -114,38 +114,38 @@
 								<table class="table has-sort-head" id="taskList"
 									data-fixed-left-width="550" data-fixed-right-width="160">
 									<thead>
-										<tr>
+										<t<tr>
 											<th data-flex="false" data-width="90px" style="width:150px" class="c-id text-center" title="ID">
-												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri" title="测试名称">
-												<a  href="${pageList.desAction}&orderColumn=t.task_name&orderByValue=${prm.orderColumn=='t.task_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">测试名称</a>
+												<a class="${prm.orderColumn=='t.task_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('t.task_name');">测试名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="类型">
-												<a href="${pageList.desAction}&orderColumn=apply_type&orderByValue=${prm.orderColumn=='apply_type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='apply_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">类型</a>
+												<a class="${prm.orderColumn=='apply_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('apply_type');">类型</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="状态">
-												<a href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('state');">状态</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="申请人">
-												<a  href="${pageList.desAction}&orderColumn=apply_name&orderByValue=${prm.orderColumn=='apply_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='apply_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请人</a>
+												<a class="${prm.orderColumn=='apply_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('apply_name');">申请人</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="测试人">
-												<a  href="${pageList.desAction}&orderColumn=tester&orderByValue=${prm.orderColumn=='tester'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='tester'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">测试人</a>
+												<a class="${prm.orderColumn=='tester'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('tester');">测试人</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:100px" class="c-pri text-center" title="申请时间">
-												<a href="${pageList.desAction}&orderColumn=apply_time&orderByValue=${prm.orderColumn=='apply_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='apply_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">申请时间</a>
+												<a class="${prm.orderColumn=='apply_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('apply_time');">申请时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:200px" class="c-pri" title="驳回原因">
-												<a href="${pageList.desAction}&orderColumn=dismissal&orderByValue=${prm.orderColumn=='dismissal'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='dismissal'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">驳回原因</a>
+												<a class="${prm.orderColumn=='dismissal'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('dismissal');">驳回原因</a>
 											</th>
 											<th data-flex="false" data-width="200px" style="width:200px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -196,17 +196,16 @@
 										</c:forEach>
 									</tbody>
 								</table>
-							</div>
-							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
-						</form>
+							</div
+							</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!-- <ul class="pager"></ul> -->
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -217,15 +216,6 @@
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 <script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "test/apply/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
-
 	$("#bysearchTab").click(function(){
 		if($(this).hasClass("querybox-opened")){
 			$(this).removeClass("querybox-opened")

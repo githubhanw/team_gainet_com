@@ -536,30 +536,14 @@ public class TeamNeedController extends GiantBaseController {
 		if(conditionPage == null){
 			conditionPage = new GiantPager();
 		}
-		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "tn.update_time");
-			mvm.put("orderByValue", "DESC");
-			mvm.put("currentPage", "1");
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
-			mvm.put("type", "");//未关闭
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
-			mvm.put("search", "");
-		}
 		Map<String, String> queryCondition = conditionPage.getQueryCondition();
 		//查询条件封装
 		queryCondition.clear();
 		queryCondition.putAll(mvm);
-		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
-		conditionPage.setPageSize(300);
-		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
-		pageList = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0),conditionPage);
+		List<Map<String, Object>> List = teamNeedService.getPageListThisProject(GiantUtil.intOf(mvm.get("project_id"), 0),conditionPage);
 		model.addAttribute("project", teamNeedService.getTeamProjectByID(GiantUtil.intOf(mvm.get("project_id"), 0)));
 		model.addAttribute("project_id", GiantUtil.intOf(mvm.get("project_id"), 0));
-		model.addAttribute("pageList", pageList);
-		requestURL = "team/need/toEachAdd";
-		pageList.setDesAction(requestURL);
+		model.addAttribute("List", List);
 		publicResult(model);
 		return "team/need/eachAdd";
 	}

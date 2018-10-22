@@ -68,24 +68,25 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="ID">
-												<a href="declaration/doctype/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="文档类型名称">
-												<a  href="declaration/doctype/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=project_doc_type&orderByValue=${prm.orderColumn=='project_doc_type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='project_doc_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">文档类型名称</a>
+											
+												<a class="${prm.orderColumn=='project_doc_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('project_doc_type');">文档类型名称</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="状态">
-												<a  href="declaration/doctype/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('state');">状态</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="项目创建时间">
-												<a  href="declaration/doctype/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">创建时间</a>
+												<a class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('create_time');">创建时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="项目结束时间">
-												<a  href="declaration/doctype/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=end_date&orderByValue=${prm.orderColumn=='update_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='update_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">修改时间</a>
+												<a class="${prm.orderColumn=='update_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('update_time');">修改时间</a>
 											</th>
 											<th data-flex="false" data-width="160px" style="width: 260px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -111,16 +112,14 @@
 									</tbody>
 								</table>
 							</div>
-							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -130,14 +129,6 @@
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 	<script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "declaration/doctype/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${pageList.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
 	function del(id){
 		$.ajaxSettings.async = false;
 		$.getJSON("declaration/doctype/del?id=" + id + "&r=" + Math.random(), function(data) {

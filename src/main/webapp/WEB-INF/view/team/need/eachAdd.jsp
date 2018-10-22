@@ -64,7 +64,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${pageList.pageResult}" var="need" varStatus="sta">
+										<c:forEach items="${List}" var="need" varStatus="sta">
 										<tr>
 											<td class="c-id cell-id text-center">${need.id}</td>
 											<td class="text-left">${need.need_name}</td>
@@ -114,15 +114,6 @@
 									</tbody>
 								</table>
 							</div>
-							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
 						</form>
 					</div>
 					<!--main-col end-->
@@ -142,13 +133,5 @@
 			$(this).addClass("querybox-opened")
 			$("#queryBox").addClass("show")
 		}
-	});
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "team/project/toEachAdd?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
 	});
 </script>

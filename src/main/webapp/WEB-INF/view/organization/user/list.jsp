@@ -96,44 +96,44 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id text-center" title="ID">
-												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="名称">
-												<a  href="${pageList.desAction}&orderColumn=name&orderByValue=${prm.orderColumn=='name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">名称</a>
+												<a class="${prm.orderColumn=='name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('name');">名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="工号">
-												<a  href="${pageList.desAction}&orderColumn=number&orderByValue=${prm.orderColumn=='number'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='number'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">工号</a>
+												<a class="${prm.orderColumn=='number'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('number');">工号</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="电话">
-												<a  href="${pageList.desAction}&orderColumn=phone&orderByValue=${prm.orderColumn=='phone'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='phone'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">电话</a>
+												<a class="${prm.orderColumn=='phone'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('phone');">电话</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:auto" class="c-pri text-center" title="邮箱">
-												<a  href="${pageList.desAction}&orderColumn=email&orderByValue=${prm.orderColumn=='email'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='email'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">邮箱</a>
+												<a class="${prm.orderColumn=='email'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('email');">邮箱</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="性别">
-												<a  href="${pageList.desAction}&orderColumn=sex&orderByValue=${prm.orderColumn=='sex'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='sex'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">性别</a>
+												<a class="${prm.orderColumn=='sex'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('sex');">性别</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=status&orderByValue=${prm.orderColumn=='status'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='status'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='status'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('status');">状态</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=oad.NAME&orderByValue=${prm.orderColumn=='oad.NAME'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='oad.NAME'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属OA部门</a>
+											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="所属OA部门">
+												<a class="${prm.orderColumn=='oad.NAME'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('oad.NAME');">所属OA部门</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=d.name&orderByValue=${prm.orderColumn=='d.name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='d.name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属团队</a>
+											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="所属团队">
+												<a class="${prm.orderColumn=='d.name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('d.name');">所属团队</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=r.name&orderByValue=${prm.orderColumn=='r.name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='r.name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">角色</a>
+											<th data-flex="false" data-width="auto" style="width:auto" class="c-pri text-center" title="角色">
+												<a class="${prm.orderColumn=='r.name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('r.name');">角色</a>
 											</th>
 											<th data-flex="false" data-width="360px" style="width:200px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -164,16 +164,14 @@
 									</tbody>
 								</table>
 							</div>
-							<!--table-responsive end-->
+							</form>
 							<!--table-footer start-->
 							<div class="table-footer" style="left: 0px; bottom: 0px;">
 								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
+								<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
 								<!--pager end-->
 							</div>
 							<!--table-footer end-->
-						</form>
 					</div>
 					<!--main-col end-->
 				</div>
@@ -200,15 +198,6 @@
 	</body>
 </html>
 <script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "organization/user/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
-
 	$("#bysearchTab").click(function(){
 		if($(this).hasClass("querybox-opened")){
 			$(this).removeClass("querybox-opened")

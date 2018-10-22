@@ -190,21 +190,11 @@
 							</tbody>
 						</table>
 					</div>
-					<!--table-responsive end-->
-					<!--table-footer start-->
-					<!-- <div class="table-footer" style="left: 0px; bottom: 0px;">
-								pager srtart
-								<ul class="pager">
-								</ul>
-								pager end
-							</div> -->
-					<!--table-footer end-->
 				</form>
 				<!--table-footer start-->
 				<div class="table-footer" style="left: 0px; bottom: 0px;">
 					<!--pager srtart-->
 					<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
-					<!-- <ul class="pager"></ul> -->
 					<!--pager end-->
 				</div>
 				<!--table-footer end-->

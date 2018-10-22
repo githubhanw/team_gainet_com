@@ -68,44 +68,44 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="ID">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=pr.id&orderByValue=${prm.orderColumn=='pr.id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='pr.id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='pr.id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="文档名称">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=pr.doc_name&orderByValue=${prm.orderColumn=='pr.doc_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.doc_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">文档名称</a>
+												<a class="${prm.orderColumn=='pr.doc_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.doc_name');">文档名称</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="文档类型">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=pr.project_doc_type&orderByValue=${prm.orderColumn=='pr.project_doc_type'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.project_doc_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">文档类型</a>
+												<a class="${prm.orderColumn=='pr.project_doc_type'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.project_doc_type');">文档类型</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="文档路径">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=pr.project_doc_url&orderByValue=${prm.orderColumn=='pr.project_doc_url'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.project_doc_url'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">文档路径</a>
+												<a class="${prm.orderColumn=='pr.project_doc_url'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.project_doc_url');">文档路径</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="预计提供时间">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=p.provide_date&orderByValue=${prm.orderColumn=='p.provide_date'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='p.provide_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">预计提供时间</a>
+												<a class="${prm.orderColumn=='p.provide_date'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('p.provide_date');">预计提供时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="是否提供">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=pr.doc_state&orderByValue=${prm.orderColumn=='pr.doc_state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.doc_state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">是否提供</a>
+												<a class="${prm.orderColumn=='pr.doc_state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.doc_state');">是否提供</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name " title="项目成果名称">
-												<a href="declaration/result/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=pr.project_result_name&orderByValue=${prm.orderColumn=='pr.project_result_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.project_result_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">项目成果名称</a>
+												<a class="${prm.orderColumn=='pr.project_result_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.project_result_name');">项目成果名称</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="所属项目">
-												<a href="declaration/result/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=p.project_name&orderByValue=${prm.orderColumn=='p.project_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='p.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属项目</a>
+												<a class="${prm.orderColumn=='p.project_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('p.project_name');">所属项目</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="状态">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=pr.state&orderByValue=${prm.orderColumn=='pr.state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='pr.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='pr.state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('pr.state');">状态</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width: auto" class="c-name text-center" title="创建时间">
-												<a href="declaration/doc/index?type=${prm.type}&currentPage=${pageList.currentPage}&pageSize=${pageList.pageSize}&search=${prm.search}&orderColumn=p.create_time&orderByValue=${prm.orderColumn=='p.create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}" 
-														class="${prm.orderColumn=='p.create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">成果创建时间</a>
+												<a class="${prm.orderColumn=='p.create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('p.create_time');">成果创建时间</a>
 											</th>
 											<th data-flex="false" data-width="160px" style="width: 260px"
 												class="c-actions text-center" title="操作">操作</th>
@@ -136,16 +136,14 @@
 									</tbody>
 								</table>
 							</div>
-							<!--table-responsive end-->
+							</form>
 							<!--table-footer start-->
 							<div class="table-footer" style="left: 0px; bottom: 0px;">
 								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
+								<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
 								<!--pager end-->
 							</div>
 							<!--table-footer end-->
-						</form>
 					</div>
 					<!--main-col end-->
 				</div>
@@ -156,14 +154,6 @@
 	</body>
 </html>
 <script>
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "declaration/doc/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${pageList.orderColumn}&orderByValue=${prm.orderByValue}"
-	});
 	function del(id){
 		$.ajaxSettings.async = false;
 		$.getJSON("declaration/doc/del?id=" + id + "&r=" + Math.random(), function(data) {

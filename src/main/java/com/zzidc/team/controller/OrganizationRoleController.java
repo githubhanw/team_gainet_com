@@ -53,6 +53,7 @@ public class OrganizationRoleController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
 			mvm.put("orderColumn", "r.id");
 			mvm.put("orderByValue", "DESC");
+			mvm.put("currentPage", "1");
 		}
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
@@ -67,7 +68,7 @@ public class OrganizationRoleController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = organizationRoleService.getPageList(conditionPage);
-		requestURL = "organization/role/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "organization/role/index";
 		pageList.setDesAction(requestURL);
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("prm", mvm);

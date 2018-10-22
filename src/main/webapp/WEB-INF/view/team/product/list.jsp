@@ -150,40 +150,40 @@
 									<thead>
 										<tr>
 											<th data-flex="false" data-width="90px" style="width: 90px" class="c-id " title="ID">
-												<a href="${pageList.desAction}&orderColumn=id&orderByValue=${prm.orderColumn=='id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">ID</a>
+												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="产品名称">
-												<a  href="${pageList.desAction}&orderColumn=product_name&orderByValue=${prm.orderColumn=='product_name'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='product_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">产品名称</a>
+												<a class="${prm.orderColumn=='product_name'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('product_name');">产品名称</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name " title="所属公司">
-												<a  href="${pageList.desAction}&orderColumn=company&orderByValue=${prm.orderColumn=='company'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">所属公司</a>
+												<a class="${prm.orderColumn=='company'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('company');">所属公司</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width:120px" class="c-pri " title="产品负责人">
-												<a  href="${pageList.desAction}&orderColumn=member_id&orderByValue=${prm.orderColumn=='member_id'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">产品负责人</a>
+												<a class="${prm.orderColumn=='member_id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('member_id');">产品负责人</a>
 											</th>
 											<th data-flex="false" data-width="50px" style="width: auto" class="c-pri " title="备注">
-												<a  href="${pageList.desAction}&orderColumn=remark&orderByValue=${prm.orderColumn=='remark'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">备注</a>
+												<a class="${prm.orderColumn=='remark'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('remark');">备注</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:100px" class="c-name text-center" title="状态">
-												<a  href="${pageList.desAction}&orderColumn=state&orderByValue=${prm.orderColumn=='state'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">状态</a>
+												<a class="${prm.orderColumn=='state'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('state');">状态</a>
 											</th>
-											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="产品创建时间">
-												<a  href="${pageList.desAction}&orderColumn=create_time&orderByValue=${prm.orderColumn=='create_time'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">记录创建时间</a>
+											<th data-flex="false" data-width="auto" style="width:150px" class="c-name text-center" title="记录创建时间">
+												<a class="${prm.orderColumn=='create_time'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('create_time');">记录创建时间</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="模块数">
-												<a  href="${pageList.desAction}&orderColumn=needCount&orderByValue=${prm.orderColumn=='needCount'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='needCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">模块数</a>
+												<a class="${prm.orderColumn=='needCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('needCount');">模块数</a>
 											</th>
 											<th data-flex="false" data-width="auto" style="width:70px" class="c-name text-center" title="任务数">
-												<a  href="${pageList.desAction}&orderColumn=taskCount&orderByValue=${prm.orderColumn=='taskCount'&&prm.orderByValue=='DESC'?'ASC':'DESC'}"
-														class="${prm.orderColumn=='taskCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}">任务数</a>
+												<a class="${prm.orderColumn=='taskCount'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
+													href="javascript:void(0)" onclick="pageOrder('taskCount');">任务数</a>
 											</th>
 											<th data-flex="false" data-width="160px" style="width:230px" class="c-actions text-center" title="操作">操作</th>
 										</tr>
@@ -230,17 +230,17 @@
 										</c:forEach>
 									</tbody>
 								</table>
+							</form>
 							</div>
 							<!--table-responsive end-->
-							<!--table-footer start-->
-							<div class="table-footer" style="left: 0px; bottom: 0px;">
-								<!--pager srtart-->
-								<ul class="pager">
-								</ul>
-								<!--pager end-->
-							</div>
-							<!--table-footer end-->
-						</form>
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!-- <ul class="pager"></ul> -->
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
 					<!--main-col end-->
 				</div>
@@ -259,14 +259,6 @@
 			$(this).addClass("querybox-opened")
 			$("#queryBox").addClass("show")
 		}
-	});
-	$('.pager').pager({
-	    page: ${pageList.currentPage},
-	    recTotal: ${pageList.totalCounts},
-	    recPerPage: ${pageList.pageSize},
-	    pageSizeOptions: [10, 20, 30, 50, 100],
-	    lang: 'zh_cn',
-	    linkCreator: "team/product/index?type=${prm.type}&currentPage={page}&pageSize={recPerPage}&search=${prm.search}&orderColumn=${prm.orderColumn}&orderByValue=${prm.orderByValue}"
 	});
 	function del(id){
 		if(confirm("确认删除？")){

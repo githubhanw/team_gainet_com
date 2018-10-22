@@ -1150,7 +1150,10 @@ public class TeamTaskService extends GiantBaseService {
 					for(String taskId: developerTaskIds) {
 						Task task = (Task) super.dao.getEntityByPrimaryKey(new Task(), Integer.valueOf(taskId));
 						if (task != null) {
-							if(task.getTestState() == 3) {
+							//获取未完成的测试任务数，如果大于1，表示还有其他测试任务未完成，不修改开发任务测试状态。
+							sql = "SELECT 1 FROM task WHERE deleted=0 AND state<4 AND developer_task_id=" + taskId;
+							list = super.getMapListBySQL(sql, null);
+							if((list == null || list.size() == 0) && task.getTestState() == 3) {
 								task.setTestState(4);
 								task.setTestTime(new Timestamp(System.currentTimeMillis()));
 								super.saveUpdateOrDelete(task, null);

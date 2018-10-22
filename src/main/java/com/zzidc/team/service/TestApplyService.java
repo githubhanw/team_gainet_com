@@ -773,11 +773,11 @@ public class TestApplyService extends GiantBaseService {
 
 	/**
 	 * 领取
+	 * 张玉兵 于 2018-10-19 修改 测试单可指派给多人
 	 */
 	public boolean receive(Map<String, String> mvm) {
-		Task task = new Task();
-		task.setResolved((short)0);
 		Integer developerTaskId = null;
+		Integer applyId = null;
 		Integer parentId = null;
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
@@ -805,55 +805,64 @@ public class TestApplyService extends GiantBaseService {
 			if(applyTask.getParentId() > 0) {
 				parentId = applyTask.getParentId();
 			}
-			task.setTestApplyId(apply.getId());
+			applyId = apply.getId();
 		}
-		task.setNeedId(GiantUtil.intOf(mvm.get("need_id"), 0));
-		task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
-		task.setTaskType(GiantUtil.intOf(mvm.get("task_type"), 0));
-		task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
-		task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
-		try {
-			task.setStartDate(super.returnTime(mvm.get("start_date")));
-		} catch (Exception e) {
-			task.setStartDate(new Timestamp(System.currentTimeMillis()));
+		boolean b = false;
+		String testNames = "";;
+		for(String assignedId: GiantUtil.stringOf(mvm.get("assigned_id")).split(",")) {
+			Task task = new Task();
+			task.setResolved((short)0);
+			task.setNeedId(GiantUtil.intOf(mvm.get("need_id"), 0));
+			task.setTaskName(GiantUtil.stringOf(mvm.get("task_name")));
+			task.setTaskType(GiantUtil.intOf(mvm.get("task_type"), 0));
+			task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
+			task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
+			try {
+				task.setStartDate(super.returnTime(mvm.get("start_date")));
+			} catch (Exception e) {
+				task.setStartDate(new Timestamp(System.currentTimeMillis()));
+			}
+			try {
+				task.setEndDate(super.returnTime(mvm.get("end_date")));
+			} catch (Exception e) {
+				task.setEndDate(new Timestamp(System.currentTimeMillis()));
+			}
+			task.setMemberId(super.getMemberId());
+			task.setMemberName(super.getMemberName());
+			Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(assignedId, 0));
+			task.setAssignedId(member == null ? 0 : member.getId());
+			task.setAssignedName(member == null ? "" : member.getName());
+			task.setAssignedTime(new Timestamp(System.currentTimeMillis()));
+			task.setOpenedId(0);
+			task.setOpenedName("");
+			task.setCheckedId(0);
+			task.setCheckedName("");
+			task.setCanceledId(0);
+			task.setCanceledName("");
+			task.setClosedId(0);
+			task.setClosedName("");
+			task.setPercent(0);
+			task.setState((short) 1);
+			task.setDelay((short) 0);
+			task.setOverdue((short) 0);
+			task.setDeleted((short) 0);
+			task.setParentId(parentId);
+			task.setDeveloperTaskId(String.valueOf(developerTaskId));
+			task.setCreateTime(new Timestamp(System.currentTimeMillis()));
+			task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+			PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ADD, task.toString(), null);
+			b = super.dao.saveUpdateOrDelete(task, null);
+			if(b) {
+				testNames += "," + member.getName();
+				pmLog.setObjectId(task.getId());
+				this.log(pmLog);
+			}
 		}
-		try {
-			task.setEndDate(super.returnTime(mvm.get("end_date")));
-		} catch (Exception e) {
-			task.setEndDate(new Timestamp(System.currentTimeMillis()));
-		}
-		task.setMemberId(super.getMemberId());
-		task.setMemberName(super.getMemberName());
-		Member member = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("assigned_id"), 0));
-		task.setAssignedId(member == null ? 0 : member.getId());
-		task.setAssignedName(member == null ? "" : member.getName());
-		task.setAssignedTime(new Timestamp(System.currentTimeMillis()));
-		task.setOpenedId(0);
-		task.setOpenedName("");
-		task.setCheckedId(0);
-		task.setCheckedName("");
-		task.setCanceledId(0);
-		task.setCanceledName("");
-		task.setClosedId(0);
-		task.setClosedName("");
-		task.setPercent(0);
-		task.setState((short) 1);
-		task.setDelay((short) 0);
-		task.setOverdue((short) 0);
-		task.setDeleted((short) 0);
-		task.setParentId(parentId);
-		task.setDeveloperTaskId(String.valueOf(developerTaskId));
-		task.setCreateTime(new Timestamp(System.currentTimeMillis()));
-		task.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		PMLog pmLog = new PMLog(LogModule.TASK, LogMethod.ADD, task.toString(), null);
-		boolean b =  super.dao.saveUpdateOrDelete(task, null);
 		if(b) {
-			pmLog.setObjectId(task.getId());
-			this.log(pmLog);
 			Task developerTask = (Task) super.getEntityByPrimaryKey(new Task(), Integer.valueOf(developerTaskId));
 			developerTask.setTestApplyId(GiantUtil.intOf(mvm.get("id"), 0));
-			developerTask.setTestId(member.getId());
-			developerTask.setTestName(member.getName());
+			developerTask.setTestId(GiantUtil.stringOf(mvm.get("assigned_id")));
+			developerTask.setTestName(testNames.substring(1));
 			developerTask.setTestState(3);
 			developerTask.setTestTime(new Timestamp(System.currentTimeMillis()));
 			super.saveUpdateOrDelete(developerTask, null);
@@ -965,7 +974,7 @@ public class TestApplyService extends GiantBaseService {
 				for(String taskId: testerTaskId.get(tester).split(",")) {
 					Task task = (Task) super.getEntityByPrimaryKey(new Task(), Integer.valueOf(taskId));
 					task.setTestApplyId(GiantUtil.intOf(mvm.get("id"), 0));
-					task.setTestId(member.getId());
+					task.setTestId(String.valueOf(member.getId()));
 					task.setTestName(member.getName());
 					task.setTestState(3);
 					task.setTestTime(new Timestamp(System.currentTimeMillis()));

@@ -52,7 +52,7 @@ public class TeamProductService extends GiantBaseService{
 							// 名称条件
 							sql += "AND p.product_name LIKE :search ";
 							countSql += "AND p.product_name LIKE :search ";
-							conditionMap.put("search", temp + "%");
+							conditionMap.put("search", "%" + temp + "%");
 						}
 					} else if("2".equals(searchType)) {//项目备注
 						sql += "AND p.remark LIKE :search ";
@@ -156,21 +156,22 @@ public class TeamProductService extends GiantBaseService{
 		p.setRemark(GiantUtil.stringOf(mvm.get("remark")));
 		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		boolean a=super.dao.saveUpdateOrDelete(p, null);
-		boolean flags;
 		//创建文档
-		   JSONObject jsonupload=new JSONObject();
-		   jsonupload=filemanageService.uploadfiles(file2);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addcp(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"2");
-		   }
-		   jsonupload=filemanageService.uploadfiles(file3);
-		   if(jsonupload!=null){
-	       flags = filemanageService.addcp(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"3");
-		   }
-		   jsonupload=filemanageService.uploadfiles(file4);
-		   if(jsonupload!=null){
-		   flags = filemanageService.addcp(mvm,id,name,jsonupload.getString("gs"),jsonupload.getString("url"),jsonupload.getString("fileName"),p.getId(),"4");
-		   }
+		if(a) {
+			JSONObject jsonupload = new JSONObject();
+			jsonupload = filemanageService.uploadfiles(file2);
+			if (jsonupload != null) {
+				filemanageService.addcp(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"), p.getId(), "2");
+			}
+			jsonupload = filemanageService.uploadfiles(file3);
+			if (jsonupload != null) {
+				filemanageService.addcp(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"), p.getId(), "3");
+			}
+			jsonupload = filemanageService.uploadfiles(file4);
+			if (jsonupload != null) {
+				filemanageService.addcp(mvm, id, name, jsonupload.getString("gs"), jsonupload.getString("url"), jsonupload.getString("fileName"), p.getId(), "4");
+			}
+		}
 		return a;
 	}
 	/**

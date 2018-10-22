@@ -1006,6 +1006,7 @@ public class GiantBaseService {
 			// 3. 获取该子任务的所有兄弟任务
 			Map<String, Object> conditionMap = new HashMap<String, Object>();
 			conditionMap.put("parentId", parentId);
+			conditionMap.put("taskType!", 2);
 			List<Object> tasks = dao.getEntityListByHQL("Task", conditionMap);
 			if(tasks == null || tasks.size() == 0) {
 				return;

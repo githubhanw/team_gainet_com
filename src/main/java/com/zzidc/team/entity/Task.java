@@ -70,7 +70,7 @@ public class Task implements java.io.Serializable {
 	private String finishedName;
 	private Timestamp finishedTime;
 	private Integer testApplyId;
-	private Integer testId;
+	private String testId;
 	private String testName;
 	private Timestamp testTime;
 	private Integer testState;
@@ -109,7 +109,7 @@ public class Task implements java.io.Serializable {
 			Integer checkedId, String checkedName, Integer checkedNum,
 			String checkedReason, Timestamp checkedTime, Integer finishedId,
 			String finishedName, Timestamp finishedTime, Integer testApplyId,
-			Integer testId, String testName, Timestamp testTime,
+			String testId, String testName, Timestamp testTime,
 			Integer testState, Integer percent, Short resolved,
 			Integer parentId, String link, Timestamp createTime,
 			Timestamp updateTime, Short state, Short delay, Short overdue,
@@ -634,12 +634,12 @@ public class Task implements java.io.Serializable {
 		this.testApplyId = testApplyId;
 	}
 
-	@Column(name = "test_id")
-	public Integer getTestId() {
+	@Column(name = "test_id", length = 11)
+	public String getTestId() {
 		return this.testId;
 	}
 
-	public void setTestId(Integer testId) {
+	public void setTestId(String testId) {
 		this.testId = testId;
 	}
 

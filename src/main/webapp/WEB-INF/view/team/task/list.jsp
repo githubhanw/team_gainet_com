@@ -446,8 +446,8 @@
 																<c:if test="${subTask.state == 1 || subTask.state == 2}">
 																	<a href="team/task/toHandover?id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="任务交接"><i class="icon-story-review icon-exchange"></i></a>
 																</c:if>
-																<c:if test="${subTask.state == 4 && task.task_type != 2}">
-																	<a href="test/apply/toAdd?task_id=${task.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon-story-review icon-plus"></i></a>
+																<c:if test="${subTask.state == 4 && subTask.task_type != 2}">
+																	<a href="test/apply/toAdd?task_id=${subTask.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提测试"><i class="icon-story-review icon-plus"></i></a>
 																</c:if>
 																<%-- 任务状态为待接收、进行中时，且不为延期审核中 --%>
 																<c:if test="${subTask.state < 3 && subTask.delay != 1 && subTask.resolved == 0}">

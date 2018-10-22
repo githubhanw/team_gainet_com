@@ -62,7 +62,8 @@
 								<tr>
 									<th>指派给</th>
 									<td class="required">
-										<select data-placeholder="请选择员工" class="form-control chosen-select" name="assigned_id" id="assigned_id">
+										<input type="hidden" name="assigned_id" id="assignedIds">
+										<select data-placeholder="请选择员工" class="form-control chosen-select" id="assigned_id" multiple>
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}">${member.name}(${member.number})</option>
@@ -176,6 +177,7 @@
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
 		$("input[name='remark']").val(UE.getEditor('remark').getContent());
+		$("#assignedIds").val($("#assigned_id").val());
 		$.ajax({type:"POST",url:"test/apply/receive?r=" + Math.random(),data:$("form").serialize(),
 				dataType:"json",success:function(data){
 			if(data.code == 0){

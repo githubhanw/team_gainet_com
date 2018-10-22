@@ -185,7 +185,9 @@
 												<c:if test="${apply.state > 0}">
 													<a href="test/apply/toEdit?id=${apply.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 													<a href="test/apply/toDismissal?id=${apply.id}" class="btn" title="驳回"><i class="icon icon-reply-all"></i></a>
-													<a href="test/apply/toReceive?id=${apply.id}" class="btn" title="领取"><i class='icon-task-start icon-play'></i></a>
+													<c:if test="${apply.state == 1}">
+														<a href="test/apply/toReceive?id=${apply.id}" class="btn" title="领取"><i class='icon-task-start icon-play'></i></a>
+													</c:if>
 													<a href="test/bug/toAdd?id=${apply.task_id}" class="btn" title="提Bug"><i class='icon-task-start icon-bug'></i></a>
 												</c:if>
 												<c:if test="${apply.state == 0}">--</c:if>

@@ -847,6 +847,7 @@ public class TestApplyService extends GiantBaseService {
 			task.setOverdue((short) 0);
 			task.setDeleted((short) 0);
 			task.setParentId(parentId);
+			task.setTestApplyId(applyId);
 			task.setDeveloperTaskId(String.valueOf(developerTaskId));
 			task.setCreateTime(new Timestamp(System.currentTimeMillis()));
 			task.setUpdateTime(new Timestamp(System.currentTimeMillis()));

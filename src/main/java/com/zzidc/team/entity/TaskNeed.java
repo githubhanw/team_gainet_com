@@ -81,7 +81,6 @@ public class TaskNeed implements java.io.Serializable {
 	private Timestamp realStartDate;
 	private Timestamp realEndDate;
 	private Short changedStatus;
-	private Short stage;
 	private Short prototypeFigure;
 	private Short testState;
 
@@ -110,7 +109,7 @@ public class TaskNeed implements java.io.Serializable {
 			Integer meetingId, Integer openedId, String openedName,
 			Timestamp openedTime, Integer finishedId, String finishedName,
 			Timestamp finishedTime, Short overdue, Timestamp realStartDate,
-			Timestamp realEndDate, Short changedStatus, Short stage,
+			Timestamp realEndDate, Short changedStatus,
 			Short prototypeFigure, Short testState) {
 		this.productId = productId;
 		this.projectId = projectId;
@@ -172,7 +171,6 @@ public class TaskNeed implements java.io.Serializable {
 		this.realStartDate = realStartDate;
 		this.realEndDate = realEndDate;
 		this.changedStatus = changedStatus;
-		this.stage = stage;
 		this.prototypeFigure = prototypeFigure;
 		this.testState = testState;
 	}
@@ -734,15 +732,6 @@ public class TaskNeed implements java.io.Serializable {
 
 	public void setChangedStatus(Short changedStatus) {
 		this.changedStatus = changedStatus;
-	}
-
-	@Column(name = "stage")
-	public Short getStage() {
-		return this.stage;
-	}
-
-	public void setStage(Short stage) {
-		this.stage = stage;
 	}
 
 	@Column(name = "prototype_figure")

@@ -64,7 +64,7 @@
 								<tr id="hid">
 									<th>审核人</th>
 									<td class="required">
-										<select data-placeholder="请选择不是问题的BUG审核人" class="form-control chosen-select" name="check_id" id="check_id">
+										<select data-placeholder="请选择你的上级" class="form-control chosen-select" name="check_id" id="check_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}">${member.name}(${member.number})</option>

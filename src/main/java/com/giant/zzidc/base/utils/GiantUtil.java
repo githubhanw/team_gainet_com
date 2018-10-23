@@ -448,11 +448,15 @@ public class GiantUtil {
 			try {
 				return URLDecoder.decode(String.valueOf(obj), "utf-8");
 			} catch (Exception e) {
-				return "";
+				try {
+					return String.valueOf(obj);
+				} catch (Exception e1) {
+					return "";
+				}
 			}
 		}
 	}
-
+	
 	/**
 	 * 
 	 * [将一个对象转换成Date数据库格式] <br>

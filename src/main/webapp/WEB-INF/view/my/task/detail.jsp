@@ -975,12 +975,12 @@
 						<c:if test="${taskM.state == 2 && taskM.delay != 1 && taskM.resolved == 0}">
 							<a href='my/task/toFinish?id=${taskM.id}' class='btn btn-link' ><i class='icon-task-finish icon-checked'></i> 完成</a>
 						</c:if>
-						<c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
+						<%-- <c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
 							<a href='my/task/toRelevance?id=${taskM.id}' class='btn btn-link ' ><i class='icon icon-sitemap'></i> 关联</a>
-						</c:if>
-						<c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
+						</c:if> --%>
+						<%-- <c:if test="${taskM.state < 3 && taskM.delay != 1 && (taskM.parent_id == null || taskM.parent_id == '')}">
 							<a href='my/task/toBatchAdd?id=${taskM.id}' class='btn btn-link ' ><i class='icon-task-batchCreate icon-branch'></i> 分解</a>
-						</c:if>
+						</c:if> --%>
 					</div>
 				</div>
 				<!--mainActions end-->

@@ -113,6 +113,19 @@
 									</div>
 								</div>
 							</c:if>
+							<c:if test="${files != null}">
+								<div class="detail">
+									<div class="detail-title">文档</div>
+									<div class="detail-content article-content">
+										<c:forEach items="${files}" var="file" varStatus="sta">
+											<a href="${file.file_url}">${file.file_url}</a>（上传前文件名：${file.file_realname}）
+											<c:if test="${files.size()>1 && sta.index+1<files.size()}">
+												<br/>
+											</c:if>
+										</c:forEach>
+									</div>
+								</div>
+							</c:if>
 							<c:if test="${subNeed != null}">
 								<div class="detail">
 									<div class="detail-title">子模块</div>

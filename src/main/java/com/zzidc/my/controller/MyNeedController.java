@@ -101,6 +101,10 @@ public class MyNeedController extends GiantBaseController {
 				return "comm/notexists";
 			}
 			model.addAttribute("needM", needDetail);
+			//获取相关文档
+			String sql = "SELECT file_name,file_url,file_realname FROM file_manage WHERE file_classification=1 AND access_control=1 AND gl_id=" + GiantUtil.intOf(mvm.get("id"), 0);
+			model.addAttribute("files", teamNeedService.getMapListBySQL(sql, null));
+			
 			List<Map<String, Object>> subNeed = teamNeedService.getSubNeedList(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("subNeed", subNeed);
 			//相关任务
@@ -533,6 +537,9 @@ public class MyNeedController extends GiantBaseController {
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("n", n);
+			//获取相关文档
+			String sql = "SELECT file_name,file_url,file_realname FROM file_manage WHERE file_classification=1 AND access_control=1 AND gl_id=" + GiantUtil.intOf(mvm.get("id"), 0);
+			model.addAttribute("files", teamNeedService.getMapListBySQL(sql, null));
 		}
 		publicResult(model);
 		return "my/need/arrange";

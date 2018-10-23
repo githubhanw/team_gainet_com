@@ -1,6 +1,5 @@
 package com.zzidc.team.controller;
 
-import java.nio.channels.GatheringByteChannel;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,10 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.service.GiantBaseService;
-import com.giant.zzidc.base.utils.FileUploadUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
-import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.log.LogMethod;
 import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
@@ -110,6 +107,10 @@ public class TeamNeedController extends GiantBaseController {
 				return "comm/notexists";
 			}
 			model.addAttribute("needM", needDetail);
+			//获取相关文档
+			String sql = "SELECT file_name,file_url,file_realname FROM file_manage WHERE file_classification=1 AND access_control=1 AND gl_id=" + GiantUtil.intOf(mvm.get("id"), 0);
+			model.addAttribute("files", teamNeedService.getMapListBySQL(sql, null));
+			
 			List<Map<String, Object>> subNeed = teamNeedService.getSubNeedList(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("subNeed", subNeed);
 			//相关任务
@@ -688,6 +689,9 @@ public class TeamNeedController extends GiantBaseController {
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("n", n);
+			//获取相关文档
+			String sql = "SELECT file_name,file_url,file_realname FROM file_manage WHERE file_classification=1 AND access_control=1 AND gl_id=" + GiantUtil.intOf(mvm.get("id"), 0);
+			model.addAttribute("files", teamNeedService.getMapListBySQL(sql, null));
 		}
 		publicResult(model);
 		return "team/need/arrange";

@@ -116,6 +116,19 @@
 									</div>
 								</div>
 							</c:if>
+							<c:if test="${files != null}">
+								<div class="detail">
+									<div class="detail-title">文档</div>
+									<div class="detail-content article-content">
+										<c:forEach items="${files}" var="file" varStatus="sta">
+											<a href="${file.file_url}">${file.file_url}</a>（上传前文件名：${file.file_realname}）
+											<c:if test="${files.size()>1 && sta.index+1<files.size()}">
+												<br/>
+											</c:if>
+										</c:forEach>
+									</div>
+								</div>
+							</c:if>
 							<c:if test="${subNeed != null}">
 								<div class="detail">
 									<div class="detail-title">子模块</div>
@@ -443,7 +456,7 @@
 								<a href="team/need/toCheck?id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i> 验收模块</a>
 							</c:if>
 						</c:if>
-						<c:if test="${(needM.parent_id == null || needM.parent_id == 0) && needM.full == 1 && needM.state == 2}">	
+						<c:if test="${(needM.parent_id == null || needM.parent_id > 0) && needM.full == 1 && needM.state == 2}">	
 							<a href="team/task/toAdd?need_id=${needM.id}" class="btn btn-link" data-toggle="tooltip" data-placement="top" title="建任务"><i class="icon icon-plus"></i> 建任务</a>
 						</c:if>
 						

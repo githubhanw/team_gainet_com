@@ -116,6 +116,17 @@
 								</tr>
 								</c:if>
 								<tr>
+									<th>文档</th>
+									<td>
+										<c:forEach items="${files}" var="file" varStatus="sta">
+											<a href="${file.file_url}">${file.file_url}</a>（上传前文件名：${file.file_realname}）
+											<c:if test="${files.size()>1 && sta.index+1<files.size()}">
+												<br/>
+											</c:if>
+										</c:forEach>
+									</td>
+								</tr>
+								<tr>
 									<th>安排给</th>
 									<td class="required"  style="width: 70%;" >
 										<select data-placeholder="安排给" class="form-control chosen-select" name="assigned_id" id="assigned_id">

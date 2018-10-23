@@ -83,6 +83,21 @@ public class TeamTaskController extends GiantBaseController {
 	}
 
 	/**
+	 * 人员安排情况查询
+	 */
+	@RequestMapping("/search")
+	public String search(@RequestParam Map<String, String> mvm, Model model) {
+		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
+			mvm.put("type", "1");
+		}
+		model.addAttribute("noTaskMember", teamTaskService.getNoTaskMember(mvm.get("type"), mvm.get("start_date"), mvm.get("end_date")));
+		model.addAttribute("taskMember", teamTaskService.getTaskMember(mvm.get("type"), mvm.get("start_date"), mvm.get("end_date")));
+		model.addAttribute("prm", mvm);
+		publicResult(model);
+		return "team/task/search";
+	}
+	
+	/**
 	 * 任务详情
 	 */
 	@RequestMapping("/detail")

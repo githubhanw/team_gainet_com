@@ -287,6 +287,53 @@ public class TeamTaskService extends GiantBaseService {
 		}
 	}
 
+	public List<Map<String, Object>> getNoTaskMember(String type, String startTime, String endTime){
+		Map<String, Object> prm = new HashMap<String, Object>();
+		String sql = "SELECT d1.`NAME` depName, m.id,m.`NAME` memName, ";
+		if(startTime != null && !"".equals(startTime) && endTime != null && !"".equals(endTime)) {
+			if("2".equals(type)) {
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date>:startTime AND real_end_date<:endTime) tc ";
+				prm.put("startTime", startTime);
+				prm.put("endTime", endTime);
+			} else {
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date>:startTime AND end_date<:endTime) tc ";
+				prm.put("startTime", startTime);
+				prm.put("endTime", endTime);
+			}
+		} else {
+			sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0) tc ";
+		}
+		sql += "FROM member m, oa_department d1, oa_department d2, oa_department d3 " + 
+				"WHERE m.deptID=d1.DEPARTMENT_ID AND d1.PARENT_ID=d2.DEPARTMENT_ID AND d2.PARENT_ID=d3.DEPARTMENT_ID AND m.`STATUS`=0 " + 
+				"AND (d1.DEPARTMENT_ID='183' OR d2.DEPARTMENT_ID='183' OR d3.DEPARTMENT_ID='183')" + 
+				"GROUP BY m.id HAVING tc=0 ORDER BY d1.DEPARTMENT_ID";
+		
+		return super.getMapListBySQL(sql, prm);
+	}
+
+	public List<Map<String, Object>> getTaskMember(String type, String startTime, String endTime){
+		Map<String, Object> prm = new HashMap<String, Object>();
+		String sql = "SELECT d1.`NAME` depName, m.id,m.`NAME` memName, ";
+		if(startTime != null && !"".equals(startTime) && endTime != null && !"".equals(endTime)) {
+			if("2".equals(type)) {
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date>:startTime AND real_end_date<:endTime) tc ";
+				prm.put("startTime", startTime);
+				prm.put("endTime", endTime);
+			} else {
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date>:startTime AND end_date<:endTime) tc ";
+				prm.put("startTime", startTime);
+				prm.put("endTime", endTime);
+			}
+		} else {
+			sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0) tc ";
+		}
+		sql += "FROM member m, oa_department d1, oa_department d2, oa_department d3 " + 
+				"WHERE m.deptID=d1.DEPARTMENT_ID AND d1.PARENT_ID=d2.DEPARTMENT_ID AND d2.PARENT_ID=d3.DEPARTMENT_ID AND m.`STATUS`=0 " + 
+				"AND (d1.DEPARTMENT_ID='183' OR d2.DEPARTMENT_ID='183' OR d3.DEPARTMENT_ID='183')" + 
+				"GROUP BY m.id HAVING tc>0 ORDER BY d1.DEPARTMENT_ID";
+		return super.getMapListBySQL(sql, prm);
+	}
+	
 	/**
 	 * 获取任务详情
 	 * 

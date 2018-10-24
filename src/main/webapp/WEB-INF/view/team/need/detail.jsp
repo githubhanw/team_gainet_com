@@ -294,7 +294,7 @@
 										<tbody>
 											<c:if test="${needM.project_id!='0'}">
 											<tr class="nofixed">
-												<th>所属项目</th>
+												<th class="w-80px">所属项目</th>
 												<td>
 													<a href="team/project/detail?id=${needM.project_id}" data-toggle="tooltip" data-placement="top" title="${needM.project_name}">${needM.project_name}</a>
 												</td>
@@ -302,7 +302,7 @@
 											</c:if>
 											<c:if test="${needM.project_id=='0'}">
 											<tr class="nofixed">
-												<th>所属产品</th>
+												<th class="w-80px">所属产品</th>
 												<td>
 													<a href="team/product/detail?id=${needM.product_id}" data-toggle="tooltip" data-placement="top" title="${needM.product_name}">${needM.product_name}</a>
 												</td>
@@ -345,13 +345,12 @@
 											<tr>
 												<th>逾期状态</th>
 												<td>
-												     
-												     <c:if test="${needM.overdue==1}">
-													          已逾期
-												      </c:if>
-												      <c:if test="${needM.overdue==0}">
-													         未逾期
-												      </c:if>
+													<c:if test="${needM.overdue==1}">
+														已逾期
+													</c:if>
+													<c:if test="${needM.overdue==0}">
+														 未逾期
+													</c:if>
 												</td>
 											</tr>
 											<%-- <tr>
@@ -375,6 +374,17 @@
 											<tr>
 												<th>上线时间</th>
 												<td>${needM.end_date}</td>
+											</tr>
+											<tr>
+												<th>确认原型图</th>
+												<td>
+													<c:if test="${needM.prototype_figure==1}">
+														已确认
+													</c:if>
+													<c:if test="${needM.prototype_figure==0}">
+														未确认
+													</c:if>
+												</td>
 											</tr>
 										</tbody>
 									</table>

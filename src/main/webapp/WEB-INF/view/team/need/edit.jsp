@@ -229,6 +229,15 @@
 															class="form-control form-date-limit" placeholder="上线时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
 													</td>
 												</tr>
+												<tr>
+													<th>确认原型图</th>
+													<td>
+														<select class="form-control chosen chosen-select"  name="prototypeFigure" id="prototypeFigure">
+															<option ${n.prototypeFigure=='1'?'selected="selected"':'' } value="1">已确认</option>
+															<option ${n.prototypeFigure=='0'?'selected="selected"':'' } value="0">未确认</option>
+														</select>
+													</td>
+												</tr>
 											</tbody>
 										</table>
 									</div>

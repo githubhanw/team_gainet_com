@@ -1106,7 +1106,7 @@ public class TeamNeedService extends GiantBaseService{
 		if (!GiantUtils.isEmpty(mvm.get("closed_reason"))) {//关闭原因
 			need.setClosedReason(mvm.get("closed_reason"));
 		}
-		
+		need.setPrototypeFigure((short) GiantUtil.intOf(mvm.get("prototypeFigure"), 0));
 		need.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		boolean flag = super.dao.saveUpdateOrDelete(need, null);
 		pmLog.add(oldNeed, need, "member_name", "assigned_name", "project_id", "src_id", "level", "start_date", "end_date", "checked_time", "closed_time", "checked_name", "closed_name", "closed_reason");

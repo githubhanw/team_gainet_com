@@ -305,7 +305,7 @@
 											</tr>
 											</c:if>
 											<tr>
-												<th>模块来源</th>
+												<th class="w-80px">模块来源</th>
 												<td>${needM.need_src}</td>
 											</tr>
 											<tr>
@@ -370,6 +370,17 @@
 											<tr>
 												<th>上线时间</th>
 												<td>${needM.end_date}</td>
+											</tr>
+											<tr>
+												<th>确认原型图</th>
+												<td>
+													<c:if test="${needM.prototype_figure==1}">
+														已确认
+													</c:if>
+													<c:if test="${needM.prototype_figure==0}">
+														未确认
+													</c:if>
+												</td>
 											</tr>
 										</tbody>
 									</table>

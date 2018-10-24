@@ -50,7 +50,7 @@
 									</c:if>
 								</div>
 							</div>
-							<c:if test="${taskM.task_type == 2 && taskM.execute_sql != null && taskM.execute_sql != ''}">
+							<c:if test="${ taskM.execute_sql != null && taskM.execute_sql != ''}">
 								<div class="detail">
 									<div class="detail-title">要执行的sql</div>
 									<div class="detail-content article-content">

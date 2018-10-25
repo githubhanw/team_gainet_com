@@ -27,6 +27,7 @@ public class DeclarationProjectDoc implements java.io.Serializable {
 	private Integer id;
 	private Timestamp createTime;
 	private String docName;
+	private String originalName;
 	private Integer docState;
 	private String projectDocUrl;
 	private Integer projectId;
@@ -43,12 +44,13 @@ public class DeclarationProjectDoc implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public DeclarationProjectDoc(Timestamp createTime, String docName,
+	public DeclarationProjectDoc(Timestamp createTime, String docName, String originalName,
 			Integer docState, String projectDocUrl,
 			Integer projectId, Date provideDate, Integer resultId,
 			Integer state, Integer typeId, Timestamp updateTime) {
 		this.createTime = createTime;
 		this.docName = docName;
+		this.originalName = originalName;
 		this.docState = docState;
 		this.projectDocUrl = projectDocUrl;
 		this.projectId = projectId;
@@ -87,6 +89,15 @@ public class DeclarationProjectDoc implements java.io.Serializable {
 
 	public void setDocName(String docName) {
 		this.docName = docName;
+	}
+	
+	@Column(name = "original_name", length = 255)
+	public String getOriginalName() {
+		return this.originalName;
+	}
+
+	public void setOriginalName(String originalName) {
+		this.originalName = originalName;
 	}
 
 	@Column(name = "doc_state")

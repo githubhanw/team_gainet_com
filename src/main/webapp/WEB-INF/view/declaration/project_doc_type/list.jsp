@@ -51,6 +51,7 @@
 					</div>
 					<!--btn-toolbar start-->
 					<div class="btn-toolbar pull-right">
+					    <a href="declaration/doctype/toModify" class="btn btn-primary"><i class="icon"></i>文档类型与成果类型关系</a>
 						<a href="declaration/doctype/toAdd" class="btn btn-primary"><i class="icon icon-plus"></i>新建文档类型</a>
 					</div>
 					<!--btn-toolbar end-->

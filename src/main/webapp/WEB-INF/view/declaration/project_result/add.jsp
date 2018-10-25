@@ -20,6 +20,36 @@
 			<c:if test="${pr.id > 0}">修改成果</c:if>
 		</title>
     	<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
+    	<style>
+.table-bymodule select.form-control {
+	height: 250px
+}
+
+.group-item {
+	display: block;
+	width: 220px;
+	float: left;
+	font-size: 14px
+}
+
+.group-item .checkbox-inline label {
+	padding-left: 8px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.table.table-form tbody>tr:last-child td {
+	border-top: 1px solid #ddd
+}
+
+@
+-moz-document url-prefix (){ .table .table-form tbody>tr:last-childtd,
+	.table.table-formtbody>tr :last-childth {
+	border-bottom: 1pxsolid #ddd
+}
+}
+</style>
 	</head>
 	<body>
 	    <!--header start-->
@@ -78,7 +108,7 @@
 									<tr>
 										<th>成果类型</th>
 										<td class="required">
-											<select class="form-control chosen chosen-select" name="type" id="type">
+											<select class="form-control chosen chosen-select" name="type" id="type" onchange="changeDocType()">
 												<option ${pr.type=='1'?'selected="selected"':'' } value="1">软著</option>
 												<option ${pr.type=='2'?'selected="selected"':'' } value="2">发明专利</option>
 												<option ${pr.type=='3'?'selected="selected"':'' } value="3">实用新型专利</option>
@@ -86,6 +116,28 @@
 												<option ${pr.type=='5'?'selected="selected"':'' } value="5">商标</option>
 											</select>
 										<td></td>
+									</tr>
+									<tr>
+									    <th>需上传文档</th>
+										<td id="docType">
+											<div style="background-color: #F5F5F5">
+												<c:forEach items="${docTypeList}"
+													var="docType" varStatus="status">
+													<div class="group-item">
+														<div class="checkbox-primary checkbox-inline">
+															<c:set var="checked" value="false"></c:set>
+															<c:if
+																test="${docType.required_or_optional == 1}">
+																<c:set var="checked" value="true"></c:set>
+															</c:if>
+															<input type="checkbox" name="docType" id=""
+																${checked ? 'checked="checked"' : "" }
+																value="${docType.id}"> <label>${docType.project_doc_type}</label>
+														</div>
+													</div>
+												</c:forEach>
+											</div>
+										</td>
 									</tr>
 									<tr>
 										<th>撰写人</th>
@@ -232,6 +284,39 @@
 			</div>
 		</main>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
+    	<script type="text/javascript">
+	    	function changeDocType() {
+	    		var type = $("#type option:selected").val();
+	    		$.ajax({
+	    			type : "POST",
+	    			url : "declaration/result/changeDocType?r=" + Math.random(),
+	    			data : {type : type},
+	    			dataType : "json",
+	    		    success : function(data) {
+	    		    	$("#docType").html("");
+	    		    	var docTypeLists = data.docTypeLists;
+	    		    	for (var i = 0; i < docTypeLists.length; i++) {
+	    		    		var docType = docTypeLists[i];
+	    		    		if (docType.required_or_optional == 1) {
+	    		    			$("#docType").append('<div class="group-item">'
+										+'<div class="checkbox-primary checkbox-inline">'
+	    		    	    		   +'<input type="checkbox" name="docType" id="" '
+	    		    	    		               +'checked="checked" value="' + docType.id +'">'
+	    		    	    		               +'<label>' + docType.project_doc_type + '</label>'
+	    		    	    		               +'</div></div>');
+	    		    		} else if (docType.required_or_optional == 2) {
+	    		    			$("#docType").append('<div class="group-item">'
+										+'<div class="checkbox-primary checkbox-inline">'
+	    		    	    		   +'<input type="checkbox" name="docType" id="" '
+	    		    	    		               +'value="' + docType.id +'">'
+	    		    	    		               +'<label>' + docType.project_doc_type + '</label>'
+	    		    	    		               +'</div></div>');
+	    		    		}
+	    		    	}
+	    		    }
+	    		});
+	    	}
+    	</script>
 	</body>
 </html>
 <script>

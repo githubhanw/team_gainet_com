@@ -51,7 +51,7 @@
 									<tr>
 										<th>成果文档路径</th>
 										<td>
-											<input type="text" name="project_doc_url" id="project_doc_url" value="${obj.projectDocUrl}" class="form-control input-product-title" autocomplete="off">
+											<input ${obj.id > 0 ? 'readonly="readonly"' : ''} type="text" name="project_doc_url" id="project_doc_url" value="${obj.projectDocUrl}" class="form-control input-product-title" autocomplete="off">
 										</td>
 										<td></td>
 									</tr>

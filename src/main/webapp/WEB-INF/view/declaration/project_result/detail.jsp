@@ -46,9 +46,8 @@
 										<thead>
 											<tr class="text-center">
 												<th class="w-50px">编号</th>
-												<th>文档名称</th>
-												<th>文档类型</th>
-												<th>文档地址</th>
+												<th class="w-500px">文档名称</th>
+												<th class="w-200px">文档类型</th>
 												<th class="w-80px">文档状态</th>
 												<th class="w-120px">预计提供时间</th>
 												<th >操作</th>
@@ -60,7 +59,6 @@
 												<td>${item.id}</td>
 												<td>${item.doc_name }</td>
 												<td>${item.project_doc_type }</td>
-												<td>${item.project_doc_url}</td>
 												<td>${item.doc_state == 1 ? '已提供' : '未提供'}</td>
 												<td>${item.provide_date}</td>
 												<td class="c-actions">
@@ -68,6 +66,13 @@
 													href="declaration/doc/toAdd?id=${item.id}"
 													class="btn " title="编辑"><i
 														class="icon-common-edit icon-edit"></i></a>
+													<a
+													href="declaration/result/toUploadDoc?id=${item.id}"
+													class="btn " title="上传文档"><i
+														class="icon icon-upload-alt"></i></a>
+												    <a
+													href="${item.doc_state == 1 ? item.project_doc_url : 'javascript:return false;'}"
+													class="btn " title="下载文档"><i class="icon icon-download-alt"></i></a>
 												</td>
 											</tr>
 											</c:forEach>

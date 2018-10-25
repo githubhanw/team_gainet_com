@@ -3,9 +3,13 @@ package com.zzidc.declaration.service;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -15,14 +19,21 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.zzidc.log.LogMethod;
+import com.zzidc.log.LogModule;
+import com.zzidc.log.PMLog;
+import com.zzidc.team.entity.DeclarationProjectDoc;
 import com.zzidc.team.entity.DeclarationProjectResult;
-import com.zzidc.team.entity.Member;;
+import com.zzidc.team.entity.FileManage;
+import com.zzidc.team.entity.Member;
+import com.zzidc.team.entity.Task;;
 
 /**
  * [说明/描述]
@@ -320,11 +331,14 @@ public class ProjectResultService extends GiantBaseService{
 	/**
 	 * 添加、修改成果信息
 	 */
-	public boolean addOrUpd(Map<String, String> mvm) {
+	public boolean addOrUpd(Map<String, String> mvm, HttpServletRequest request) {
 		DeclarationProjectResult pr = null;
+		DeclarationProjectResult oldpr = new DeclarationProjectResult();
+		
 		if(GiantUtil.intOf(mvm.get("result_id"), 0) != 0){
 			//获取成果对象
 			pr = (DeclarationProjectResult) super.dao.getEntityByPrimaryKey(new DeclarationProjectResult(), GiantUtil.intOf(mvm.get("result_id"), 0));
+			BeanUtils.copyProperties(pr, oldpr);
 		} else {
 			pr = new DeclarationProjectResult();
 			pr.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -361,7 +375,84 @@ public class ProjectResultService extends GiantBaseService{
 		pr.setInvoice(GiantUtil.intOf(mvm.get("invoice"), 0));
 		pr.setReceipt(GiantUtil.intOf(mvm.get("receipt"), 0));
 		pr.setIsAllDoc(GiantUtil.intOf(mvm.get("is_all_doc"), 0));
-		return super.dao.saveUpdateOrDelete(pr, null);
+		boolean flag = super.dao.saveUpdateOrDelete(pr, null);
+		
+		//添加日志
+		PMLog pmLog = new PMLog(LogModule.RESULT, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+		if (flag) {
+			if (GiantUtil.intOf(mvm.get("result_id"), 0) != 0) {//编辑
+				pmLog.add(pr.getId(), oldpr, pr, "project_result_name");
+			} else {//创建
+				pmLog.setObjectId(pr.getId());
+			}
+			this.log(pmLog);
+		}
+		
+		
+		String querySql = "select * from declaration_project_doc where result_id = " + pr.getId();
+		List<Object> alreadyExist = super.dao.getEntityListBySQL(querySql, null, new DeclarationProjectDoc());//成果下已存在的文档
+		List<DeclarationProjectDoc> deleteList = new ArrayList<DeclarationProjectDoc>();
+		List<DeclarationProjectDoc> addList = new ArrayList<DeclarationProjectDoc>();
+		String[] docTypes = request.getParameterValues("docType");//成果需要的文档
+		if (alreadyExist != null && alreadyExist.size() > 0) {
+			for (int i = 0; i < alreadyExist.size(); i++) {
+				DeclarationProjectDoc declarationProjectDoc = (DeclarationProjectDoc)alreadyExist.get(i);
+				Integer typeId = declarationProjectDoc.getTypeId();
+				boolean isDelete = true;
+				for (int j = 0; j < docTypes.length; j++) {
+					if (typeId == Integer.valueOf(docTypes[j])) {
+						isDelete = false;
+						break;
+					}
+				}
+				if (isDelete) {
+					deleteList.add(declarationProjectDoc);
+				}
+			}
+			
+			for (int i = 0; i < docTypes.length; i++) {
+				Integer typeId = Integer.valueOf(docTypes[i]);
+				boolean isAdd = true;
+				for (int j = 0; j < alreadyExist.size(); j++) {
+					DeclarationProjectDoc declarationProjectDoc = (DeclarationProjectDoc)alreadyExist.get(j);
+					if (typeId == declarationProjectDoc.getTypeId()) {
+						isAdd = false;
+						break;
+					}
+				}
+				if (isAdd) {
+					DeclarationProjectDoc declarationProjectDoc = new DeclarationProjectDoc();
+					declarationProjectDoc.setTypeId(Integer.valueOf(docTypes[i]));
+					declarationProjectDoc.setDocState(0);
+					declarationProjectDoc.setProjectId(pr.getProjectId());
+					declarationProjectDoc.setResultId(pr.getId());
+					declarationProjectDoc.setProvideDate(new Date());
+					declarationProjectDoc.setCreateTime(new Timestamp(System.currentTimeMillis()));
+					declarationProjectDoc.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+					declarationProjectDoc.setState(1);
+					addList.add(declarationProjectDoc);
+				}
+			}
+		} else {
+			for (int i = 0; i < docTypes.length; i++) {
+				DeclarationProjectDoc declarationProjectDoc = new DeclarationProjectDoc();
+				declarationProjectDoc.setTypeId(Integer.valueOf(docTypes[i]));
+				declarationProjectDoc.setDocState(0);
+				declarationProjectDoc.setProjectId(pr.getProjectId());
+				declarationProjectDoc.setResultId(pr.getId());
+				declarationProjectDoc.setProvideDate(new Date());
+				declarationProjectDoc.setCreateTime(new Timestamp(System.currentTimeMillis()));
+				declarationProjectDoc.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+				declarationProjectDoc.setState(1);
+				addList.add(declarationProjectDoc);
+			}
+		}
+		
+		if (flag) {
+			flag = super.dao.saveUpdateOrDelete(addList, deleteList);
+		}
+		
+		return flag;
 	}
 
 	/**
@@ -385,4 +476,25 @@ public class ProjectResultService extends GiantBaseService{
 				+ "WHERE pd.type_id=pdt.id AND pd.state>0 AND result_id=" + resultId;
 		return super.getMapListBySQL(sql, null);
 	}
+	
+	/**
+	 * 获取日志
+	 * @param taskId
+	 * @return
+	 */
+	public List<Map<String, Object>> getLogList(Integer resultId){
+		String sql = "SELECT * FROM `action_log` where module='result' and object_id=" + resultId;
+		List<Map<String, Object>> logList = super.getMapListBySQL(sql, null);
+		if(logList != null && logList.size() > 0) {
+			for(Map<String, Object> log: logList) {
+				sql = "SELECT tfd.field_desc,ah.old_data,ah.new_data,ah.diff FROM action_history ah LEFT JOIN table_field_desc tfd ON ah.field=tfd.field_name WHERE tfd.table_name='result' AND action_id=" + log.get("id");
+				List<Map<String, Object>> historyList = super.getMapListBySQL(sql, null);
+				if(historyList != null && historyList.size() > 0) {
+					log.put("history", historyList);
+				}
+			}
+		}
+		return logList;
+	}
+	
 }

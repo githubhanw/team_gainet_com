@@ -332,4 +332,29 @@ public class FileUploadUtil {
 				return null;
 			}
 	}
+	
+	public static Object uploadFiles(MultipartFile[] file, String fileName) {
+		if(file!=null && file.length>0){
+			MultipartFile f =file[0];
+			try {
+				if (!fileName.endsWith("BMP") && !fileName.endsWith("JPEG") && !fileName.endsWith("GIF") && !fileName.endsWith("PNG")&&!fileName.endsWith("JPG")) {
+					if(uploadFileToCloud(fileName,f.getInputStream(),UPLOADFILEPATH)){
+						return "http://"+BUCKETNAME+".kuaiyunds.com/"+BUCKETNAME+"/"+UPLOADFILEPATH+"/" + fileName;
+					}else{
+						return null;
+					}
+				}else{
+					if(uploadFileToCloud(fileName,f.getInputStream(),UPLOADIMAGEPATH)){
+						return "http://"+BUCKETNAME+".kuaiyunds.com/"+BUCKETNAME+"/"+UPLOADIMAGEPATH+"/" + fileName;
+					}else{
+						return null;
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+		return null;
+	}
 }

@@ -1,8 +1,12 @@
 package com.zzidc.declaration.controller;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.zzidc.declaration.service.ProjectDocTypeService;
 import com.zzidc.team.entity.DeclarationProjectDocType;
+import com.zzidc.team.entity.ResultTypeDocType;
 
 import net.sf.json.JSONObject;
 
@@ -132,4 +137,82 @@ public class ProjectDocTypeController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
+	
+	
+	
+	@RequestMapping("/toModify")
+	public String toModify(@RequestParam Map<String, String> mvm, Model model) {
+		List<String> resultTypeList = new ArrayList<String>();
+		resultTypeList.add("1");
+		resultTypeList.add("2");
+		resultTypeList.add("3");
+		resultTypeList.add("4");
+		resultTypeList.add("5");
+		model.addAttribute("resultTypeList", resultTypeList);
+		
+		String docTypeSql = "select * from declaration_project_doc_type where state = 1 ";
+		List<Map<String, Object>> docTypeList = projectDocTypeService.dao.getMapListBySQL(docTypeSql, null);
+		model.addAttribute("docTypeList", docTypeList);
+		
+		//必选
+		String requiredSql = "select * from result_type_doc_type where required_or_optional = 1 ";
+		List<Map<String, Object>> requiredList = projectDocTypeService.dao.getMapListBySQL(requiredSql, null);
+		model.addAttribute("requiredList", requiredList);
+		
+		//可选
+		String optionalSql = "select * from result_type_doc_type where required_or_optional = 2 ";
+		List<Map<String, Object>> optionalList = projectDocTypeService.dao.getMapListBySQL(optionalSql, null);
+		model.addAttribute("optionalList", optionalList);
+		publicResult(model);
+		return "declaration/project_doc_type/modify";
+	}
+	
+	/**
+	 * 删除项目成果文档类型页面
+	 */
+	@RequestMapping("/modify")
+	public void modify(@RequestParam Map<String, String> mvm, Model model, HttpServletRequest request, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		Short resultType = Short.valueOf(request.getParameter("resultType"));
+		String[] requiredArray = request.getParameterValues("required");
+		String[] optionalArray = request.getParameterValues("optional");
+		
+		String querySql = "select * from result_type_doc_type where result_type = " + resultType;
+		List<Object> deleteList = projectDocTypeService.dao.getEntityListBySQL(querySql, null, new ResultTypeDocType());
+		if (deleteList != null && deleteList.size() > 0) {
+			projectDocTypeService.dao.saveUpdateOrDelete(null, deleteList);
+		}
+		
+		List<ResultTypeDocType> insertList = new ArrayList<ResultTypeDocType>();
+		if (requiredArray != null && requiredArray.length > 0) {
+			for (int i = 0; i < requiredArray.length; i++) {
+				ResultTypeDocType resultTypeDocType = new ResultTypeDocType();
+				resultTypeDocType.setResultType(resultType);
+				resultTypeDocType.setDocTypeId(Integer.valueOf(requiredArray[i]));
+				resultTypeDocType.setRequiredOrOptional((short)1);
+				insertList.add(resultTypeDocType);
+			}
+		}
+		
+		if (optionalArray != null && optionalArray.length > 0) {
+			for (int i = 0; i < optionalArray.length; i++) {
+				ResultTypeDocType resultTypeDocType = new ResultTypeDocType();
+				resultTypeDocType.setResultType(resultType);
+				resultTypeDocType.setDocTypeId(Integer.valueOf(optionalArray[i]));
+				resultTypeDocType.setRequiredOrOptional((short)2);
+				insertList.add(resultTypeDocType);
+			}
+		}
+		
+		boolean flag = projectDocTypeService.dao.saveUpdateOrDelete(insertList, null);
+		if (flag) {
+			json.put("code",0);
+			json.put("message", "成功");
+		} else {
+			json.put("code",1);
+			json.put("message", "失败");
+		}
+		resultresponse(response,json);
+	}
+	
 }

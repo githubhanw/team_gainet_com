@@ -72,7 +72,7 @@ public class OrganizationUserController extends GiantBaseController {
 		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
 		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
 		pageList = organizationUserService.getPageList(conditionPage);
-		requestURL = "organization/user/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
+		requestURL = "organization/user/index";
 		pageList.setDesAction(requestURL);
 		model.addAttribute("pageList", pageList);
 		model.addAttribute("sync", SyncUser.sync);

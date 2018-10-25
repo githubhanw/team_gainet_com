@@ -38,9 +38,9 @@
 								<tr>
 									<th>需求名称</th>
 									<td class="required" style="width:60%">
-										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off">
+										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off" placeholder="最大64个字符">
 									</td>
-									<td></td>
+									<td>注：最大64个字符</td>
 								</tr>
 								<tr>
 									<th>所属产品</th>

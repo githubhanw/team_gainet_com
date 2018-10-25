@@ -1,6 +1,7 @@
 package com.zzidc.team.service;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -287,50 +289,104 @@ public class TeamTaskService extends GiantBaseService {
 		}
 	}
 
-	public List<Map<String, Object>> getNoTaskMember(String type, String startTime, String endTime){
-		Map<String, Object> prm = new HashMap<String, Object>();
-		String sql = "SELECT d1.`NAME` depName, m.id,m.`NAME` memName, ";
-		if(startTime != null && !"".equals(startTime) && endTime != null && !"".equals(endTime)) {
-			if("2".equals(type)) {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date>:startTime AND real_end_date<:endTime) tc ";
-				prm.put("startTime", startTime);
-				prm.put("endTime", endTime);
-			} else {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date>:startTime AND end_date<:endTime) tc ";
-				prm.put("startTime", startTime);
-				prm.put("endTime", endTime);
+	/**
+	 * 获取每个月每天没有任务的人员
+	 * @param type
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	public List<Map<String, Object>> getNoTaskMemberByMonth(String type, String date, String depId){
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar cal = Calendar.getInstance();
+		if(date != null && !"".equals(date)) {
+			try {
+				cal.setTime(df.parse(date));
+			} catch (ParseException e) {
+				e.printStackTrace();
+				cal.setTime(new Date());
 			}
-		} else {
-			sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0) tc ";
+		}else {
+			cal.setTime(new Date());
 		}
-		sql += "FROM member m, oa_department d1, oa_department d2, oa_department d3 " + 
-				"WHERE m.deptID=d1.DEPARTMENT_ID AND d1.PARENT_ID=d2.DEPARTMENT_ID AND d2.PARENT_ID=d3.DEPARTMENT_ID AND m.`STATUS`=0 " + 
-				"AND (d1.DEPARTMENT_ID='183' OR d2.DEPARTMENT_ID='183' OR d3.DEPARTMENT_ID='183')" + 
-				"GROUP BY m.id HAVING tc=0 ORDER BY d1.DEPARTMENT_ID";
-		
-		return super.getMapListBySQL(sql, prm);
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		for (int x = 1; x <= lastDay; x++) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			date = df.format(cal.getTime());
+			map.put("start", date);
+			if (isFestivalOrHoliday(cal)) {
+				map.put("title", "节假日");
+				list.add(map);
+			} else {
+				List<Map<String, Object>> dayList = getNoTaskMemberByday(type, date, depId);
+				if(dayList != null && dayList.size() > 0) {
+					Map<String, Object> dayMap = new HashMap<String, Object>();
+					String name = "";
+					int sort = 0;
+					for(int i=0; i< dayList.size(); i++) {
+						Map<String, Object> m = dayList.get(i);
+						if (i > 0 && i % 3 == 0 || i + 1 == dayList.size()) {
+							dayMap = new HashMap<String, Object>();
+							dayMap.put("sortId", sort ++);
+							dayMap.put("start", date);
+							dayMap.put("className", "label-grey");
+							dayMap.put("title", name.substring(1));
+							list.add(dayMap);
+							name = "，" + m.get("title");
+						} else {
+							name += "，" + m.get("title");
+						}
+					}
+				}
+			}
+			cal.add(Calendar.DAY_OF_MONTH, 1);
+		}
+		return list;
 	}
-
-	public List<Map<String, Object>> getTaskMember(String type, String startTime, String endTime){
-		Map<String, Object> prm = new HashMap<String, Object>();
-		String sql = "SELECT d1.`NAME` depName, m.id,m.`NAME` memName, ";
-		if(startTime != null && !"".equals(startTime) && endTime != null && !"".equals(endTime)) {
-			if("2".equals(type)) {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date>:startTime AND real_end_date<:endTime) tc ";
-				prm.put("startTime", startTime);
-				prm.put("endTime", endTime);
+	/**
+	 * 是否节假日
+	 */
+	private boolean isFestivalOrHoliday(Calendar cal) {
+		String holiday[] = {"2018-09-22", "2018-09-23", "2018-09-24", 
+				"2018-10-01", "2018-10-02", "2018-10-03", "2018-10-04", "2018-10-05", "2018-10-06", "2018-10-07", 
+				""};//假日
+		String overtime[] = {"2018-09-29", "2018-09-30", ""};//加班
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String date = df.format(cal.getTime());
+		if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {//是否周末
+			if (ArrayUtils.contains(overtime, date)) {//是否加班
+				return false;
 			} else {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date>:startTime AND end_date<:endTime) tc ";
-				prm.put("startTime", startTime);
-				prm.put("endTime", endTime);
+				return true;
+			}
+		} else if(ArrayUtils.contains(holiday, date)) {//是否假日
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private List<Map<String, Object>> getNoTaskMemberByday(String type, String date, String depId){
+		Map<String, Object> prm = new HashMap<String, Object>();
+		String sql = "SELECT '" + date + "' start, m.`NAME` title, 'label-info' className, ";
+		if(date != null && !"".equals(date)) {
+			if("2".equals(type)) {
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date<=:date AND real_end_date>=:date) sortId ";
+				prm.put("date", date + " 12");//每天中午12点划分
+			} else {
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date<=:date AND end_date>=:date) sortId ";
+				prm.put("date", date + " 12");//每天中午12点划分
 			}
 		} else {
 			sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0) tc ";
 		}
 		sql += "FROM member m, oa_department d1, oa_department d2, oa_department d3 " + 
 				"WHERE m.deptID=d1.DEPARTMENT_ID AND d1.PARENT_ID=d2.DEPARTMENT_ID AND d2.PARENT_ID=d3.DEPARTMENT_ID AND m.`STATUS`=0 " + 
-				"AND (d1.DEPARTMENT_ID='183' OR d2.DEPARTMENT_ID='183' OR d3.DEPARTMENT_ID='183')" + 
-				"GROUP BY m.id HAVING tc>0 ORDER BY d1.DEPARTMENT_ID";
+				"AND (d1.DEPARTMENT_ID=:depId OR d2.DEPARTMENT_ID=:depId OR d3.DEPARTMENT_ID=:depId) " + 
+				"GROUP BY m.number HAVING sortId=0 ORDER BY d1.DEPARTMENT_ID";
+		prm.put("depId", depId);
 		return super.getMapListBySQL(sql, prm);
 	}
 	

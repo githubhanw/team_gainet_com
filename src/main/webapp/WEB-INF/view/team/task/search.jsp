@@ -17,6 +17,35 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<title>人员工作安排情况</title>
 		<%@ include file="/WEB-INF/view/comm/cssjs.jsp" %>
+		<script src="static/calendar/moment.min.js"></script>
+		<script src="static/calendar/fullcalendar.min.js"></script>
+		<link rel="stylesheet" href="static/calendar/fullcalendar.min.css">
+		<link rel="stylesheet" href="static/calendar/ace.min.css">
+		<style type="text/css">
+			.fc-toolbar h2{float:left;height: 26px;line-height: 26px;width: 130px;font-size: 20px;}
+			.fc-toolbar button{float:left;height:26px;padding:0 .3em;}
+			.fc-toolbar{margin-bottom:0px;background: #cfe7ff;border:1px solid #cfe7ff;padding:8px 10px;}
+			.fc-unthemed td,.fc-unthemed th{border-color:#cfe7ff;}
+			.fc-unthemed th{padding:8px;}
+			.fc-day-grid-event > .fc-content{text-align: center;}
+			.fc-state-default{background: #8cc6e8;}
+			.fc-ltr .fc-basic-view .fc-day-number:nth-child(1),.fc-ltr .fc-basic-view .fc-day-number:nth-child(7){color:red;}
+			
+			.label.arrowed{height:30px;line-height:30px;padding:0 20px 0 15px;margin-left:10px;}
+			.label.arrowed:before{left:-20px;border-width:15px 10px;}
+			#calendar{width:100%;}
+			.modal-header{padding:6px 15px;background: #6eafd9;color:#fff;}
+			.modal-header .close{color:#fff;font-size:28px;margin-top:-4px;opacity:1;}
+			.btn-danger{padding:1px 20px;}
+			.modal-footer{text-align: center;background-color:none!important;border-top:none;}
+			.mr span{padding:0 5px 5px 5px;}
+			.mr{padding-bottom:5px;}
+			.mrs span:nth-child(1){font-weight:bold;}
+			.mrs span:nth-child(2){width:80px;text-align:left;display: inline-block;}
+			[status='1']{color:red;}
+			a.fc-start[class*='apply']{cursor:zoom-in;cursor:-webkit-zoom-in;}
+			a.fc-start[class*='apply']:hover{box-shadow:0 0 10px #428bca}
+		</style>
 	</head>
 	<body>
 		<!--header start-->
@@ -36,28 +65,29 @@
 							<span class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}""><span class="text">人员安排</span></span>
 						</a>
 					</div>
-					<div class="btn-toolbar pull-left" style="margin-left:30px;width:600px">
+					<div class="btn-toolbar pull-left" style="margin-left:30px;width:300px">
 						<form action="team/task/search">
+							<input type="hidden" name="type" value="${prm.type}"/>
+							<input type="hidden" name="date" value="${prm.date}"/>
 							<table style="width:100%">
 								<tr>
-									<%-- <td>
-										<select class="form-control chosen chosen-select" name="level" id="level">
+									<td>
+										<select class="form-control chosen chosen-select" name="depId" id="depId">
 											<option value="">请选择部门或团队</option>
-											<option ${prm.level=='1'?'selected="selected"':'' } value="1">紧急重要</option>
-											<option ${prm.level=='2'?'selected="selected"':'' } value="2">紧急不重要</option>
-											<option ${prm.level=='3'?'selected="selected"':'' } value="3">不紧急重要</option>
-											<option ${prm.level=='4'?'selected="selected"':'' } value="4">不紧急不重要</option>
+											<c:forEach items="${levelA}" var="a">
+												<option ${prm.depId==a.depId?'selected="selected"':'' } value="${a.depId}">${a.depName}</option>
+												<c:forEach items="${levelB}" var="b" varStatus="sta">
+													<c:if test="${b.parentId == a.depId}">
+														<option ${prm.depId==b.depId?'selected="selected"':'' } value="${b.depId}">| -- ${b.depName}</option>
+														<c:forEach items="${levelC}" var="c" varStatus="sta">
+															<c:if test="${c.parentId == b.depId}">
+																<option ${prm.depId==c.depId?'selected="selected"':'' } value="${c.depId}">&nbsp; &nbsp; &nbsp; | -- ${c.depName}</option>
+															</c:if>
+														</c:forEach>
+													</c:if>
+												</c:forEach>
+											</c:forEach>
 										</select>
-									</td> --%>
-									<td>
-										<input type="hidden" name="type" value="${prm.type}"/>
-										<input type="text" name="start_date" id="start_date" value="${prm.start_date}" class="form-control form-date" placeholder="选择计划开始时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
-									</td>
-									<td>
-										<input type="text" name="end_date" id="end_date" value="${prm.end_date}" class="form-control form-date" placeholder="选择计划结束时间" autocomplete="off" style="border-radius: 2px 0px 0px 2px;" readonly="readonly">
-									</td>
-									<td>
-										<button type="submit" id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">搜索</button>
 									</td>
 								</tr>
 							</table>
@@ -65,11 +95,11 @@
 					</div>
 				</div>
 				<div id="mainContent" class="main-row">
-					<div class="side-col col-4">
+					<%-- <div class="side-col col-4">
 						<div class="panel">
 							<div class="panel-heading">
 								<div class="panel-title">
-									无任务人员列表
+									当月无任务人员列表
 									<span class="label label-light label-badge">${noTaskMember.size()}</span>
 								</div>
 							</div>
@@ -88,28 +118,16 @@
 								</table>
 							</div>
 						</div>
-					</div>
-					<div class="main-col col-4">
+					</div> --%>
+					<div class="main-col col-8">
 						<div class="panel">
 							<div class="panel-heading">
 								<div class="panel-title">
-									有任务人员列表
-									<span class="label label-light label-badge">${taskMember.size()}</span>
+									无任务人员统计
 								</div>
 							</div>
-							<div class="panel-body">
-								<table class="table has-sort-head">
-									<tr>
-										<td>团队</td>
-										<td>姓名</td>
-									</tr>
-									<c:forEach items="${taskMember}" var="member" varStatus="sta">
-										<tr>
-											<td>${member.depName}</td>
-											<td>${member.memName}</td>
-										</tr>
-									</c:forEach>
-								</table>
+							<div class="panel-body" style="margin-top:10px">
+								<div id="calendar"></div>
 							</div>
 						</div>
 					</div>
@@ -119,3 +137,56 @@
 		<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 </html>
+<script type="text/javascript">
+	jQuery(function($) {
+		var noTime =  $.fullCalendar.moment("${prm.date}");
+		var calendar = $('#calendar').fullCalendar({
+			height:800,
+			buttonText:{
+				prev:"上月",
+				next:"下月"
+			},
+		    timeFormat: {
+		        '': 'H:mm{-H:mm}'
+		    },
+		    weekMode: "variable",
+		    columnFormat: {
+		        month: 'dddd',
+		        week: 'dddd M-d',
+		        day: 'dddd M-d'
+		    },
+		    titleFormat: {
+		        month: "YYYY年MMMM月",
+		        week: "[yyyy年] MMMM月d日 { '&#8212;' [yyyy年] MMMM月d日}",
+		        day: 'yyyy年 MMMM月d日 dddd'
+		    },
+		    monthNames: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+		    dayNames: ["日", "一", "二", "三", "四", "五", "六"],
+			header: {
+				left: '',
+				center: 'prev,title,next',
+				right: ''
+			}
+		    ,events:${noTaskMemberByMonth}
+		    ,eventLimit:false
+		    ,eventLimitText : function(more){return "剩" + more + ",查看全部记录";}
+			,dayPopoverFormat:"YYYY年MMMM月D日 周dddd"
+		    ,views:{
+		    	agenda:{
+		    		eventLimit:5
+		    	}
+		    }
+		});
+
+		$('#calendar').fullCalendar('gotoDate',noTime);
+		var url=document.baseURI+"/team/task/search?type=${prm.type}&depId=${prm.depId}&date=";
+		$("#calendar").on("click",".fc-button",function(){
+			var date=$.trim($(this).siblings("h2").text().replace("年","-").replace("月",""));
+			if(date.length==6)date=date.replace("-","-0");
+			location.replace(url+date + "-01");
+		});
+		$("#depId").on("change",function(){
+			$("form").submit();
+		})
+	})
+</script>

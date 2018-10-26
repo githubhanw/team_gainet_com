@@ -62,7 +62,8 @@
 								<tr>
 									<th>指派给</th>
 									<td class="required">
-										<select data-placeholder="请选择员工" class="form-control chosen-select" name="assigned_id" id="assigned_id">
+										<input type="hidden" name="assigned_id" id="assignedIds">
+										<select data-placeholder="请选择员工" class="form-control chosen-select" id="assigned_id" multiple>
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
 												<option value="${member.id}">${member.name}(${member.number})</option>
@@ -104,6 +105,15 @@
 										<input type="hidden" name="remark">
 										<textarea id="remark" name="details" placeholder="" style="width:100%;">${t.testContent}</textarea>
 										<div id="remark" value=""></div>
+									</td>
+									<td></td>
+								</tr>
+								<tr>
+									<th>要执行的sql</th>
+									<td class="required">
+										<input type="hidden" name="execute_sql">
+										<textarea id="execute_sql" name="details" placeholder="" style="width:100%;">${t.executeSql}</textarea>
+										<div id="execute_sql" value=""></div>
 									</td>
 									<td></td>
 								</tr>
@@ -172,10 +182,13 @@
 		}  
 	};  
 	UE.getEditor('remark');
+	UE.getEditor('execute_sql');
 
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
 		$("input[name='remark']").val(UE.getEditor('remark').getContent());
+		$("input[name='execute_sql']").val(UE.getEditor('execute_sql').getContent());
+		$("#assignedIds").val($("#assigned_id").val());
 		$.ajax({type:"POST",url:"my/test/receive?r=" + Math.random(),data:$("form").serialize(),
 				dataType:"json",success:function(data){
 			if(data.code == 0){

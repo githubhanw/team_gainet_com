@@ -817,6 +817,7 @@ public class TestApplyService extends GiantBaseService {
 			task.setTaskType(GiantUtil.intOf(mvm.get("task_type"), 0));
 			task.setLevel(GiantUtil.intOf(mvm.get("level"), 0));
 			task.setRemark(GiantUtil.stringOf(mvm.get("remark")));
+			task.setExecuteSql(GiantUtil.stringOf(mvm.get("execute_sql")));
 			try {
 				task.setStartDate(super.returnTime(mvm.get("start_date")));
 			} catch (Exception e) {

@@ -108,6 +108,15 @@
 									</td>
 									<td></td>
 								</tr>
+								<tr>
+									<th>要执行的sql</th>
+									<td class="required">
+										<input type="hidden" name="execute_sql">
+										<textarea id="execute_sql" name="details" placeholder="" style="width:100%;">${t.executeSql}</textarea>
+										<div id="execute_sql" value=""></div>
+									</td>
+									<td></td>
+								</tr>
 								</form>
 								<tr>
 									<td colspan="3" class="text-center form-actions">
@@ -173,10 +182,12 @@
 		}  
 	};  
 	UE.getEditor('remark');
+	UE.getEditor('execute_sql');
 
 	$("#submit").click(function(){
 		$.ajaxSettings.async = false;
 		$("input[name='remark']").val(UE.getEditor('remark').getContent());
+		$("input[name='execute_sql']").val(UE.getEditor('execute_sql').getContent());
 		$("#assignedIds").val($("#assigned_id").val());
 		$.ajax({type:"POST",url:"test/apply/receive?r=" + Math.random(),data:$("form").serialize(),
 				dataType:"json",success:function(data){

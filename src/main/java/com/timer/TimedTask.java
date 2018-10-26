@@ -65,5 +65,17 @@ public class TimedTask extends GiantBaseService {
 			}
 		}
 	}
+	
+	
+//	@Scheduled(cron = "0 00 00 ? * *") // 每天凌晨执行一次
+//	public void overdue() {
+//		String querySql = "update task set overdue=1 WHERE end_date < CURDATE() and state=1 and overdue=0 and deleted=0 "
+//				
+//				+ "UPDATE task SET overdue=1 WHERE plan_end_date<CURDATE() AND state=2 AND overdue=0"
+//				
+//				+ "UPDATE task SET overdue=1 WHERE DATE_ADD(plan_end_date,INTERVAL 3 DAY)<CURDATE() AND state=3 AND overdue=0";
+//		List<Map<String, Object>> list = super.dao.getListMapBySql(querySql, null);
+//		
+//	}
 
 }

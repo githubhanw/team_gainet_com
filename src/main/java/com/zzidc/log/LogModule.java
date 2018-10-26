@@ -11,7 +11,8 @@ public enum LogModule {
 	TASK("task"),
 	NEED("need"),
 	TEST("test"),
-	BUG("bug");
+	BUG("bug"),
+	RESULT("result");//成果
 	
 	private LogModule(String value) {
 		this.value = value;

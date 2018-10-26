@@ -42,10 +42,12 @@ import com.giant.zzidc.base.filter.WebUtil;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.giant.zzidc.base.utils.HttpUtils;
 import com.zzidc.log.PMLog;
 import com.zzidc.log.PMLogItem;
 import com.zzidc.team.entity.ActionHistory;
 import com.zzidc.team.entity.ActionLog;
+import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Task;
 
 import net.sf.json.JSONObject;
@@ -1194,5 +1196,98 @@ public class GiantBaseService {
             throw e;  
         }  
 		return ts;
+	}
+	
+//	/**
+//	 * OA待办事项
+//	 * 
+//	 * @param Title
+//	 *            景安售前流程，待办标题
+//	 * @param Startmissiondate
+//	 *            开始时间 yyyy-MM-dd HH:mm格式
+//	 * @param Overmissiondate
+//	 *            结束时间 yyyy-MM-dd HH:mm格式
+//	 * @param Responsible
+//	 *            责任人工号
+//	 * @param Assigner
+//	 *            分配人工号
+//	 * @param ParticipantsIds
+//	 *            参与人工号，如果是多个，英文逗号分隔， 例如：2017021502,2017041104
+//	 * @param Participantsname
+//	 *            参与人名称，如果是多个，英文逗号分隔，例如：张三,李四,王五,赵六,钱七
+//	 * @param Description
+//	 *            根据【景安售前流程】创建面谈问题，描述
+//	 * @param actionUrl
+//	 *            跳转链接 "preSales/goClueDetails.do?cluesID="+id
+//	 * @param currentNumber
+//	 *            当前操作人的工号
+//	 */
+//	public void OAToDo(String Title, String Startmissiondate, String Overmissiondate, Integer ResponsibleId,
+//			Integer AssignerId, String Participantsname, String Description, String actionUrl,
+//			Integer currentNumberId, Integer...ParticipantsIds) {
+//		if (Description != null && Description !="") {
+//			Description = Description.substring(Description.indexOf(">") + 1, Description.lastIndexOf("<"));
+//		}
+//		String Responsible = getNumber(ResponsibleId);
+//		String Assigner = getNumber(AssignerId);
+//		String Participants = "";
+//		if (ParticipantsIds != null && ParticipantsIds.length > 0) {
+//			for (int i = 0; i < ParticipantsIds.length; i++) {
+//				Participants += getNumber(ParticipantsIds[i]) + ",";
+//			}
+//			Participants = Participants.substring(0, Participants.length() - 1);
+//		}
+//		JSONObject jsonParams = new JSONObject();
+//		jsonParams.put("Title", Title);
+//		jsonParams.put("Startmissiondate", Startmissiondate);
+//		jsonParams.put("Overmissiondate", Overmissiondate);
+//		jsonParams.put("Responsible", Responsible);
+//		jsonParams.put("Assigner", Assigner);
+//		jsonParams.put("Participants", Participants);
+//		jsonParams.put("Participantsname", Participantsname);
+//		jsonParams.put("Description", Description);
+//		jsonParams.put("actionUrl", "http://localhost:8080/team_gainet_com/" + actionUrl);
+//		jsonParams.put("currentNumber", getNumber(currentNumberId));
+////		String url = "http://192.168.103.180:8080/llkOA/todo/saveWorklists.do";
+//		String url = "http://zhiguan360.cn/llkOA/todo/saveWorklists.do";
+//		String resultData = HttpUtils.sendPost(url, jsonParams.toString());
+//		JSONObject resultJson = JSONObject.fromObject(resultData);
+//		if ("0".equals(resultJson.get("code"))) {
+//			System.out.println("===========================安排待办成功===========================");
+//		} else if ("1".equals(resultJson.get("code"))) {
+//			System.out.println("===========================安排待办失败===========================");
+//		}
+//	}
+	
+	
+	/**
+	 * 
+	 * @param Title 待办事项说明
+	 * @param ResponsibleId  待办人
+	 * @param AssignerId  分配人
+	 * @param Description  待办事项名称
+	 */
+	public void OAToDo(String Title, Integer ResponsibleId, Integer AssignerId, String Description) {
+		String Responsible = getNumber(ResponsibleId);
+		String Assigner = getNumber(AssignerId);
+		JSONObject jsonParams = new JSONObject();
+		jsonParams.put("Title", Title);
+		jsonParams.put("Responsible", Responsible);
+		jsonParams.put("Assigner", Assigner);
+		jsonParams.put("Description", Description);
+//		String url = "http://192.168.103.180:8080/llkOA/todo/saveWorklists.do";
+		String url = "http://zhiguan360.cn/llkOA/todo/saveWorklists.do";
+		String resultData = HttpUtils.sendPost(url, jsonParams.toString());
+		JSONObject resultJson = JSONObject.fromObject(resultData);
+		if ("0".equals(resultJson.get("code"))) {
+			System.out.println("===========================安排待办成功===========================");
+		} else if ("1".equals(resultJson.get("code"))) {
+			System.out.println("===========================安排待办失败===========================");
+		}
+	}
+	
+	public String getNumber(Integer id) {
+		Member member = (Member)getEntityByPrimaryKey(new Member(), id);
+		return member.getNumber();
 	}
 }

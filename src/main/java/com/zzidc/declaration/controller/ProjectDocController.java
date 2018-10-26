@@ -103,7 +103,7 @@ public class ProjectDocController extends GiantBaseController {
 		}
 		pd.setDocName(GiantUtil.stringOf(mvm.get("doc_name")));
 		pd.setProjectDocUrl(GiantUtil.stringOf(mvm.get("project_doc_url")));
-		pd.setProvideDate(Timestamp.valueOf(mvm.get("provide_date") + " 00:00:00"));
+		pd.setProvideDate(Timestamp.valueOf(mvm.get("provide_date") + ":00"));
 		pd.setDocState(GiantUtil.intOf(mvm.get("doc_state"), 0)); // 默认未提供
 		pd.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		// 文档类型ID，当文档类型ID为空时表示没有选择文档类型

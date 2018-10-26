@@ -239,7 +239,6 @@ public class PMLog {
 	public void add(Object oldEntity, Object newEntity, String... fields) {
 		add(oldEntity, newEntity, null, fields);
 	}
-	
 	public void add(int objectId, Object oldEntity, Object newEntity, String[] diffFields, String... fields) {
 		this.objectId = objectId;
 		add(oldEntity, newEntity, diffFields, fields);

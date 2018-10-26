@@ -194,6 +194,7 @@ public class HttpUtils {
 	        HttpClient client = null;
 	        HttpPost post = new HttpPost(url);
 	        post.setHeader("content-type","application/json; charset=UTF-8");
+//	        post.setHeader("content-type","application/x-www-form-urlencoded; charset=UTF-8");
 	        try {
 	        	if(url.startsWith("https")){
 	        		SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {

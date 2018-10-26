@@ -1,7 +1,10 @@
 package com.zzidc.team.controller;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSONArray;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
@@ -90,8 +94,26 @@ public class TeamTaskController extends GiantBaseController {
 		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
 			mvm.put("type", "1");
 		}
-		model.addAttribute("noTaskMember", teamTaskService.getNoTaskMember(mvm.get("type"), mvm.get("start_date"), mvm.get("end_date")));
-		model.addAttribute("taskMember", teamTaskService.getTaskMember(mvm.get("type"), mvm.get("start_date"), mvm.get("end_date")));
+		// 参数：日期+团队
+		if ("".equals(GiantUtil.stringOf(mvm.get("date")))){
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			mvm.put("date", df.format(new Date()));
+		}
+		if ("".equals(GiantUtil.stringOf(mvm.get("depId")))){
+			mvm.put("depId", "183");
+		}
+		
+		// 所有部门团队
+		model.addAttribute("levelA", teamTaskService.getMapListBySQL("SELECT d1.DEPARTMENT_ID depId,CONCAT(d1.`NAME`,'-',d2.`NAME`) depName, d1.PARENT_ID parentId "
+				+ "FROM oa_department d1, oa_department d2 WHERE d1.PARENT_ID=d2.DEPARTMENT_ID AND "
+				+ "d1.DEPARTMENT_ID IN ('183', '8004c2d7410a4aa183bfca1cc2926ba6', '7d91e6a336b2456183eefad087e25069', '482e6267fe7b46c589adaf87eb0049ce')", null));
+		model.addAttribute("levelB", teamTaskService.getMapListBySQL("SELECT d1.DEPARTMENT_ID depId,d1.`NAME` depName, d1.PARENT_ID parentId FROM oa_department d1, oa_department d2 "
+				+ "WHERE d1.PARENT_ID=d2.DEPARTMENT_ID AND d2.DEPARTMENT_ID IN ('183', '8004c2d7410a4aa183bfca1cc2926ba6', '7d91e6a336b2456183eefad087e25069', '482e6267fe7b46c589adaf87eb0049ce')", null));
+		model.addAttribute("levelC", teamTaskService.getMapListBySQL("SELECT d1.DEPARTMENT_ID depId,d1.`NAME` depName, d1.PARENT_ID parentId "
+				+ "FROM oa_department d1, oa_department d2, oa_department d3 WHERE d1.PARENT_ID=d2.DEPARTMENT_ID AND d2.PARENT_ID=d3.DEPARTMENT_ID AND "
+				+ "d3.DEPARTMENT_ID IN ('183', '8004c2d7410a4aa183bfca1cc2926ba6', '7d91e6a336b2456183eefad087e25069', '482e6267fe7b46c589adaf87eb0049ce')", null));
+		//统计数据
+		model.addAttribute("noTaskMemberByMonth", JSONArray.toJSON(teamTaskService.getNoTaskMemberByMonth(mvm.get("type"), mvm.get("date"), mvm.get("depId"))));
 		model.addAttribute("prm", mvm);
 		publicResult(model);
 		return "team/task/search";

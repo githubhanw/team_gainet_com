@@ -114,7 +114,7 @@
 								<table class="table has-sort-head" id="taskList"
 									data-fixed-left-width="550" data-fixed-right-width="160">
 									<thead>
-										<t<tr>
+										<tr>
 											<th data-flex="false" data-width="90px" style="width:150px" class="c-id text-center" title="ID">
 												<a class="${prm.orderColumn=='id'?(prm.orderByValue=='DESC'?'sort-down':'sort-up'):'header'}"
 													href="javascript:void(0)" onclick="pageOrder('id');">ID</a>

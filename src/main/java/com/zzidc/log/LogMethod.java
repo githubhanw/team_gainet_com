@@ -32,7 +32,9 @@ public enum LogMethod {
 	SUBMITCHECK("提交验收"),
 	SURENEED("确认需求"),
 	SURETALK("确认谈判"),
-	REJECTED("驳回原型图");
+	REJECTED("驳回原型图"),
+	DELETE("删除"),
+	UPLOADDOC("上传成果文档");
 	
 	private LogMethod(String value) {
 		this.value = value;

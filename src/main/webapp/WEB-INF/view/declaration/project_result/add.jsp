@@ -117,10 +117,10 @@
 											</select>
 										<td></td>
 									</tr>
+									<input type="hidden" id="docTypes" name="docTypes" value="" >
 									<tr>
 									    <th>需上传文档</th>
 										<td id="docType">
-											<div style="background-color: #F5F5F5">
 												<c:forEach items="${docTypeList}"
 													var="docType" varStatus="status">
 													<div class="group-item">
@@ -130,13 +130,12 @@
 																test="${docType.required_or_optional == 1}">
 																<c:set var="checked" value="true"></c:set>
 															</c:if>
-															<input type="checkbox" name="docType" id=""
+															<input type="checkbox" name="docType" 
 																${checked ? 'checked="checked"' : "" }
 																value="${docType.id}"> <label>${docType.project_doc_type}</label>
 														</div>
 													</div>
 												</c:forEach>
-											</div>
 										</td>
 									</tr>
 									<tr>
@@ -300,14 +299,14 @@
 	    		    		if (docType.required_or_optional == 1) {
 	    		    			$("#docType").append('<div class="group-item">'
 										+'<div class="checkbox-primary checkbox-inline">'
-	    		    	    		   +'<input type="checkbox" name="docType" id="" '
+	    		    	    		   +'<input type="checkbox" name="docType" '
 	    		    	    		               +'checked="checked" value="' + docType.id +'">'
 	    		    	    		               +'<label>' + docType.project_doc_type + '</label>'
 	    		    	    		               +'</div></div>');
 	    		    		} else if (docType.required_or_optional == 2) {
 	    		    			$("#docType").append('<div class="group-item">'
 										+'<div class="checkbox-primary checkbox-inline">'
-	    		    	    		   +'<input type="checkbox" name="docType" id="" '
+	    		    	    		   +'<input type="checkbox" name="docType" '
 	    		    	    		               +'value="' + docType.id +'">'
 	    		    	    		               +'<label>' + docType.project_doc_type + '</label>'
 	    		    	    		               +'</div></div>');
@@ -332,6 +331,15 @@ UE.Editor.prototype.getActionUrl = function(action){
 };  
 UE.getEditor('remark');
 $("#submit").click(function(){
+	var docTypes = '';
+	$('input:checkbox[name=docType]:checked').each(function(k){
+	    if(k == 0){
+	    	docTypes = $(this).val();
+	    }else{
+	    	docTypes += ','+$(this).val();
+	    }
+	});
+	$("#docTypes").val(docTypes);
 	$.ajaxSettings.async = false;
 	$("input[name='remark']").val(UE.getEditor('remark').getContent());
 	$.ajax({type:"POST",url:"declaration/result/addOrUpd?r=" + Math.random(),data:$("form").serialize(),dataType:"json",success:function(data){

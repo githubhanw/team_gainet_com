@@ -198,8 +198,8 @@
 			dataType : "json",
 			success : function(data) {
 				if(data.code == 0){
-					$("#msg").text(data.message);
-	 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+					alert(data.message);
+					window.location.href="declaration/doctype/toModify";
 	 			}else{
 	 				$("#errMsg").text(data.message);
 	 				$('#errModal').modal({keyboard: false,show: true, moveable: true});

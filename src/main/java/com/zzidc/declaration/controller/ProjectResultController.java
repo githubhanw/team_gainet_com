@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -182,7 +183,7 @@ public class ProjectResultController extends GiantBaseController {
 		JSONObject json=new JSONObject();
 		if(GiantUtils.isEmpty(mvm.get("type")) || GiantUtils.isEmpty(mvm.get("company")) || GiantUtils.isEmpty(mvm.get("agent")) || GiantUtils.isEmpty(mvm.get("state")) || 
 				GiantUtils.isEmpty(mvm.get("registration_number")) || GiantUtils.isEmpty(mvm.get("project_id")) || GiantUtils.isEmpty(mvm.get("project_result_name")) || 
-				GiantUtils.isEmpty(mvm.get("member_id")) || GiantUtils.isEmpty(mvm.get("apply_date"))){
+				GiantUtils.isEmpty(mvm.get("member_id")) || GiantUtils.isEmpty(mvm.get("apply_date")) || GiantUtils.isEmpty(mvm.get("docTypes"))){
 			json.put("code",1);
 			json.put("message", "参数不完整！！");
 			resultresponse(response,json);
@@ -211,6 +212,9 @@ public class ProjectResultController extends GiantBaseController {
 			pr.setState((short) 0);
 			boolean flag = projectResultService.saveUpdateOrDelete(pr, null);
 			if(flag){
+				PMLog pmLog = new PMLog(LogModule.RESULT, LogMethod.DELETE, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+				pmLog.setObjectId(pr.getId());
+				projectResultService.log(pmLog);
 				json.put("code",0);
 				json.put("message", "删除成功");
 			}else{
@@ -264,10 +268,12 @@ public class ProjectResultController extends GiantBaseController {
 			@RequestParam("file") MultipartFile[] file) {
 		JSONObject json = new JSONObject();
 		DeclarationProjectDoc pdt = null;
+		DeclarationProjectDoc oldpdt = new DeclarationProjectDoc();;
 		if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {
 			// 获取文档对象
 			pdt = (DeclarationProjectDoc) projectResultService
 					.getEntityByPrimaryKey(new DeclarationProjectDoc(), GiantUtil.intOf(mvm.get("id"), 0));
+			BeanUtils.copyProperties(pdt, oldpdt);
 		}
 		DeclarationProjectResult result = (DeclarationProjectResult) projectResultService.getEntityByPrimaryKey(new DeclarationProjectResult(), pdt.getResultId());
 		DeclarationProjectDocType doc = (DeclarationProjectDocType) projectResultService.getEntityByPrimaryKey(new DeclarationProjectDocType(), pdt.getTypeId());
@@ -297,11 +303,14 @@ public class ProjectResultController extends GiantBaseController {
 		pdt.setDocState(1);
 		boolean flag = projectResultService.saveUpdateOrDelete(pdt, null);
 		if (flag) {
+			PMLog pmLog = new PMLog(LogModule.RESULT, LogMethod.UPLOADDOC, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+			pmLog.add(pdt.getResultId(), oldpdt, pdt, "doc_name", "project_doc_url", "doc_state");
+			projectResultService.log(pmLog);
 			json.put("code", 0);
-			json.put("message", "创建成功");
+			json.put("message", "上传成果文档成功");
 		} else {
 			json.put("code", 1);
-			json.put("message", "创建失败");
+			json.put("message", "上传成果文档失败");
 		}
 		resultresponse(response, json);
 	}

@@ -32,10 +32,11 @@
 				<div class="main-header">
 					<h2>上传成果文档</h2>
 				</div>
+				<table class="table table-form">
+						<tbody>
 				<form class="load-indicator main-form form-ajax" id="createForm" enctype="multipart/form-data"
 					method="post">
-					<table class="table table-form">
-						<tbody>
+					
 							<tr>
 								<th>成果文档名称</th>
 								<td class="required"><input type="text" name="doc_name" readonly="readonly"
@@ -103,7 +104,8 @@
 									</td>
 								<td></td>
 							</tr>
-							<tr>
+				</form>
+				<tr>
 								<td colspan="3" class="text-center form-actions">
 									<button id="submit" class="btn btn-wide btn-primary"
 										data-loading="稍候...">上传</button> <a
@@ -111,9 +113,8 @@
 									class="btn btn-back btn btn-wide">返回</a>
 								</td>
 							</tr>
-						</tbody>
+				</tbody>
 					</table>
-				</form>
 			</div>
 		</div>
 	</div>
@@ -158,6 +159,7 @@
 		</div>
 	<%@ include file="/WEB-INF/view/comm/footer.jsp"%>
 </body>
+</html>
 <script>
 /* 	$("#provide_date").datetimepicker({
 		language : "zh-CN",
@@ -187,8 +189,8 @@
 			         contentType:false,
 			         success:function(data){
 			        	if(data.code == 0){
-			 				$("#msg").text(data.message);
-			 				$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+			        		alert(data.message);
+			        		window.location.href="declaration/result/detail?id=${result.id}";
 			 			}else{
 			 				$("#errMsg").text(data.message);
 			 				$('#errModal').modal({keyboard: false,show: true, moveable: true});
@@ -199,4 +201,3 @@
 				}
 			});
 </script>
-</html>

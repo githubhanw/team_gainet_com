@@ -82,37 +82,11 @@
 							</div>
                         <div class="detail histories" id="actionbox" data-textdiff="文本格式" data-original="原始格式">
                             <div class="detail-title">
-								历史记录（暂未实现）
-                                <button type="button" class="btn btn-mini btn-icon btn-reverse" title="切换顺序">
-                                    <i class="icon icon-arrow-up icon-sm"></i>
-                                </button>
-                                <button type="button" class="btn btn-mini btn-icon btn-expand-all" title="切换显示">
-                                    <i class="icon icon-plus icon-sm"></i>
-                                </button>
-                                <button type="button" class="btn btn-link pull-right btn-comment"><i class="icon icon-chat-line"></i> 添加备注</button>
-                                <div class="modal fade modal-comment">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>
-                                                <h4 class="modal-title">添加备注</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="#" target="hiddenwin" method="post">
-                                                    <div class="form-group">
-                                                        <textarea id="content" name="content" class="form-control kindeditor" style="height:150px;">Hello, world!</textarea>
-                                                    </div>
-                                                    <div class="form-group form-actions text-center">
-                                                        <button type="submit" class="btn btn-primary btn-wide">保存</button>
-                                                        <input type="hidden" id="uid" name="uid" value="5b4c2efc98fe7">
-                                                        <button type="button" class="btn btn-wide" data-dismiss="modal">关闭</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+									历史记录
+	                                <button type="button" class="btn btn-mini btn-icon btn-expand-all" title="切换显示">
+	                                    <i class="icon icon-plus icon-sm"></i>
+	                                </button>
+	                            </div>
                             <c:if test="${logList != null}">
 	                            <div class="detail-content">
 	                                <ol class="histories-list">

@@ -382,7 +382,10 @@ public class ProjectResultService extends GiantBaseService{
 		if (flag) {
 			if (GiantUtil.intOf(mvm.get("result_id"), 0) != 0) {//编辑
 				pmLog = new PMLog(LogModule.RESULT, LogMethod.EDIT, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
-				pmLog.add(pr.getId(), oldpr, pr, "project_result_name");
+				pmLog.add(pr.getId(), oldpr, pr, "cert_number", "registration_number", "project_result_name"
+						, "project_id", "type", "member_name", "apply_date"
+						, "accept_date", "down_date", "company", "agent", "state", "payment", "invoice", "receipt"
+						, "is_all_doc", "version", "inventor");
 			} else {//创建
 				pmLog = new PMLog(LogModule.RESULT, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
 				pmLog.setObjectId(pr.getId());
@@ -395,7 +398,8 @@ public class ProjectResultService extends GiantBaseService{
 		List<Object> alreadyExist = super.dao.getEntityListBySQL(querySql, null, new DeclarationProjectDoc());//成果下已存在的文档
 		List<DeclarationProjectDoc> deleteList = new ArrayList<DeclarationProjectDoc>();
 		List<DeclarationProjectDoc> addList = new ArrayList<DeclarationProjectDoc>();
-		String[] docTypes = request.getParameterValues("docType");//成果需要的文档
+		String docTypess = mvm.get("docTypes");
+		String[] docTypes = docTypess.split(",");
 		if (alreadyExist != null && alreadyExist.size() > 0) {
 			for (int i = 0; i < alreadyExist.size(); i++) {
 				DeclarationProjectDoc declarationProjectDoc = (DeclarationProjectDoc)alreadyExist.get(i);

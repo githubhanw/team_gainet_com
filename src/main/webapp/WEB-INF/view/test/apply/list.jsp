@@ -196,8 +196,8 @@
 										</c:forEach>
 									</tbody>
 								</table>
-							</div
-							</form>
+							</div>
+						</form>
 						<!--table-footer start-->
 						<div class="table-footer" style="left: 0px; bottom: 0px;">
 							<!--pager srtart-->

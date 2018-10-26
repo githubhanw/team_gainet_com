@@ -9,13 +9,18 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.zzidc.log.LogMethod;
+import com.zzidc.log.LogModule;
+import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.DeclarationProject;
+import com.zzidc.team.entity.DeclarationProjectResult;
 
 /**
  * [说明/描述]
@@ -74,9 +79,11 @@ public class ProjectService extends GiantBaseService{
 	 */
 	public boolean addOrUpd(Map<String, String> mvm) {
 		DeclarationProject p = null;
+		DeclarationProject oldpr = new DeclarationProject();
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			p = (DeclarationProject) super.dao.getEntityByPrimaryKey(new DeclarationProject(), GiantUtil.intOf(mvm.get("id"), 0));
+			BeanUtils.copyProperties(p, oldpr);
 		} else {
 			p = new DeclarationProject();
 			p.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -94,7 +101,21 @@ public class ProjectService extends GiantBaseService{
 			p.setEndDate(new Date());
 		}
 		p.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-		return super.dao.saveUpdateOrDelete(p, null);
+		boolean flag = super.dao.saveUpdateOrDelete(p, null);
+		//添加日志
+		PMLog pmLog = null;
+		if (flag) {
+			if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {//编辑
+				pmLog = new PMLog(LogModule.PROJECT, LogMethod.EDIT, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+				pmLog.add(p.getId(), oldpr, p, "declaration_number", "project_name", "company"
+						, "stage", "start_date", "end_date");
+			} else {//创建
+				pmLog = new PMLog(LogModule.PROJECT, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+				pmLog.setObjectId(p.getId());
+			}
+			this.log(pmLog);
+		}
+		return flag;
 	}
 
 	/**
@@ -130,5 +151,25 @@ public class ProjectService extends GiantBaseService{
 		String sql = "SELECT pd.*,pdt.project_doc_type FROM declaration_project_doc pd, declaration_project_doc_type pdt "
 				+ "WHERE pd.type_id=pdt.id AND pd.state>0 AND project_id=" + projectId;
 		return super.getMapListBySQL(sql, null);
+	}
+	
+	/**
+	 * 获取日志
+	 * @param taskId
+	 * @return
+	 */
+	public List<Map<String, Object>> getLogList(Integer projectId){
+		String sql = "SELECT * FROM `action_log` where module='project' and object_id=" + projectId;
+		List<Map<String, Object>> logList = super.getMapListBySQL(sql, null);
+		if(logList != null && logList.size() > 0) {
+			for(Map<String, Object> log: logList) {
+				sql = "SELECT tfd.field_desc,ah.old_data,ah.new_data,ah.diff FROM action_history ah LEFT JOIN table_field_desc tfd ON ah.field=tfd.field_name WHERE tfd.table_name='project' AND action_id=" + log.get("id");
+				List<Map<String, Object>> historyList = super.getMapListBySQL(sql, null);
+				if(historyList != null && historyList.size() > 0) {
+					log.put("history", historyList);
+				}
+			}
+		}
+		return logList;
 	}
 }

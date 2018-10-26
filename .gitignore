@@ -5,3 +5,6 @@ target/
 bin/
 .classpath
 .project
+TestOne.java
+details.jsp
+*.gitignore

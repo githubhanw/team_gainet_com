@@ -92,6 +92,9 @@ public class ProjectController extends GiantBaseController {
 			//获取项目文档
 			List<Map<String, Object>> doc = projectService.getProjectDoc(GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("doc", doc);
+			//日志
+			List<Map<String, Object>> logList = projectService.getLogList(GiantUtil.intOf(mvm.get("id"), 0));
+			model.addAttribute("logList", logList);
 		}
 		publicResult(model);
 		return "declaration/project/detail";

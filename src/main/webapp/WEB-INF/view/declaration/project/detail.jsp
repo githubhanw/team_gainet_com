@@ -114,63 +114,44 @@
 								</div>
 							</div>
 	                        <div class="detail histories" id="actionbox" data-textdiff="文本格式" data-original="原始格式">
-	                            <div class="detail-title">
-									历史记录（暂未实现）
-	                                <button type="button" class="btn btn-mini btn-icon btn-reverse" title="切换顺序">
-	                                    <i class="icon icon-arrow-up icon-sm"></i>
-	                                </button>
+                            <div class="detail-title">
+									历史记录
 	                                <button type="button" class="btn btn-mini btn-icon btn-expand-all" title="切换显示">
 	                                    <i class="icon icon-plus icon-sm"></i>
 	                                </button>
-	                                <button type="button" class="btn btn-link pull-right btn-comment"><i class="icon icon-chat-line"></i> 添加备注</button>
-	                                <div class="modal fade modal-comment">
-	                                    <div class="modal-dialog">
-	                                        <div class="modal-content">
-	                                            <div class="modal-header">
-	                                                <button type="button" class="close" data-dismiss="modal"><i class="icon icon-close"></i></button>
-	                                                <h4 class="modal-title">添加备注</h4>
-	                                            </div>
-	                                            <div class="modal-body">
-	                                                <form action="#" target="hiddenwin" method="post">
-	                                                    <div class="form-group">
-	                                                        <textarea id="content" name="content" class="form-control kindeditor" style="height:150px;">Hello, world!</textarea>
-	                                                    </div>
-	                                                    <div class="form-group form-actions text-center">
-	                                                        <button type="submit" class="btn btn-primary btn-wide">保存</button>
-	                                                        <input type="hidden" id="uid" name="uid" value="5b4c2efc98fe7">
-	                                                        <button type="button" class="btn btn-wide" data-dismiss="modal">关闭</button>
-	                                                    </div>
-	                                                </form>
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
 	                            </div>
+                            <c:if test="${logList != null}">
 	                            <div class="detail-content">
 	                                <ol class="histories-list">
-	                                    <li value="1">
-	                                        2018-07-13 23:41:03, 由 <strong>admin</strong> 创建。
-	                                    </li>
-	                                    <li value="2">
-	                                        2018-07-16 13:36:40, 由 <strong>admin</strong> 添加备注。
-	                                        <button type="button" class="btn btn-link btn-icon btn-sm btn-edit-comment" title="修改备注">
-	                                            <i class="icon icon-pencil"></i>
-	                                        </button>
-	                                    <div class="article-content comment">
-	                                    磊
-	                                    </div>
-	                                    <form method="post" class="comment-edit-form" action="">
-	                                    <div class="form-group">
-	
-	                                    <textarea id="content" name="content" class="form-control kindeditor" style="height:150px;">Hello, world!</textarea>
-	                                    </div>
-	                                    <div class="form-group form-actions">
-	                                    <button type="submit" id="submit" class="btn btn-primary btn-wide" data-loading="稍候...">保存</button><input type="hidden" id="uid" name="uid" value="5b4c2efc98fe7">           <button type="button" class="btn btn-wide btn-hide-form">关闭</button>          </div>
-	                                    </form>
-	                                    </li>
+										<c:forEach items="${logList}" var="log" varStatus="sta">
+											<li value="${sta.index+1}" class="">
+												<fmt:formatDate value="${log.start_time}" pattern="yyyy-MM-dd HH:mm:ss"/>,
+												由 <strong>${log.member_name}</strong> ${log.method}。
+												<c:if test="${log.history != null}">
+													<button type="button" class="btn btn-mini switch-btn btn-icon btn-expand" title="切换显示"><i class="change-show icon icon-plus icon-sm"></i></button>
+													<div class="history-changes" id="changeBox3">
+														<c:forEach items="${log.history}" var="his" varStatus="sta">
+															<c:if test="${his.diff == 0}">
+																修改了 <strong><i>${his.field_desc}</i></strong>，旧值为 "${his.old_data}"，新值为 "${his.new_data}"。<br>
+															</c:if>
+															<c:if test="${his.diff == 1}">
+																修改了 <strong><i>${his.field_desc}</i></strong>，区别为：
+																<blockquote class="textdiff">
+																	- <del>${his.old_data}</del><br/>+ <ins>${his.new_data}</ins>
+																</blockquote>
+															</c:if>
+														</c:forEach>
+													</div>
+												</c:if>
+												<c:if test="${log.comment != null && log.comment != ''}">
+													<div class="article-content comment">${log.comment}</div>
+												</c:if>
+											</li>
+										</c:forEach>
 	                                </ol>
 	                            </div>
-	                        </div>
+	                        </c:if>
+                        </div>
 						</div>
 					</div>
 					<div class="side-col col-4">

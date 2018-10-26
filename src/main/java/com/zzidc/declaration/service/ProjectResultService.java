@@ -381,10 +381,10 @@ public class ProjectResultService extends GiantBaseService{
 		PMLog pmLog = null;
 		if (flag) {
 			if (GiantUtil.intOf(mvm.get("result_id"), 0) != 0) {//编辑
-				pmLog = new PMLog(LogModule.RESULT, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+				pmLog = new PMLog(LogModule.RESULT, LogMethod.EDIT, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
 				pmLog.add(pr.getId(), oldpr, pr, "project_result_name");
 			} else {//创建
-				pmLog = new PMLog(LogModule.RESULT, LogMethod.EDIT, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+				pmLog = new PMLog(LogModule.RESULT, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
 				pmLog.setObjectId(pr.getId());
 			}
 			this.log(pmLog);

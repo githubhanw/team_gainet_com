@@ -68,8 +68,8 @@
 														<div class="group-item">
 															<div class="checkbox-primary checkbox-inline">
 																<c:set var="checked" value="false"></c:set>
-																<c:forEach items="${entity.privileges}" var="ep">
-																	<c:if test="${ep.id == sub.id}">
+																<c:forEach items="${authorized}" var="ep">
+																	<c:if test="${ep.privilege_id == sub.id}">
 																		<c:set var="checked" value="true"></c:set>
 																	</c:if>
 																</c:forEach>

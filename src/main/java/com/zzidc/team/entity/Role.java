@@ -1,47 +1,52 @@
 package com.zzidc.team.entity;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
  * Role entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "role")
+@Table(name = "role", catalog = "team_gainet_com")
 public class Role implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * serialVersionUID long
-	 */
-	private static final long serialVersionUID = 1779646662716759783L;
 	private Integer id;
 	private Short status;
 	private String name;
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private String remark;
-	private Set<Privilege> privileges = new HashSet<Privilege>(0);
 
 	// Constructors
 
 	/** default constructor */
 	public Role() {
+	}
+
+	/** minimal constructor */
+	public Role(Short status, String name, Timestamp createTime,
+			Timestamp updateTime) {
+		this.status = status;
+		this.name = name;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+	}
+
+	/** full constructor */
+	public Role(Short status, String name, Timestamp createTime,
+			Timestamp updateTime, String remark) {
+		this.status = status;
+		this.name = name;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.remark = remark;
 	}
 
 	// Property accessors
@@ -92,27 +97,13 @@ public class Role implements java.io.Serializable {
 		this.updateTime = updateTime;
 	}
 
-	@Column(name = "remark", nullable = false)
+	@Column(name = "remark")
 	public String getRemark() {
 		return this.remark;
 	}
 
 	public void setRemark(String remark) {
 		this.remark = remark;
-	}
-
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@JoinTable(
-		name = "role_privilege", 
-		joinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id")},
-		inverseJoinColumns = {@JoinColumn(name = "privilege_id",referencedColumnName ="id")}
-	)
-	public Set<Privilege> getPrivileges() {
-		return this.privileges;
-	}
-
-	public void setPrivileges(Set<Privilege> privileges) {
-		this.privileges = privileges;
 	}
 
 }

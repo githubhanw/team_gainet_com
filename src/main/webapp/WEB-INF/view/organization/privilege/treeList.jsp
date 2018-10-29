@@ -14,7 +14,7 @@
 <base href="<%=basePath%>" />
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>团队列表</title>
+<title>权限管理</title>
 <%@ include file="/WEB-INF/view/comm/cssjs.jsp"%>
 <style>
 .table-bymodule select.form-control {
@@ -71,17 +71,20 @@
 									<li class="has-list ${entity.parentId == item.id ? ' open in':''}">
 										<c:if test="${item.childrens != null}">
 											<i class="list-toggle icon"></i>
-											<a href="organization/privilege/treeList?id=${item.id}">${item.name}</a>
+											<a href="organization/privilege/treeList?id=${item.id}">[${item.rank}] ${item.name}</a>
 											<ul data-idx="1">
 												<c:forEach items="${item.childrens}" var="chirden">
 													<li>
-														<a ${chirden.id==entity.id?'style="font-weight:bold;color:red"':''} href="organization/privilege/treeList?id=${chirden.id}">${chirden.name}</a>
+														<a ${chirden.id==entity.id?'style="font-weight:bold;color:red"':''} 
+																href="organization/privilege/treeList?id=${chirden.id}">
+															[${chirden.rank}] ${chirden.name} (${chirden.url}) 
+														</a>
 													</li>
 												</c:forEach>
 											</ul>
 										</c:if>
 										<c:if test="${item.childrens == null}">
-											<a href="organization/privilege/treeList?id=${item.id}">${item.name}</a>
+											<a href="organization/privilege/treeList?id=${item.id}">[${item.rank}] ${item.name}</a>
 										</c:if>
 									</li>
 								</c:forEach>
@@ -95,8 +98,7 @@
 					<div class="panel-body">
 						<table class="table table-form">
 							<tbody>
-								<form class="load-indicator main-form form-ajax" id="createForm"
-									method="post">
+								<form class="load-indicator main-form form-ajax" id="updateForm" method="post">
 									<tr>
 										<th>权限名称</th>
 										<td class="required"><input type="text" name="name"
@@ -158,35 +160,38 @@
 							<table class="table table-hover table-striped table-bordered"
 								id="privList">
 								<tbody>
-									<form id="saveRoles" class="main-table table-task skip-iframe-modal"
-										method="post">
-									<tr class="even">
-										<td class="pv-10px"><c:forEach items="${allRole}"
-												var="sub" varStatus="sta">
-												<div class="group-item">
-													<div class="checkbox-primary checkbox-inline">
-														<c:set var="checked" value="false"></c:set>
-																<c:forEach items="${roleList}" var="roless">
-																	<c:if test="${roless.id==sub.id }">
-																		<c:set var="checked" value="true"></c:set>
-																	</c:if>
-																</c:forEach>
-																<input type="checkbox" name="allRole" ${checked ? 'checked="checked"' : "" } value="${sub.id}"
-																value="${sub.id}" id="${sub.id}">
+									<form id="saveRoles" class="main-table table-task skip-iframe-modal" method="post">
+										<tr class="even">
+											<td class="pv-10px">
+												<c:forEach items="${allRole}" var="sub" varStatus="sta">
+													<div class="group-item">
+														<div class="checkbox-primary checkbox-inline">
+															<c:set var="checked" value="false"></c:set>
+															<c:forEach items="${roleList}" var="roless">
+																<c:if test="${roless.id==sub.id }">
+																	<c:set var="checked" value="true"></c:set>
+																</c:if>
+															</c:forEach>
+															<input type="checkbox" name="roles" ${checked ? 'checked="checked"' : "" } value="${sub.id}" id="${sub.id}">
 															<label>${sub.name}</label>
+														</div>
 													</div>
-												</div>
-											</c:forEach>
+												</c:forEach>
 											</td>
+											<input type="hidden" name="allRole" id="allRole"/>
 											<input type="hidden" name="id" value="${entity.id}" />
-									</tr>
+										</tr>
 									</form>
 									<tr>
 										<td class="form-actions">
-											<button id="saveRole"
-												class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
-											<a href="javascript:history.go(-1);"
-											class="btn btn-back btn btn-wide">返回</a>
+											<div class="group-item" style="width:80px">
+												<div class="checkbox-primary checkbox-inline">
+													<input type="checkbox" id="allChecker">
+													<label>全选</label>
+												</div>
+											</div>
+											<button id="saveRole" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
+											<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
 										</td>
 									</tr>
 								</tbody>
@@ -218,7 +223,8 @@
 							<strong>您现在可以进行以下操作：</strong>
 						</p>
 						<div>
-							<a href="organization/privilege/index" class="btn">返回权限列表</a>
+							<a href="organization/privilege/treeList?id=${entity.id}" class="btn">刷新</a>
+							<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 						</div>
 					</div>
 				</div>
@@ -263,12 +269,9 @@
 		$.ajax({
 			type : "POST",
 			url : "organization/privilege/addOrUpd?r=" + Math.random(),
-			data : $("form").serialize(),
+			data : $("#updateForm").serialize(),
 			dataType : "json",
 			success : function(data) {
-				/* if (data.code == 0) {
-					window.location.href = "organization/privilege/treeList";
-				} */
 				if (data.code == 0) {
 					$("#msg").text(data.message);
 					$('#myModal').modal({
@@ -290,18 +293,15 @@
 		$.ajaxSettings.async = true;
 	});
 
-/* 	var form = new FormData(document.getElementById("saveRoles"));
- */	$("#saveRole").click(function() {
+	$("#saveRole").click(function() {
 		$.ajaxSettings.async = false;
+		$("#allRole").val(getChecked());
 		$.ajax({
 			type : "POST",
 			url : "organization/privilege/saveRole?r=" + Math.random(),
-			data :$("form").serialize(),
+			data :$("#saveRoles").serialize(),
 			dataType : "json",
 			success : function(data) {
-				/* if (data.code == 0) {
-					window.location.href = "organization/privilege/treeList";
-				} */
 				if (data.code == 0) {
 					$("#msg").text(data.message);
 					$('#myModal').modal({
@@ -321,6 +321,20 @@
 			}
 		})
 		$.ajaxSettings.async = true;
+	});
+	function getChecked() {
+		var checkValue = [];
+		$(':checkbox').each(function(){
+			if(!!$(this).prop('checked') && !!$(this).prop('name')) {
+				checkValue.push($(this).val());
+			}
+		});
+		return checkValue.join(",");
+	}
+	$(function() {
+	    $('#allChecker').change(function() {
+            $('input[type=checkbox]').prop('checked', $(this).prop('checked'));
+	    });
 	});
 </script>
 </html>

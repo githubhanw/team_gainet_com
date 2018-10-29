@@ -1,35 +1,22 @@
 package com.zzidc.team.entity;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
  * Privilege entity. @author MyEclipse Persistence Tools
  */
 @Entity
-@Table(name = "privilege")
+@Table(name = "privilege", catalog = "team_gainet_com")
 public class Privilege implements java.io.Serializable {
 
 	// Fields
 
-	/**
-	 * serialVersionUID long
-	 */
-	private static final long serialVersionUID = -4319851310032724598L;
 	private Integer id;
 	private String name;
 	private String url;
@@ -37,7 +24,6 @@ public class Privilege implements java.io.Serializable {
 	private Timestamp updateTime;
 	private String remark;
 	private Integer parentId;
-	private Set<Role> roles = new HashSet<Role>(0);
 	private Integer rank;
 	private Short state;
 
@@ -45,6 +31,27 @@ public class Privilege implements java.io.Serializable {
 
 	/** default constructor */
 	public Privilege() {
+	}
+
+	/** minimal constructor */
+	public Privilege(String name, Timestamp updateTime, Integer parentId) {
+		this.name = name;
+		this.updateTime = updateTime;
+		this.parentId = parentId;
+	}
+
+	/** full constructor */
+	public Privilege(String name, String url, Timestamp createTime,
+			Timestamp updateTime, String remark, Integer parentId,
+			Integer rank, Short state) {
+		this.name = name;
+		this.url = url;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.remark = remark;
+		this.parentId = parentId;
+		this.rank = rank;
+		this.state = state;
 	}
 
 	// Property accessors
@@ -68,7 +75,7 @@ public class Privilege implements java.io.Serializable {
 		this.name = name;
 	}
 
-	@Column(name = "url", nullable = false)
+	@Column(name = "url")
 	public String getUrl() {
 		return this.url;
 	}
@@ -77,7 +84,7 @@ public class Privilege implements java.io.Serializable {
 		this.url = url;
 	}
 
-	@Column(name = "create_time", nullable = false, length = 19)
+	@Column(name = "create_time", length = 19)
 	public Timestamp getCreateTime() {
 		return this.createTime;
 	}
@@ -113,30 +120,7 @@ public class Privilege implements java.io.Serializable {
 		this.parentId = parentId;
 	}
 
-	/*@ManyToMany(fetch = FetchType.LAZY, mappedBy = "privileges")
-	public Set<Role> getRoles() {
-		return this.roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}*/
-	
-	@ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-	@JoinTable(
-		name = "role_privilege", 
-		joinColumns = { @JoinColumn(name = "privilege_id", referencedColumnName = "id")},
-		inverseJoinColumns = {@JoinColumn(name = "role_id",referencedColumnName ="id")}
-	)
-	public Set<Role> getRoles() {
-		return this.roles;
-	}
-
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
-	}
-		
-	@Column(name = "rank", nullable = true)
+	@Column(name = "rank")
 	public Integer getRank() {
 		return this.rank;
 	}
@@ -144,7 +128,7 @@ public class Privilege implements java.io.Serializable {
 	public void setRank(Integer rank) {
 		this.rank = rank;
 	}
-	
+
 	@Column(name = "state")
 	public Short getState() {
 		return this.state;

@@ -480,10 +480,10 @@
 													           	</c:if>
 															</c:if>
 															<c:if test="${subNeed.project_id=='0' && subNeed.full == 1 && subNeed.state == 2 && subNeed.prototype_figure == 1 && (need.state!=7 && need.state!=8)}">
-																<a href="team/task/toBatchAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
+																<a href="team/task/toAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="建任务"><i class="icon icon-plus"></i></a>
 															</c:if>
 															<c:if test="${subNeed.project_id!='0' && subNeed.full == 1 && subNeed.state == 2 && (need.state!=7 && need.state!=8)}">
-																<a href="team/task/toBatchAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="批量建任务"><i class="icon icon-plus"></i></a>
+																<a href="team/task/toAdd?need_id=${subNeed.id}" class="btn" data-toggle="tooltip" data-placement="top" title="建任务"><i class="icon icon-plus"></i></a>
 															</c:if>
 															<c:if test="${(subNeed.state == 0 || subNeed.state == 5) && (need.state!=7 && need.state!=8)}"></c:if>
 															<c:if test="${subNeed.state == 6 && (need.state!=7 && need.state!=8)}">

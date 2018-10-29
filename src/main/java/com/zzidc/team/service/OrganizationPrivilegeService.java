@@ -1,6 +1,7 @@
 package com.zzidc.team.service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,9 @@ import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
-import com.zzidc.team.entity.MonthMeeting;
 import com.zzidc.team.entity.Privilege;
+import com.zzidc.team.entity.Role;
+import com.zzidc.team.entity.RolePrivilege;
 
 /**
  * 权限管理业务逻辑层
@@ -103,4 +105,32 @@ public class OrganizationPrivilegeService extends GiantBaseService {
 		return super.dao.getListMapBySql(sql, params);
 	}
 
+	/**
+	 * 将制定权限分配给多个角色
+	 */
+	public boolean saveRole(Map<String, String> mvm) {
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			Privilege privilege = (Privilege) super.getEntityByPrimaryKey(new Privilege(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(privilege != null) {
+				//获取当前角色已有权限列表
+				List<Object> delList = super.getEntityListBySQL("select * from role_privilege where privilege_id=" + privilege.getId(), null, new RolePrivilege());
+				//生成当前角色新权限对象列表
+				List<RolePrivilege> saveList = new ArrayList<RolePrivilege>();
+				if(!GiantUtil.isEmpty(mvm.get("allRole"))) {
+					String[] roleIds = GiantUtil.stringOf(mvm.get("allRole")).split(",");
+					for(String roleId : roleIds) {
+						Role role = (Role) super.getEntityByPrimaryKey(new Role(), GiantUtil.intOf(roleId, 0));
+						if(role != null) {
+							RolePrivilege rp = new RolePrivilege();
+							rp.setPrivilegeId(privilege.getId());
+							rp.setRoleId(role.getId());
+							saveList.add(rp);
+						}
+					}
+				}
+				return super.dao.saveUpdateOrDelete(saveList, delList);
+			}
+		}
+		return false;
+	}
 }

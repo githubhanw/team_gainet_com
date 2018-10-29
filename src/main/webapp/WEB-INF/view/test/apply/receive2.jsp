@@ -446,7 +446,7 @@
 								</tr>
 								<tr>
 									<th>要执行的sql</th>
-									<td class="required">
+									<td>
 										<input type="hidden" name="execute_sql">
 										<textarea id="execute_sql" name="details" placeholder="" style="width:100%;">${t.executeSql}</textarea>
 										<div id="execute_sql" value=""></div>

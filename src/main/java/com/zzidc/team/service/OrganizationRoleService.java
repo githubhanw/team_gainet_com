@@ -3,10 +3,8 @@ package com.zzidc.team.service;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -17,6 +15,7 @@ import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
 import com.zzidc.team.entity.Privilege;
 import com.zzidc.team.entity.Role;
+import com.zzidc.team.entity.RolePrivilege;
 
 /**
  * [角色管理 Service]
@@ -89,7 +88,19 @@ public class OrganizationRoleService extends GiantBaseService{
 		role.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 		return super.dao.saveUpdateOrDelete(role, null);
 	}
-	
+
+	/**
+	 * 获取已有权限关联表数据
+	 */
+	public List<Map<String, Object>> getAuthorized(Integer roleId) {
+		String sql = "select * from role_privilege where role_id=" + roleId;
+		List<Map<String, Object>> list = dao.getMapListBySQL(sql, null);
+		if(list == null) {
+			list = new ArrayList<Map<String, Object>>();
+		}
+		return list;
+	}
+
 	/**
 	 * [获取所有权限列表] <br>
 	 * 
@@ -107,29 +118,29 @@ public class OrganizationRoleService extends GiantBaseService{
 	}
 
 	/**
-	 * [授权] <br>
-	 * 
-	 * @author likai <br>
-	 * @date 2018年8月3日 下午3:08:14 <br>
-	 * @param mvm
-	 * @return <br>
+	 * 授权
 	 */
 	public boolean auth(Map<String, String> mvm) {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			Role role = (Role) super.getEntityByPrimaryKey(new Role(), GiantUtil.intOf(mvm.get("id"), 0));
 			if(role != null) {
-				Set<Privilege> set = new HashSet<Privilege>();
+				//获取当前角色已有权限列表
+				List<Object> delList = super.getEntityListBySQL("select * from role_privilege where role_id=" + role.getId(), null, new RolePrivilege());
+				//生成当前角色新权限对象列表
+				List<RolePrivilege> saveList = new ArrayList<RolePrivilege>();
 				if(!GiantUtil.isEmpty(mvm.get("privileges"))) {
 					String[] privileges = GiantUtil.stringOf(mvm.get("privileges")).split(",");
 					for(String privilege : privileges) {
 						Privilege item = (Privilege) super.getEntityByPrimaryKey(new Privilege(), GiantUtil.intOf(privilege, 0));
 						if(item != null) {
-							set.add(item);
+							RolePrivilege rp = new RolePrivilege();
+							rp.setPrivilegeId(item.getId());
+							rp.setRoleId(role.getId());
+							saveList.add(rp);
 						}
 					}
 				}
-				role.setPrivileges(set);
-				return super.dao.saveUpdateOrDelete(role, null);
+				return super.dao.saveUpdateOrDelete(saveList, delList);
 			}
 		}
 		return false;

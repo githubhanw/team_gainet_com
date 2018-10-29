@@ -327,26 +327,16 @@ public class TeamTaskService extends GiantBaseService {
 					int sort = 0;
 					for(int i=0; i< dayList.size(); i++) {
 						Map<String, Object> m = dayList.get(i);
-						if (i > 0 && i % 3 == 0 || i + 1 == dayList.size()) {
-							if (i + 1 == dayList.size() && i % 3 != 0 ) {
-								name += "，" + m.get("title");
-							}
+						//如果 i+1是3的倍数 或 最后一个时
+						if ((i + 1) % 3 == 0 || i + 1 == dayList.size()) {
+							name += "，" + m.get("title");
 							dayMap = new HashMap<String, Object>();
 							dayMap.put("sortId", sort ++);
 							dayMap.put("start", date);
 							dayMap.put("className", "label-grey");
 							dayMap.put("title", name.substring(1));
 							list.add(dayMap);
-							if (i + 1 < dayList.size()) {
-								name = "，" + m.get("title");
-							} else if (i + 1 == dayList.size() && i % 3 == 0 ) {
-								dayMap = new HashMap<String, Object>();
-								dayMap.put("sortId", sort ++);
-								dayMap.put("start", date);
-								dayMap.put("className", "label-grey");
-								dayMap.put("title", m.get("title"));
-								list.add(dayMap);
-							}
+							name = "";
 						} else {
 							name += "，" + m.get("title");
 						}
@@ -365,6 +355,7 @@ public class TeamTaskService extends GiantBaseService {
 		}
 		return list;
 	}
+	
 	/**
 	 * 是否节假日
 	 */

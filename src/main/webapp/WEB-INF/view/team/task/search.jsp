@@ -141,7 +141,6 @@
 	jQuery(function($) {
 		var noTime =  $.fullCalendar.moment("${prm.date}");
 		var calendar = $('#calendar').fullCalendar({
-			height:800,
 			buttonText:{
 				prev:"上月",
 				next:"下月"

@@ -1,9 +1,7 @@
 package com.zzidc.team.controller;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,10 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.giant.zzidc.base.action.GiantBaseController;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
-import com.zzidc.team.entity.Department;
-import com.zzidc.team.entity.MonthMeeting;
 import com.zzidc.team.entity.Privilege;
-import com.zzidc.team.entity.Role;
 import com.zzidc.team.service.OrganizationPrivilegeService;
 
 import net.sf.json.JSONObject;
@@ -184,28 +179,18 @@ public class OrganizationPrivilegeController extends GiantBaseController {
 	}
 	
 	/**
-	 * 给指定角色添加权限
-	 * @param mvm
-	 * @param request
-	 * @param response
-	 * @param model
+	 * 将制定权限分配给多个角色
 	 */
 	@RequestMapping("/saveRole")
-	public void saveRole(@RequestParam Map<String, String> mvm, HttpServletRequest request,HttpServletResponse response, Model model) {
+	public void saveRole(@RequestParam Map<String, String> mvm, HttpServletRequest request, HttpServletResponse response, Model model) {
 		JSONObject json = new JSONObject();
-		Privilege privilege = (Privilege) organizationPrivilegeService.getEntityByPrimaryKey(new Privilege(), GiantUtil.intOf(mvm.get("id"), 0));
-		if(privilege != null) {
-			Set<Role> set = new HashSet<Role>();
-			String[] roleIds = request.getParameterValues("allRole");
-			for(String roleId : roleIds) {
-				Role role = (Role) organizationPrivilegeService.getEntityByPrimaryKey(new Role(), GiantUtil.intOf(roleId, 0));
-				if(role != null) {
-					set.add(role);
-				}
-			}
-			privilege.setRoles(set);
+		if(GiantUtil.isEmpty(mvm.get("id"))){
+			json.put("code",1);
+			json.put("message", "参数不足");
+			resultresponse(response,json);
+			return;
 		}
-		boolean flag = organizationPrivilegeService.saveUpdateOrDelete(privilege, null);
+		boolean flag = organizationPrivilegeService.saveRole(mvm);
 		if (flag) {
 			json.put("code", 0);
 			json.put("message", "成功");

@@ -131,6 +131,7 @@ public class OrganizationRoleController extends GiantBaseController {
 			//获取对象
 			Role n = (Role) organizationRoleService.getEntityByPrimaryKey(new Role(), GiantUtil.intOf(mvm.get("id"), 0));
 			model.addAttribute("entity", n);
+			model.addAttribute("authorized", organizationRoleService.getAuthorized(n.getId()));
 			model.addAttribute("allPrivileges", organizationRoleService.getAllPrivileges());
 		}
 		publicResult(model);

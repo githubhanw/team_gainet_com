@@ -79,9 +79,9 @@
 									<td></td>
 								</tr>
 								<tr>
-									<th>部门负责人</th>
+									<th>实施方部门负责人</th>
 									<td class="required">
-										<select data-placeholder="请选择部门负责人" class="form-control chosen-select" name="department_id" id="department_id">
+										<select data-placeholder="请选择 【实施方】 的部门负责人" class="form-control chosen-select" name="department_id" id="department_id">
 											<option value=""></option>
 											<c:forEach items="${departinfo}" var="depart" varStatus="sta">
 												<option value="${depart.id}">${depart.name}(${depart.number})</option>

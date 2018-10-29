@@ -189,7 +189,6 @@
 			</div>
 			<script></script>
 		</main>
-    	<%@ include file="/WEB-INF/view/team/need/div.jsp" %>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 <script>

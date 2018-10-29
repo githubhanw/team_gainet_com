@@ -476,7 +476,7 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="team/task/index" class="btn">返回任务列表</a>
-								<a href="team/task/index" class="btn">任务详情</a>
+								<a href="team/task/detail?id=${t.id}" class="btn">任务详情</a>
 							</div>
 						</div>
 					</div>

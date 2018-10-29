@@ -199,11 +199,9 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/toaddproject?project_id=${project_id}" class="btn">继续创建模块</a> 
-								<a href="team/task/toAdd" class="btn">建任务</a> 
-								<a href="team/task/toAdd" class="btn">批量建任务</a> 
-								<a href="team/need/index" class="btn">返回模块列表</a>
-								<a href="team/need/toEachAdd?project_id=${project_id}" class="btn">返回本项目模块列表</a>
+								<a href="my/need/toaddproject?project_id=${project_id}" class="btn">继续创建模块</a> 
+								<a href="my/task/toAdd" class="btn">建任务</a> 
+								<a href="my/need" class="btn">返回我的模块</a>
 							</div>
 						</div>
 					</div>
@@ -255,7 +253,7 @@ $("#submit").click(function(){
 	}else{ */
 	$.ajaxSettings.async = false;
 	$.ajax({
-         url:"team/need/addproject?r=" + Math.random(),
+         url:"my/need/addproject?r=" + Math.random(),
          type:"post",
          data:form,
          dataType:"json",

@@ -33,7 +33,7 @@
 							<c:if test="${t.id == null}">批量创建</c:if>
 							<c:if test="${t.id != null}">
 								<span class="label label-id">${t.id}</span>
-								<a href="team/need/index">${t.taskName}</a>
+								<a href="team/need/detail?id=${n.id}">${t.taskName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 批量建子任务</small>
 							</c:if>
 						</h2>

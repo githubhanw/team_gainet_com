@@ -98,7 +98,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/task" class="btn">返回任务列表</a>
+								<a href="my/task" class="btn">返回我的任务</a>
 							</div>
 						</div>
 					</div>

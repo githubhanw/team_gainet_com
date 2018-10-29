@@ -33,7 +33,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${t.id}</span>
-								<a href="my/task">${t.taskName}</a>
+								<a href="my/task/detail?id=${t.id}">${t.taskName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 编辑</small>
 							</h2>
 						</div>
@@ -318,8 +318,7 @@
 							<div>
 								<a href="javascript:history.go(0);" class="btn">继续编辑任务</a> <a
 									href="my/task/toAdd" class="btn">建任务</a> <a
-									href="my/task/toAdd" class="btn">批量建任务</a> <a
-									href="my/task" class="btn">返回任务列表</a>
+									href="my/task" class="btn">返回我的任务</a>
 							</div>
 						</div>
 					</div>

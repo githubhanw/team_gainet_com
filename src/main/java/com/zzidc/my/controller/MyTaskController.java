@@ -43,41 +43,8 @@ public class MyTaskController extends GiantBaseController {
 	}
 
 	/**
-	 * 任务列表
+	 * 任务列表在:MyController
 	 */
-//	@RequestMapping("/index")
-//	public String list(@RequestParam Map<String, String> mvm, Model model) {
-//		if(conditionPage == null){
-//			conditionPage = new GiantPager();
-//		}
-//		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-//			mvm.put("orderColumn", "t.update_time");
-//			mvm.put("orderByValue", "DESC");
-//		}
-//		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
-//			mvm.put("type", "1");
-//		}
-//		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
-//			mvm.put("search", "");
-//		}
-//		Map<String, String> queryCondition = conditionPage.getQueryCondition();
-//		//查询条件封装
-//		queryCondition.clear();
-//		queryCondition.putAll(mvm);
-//		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
-//		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
-//		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
-//		pageList = teamTaskService.getPageList(conditionPage);
-//		requestURL = "my/task?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
-//		pageList.setDesAction(requestURL);
-//		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
-//			teamTaskService.getSubTaskList(pageList.getPageResult(), mvm.get("type"), mvm.get("orderColumn"), mvm.get("orderByValue"));
-//		}
-//		model.addAttribute("pageList", pageList);
-//		model.addAttribute("prm", mvm);
-//		publicResult(model);
-//		return "my/task";
-//	}
 
 	/**
 	 * 任务详情
@@ -639,7 +606,7 @@ public class MyTaskController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-	
+
 	/**
 	 * 跳转任务完成页面
 	 * @param mvm
@@ -652,6 +619,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(t != null && !teamTaskService.isCurrentMember(t.getAssignedId())) {
+				return "nopower";
+			}
 			model.addAttribute("members", teamTaskService.getAllMember());
 			model.addAttribute("t", t);
 			if(t.getTaskType() == 2) {
@@ -683,10 +653,16 @@ public class MyTaskController extends GiantBaseController {
 		}
 		String checkedid = mvm.get("checkedid")+"";
 		Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+		if(task != null && !teamTaskService.isCurrentMember(task.getAssignedId())) {
+			json.put("code",2);
+			json.put("message", "你没有权限完成当前任务！");
+			resultresponse(response,json);
+			return;
+		}
 		String task_assignedid = task.getAssignedId()+"";
 		if(checkedid.equals(task_assignedid)){
 			json.put("code",2);
-			json.put("message", "审核人不可以是自己哦!");
+			json.put("message", "自己不能审核自己的任务！请选择你的直接领导审核！");
 			resultresponse(response,json);
 			return;
 		}
@@ -703,10 +679,6 @@ public class MyTaskController extends GiantBaseController {
 	
 	/**
 	 * 跳转任务完成审核页面
-	 * @param mvm
-	 * @param model
-	 * @return
-	 *PS:审核人需要列表形式的添加->审核人id & 审核人名称
 	 */
 	@RequestMapping("/toFinishCheck")
 	public String toCheck(@RequestParam Map<String, String> mvm, Model model) {
@@ -714,6 +686,9 @@ public class MyTaskController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(t != null && !teamTaskService.isCurrentMember(t.getCheckedId())) {
+				return "nopower";
+			}
 			model.addAttribute("t", t);
 			if(t.getTaskType() == 2) {
 				TestApply n = (TestApply) testApplyService.getEntityByPrimaryKey(new TestApply(), t.getTestApplyId());
@@ -748,6 +723,13 @@ public class MyTaskController extends GiantBaseController {
 			}else {
 				json.put("message", "参数不足!");
 			}
+			resultresponse(response,json);
+			return;
+		}
+		Task task = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+		if(task != null && !teamTaskService.isCurrentMember(task.getCheckedId())) {
+			json.put("code",2);
+			json.put("message", "你没有权限审核当前任务！");
 			resultresponse(response,json);
 			return;
 		}
@@ -930,6 +912,16 @@ public class MyTaskController extends GiantBaseController {
 			json.put("message", "参数不足");
 			resultresponse(response,json);
 			return;
+		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			Task t = (Task) teamTaskService.getEntityByPrimaryKey(new Task(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(t != null && !teamTaskService.isCurrentMember(t.getDelayedReviewId())) {
+				json.put("code", 2);
+				json.put("message", "你没有权限延期审核当前任务！");
+				resultresponse(response,json);
+				return;
+			}
 		}
 		boolean flag = teamTaskService.delayCheck(mvm);
 		if(flag){

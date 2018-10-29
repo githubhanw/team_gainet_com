@@ -220,7 +220,7 @@
 												<a href="my/bug/toDetail?id=${bug.id}">${bug.bugdes}</a>
 											</td>
 											<td class="c-pri text-center">
-												<a href="team/task/detail?id=${bug.taskid}">${bug.taskid}</a>
+												<a href="my/task/detail?id=${bug.taskid}">${bug.taskid}</a>
 											</td>
 											<td class="c-name text-left">
 												<span class="${bug.solvestatus == 0 ? 'status-wait' : bug.solvestatus == 1 ? 'status-doing' : bug.solvestatus == 2 ? 'status-done' : bug.solvestatus == 3 ? 'status-cancel':''}">
@@ -280,7 +280,6 @@
 			</div>
 			<script></script>
 		</main>
-    	<%@ include file="/WEB-INF/view/team/need/div.jsp" %>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>
 <script>

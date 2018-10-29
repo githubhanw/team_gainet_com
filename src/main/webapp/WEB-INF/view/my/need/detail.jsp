@@ -185,7 +185,7 @@
 												<c:forEach items="${task}" var="item" varStatus="sta">
 												<tr class="text-center">
 													<td>${item.id}</td>
-													<td><a href="team/task/detail?id=${item.id}" data-toggle="tooltip" data-placement="top" title="${item.task_name}">${item.task_name}</a></td>
+													<td><a href="my/task/detail?id=${item.id}" data-toggle="tooltip" data-placement="top" title="${item.task_name}">${item.task_name}</a></td>
 													<td>
 														<c:if test="${item.level=='1'}">紧急重要</c:if>
 														<c:if test="${item.level=='2'}">紧急不重要</c:if>

@@ -53,14 +53,14 @@
 								<div class="detail-content article-content">
 									<c:if test="${applyType == 2}">
 										<ul class="tree tree-lines" data-ride="tree">
-											<li class="has-list open in">&nbsp;<a target="_blank" href="team/need/detail?id=${n.id}">${n.needName }【模块】</a>
+											<li class="has-list open in">&nbsp;<a target="_blank" href="my/need/detail?id=${n.id}">${n.needName }【模块】</a>
 												<ul>
 												<c:forEach items="${subNeed}" var="subNeed" varStatus="sta">
-													<li class="has-list open in"><a target="_blank" href="team/need/detail?id=${subNeed.id}">&nbsp;${subNeed.need_name }【子模块】</a>
+													<li class="has-list open in"><a target="_blank" href="my/need/detail?id=${subNeed.id}">&nbsp;${subNeed.need_name }【子模块】</a>
 														<ul>
 														<c:forEach items="${subNeedTask}" var="task" varStatus="sta">
 														<c:if test="${subNeed.id == task.need_id }">
-															<li><a target="_blank" href="team/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+															<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
 																<ul>
 																	<li><a href="#">&nbsp;界面原型图</a>
 																		<ul>
@@ -140,7 +140,7 @@
 													</li>
 												</c:forEach>
 												<c:forEach items="${needTask}" var="task" varStatus="sta">
-													<li><a target="_blank" href="team/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+													<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
 														<ul>
 															<li><a href="#">&nbsp;界面原型图</a>
 																<ul>
@@ -222,15 +222,15 @@
 									<c:if test="${applyType == 3 || applyType == 4}">
 										<ul class="tree tree-lines" data-ride="tree">
 											<c:forEach items="${need}" var="need" varStatus="sta">
-												<li class="has-list open in">&nbsp;<a target="_blank" href="team/need/detail?id=${n.id}">${need.need_name }【模块】</a>
+												<li class="has-list open in">&nbsp;<a target="_blank" href="my/need/detail?id=${n.id}">${need.need_name }【模块】</a>
 													<ul>
 													<c:forEach items="${subNeed}" var="subNeed" varStatus="sta">
 													<c:if test="${need.id == subNeed.parent_id }">
-														<li class="has-list open in"><a target="_blank" href="team/need/detail?id=${subNeed.id}">&nbsp;${subNeed.need_name }【子模块】</a>
+														<li class="has-list open in"><a target="_blank" href="my/need/detail?id=${subNeed.id}">&nbsp;${subNeed.need_name }【子模块】</a>
 															<ul>
 															<c:forEach items="${subNeedTask}" var="task" varStatus="sta">
 															<c:if test="${subNeed.id == task.need_id }">
-																<li><a target="_blank" href="team/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+																<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
 																	<ul>
 																		<li><a href="#">&nbsp;界面原型图</a>
 																			<ul>
@@ -312,7 +312,7 @@
 													</c:forEach>
 													<c:forEach items="${needTask}" var="task" varStatus="sta">
 													<c:if test="${need.id == task.need_id }">
-														<li><a target="_blank" href="team/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
+														<li><a target="_blank" href="my/task/detail?id=${task.id}">&nbsp;${task.task_name}【任务】</a>
 															<ul>
 																<li><a href="#">&nbsp;界面原型图</a>
 																	<ul>
@@ -415,13 +415,13 @@
 												<c:if test="${applyType == 1}">
 													<th>所属任务</th>
 													<td>
-														<a href="team/task/detail?id=${task.id }">${task.taskName}</a>
+														<a href="my/task/detail?id=${task.id }">${task.taskName}</a>
 													</td>
 												</c:if>
 												<c:if test="${applyType == 2}">
 													<th>所属模块</th>
 													<td>
-														<a href="team/need/detail?id=${n.id}">${n.needName}</a>
+														<a href="my/need/detail?id=${n.id}">${n.needName}</a>
 													</td>
 												</c:if>
 												<c:if test="${applyType == 3}">

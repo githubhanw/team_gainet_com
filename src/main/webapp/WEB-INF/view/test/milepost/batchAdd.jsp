@@ -32,7 +32,6 @@
 						<h2>
 							批量创建
 								<span class="label label-id"></span>
-								<a href="team/need/index"></a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp;</small>
 						</h2>
 					</div>

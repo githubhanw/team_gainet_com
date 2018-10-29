@@ -33,7 +33,7 @@
 							<c:if test="${n.id == null}">批量创建</c:if>
 							<c:if test="${n.id != null}">
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/index">${n.needName}</a>
+								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 批量建子模块</small>
 							</c:if>
 						</h2>
@@ -144,7 +144,6 @@
 							</p>
 							<div>
 								<a href="team/task/toAdd" class="btn">创建任务</a> <a
-									href="team/task/toAdd" class="btn">批量创建任务</a> <a
 									href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>

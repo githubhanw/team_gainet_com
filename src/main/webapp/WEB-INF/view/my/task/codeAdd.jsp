@@ -193,7 +193,7 @@ $("#submit").click(function(){
 	if(flag){
 		//卸载离开拦截事件
 		$(window).unbind('beforeunload');
-		window.location.href="team/task/index";
+		window.location.href="my/task";
 	}
 	$.ajaxSettings.async = true;
 });

@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${t.id}</span>
-								<a href="team/need/index">${t.taskName}</a>
+								<a href="team/need/detail?id=${n.id}">${t.taskName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 变更</small>
 							</h2>
 						</div>

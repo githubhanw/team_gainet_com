@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/index">${n.needName}</a>
+								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 指派</small>
 							</h2>
 						</div>
@@ -89,7 +89,6 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="team/task/toAdd" class="btn">建任务</a> <a
-									href="team/task/toAdd" class="btn">批量建任务</a> <a
 									href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>

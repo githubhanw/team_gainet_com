@@ -136,8 +136,8 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/task/index" class="btn">返回任务列表</a>
-								<a href="team/need/index" class="btn">返回模块列表</a>
+								<a href="my/task" class="btn">返回我的任务</a>
+								<a href="my/need" class="btn">返回我的模块</a>
 							</div>
 						</div>
 					</div>

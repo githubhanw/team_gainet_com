@@ -170,9 +170,8 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="my/task/toAdd" class="btn">继续建任务</a>
-								<a href="my/task/toAdd" class="btn">批量建任务</a>
-								<a href="my/task" class="btn">返回任务列表</a>
-								<a href="my/need" class="btn">返回模块列表</a>
+								<a href="my/task" class="btn">返回我的任务</a>
+								<a href="my/need" class="btn">返回我的模块</a>
 							</div>
 						</div>
 					</div>

@@ -117,11 +117,6 @@ $("#submit").click(function(){
 	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"my/test/dismissal?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
-		/* if(data.code == 0){
-			window.location.href = "team/need/index";
-		}else{
-			alert(data.message);
-		} */
 		if(data.code == 0){
 			$("#msg").text(data.message);
 			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});

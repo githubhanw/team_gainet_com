@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${t.id}</span>
-								<a href="team/task/index">${t.taskName}</a>
+								<a href="team/task/detail?id=${t.id}">${t.taskName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 交接</small>
 							</h2>
 						</div>

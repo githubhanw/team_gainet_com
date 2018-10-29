@@ -194,8 +194,7 @@
 							<div>
 								<a href="team/need/toaddproduct?product_id=${product_id}" class="btn">继续创建需求</a> 
 								<a href="team/task/toAdd" class="btn">建任务</a> 
-								<a href="team/task/toAdd" class="btn">批量建任务</a> 
-								<a href="team/need/index" class="btn">返回需求列表</a>	
+								<a href="team/need/index" class="btn">返回模块列表</a>	
 							</div>
 						</div>
 					</div>

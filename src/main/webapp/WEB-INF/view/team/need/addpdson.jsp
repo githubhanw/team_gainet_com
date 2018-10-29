@@ -207,7 +207,6 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="team/task/toAdd" class="btn">建任务</a> 
-								<a href="team/task/toAdd" class="btn">批量建任务</a> 
 								<a href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>

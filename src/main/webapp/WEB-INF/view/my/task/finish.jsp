@@ -32,7 +32,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${t.id}</span>
-								<a href="my/task">${t.taskName}</a>
+								<a href="my/task/detail?id=${t.id}">${t.taskName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 完成</small>
 							</h2>
 						</div>
@@ -475,7 +475,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="my/task" class="btn">返回任务列表</a>
+								<a href="my/task" class="btn">返回我的任务</a>
 								<a href="my/task/detail?id=${t.id}" class="btn">任务详情</a>
 							</div>
 						</div>

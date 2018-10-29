@@ -339,7 +339,6 @@
 							<div>
 								<a href="team/need/toEdit?id=${n.id}" class="btn">继续编辑模块</a>
 								<a href="team/task/toAdd" class="btn">建任务</a>
-								<a href="team/task/toBatchAdd" class="btn">批量建任务</a>
 								<a href="team/need/index" class="btn">返回模块列表</a>
 							</div>
 						</div>

@@ -201,7 +201,6 @@
 							<div>
 								<a href="team/need/toaddproject?project_id=${project_id}" class="btn">继续创建模块</a> 
 								<a href="team/task/toAdd" class="btn">建任务</a> 
-								<a href="team/task/toAdd" class="btn">批量建任务</a> 
 								<a href="team/need/index" class="btn">返回模块列表</a>
 								<a href="team/need/toEachAdd?project_id=${project_id}" class="btn">返回本项目模块列表</a>
 							</div>

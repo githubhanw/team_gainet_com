@@ -2,9 +2,7 @@ package com.zzidc.my.controller;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,41 +52,8 @@ public class MyNeedController extends GiantBaseController {
 	}
 	
 	/**
-	 * 模块列表
+	 * 模块列表在:MyController
 	 */
-	/*@RequestMapping("/index")
-	public String list(@RequestParam Map<String, String> mvm, Model model) {
-		if(conditionPage == null){
-			conditionPage = new GiantPager();
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("orderColumn")))){
-			mvm.put("orderColumn", "tn.update_time");
-			mvm.put("orderByValue", "DESC");
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("type")))){
-			mvm.put("type", "1");
-		}
-		if("".equals(GiantUtil.stringOf(mvm.get("search")))){
-			mvm.put("search", "");
-		}
-		Map<String, String> queryCondition = conditionPage.getQueryCondition();
-		//查询条件封装
-		queryCondition.clear();
-		queryCondition.putAll(mvm);
-		conditionPage.setCurrentPage(GiantUtil.intOf(mvm.get("currentPage"), 1));
-		conditionPage.setPageSize(GiantUtil.intOf(mvm.get("pageSize"), 15));
-		conditionPage.setOrderColumn(GiantUtil.stringOf(mvm.get("orderColumn")));
-		pageList = teamNeedService.getPageList(conditionPage);
-		requestURL = "my/need/index?type=" + mvm.get("type") + "&currentPage=" + pageList.getCurrentPage() + "&pageSize=" + pageList.getPageSize() + "&search=" + mvm.get("search");
-		pageList.setDesAction(requestURL);
-		if("1".equals(mvm.get("type")) || "2".equals(mvm.get("type"))) {
-			teamNeedService.getSubNeedList(pageList.getPageResult(), mvm.get("type"));
-		}
-		model.addAttribute("pageList", pageList);
-		model.addAttribute("prm", mvm);
-		publicResult(model);
-		return "my/need/list";
-	}*/
 
 	/**
 	 * 模块详情
@@ -253,8 +218,6 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
-		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-		String needId=dfs.format(new Date());
 		boolean flag = teamNeedService.addproject(mvm,id,name,file,filePrototype,filetree);
 	    if(flag){
 			json.put("code",0);
@@ -330,8 +293,6 @@ public class MyNeedController extends GiantBaseController {
 				return;
 			}
 		}
-		SimpleDateFormat dfs = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-		String needId=dfs.format(new Date());
 		boolean flag = teamNeedService.addproduct(mvm,id,name,file,filePrototype,filetree);
 	    if(flag){
 			json.put("code",0);
@@ -536,6 +497,9 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(n != null && !teamNeedService.isCurrentMember(n.getDepartmentId())) {
+				return "nopower";
+			}
 			model.addAttribute("n", n);
 			//获取相关文档
 			String sql = "SELECT file_name,file_url,file_realname FROM file_manage WHERE file_classification=1 AND access_control=1 AND gl_id=" + GiantUtil.intOf(mvm.get("id"), 0);
@@ -556,6 +520,16 @@ public class MyNeedController extends GiantBaseController {
 			json.put("message", "参数不足");
 			resultresponse(response,json);
 			return;
+		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if(n != null && !teamNeedService.isCurrentMember(n.getDepartmentId())) {
+				json.put("code",2);
+				json.put("message", "你没有权限安排当前模块！");
+				resultresponse(response,json);
+				return;
+			}
 		}
 		boolean flag = teamNeedService.arrange(mvm);
 		if(flag){
@@ -614,7 +588,7 @@ public class MyNeedController extends GiantBaseController {
 		}
 		if(!teamNeedService.isCanOperation(mvm)) {
 			json.put("code",1);
-			json.put("message", "不能对该模块进行变更操作");
+			json.put("message", "你没有权限变更当前模块！");
 			return;
 		}
 		
@@ -657,9 +631,9 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-//			if(!teamNeedService.isCanOperation(mvm)) {
-//				return "nopower";
-//			}
+			if (!teamNeedService.isCurrentMember(n.getCreateId())) {
+				return "nopower";
+			}
 			model.addAttribute("n", n);
 			parentId = n.getParentId();
 		}
@@ -704,7 +678,7 @@ public class MyNeedController extends GiantBaseController {
 	}
 
 	/**
-	 * 模块验收
+	 * 子模块验收
 	 */
 	@RequestMapping("/check")
 	public void check(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) {
@@ -763,13 +737,20 @@ public class MyNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-	
+	/**
+	 * 验收模块
+	 */
 	@RequestMapping("/checkParent")
 	public void checkParent(@RequestParam Map<String, String> mvm, Model model, HttpServletRequest request, HttpServletResponse response,@RequestParam("file")MultipartFile[] file) throws ParseException {
 		JSONObject json=new JSONObject();
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (n != null && !teamNeedService.isCurrentMember(n.getMemberId())) {
+				json.put("code",1);
+				json.put("message", "不能对该模块进行验收操作！");
+				return;
+			}
 			String notThrough =  GiantUtil.stringOf(mvm.get("notThrough"));
 			//项目验收不通过的情况
 			if ("0".equals(notThrough)) {
@@ -959,6 +940,16 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (n != null && !teamNeedService.isCurrentMember(n.getMemberId())) {
+				json.put("code",2);
+				json.put("message", "你没有权限关闭当前模块！");
+				resultresponse(response,json);
+				return;
+			}
+		}
 		if(!teamNeedService.isCanOperation(mvm)) {
 			json.put("code",1);
 			json.put("message", "不能对该模块进行关闭操作");
@@ -1070,6 +1061,16 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (n != null && !teamNeedService.isCurrentMember(n.getAssignedId())) {
+				json.put("code",2);
+				json.put("message", "你没有权限接收当前模块！");
+				resultresponse(response,json);
+				return;
+			}
+		}
 		boolean flag = teamNeedService.open(mvm);
 		if(flag){
 			json.put("code",0);
@@ -1092,7 +1093,7 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			//获取对象
 			n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
-			if (!teamNeedService.isCurrentMember(n.getAssignedId())) {
+			if (n != null && !teamNeedService.isCurrentMember(n.getAssignedId())) {
 				return "nopower";
 			}
 			parentId = n.getParentId();
@@ -1138,6 +1139,16 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (n != null && !teamNeedService.isCurrentMember(n.getAssignedId())) {
+				json.put("code",2);
+				json.put("message", "你没有权限提交验收当前模块！");
+				resultresponse(response,json);
+				return;
+			}
+		}
 		boolean flag = teamNeedService.submitCheck(mvm);
 		if(flag){
 			json.put("code",0);
@@ -1163,6 +1174,16 @@ public class MyNeedController extends GiantBaseController {
 			resultresponse(response,json);
 			return;
 		}
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (n != null && !teamNeedService.isCurrentMember(n.getAssignedId())) {
+				json.put("code",2);
+				json.put("message", "你没有权限提交验收当前模块！");
+				resultresponse(response,json);
+				return;
+			}
+		}
 		boolean flag = teamNeedService.submitCheck(mvm);
 		if(flag){
 			json.put("code",0);
@@ -1174,6 +1195,9 @@ public class MyNeedController extends GiantBaseController {
 		resultresponse(response,json);
 	}
     
+	/**
+	 * 跳转确认原型图页面
+	 */
 	@RequestMapping("/toConfirmPrototypeFigure")
 	public String toConfirmPrototypeFigure(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
@@ -1193,12 +1217,21 @@ public class MyNeedController extends GiantBaseController {
 		return "my/need/confirmPrototypeFigure";
 	}
     
+	/**
+	 * 确认原型图
+	 */
 	@RequestMapping("/confirmPrototypeFigure")
 	public void confirmPrototypeFigure(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
 		List<TaskNeed> list = new ArrayList<TaskNeed>();
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (n != null && !teamNeedService.isCurrentMember(n.getMemberId())) {
+				json.put("code",2);
+				json.put("message", "你没有权限确认当前模块的原型图！");
+				resultresponse(response,json);
+				return;
+			}
 			n.setPrototypeFigure((short)1);
 			list.add(n);
 			String querySql = "select * from task_need where state!=0 and parent_id = " + mvm.get("id");
@@ -1221,7 +1254,9 @@ public class MyNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-	
+	/**
+	 * 驳回原型图
+	 */
 	@RequestMapping("/toRejected")
 	public void rejected(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
@@ -1229,6 +1264,12 @@ public class MyNeedController extends GiantBaseController {
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
 			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.REJECTED, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
 			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			if (n != null && !teamNeedService.isCurrentMember(n.getMemberId())) {
+				json.put("code",2);
+				json.put("message", "你没有权限确认当前模块的原型图！");
+				resultresponse(response,json);
+				return;
+			}
 			TaskNeed oldT = new TaskNeed();
 			BeanUtils.copyProperties(n, oldT);
 			flag = teamNeedService.saveUpdateOrDelete(n, null);

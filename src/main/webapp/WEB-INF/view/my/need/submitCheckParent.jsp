@@ -33,7 +33,7 @@
 						<div class="main-header">
 							<h2>
 								<span class="label label-id">${n.id}</span>
-								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
+								<a href="my/need/detail?id=${n.id}">${n.needName}</a>
 								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 提交验收</small>
 							</h2>
 						</div>
@@ -266,7 +266,7 @@
 							<hr class="small"/>
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
-								<a href="team/need/index" class="btn">返回模块列表</a>
+								<a href="my/need" class="btn">返回我的模块</a>
 							</div>
 						</div>
 					</div>

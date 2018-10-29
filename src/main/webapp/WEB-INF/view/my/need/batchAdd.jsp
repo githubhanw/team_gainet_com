@@ -144,9 +144,8 @@
 							</p>
 							<div>
 								<a href="my/need/toAdd" class="btn">继续创建模块</a> <a
-									href="team/task/toAdd" class="btn">创建任务</a> <a
-									href="team/task/toAdd" class="btn">批量创建任务</a> <a
-									href="my/need" class="btn">返回模块列表</a>
+									href="my/task/toAdd" class="btn">创建任务</a> <a
+									href="my/need" class="btn">返回我的模块</a>
 							</div>
 						</div>
 					</div>

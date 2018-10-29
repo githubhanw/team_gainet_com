@@ -1275,8 +1275,8 @@ public class GiantBaseService {
 		jsonParams.put("Responsible", Responsible);
 		jsonParams.put("Assigner", Assigner);
 		jsonParams.put("Description", Description);
-//		String url = "http://192.168.103.180:8080/llkOA/todo/saveWorklists.do";
-		String url = "http://zhiguan360.cn/llkOA/todo/saveWorklists.do";
+//		String url = "http://192.168.103.180:8080/llkOA/todo/todoWeChatPushMsg.do";
+		String url = "http://zhiguan360.cn/llkOA/todo/todoWeChatPushMsg.do";
 		String resultData = HttpUtils.sendPost(url, jsonParams.toString());
 		JSONObject resultJson = JSONObject.fromObject(resultData);
 		if ("0".equals(resultJson.get("code"))) {

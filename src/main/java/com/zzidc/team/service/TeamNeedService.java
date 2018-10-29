@@ -748,9 +748,20 @@ public class TeamNeedService extends GiantBaseService{
 				return false;
 			}
 		}
-		
+				
 		pmLog.setObjectId(need.getId());
 		this.log(pmLog);
+		if (flag) {
+			//调用OA待办接口
+			if (need.getParentId() == 0) {//部门负责人安排模块
+				String Title = "模块待安排";
+				OAToDo(Title, need.getDepartmentId(), need.getCreateId(), need.getNeedName());
+			} else {//模块负责人接收模块
+				String Title = "模块待接收";
+				OAToDo(Title, need.getAssignedId(), need.getCreateId(), need.getNeedName());
+			}
+			
+		}
 		return flag;
 	}
 
@@ -1208,6 +1219,9 @@ public class TeamNeedService extends GiantBaseService{
 			if(b) {
 				pmLog.add(need.getId(), oldT, need, "assigned_name");
 				this.log(pmLog);
+				//调用OA待办接口
+				String Title = "模块待接收";
+				OAToDo(Title, need.getAssignedId(), need.getCreateId(), need.getNeedName());
 			}
 			return b;
 		}

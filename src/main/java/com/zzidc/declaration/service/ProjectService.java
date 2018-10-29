@@ -106,11 +106,11 @@ public class ProjectService extends GiantBaseService{
 		PMLog pmLog = null;
 		if (flag) {
 			if (GiantUtil.intOf(mvm.get("id"), 0) != 0) {//编辑
-				pmLog = new PMLog(LogModule.PROJECT, LogMethod.EDIT, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+				pmLog = new PMLog(LogModule.DECLAREPROJECT, LogMethod.EDIT, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
 				pmLog.add(p.getId(), oldpr, p, "declaration_number", "project_name", "company"
 						, "stage", "start_date", "end_date");
 			} else {//创建
-				pmLog = new PMLog(LogModule.PROJECT, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
+				pmLog = new PMLog(LogModule.DECLAREPROJECT, LogMethod.ADD, mvm.toString(), GiantUtil.stringOf(mvm.get("remark")));
 				pmLog.setObjectId(p.getId());
 			}
 			this.log(pmLog);
@@ -159,11 +159,11 @@ public class ProjectService extends GiantBaseService{
 	 * @return
 	 */
 	public List<Map<String, Object>> getLogList(Integer projectId){
-		String sql = "SELECT * FROM `action_log` where module='project' and object_id=" + projectId;
+		String sql = "SELECT * FROM `action_log` where module='declare_project' and object_id=" + projectId;
 		List<Map<String, Object>> logList = super.getMapListBySQL(sql, null);
 		if(logList != null && logList.size() > 0) {
 			for(Map<String, Object> log: logList) {
-				sql = "SELECT tfd.field_desc,ah.old_data,ah.new_data,ah.diff FROM action_history ah LEFT JOIN table_field_desc tfd ON ah.field=tfd.field_name WHERE tfd.table_name='project' AND action_id=" + log.get("id");
+				sql = "SELECT tfd.field_desc,ah.old_data,ah.new_data,ah.diff FROM action_history ah LEFT JOIN table_field_desc tfd ON ah.field=tfd.field_name WHERE tfd.table_name='declare_project' AND action_id=" + log.get("id");
 				List<Map<String, Object>> historyList = super.getMapListBySQL(sql, null);
 				if(historyList != null && historyList.size() > 0) {
 					log.put("history", historyList);

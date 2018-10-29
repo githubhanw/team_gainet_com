@@ -59,7 +59,7 @@
 				<div id="mainMenu" class="clearfix">
 					<div class="btn-toolbar pull-left">
 						<a href="team/task/search?type=2">
-							<span class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}"><span class="text">人员历史动态</span></span>
+							<span class="btn btn-link ${prm.type == 2 ? 'btn-active-text':''}"><span class="text">人员实际动态</span></span>
 						</a>
 						<a href="team/task/search?type=1">
 							<span class="btn btn-link ${prm.type == 1 ? 'btn-active-text':''}""><span class="text">人员安排</span></span>
@@ -95,30 +95,6 @@
 					</div>
 				</div>
 				<div id="mainContent" class="main-row">
-					<%-- <div class="side-col col-4">
-						<div class="panel">
-							<div class="panel-heading">
-								<div class="panel-title">
-									当月无任务人员列表
-									<span class="label label-light label-badge">${noTaskMember.size()}</span>
-								</div>
-							</div>
-							<div class="panel-body">
-								<table class="table has-sort-head">
-									<tr>
-										<td style="width:50%">团队</td>
-										<td style="width:50%">姓名</td>
-									</tr>
-									<c:forEach items="${noTaskMember}" var="member" varStatus="sta">
-										<tr>
-											<td>${member.depName}</td>
-											<td>${member.memName}</td>
-										</tr>
-									</c:forEach>
-								</table>
-							</div>
-						</div>
-					</div> --%>
 					<div class="main-col col-8">
 						<div class="panel">
 							<div class="panel-heading">

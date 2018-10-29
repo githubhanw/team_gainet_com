@@ -384,11 +384,13 @@ public class TeamTaskService extends GiantBaseService {
 		String sql = "SELECT '" + date + "' start, m.`NAME` title, 'label-info' className, ";
 		if(date != null && !"".equals(date)) {
 			if("2".equals(type)) {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date<=:date AND real_end_date>=:date) sortId ";
-				prm.put("date", date + " 12");//每天中午12点划分
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date<=:startDate AND real_end_date>=:endDate) sortId ";
+				prm.put("startDate", date + " 00:00:00");
+				prm.put("endDate", date + " 23:59:59");
 			} else {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date<=:date AND end_date>=:date) sortId ";
-				prm.put("date", date + " 12");//每天中午12点划分
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date<=:startDate AND end_date>=:endDate) sortId ";
+				prm.put("startDate", date + " 00:00:00");
+				prm.put("endDate", date + " 23:59:59");
 			}
 		} else {
 			sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0) tc ";

@@ -103,7 +103,13 @@ public class TeamTaskController extends GiantBaseController {
 			mvm.put("depId", "183");
 		}
 		
-		// 所有部门团队
+		/** 
+		 * 所有部门团队
+		 * 183	技术开发部
+		 * 8004c2d7410a4aa183bfca1cc2926ba6	技术开发部(绿林客)
+		 * 7d91e6a336b2456183eefad087e25069	技术开发部(大数据)
+		 * 482e6267fe7b46c589adaf87eb0049ce	运维部
+		 */
 		model.addAttribute("levelA", teamTaskService.getMapListBySQL("SELECT d1.DEPARTMENT_ID depId,CONCAT(d1.`NAME`,'-',d2.`NAME`) depName, d1.PARENT_ID parentId "
 				+ "FROM oa_department d1, oa_department d2 WHERE d1.PARENT_ID=d2.DEPARTMENT_ID AND "
 				+ "d1.DEPARTMENT_ID IN ('183', '8004c2d7410a4aa183bfca1cc2926ba6', '7d91e6a336b2456183eefad087e25069', '482e6267fe7b46c589adaf87eb0049ce')", null));

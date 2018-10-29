@@ -159,7 +159,7 @@
 							<p><strong>您现在可以进行以下操作：</strong></p>
 							<div>
 								<a href="my/bug/toAdd" class="btn">继续提BUG</a>
-								<a href="my/bug" class="btn">返回BUG列表</a>
+								<a href="my/bug" class="btn">返回我的Bug</a>
 							</div>
 						</div>
 					</div>

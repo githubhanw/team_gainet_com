@@ -824,6 +824,12 @@
 												</td>
 											</tr>
 											<tr>
+												<th>删除状态</th>
+												<td>
+													${taskM.deleted == 0 ? '未删除' : taskM.deleted == 1 ? '<span style="color: red;">已删除</span>' : '未知' }
+												</td>
+											</tr>
+											<tr>
 												<th>优先级</th>
 												<td>
 													<c:if test="${taskM.level=='1'}">紧急重要</c:if>
@@ -844,16 +850,18 @@
 									<table class="table table-data">
 										<tbody>
 											<tr>
-												<th>初始开始</th>
+												<td class="w-100px" colspan="2" style="border-bottom:1px solid #eee;color:red">负责人计划安排时间</td>
+											</tr>
+											<tr>
+												<th class="w-100px">计划开始</th>
 												<td><fmt:formatDate value="${taskM.start_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 											<tr>
-												<th>实际开始</th>
-												<td><fmt:formatDate value="${taskM.real_start_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+												<th>计划结束</th>
+												<td><fmt:formatDate value="${taskM.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>
 											<tr>
-												<th>初始结束</th>
-												<td><fmt:formatDate value="${taskM.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+												<td class="w-100px" colspan="2" style="border-bottom:1px solid #eee;color:red">实施方实际实施时间</td>
 											</tr>
 											<tr>
 												<th>计划结束</th>
@@ -866,6 +874,10 @@
 												</td>
 											</tr>
 											<tr>
+												<th>实际开始</th>
+												<td><fmt:formatDate value="${taskM.real_start_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
+											</tr>
+											<tr style="border-bottom:1px solid #eee">
 												<th>实际结束</th>
 												<td><fmt:formatDate value="${taskM.real_end_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 											</tr>

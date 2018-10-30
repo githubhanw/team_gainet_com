@@ -45,12 +45,12 @@
 										<select data-placeholder="请选择验收人" class="form-control chosen-select" name="checked_id" id="checked_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}" ${member.id==n.memberId?'selected="selected"':''}>${member.name}(${member.number})</option>
+												<option value="${member.id}" ${member.id==n.createId?'selected="selected"':''}>${member.name}(${member.number})${member.id==n.createId ? ' (创建人)' : ''}</option>
 											</c:forEach>
 										</select>
+										<input type="hidden" name="id" value="${n.id}"/>
 									</td>
-									<td></td>
-									<input type="hidden" name="id" value="${n.id}"/>
+									<td>注：1、子模块有子模块创建人验收！！！2、本人的子模块请选择直接上级验收！！！</td>
 								</tr>
 								<tr>
 									<th>备注</th>

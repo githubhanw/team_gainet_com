@@ -282,6 +282,7 @@ public class TeamNeedController extends GiantBaseController {
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
 		model.addAttribute("members", teamNeedService.getAllMember());
+		model.addAttribute("current_login", teamNeedService.getMemberId());
 		model.addAttribute("departinfo", teamNeedService.getDepartmentInfo());
 		publicResult(model);
 		return "team/need/addproduct";
@@ -516,9 +517,14 @@ public class TeamNeedController extends GiantBaseController {
 	 * 跳转添加 产品子模块页面
 	 */
 	@RequestMapping("/toAddPDSon")
-	public String toAddSon(@RequestParam Map<String, String> mvm, Model model) {
+	public String toAddPDSon(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
 		model.addAttribute("need_id",GiantUtil.intOf(mvm.get("need_id"), 0));
+		if(GiantUtil.intOf(mvm.get("need_id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("need_id"), 0));
+			model.addAttribute("n", n);
+		}
 		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));
@@ -1293,6 +1299,9 @@ public class TeamNeedController extends GiantBaseController {
 		resultresponse(response,json);
 	}
 
+	/**
+	 * 跳转确认原型图页面
+	 */
 	@RequestMapping("/toConfirmPrototypeFigure")
 	public String toConfirmPrototypeFigure(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
@@ -1309,7 +1318,9 @@ public class TeamNeedController extends GiantBaseController {
 		publicResult(model);
 		return "team/need/confirmPrototypeFigure";
 	}
-    
+    /**
+     * 确认原型图
+     */
 	@RequestMapping("/confirmPrototypeFigure")
 	public void confirmPrototypeFigure(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
@@ -1353,7 +1364,9 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
-	
+	/**
+	 * 驳回原型图
+	 */
 	@RequestMapping("/toRejected")
 	public void rejected(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();

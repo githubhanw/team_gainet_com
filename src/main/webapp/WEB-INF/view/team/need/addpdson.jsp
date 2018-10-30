@@ -30,40 +30,46 @@
 				<div id="mainContent" class="main-content">
 					<div class="center-block">
 						<div class="main-header">
-							<h2>添加子模块</h2>
+							<h2>
+								<span class="label label-id">${n.id}</span>
+								<a href="team/need/detail?id=${n.id}">${n.needName}</a>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 添加子模块</small>
+							</h2>
 						</div>
 						<table class="table table-form">
 							<tbody>
 							<form class="load-indicator main-form form-ajax" id="createForm" method="post">
 								<tr>
-									<th>子模块名称</th>
-									<td class="required" style="width:60%">
-										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off">
+									<th>所属产品</th>
+									<td style="width:60%">
+										<c:forEach items="${product}" var="p" varStatus="sta">
+											<c:if test="${p.id==product_id}">${p.product_name }</c:if>
+										</c:forEach>
 										<input type="hidden" name="id" value="${need_id}"/>
+										<input type="hidden" name="src_id" value="${n.srcId}"/>
+										<input type="hidden" name="member_id" value="${n.memberId}"/>
+										<input type="hidden" name="product_id" value="${n.productId}"/>
 									</td>
 									<td></td>
 								</tr>
 								<tr>
-									<th>所属产品</th>
+									<th>子模块名称</th>
 									<td class="required">
-										<select class="form-control chosen chosen-select"  name="product_id" id="product_id">
-											<c:forEach items="${product}" var="p" varStatus="sta">
-												<option value="${p.id}" ${p.id==product_id?'selected="selected"':''}>${p.product_name }</option>
-											</c:forEach>
-										</select>
+										<input type="text" name="need_name" id="need_name" class="form-control input-product-title" autocomplete="off">
+									</td>
 									<td></td>
 								</tr>
 								<tr>
 								    <th>原型图</th>
 								    <td class="required">
-									<input type="file" name="filePrototype" multiple="multiple" accept="image/*"/>
+										<input type="file" name="filePrototype" multiple="multiple" accept="image/*"/>
 								    </td>
 								    <td></td>
 								</tr>
 								<tr>
 								    <th>流程图</th>
 								    <td class="required">
-								    <input type="file" name="filetree" multiple="multiple" accept="image/*"/>
+										<input type="file" name="filetree" multiple="multiple" accept="image/*"/>
 									</td>
 								    <td></td>
 								</tr>
@@ -77,36 +83,6 @@
 											</c:forEach>
 										</select>
 										<input type="hidden" name="department_id" value="0"/>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>需求方</th>
-									<td class="required">
-										<select data-placeholder="请选模块方" class="form-control chosen-select" name="member_id" id="member_id">
-											<option value=""></option>
-											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
-											</c:forEach>
-										</select>
-									</td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>模块来源</th>
-									<td class="required">
-										<select data-placeholder="请选择模块来源" class="form-control chosen-select" name="src_id" id="src_id">
-											<option value=""></option>
-											<c:forEach items="${needSrc}" var="src" varStatus="sta">
-												<option value="${src.id}">${src.need_src}</option>
-											</c:forEach>
-										</select>
-									<td></td>
-								</tr>
-								<tr>
-									<th>模块来源备注</th>
-									<td>
-										<input type="text" name="src_remark" id="src_remark" class="form-control input-product-title" autocomplete="off">
 									</td>
 									<td></td>
 								</tr>

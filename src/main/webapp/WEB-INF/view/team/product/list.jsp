@@ -197,7 +197,7 @@
 											</td>
 											<td class="c-name text-left">${product.company}</td>
 											<td class="c-pri text-left">${product.member_name}</td>
-											<td class="c-pri text-left">${product.remark}</td>
+											<td class="c-name text-left">${product.remark}</td>
 											<td class="c-assignedTo has-btn text-center">
 												${product.state == 0 ? '已删除' : product.state == 1 ? '正常' :
 												  product.state == 2 ? '产品待验收' : product.state == 3 ? '产品已验收' :
@@ -220,7 +220,7 @@
 												<c:if test="${product.state == '3' }">
 													<a href="team/product/toFinish?id=${product.id}" class="btn" title="确认产品完成"><i class="icon-task-finish icon-checked"></i></a>
 												</c:if>
-												<a href="team/need/toaddproduct?product_id=${product.id}" class="btn" title="提需求"><i class="icon icon-plus"></i></a>
+												<a href="team/need/toaddproduct?product_id=${product.id}" class="btn" title="提需求"><i class="icon icon-plus"></i> 提需求</a>
 												<a href="team/product/toedit?id=${product.id}" class="btn" title="编辑"><i class="icon-common-edit icon-edit"></i></a>
 												<c:if test="${product.state == '1'}"> 
 													<a href="javascript:void(0)" onclick="del(${product.id})" class="btn" title="删除"><i class="icon-common-delete icon-trash"></i></a>
@@ -230,22 +230,21 @@
 										</c:forEach>
 									</tbody>
 								</table>
-							</form>
 							</div>
-							<!--table-responsive end-->
-						<!--table-footer start-->
-						<div class="table-footer" style="left: 0px; bottom: 0px;">
-							<!--pager srtart-->
-							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
-							<!-- <ul class="pager"></ul> -->
-							<!--pager end-->
-						</div>
-						<!--table-footer end-->
+						</form>
 					</div>
-					<!--main-col end-->
+					<!--table-responsive end-->
+					<!--table-footer start-->
+					<div class="table-footer" style="left: 0px; bottom: 0px;">
+						<!--pager srtart-->
+						<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+						<!-- <ul class="pager"></ul> -->
+						<!--pager end-->
+					</div>
+					<!--table-footer end-->
 				</div>
+				<!--main-col end-->
 			</div>
-			<script></script>
 		</main>
     	<%@ include file="/WEB-INF/view/comm/footer.jsp" %>
 	</body>

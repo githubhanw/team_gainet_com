@@ -379,16 +379,28 @@ public class TeamTaskService extends GiantBaseService {
 		}
 	}
 	
+	/**
+	 * 获取指定日期没有任务的人员
+	 * 规则：1、开始时间 小于 某天0点 并且 结束时间 大于 某天24点；
+	 * 		2、开始时间 在 某天0 - 24点之间；
+	 * 		3、结束时间 在 某天0 - 24点之间。
+	 */
 	private List<Map<String, Object>> getNoTaskMemberByday(String type, String date, String depId){
 		Map<String, Object> prm = new HashMap<String, Object>();
 		String sql = "SELECT '" + date + "' start, m.`NAME` title, 'label-info' className, ";
 		if(date != null && !"".equals(date)) {
 			if("2".equals(type)) {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND real_start_date<=:startDate AND real_end_date>=:endDate) sortId ";
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND "
+						+ "(real_start_date<=:startDate AND real_end_date>=:endDate OR "
+						+ "real_start_date>=:startDate AND real_start_date<=:endDate OR "
+						+ "real_end_date>=:startDate AND real_end_date<=:endDate)) sortId ";
 				prm.put("startDate", date + " 00:00:00");
 				prm.put("endDate", date + " 23:59:59");
 			} else {
-				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND start_date<=:startDate AND end_date>=:endDate) sortId ";
+				sql += "(SELECT count(0) FROM task t WHERE t.assigned_id=m.id AND t.deleted=0 AND "
+						+ "(start_date<=:startDate AND end_date>=:endDate OR "
+						+ "start_date>=:startDate AND start_date<=:endDate OR "
+						+ "end_date>=:startDate AND end_date<=:endDate)) sortId ";
 				prm.put("startDate", date + " 00:00:00");
 				prm.put("endDate", date + " 23:59:59");
 			}

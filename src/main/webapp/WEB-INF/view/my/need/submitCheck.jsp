@@ -33,7 +33,7 @@
 							<h2>
 								<span class="label label-id">${n.id}</span>
 								<a href="my/need/detail?id=${n.id}">${n.needName}</a>
-								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 提交验收</small>
+								<small>&nbsp;<i class="icon-angle-right"></i>&nbsp; 子模块提交验收</small>
 							</h2>
 						</div>
 						<table class="table table-form">
@@ -45,18 +45,18 @@
 										<select data-placeholder="请选择验收人" class="form-control chosen-select" name="checked_id" id="checked_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}" ${member.id==n.memberId?'selected="selected"':''}>${member.name}(${member.number})</option>
+												<option value="${member.id}" ${member.id==n.createId?'selected="selected"':''}>${member.name}(${member.number})${member.id==n.createId ? ' (创建人)' : ''}</option>
 											</c:forEach>
 										</select>
+										<input type="hidden" name="id" value="${n.id}"/>
 									</td>
-									<td></td>
+									<td>注：1、子模块有子模块创建人验收！！！2、本人的子模块请选择直接上级验收！！！</td>
 								</tr>
 								<tr>
 									<th>备注</th>
 									<td>
 										<input type="hidden" name="comment">
 										<div id="comment" style="width:100%;"></div>
-										<input type="hidden" name="id" value="${n.id}"/>
 									</td>
 									<td></td>
 								</tr>

@@ -96,7 +96,7 @@
 										<select data-placeholder="请选需求方" class="form-control chosen-select" name="member_id" id="member_id">
 											<option value=""></option>
 											<c:forEach items="${members}" var="member" varStatus="sta">
-												<option value="${member.id}">${member.name}(${member.number})</option>
+												<option value="${member.id}" ${member.id==current_login?'selected="selected"':''}>${member.name}(${member.number})</option>
 											</c:forEach>
 										</select>
 									</td>
@@ -111,13 +111,6 @@
 												<option value="${src.id}">${src.need_src}</option>
 											</c:forEach>
 										</select>
-									<td></td>
-								</tr>
-								<tr>
-									<th>需求来源备注</th>
-									<td>
-										<input type="text" name="src_remark" id="src_remark" class="form-control input-product-title" autocomplete="off">
-									</td>
 									<td></td>
 								</tr>
 								<tr>

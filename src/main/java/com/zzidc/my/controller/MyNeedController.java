@@ -324,9 +324,14 @@ public class MyNeedController extends GiantBaseController {
 	 * 跳转添加 产品子模块页面
 	 */
 	@RequestMapping("/toAddPDSon")
-	public String toAddSon(@RequestParam Map<String, String> mvm, Model model) {
+	public String toAddPDSon(@RequestParam Map<String, String> mvm, Model model) {
 		//添加模块页面的项目列表
 		model.addAttribute("need_id",GiantUtil.intOf(mvm.get("need_id"), 0));
+		if(GiantUtil.intOf(mvm.get("need_id"), 0) != 0){
+			//获取对象
+			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("need_id"), 0));
+			model.addAttribute("n", n);
+		}
 		model.addAttribute("product", teamNeedService.getTeamProduct());
 		model.addAttribute("needSrc", teamNeedService.getNeedSrc());
 		model.addAttribute("product_id", GiantUtil.intOf(mvm.get("product_id"), 0));

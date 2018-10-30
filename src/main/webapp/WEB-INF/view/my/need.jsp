@@ -318,9 +318,15 @@
 													</c:if>
 													<c:if test="${need.resolved == 0}">
 														<c:if test="${need.task_sum > 0 && need.not_finish_task == 0}">
-													 		<c:if test="${need.state == 2}">
-																<a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
-															</c:if>
+														  <c:if test="${need.project_id=='0' && need.state == 2 && need.test_state == 4 && (need.parent_id == null || need.parent_id == 0)}">
+														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+														  </c:if>
+														  <c:if test="${need.project_id=='0' && need.state == 2 && need.parent_id > 0}">
+														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+														  </c:if>
+														  <c:if test="${need.project_id!='0' && need.state == 2}">
+														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+														  </c:if>
 															<c:if test="${need.state == 3}">
 																<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
 															</c:if>
@@ -328,9 +334,15 @@
 													</c:if>
 													<c:if test="${need.resolved == 1 && need.sub_need_count > 0}">
 														<c:if test="${need.not_check_need == 0 && need.not_finish_task == 0}">
-													 		<c:if test="${need.state == 2}">
-																<a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
-															</c:if>
+													 		<c:if test="${need.project_id=='0' && need.state == 2 && need.test_state == 4 && (need.parent_id == null || need.parent_id == 0)}">
+														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+														  </c:if>
+														  <c:if test="${need.project_id=='0' && need.state == 2 && need.parent_id > 0}">
+														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+														  </c:if>
+														  <c:if test="${need.project_id!='0' && need.state == 2}">
+														    <a href="my/need/toSubmitCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="提交验收"><i class="icon-task-finish icon-checked"></i></a>
+														  </c:if>
 															<c:if test="${need.state == 3}">
 																<a href="my/need/toCheck?id=${need.id}" class="btn" data-toggle="tooltip" data-placement="top" title="验收模块"><i class="icon-story-review icon-glasses"></i></a>
 															</c:if>

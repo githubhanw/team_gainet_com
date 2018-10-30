@@ -43,6 +43,7 @@ import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
 import com.giant.zzidc.base.utils.HttpUtils;
+import com.giant.zzidc.base.utils.PropertyUtils;
 import com.zzidc.log.PMLog;
 import com.zzidc.log.PMLogItem;
 import com.zzidc.team.entity.ActionHistory;
@@ -1276,7 +1277,7 @@ public class GiantBaseService {
 		jsonParams.put("Assigner", Assigner);
 		jsonParams.put("Description", Description);
 //		String url = "http://192.168.103.180:8080/llkOA/todo/todoWeChatPushMsg.do";
-		String url = "http://zhiguan360.cn/llkOA/todo/todoWeChatPushMsg.do";
+		String url = PropertyUtils.readProperty("config.properties", "WEIXIN_DAIBAN");
 		String resultData = HttpUtils.sendPost(url, jsonParams.toString());
 		JSONObject resultJson = JSONObject.fromObject(resultData);
 		if ("0".equals(resultJson.get("code"))) {

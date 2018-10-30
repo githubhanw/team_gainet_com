@@ -1,13 +1,17 @@
 package com.zzidc.team.service;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +21,7 @@ import com.giant.zzidc.base.service.GiantBaseService;
 import com.giant.zzidc.base.utils.GiantPager;
 import com.giant.zzidc.base.utils.GiantUtil;
 import com.giant.zzidc.base.utils.GiantUtils;
+import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.ProjectMember;
 import com.zzidc.team.entity.TaskProject;
 
@@ -177,9 +182,17 @@ public class TeamProjectService extends GiantBaseService{
 		boolean a=super.dao.saveUpdateOrDelete(p, null);
 		String[] projectMembers = request.getParameterValues("projectMembers");
 		String[] testMembers = request.getParameterValues("testMembers");
+		String[] ParticipantsString = ArrayUtils.addAll(projectMembers, testMembers);
+		Integer[] Participants = new Integer[ParticipantsString.length];
+		for (int i = 0; i < ParticipantsString.length; i++) {
+			Participants[i] = Integer.valueOf(ParticipantsString[i]);
+		}
+		String Participantsname = "";//参与人名称
 		if (projectMembers != null && projectMembers.length > 0) {
 			ProjectMember projectMember = new ProjectMember();
 			for (int i = 0; i < projectMembers.length; i++) {
+				Member member = (Member)getEntityByPrimaryKey(new Member(), Integer.valueOf(projectMembers[i]));
+				Participantsname += member.getName() + ",";
 				projectMember.setId(null);
 				projectMember.setProjectId(p.getId());
 				projectMember.setMemberType((short)1);
@@ -191,6 +204,8 @@ public class TeamProjectService extends GiantBaseService{
 		if (testMembers != null && testMembers.length > 0) {
 			ProjectMember projectMember = new ProjectMember();
 			for (int i = 0; i < testMembers.length; i++) {
+				Member member = (Member)getEntityByPrimaryKey(new Member(), Integer.valueOf(testMembers[i]));
+				Participantsname += member.getName() + ",";
 				projectMember.setId(null);
 				projectMember.setProjectId(p.getId());
 				projectMember.setMemberType((short)2);
@@ -276,6 +291,16 @@ public class TeamProjectService extends GiantBaseService{
 				}
 			}
 		}
+		
+		// 调用OA待办接口
+		if (a) {
+			Participantsname = Participantsname.substring(0, Participantsname.length() - 1);
+//			OAToDo(p.getProjectName(), p.getStartTime(),p.getEndTime(),
+//					p.getMemberId(), p.getMemberId(),
+//					Participantsname, p.getProjectContent(), "preSales/goClueDetails.do?cluesID=" + p.getId(),
+//					getMemberId(),  Participants);
+		}
+		
 		return a;
 	}
 	/**

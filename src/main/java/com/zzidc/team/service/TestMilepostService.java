@@ -176,6 +176,8 @@ public class TestMilepostService extends GiantBaseService{
 		mm.setAuthorName(name);
 		mm.setMilepostState("1");
 		mm.setProjectId(Integer.parseInt(mvm.get("taskProject_id")));
+		String querySql = "select 1 from milepost_manage where project_id = " + Integer.parseInt(mvm.get("taskProject_id"));
+		List<Map<String, Object>> list = getMapListBySQL(querySql, null);
 		boolean b =  super.dao.saveUpdateOrDelete(mm, null);
 		if(b){
 			boolean c = false;
@@ -190,6 +192,14 @@ public class TestMilepostService extends GiantBaseService{
 				mt.setTaskneedId(Integer.parseInt(string));
 				mt.setAssociationTime(createTime);
 			    c=super.dao.saveUpdateOrDelete(mt, null);
+			}
+			if (c && (list == null || list.size() == 0)) {
+				// 调用OA待办接口
+				SimpleDateFormat sdfor = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//				OAToDo(mm.getMilepostName(), mm.getStartTime(), mm.getEndTime(),
+//						mm.getAuthorId() + "", mm.getAuthorId() + "", "",
+//						"", mm.getMilepostRemarks(), "preSales/goClueDetails.do?cluesID=" + mm.getId(),
+//						getMemberId() + "");				
 			}
 			return c;
 		}else{
@@ -226,6 +236,14 @@ public class TestMilepostService extends GiantBaseService{
 		tp.setState((short) 7);
 		tp.setRemark(mvm.get("need_remark"));
 		c=super.dao.saveUpdateOrDelete(tp, null);
+		if (c) {
+			// 调用OA待办接口
+			SimpleDateFormat sdfor = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//			OAToDo(m.getMilepostName(), m.getStartTime(), m.getEndTime(),
+//					m.getAuthorId() + "", m.getAuthorId() + "", "",
+//					"", m.getMilepostRemarks(), "preSales/goClueDetails.do?cluesID=" + m.getId(),
+//					getMemberId() + "");
+		}
 		}
 		return c;
 	}
@@ -298,6 +316,14 @@ public class TestMilepostService extends GiantBaseService{
 		tp.setState((short) 8);
 		tp.setRemark(mvm.get("need_remark"));
 		c=super.dao.saveUpdateOrDelete(tp, null);
+		if (c) {
+			// 调用OA待办接口
+			SimpleDateFormat sdfor = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//			OAToDo(m.getMilepostName(), m.getStartTime(), m.getEndTime(),
+//					m.getAuthorId() + "", m.getAuthorId() + "", "",
+//					"", m.getMilepostRemarks(), "preSales/goClueDetails.do?cluesID=" + m.getId(),
+//					getMemberId() + "");
+		}
 		}
 		return c;
 	}

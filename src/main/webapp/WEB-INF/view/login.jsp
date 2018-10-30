@@ -49,13 +49,13 @@
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input id="account" type="text" class="form-control" placeholder="请输入用户名/手机/邮箱" title="用户名">
+															<input id="account" type="text" value="hanw" class="form-control" placeholder="请输入用户名/手机/邮箱" title="用户名">
 															<i class="ace-icon fa fa-user"></i>
 														</span>
 													</label>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input id="pwd" type="password" class="form-control" placeholder="请输入密码" title="密码">
+															<input id="pwd" type="password" value="111111" class="form-control" placeholder="请输入密码" title="密码">
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
 													</label>

@@ -737,20 +737,16 @@ public class TeamNeedController extends GiantBaseController {
 			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.DISMISSAL, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
 			TaskNeed oldT = new TaskNeed();
 			BeanUtils.copyProperties(need, oldT);
-			pmLog.add(need.getId(), oldT, need, "assigned_name");
+			pmLog.setObjectId(need.getId());
 			teamNeedService.log(pmLog);
 			//调用OA待办接口
+			Integer productId = need.getProductId();//产品ID
+			TaskProduct product = (TaskProduct)teamNeedService.getEntityByPrimaryKey(new TaskProduct(), productId);
 			String Title = "模块被驳回";
-			teamNeedService.OAToDo(Title, need.getAssignedId(), need.getDepartmentId(), need.getNeedName());
+			teamNeedService.OAToDo(Title, product.getMemberId(), need.getDepartmentId(), need.getNeedName());
 		}
-		boolean flag = teamNeedService.arrange(mvm);
-		if(flag){
-			json.put("code",0);
-			json.put("message", "操作成功");
-		}else{
-			json.put("code",1);
-			json.put("message", "操作失败");
-		}
+		json.put("code",0);
+		json.put("message", "操作成功");
 		resultresponse(response,json);
 	}
 

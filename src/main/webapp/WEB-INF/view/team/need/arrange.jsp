@@ -159,7 +159,7 @@
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
-										<!-- <button id="reject" class="btn btn-wide btn-primary" data-loading="稍候...">驳回</button> -->
+										<button id="reject" class="btn btn-wide btn-primary" data-loading="稍候...">驳回</button>
 										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
 									</td>
 								</tr>
@@ -228,6 +228,22 @@ $("#submit").click(function(){
 	$.ajaxSettings.async = false;
 	$("input[name='comment']").val(UE.getEditor('comment').getContent());
 	$.ajax({type:"POST",url:"team/need/arrange?r=" + Math.random(),data:$("form").serialize(),
+			dataType:"json",success:function(data){
+		if(data.code == 0){
+			$("#msg").text(data.message);
+			$('#myModal').modal({backdrop: 'static', keyboard: false,show: true, moveable: true});
+		}else{
+			$("#errMsg").text(data.message);
+			$('#errModal').modal({keyboard: false,show: true, moveable: true});
+		}
+	}})
+	$.ajaxSettings.async = true;
+});
+
+$("#reject").click(function(){
+	$.ajaxSettings.async = false;
+	$("input[name='comment']").val(UE.getEditor('comment').getContent());
+	$.ajax({type:"POST",url:"team/need/reject?r=" + Math.random(),data:$("form").serialize(),
 			dataType:"json",success:function(data){
 		if(data.code == 0){
 			$("#msg").text(data.message);

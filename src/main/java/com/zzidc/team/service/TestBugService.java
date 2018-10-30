@@ -231,6 +231,11 @@ public class TestBugService extends GiantBaseService {
 				String a1 = JSONObject.fromObject(str).toString();
 				HttpUtils.weiXinSendPost(a1);
 			}
+			
+			//调用OA待办接口
+			//测试人员提bug后通知开发者
+			String Title = "BUG待解决";
+			OAToDo(Title, t.getDeveloperId(), t.getCreaterId(), t.getBugdes());
 		}
 		return b;
 	}
@@ -312,7 +317,14 @@ public class TestBugService extends GiantBaseService {
 				Member check = (Member) super.dao.getEntityByPrimaryKey(new Member(), GiantUtil.intOf(mvm.get("check_id"), 0));
 				t.setCheckId(check == null ? 0 : check.getId());
 				t.setCheckName(check == null ? "" : check.getName());
-				return super.dao.saveUpdateOrDelete(t, null);
+				boolean flag = super.dao.saveUpdateOrDelete(t, null);
+				if (flag) {
+					//调用OA待办接口
+					//不是问题的bug通知审核人去审核
+					String Title = "BUG待审核";
+					OAToDo(Title, t.getCheckId(), t.getDeveloperId(), t.getBugdes());
+				}
+				return flag;
 			}
 			return false;
 		}else {
@@ -326,7 +338,14 @@ public class TestBugService extends GiantBaseService {
 				t.setSolvestatus(1);
 				t.setKaifamark(mvm.get("kaifamark"));
 				t.setSolvetime(new Timestamp(System.currentTimeMillis()));
-				return super.dao.saveUpdateOrDelete(t, null);
+				boolean flag = super.dao.saveUpdateOrDelete(t, null);
+				if (flag) {
+					//调用OA待办接口
+					//修复bug后通知测试人员去验证
+					String Title = "BUG待验证";
+					OAToDo(Title, t.getCreaterId(), t.getDeveloperId(), t.getBugdes());
+				}
+				return flag;
 			}
 			return false;
 		}

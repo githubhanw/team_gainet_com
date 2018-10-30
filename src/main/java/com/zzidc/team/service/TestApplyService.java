@@ -611,6 +611,14 @@ public class TestApplyService extends GiantBaseService {
 					}
 				}
 			}
+			
+			//调用OA待办接口
+			//创建测试单后，按照某种规则选择测试人员去推送领取测试单通知
+			if (b) {
+				String Title = "测试单待领取";
+//				OAToDo(Title, 564, testApply.getApplyId(), testApply.getTestName());
+			}
+			
 			return b;
 		}
 	}
@@ -858,6 +866,11 @@ public class TestApplyService extends GiantBaseService {
 				testNames += "," + member.getName();
 				pmLog.setObjectId(task.getId());
 				this.log(pmLog);
+				
+				//调用OA待办接口
+				//领取测试单的时候，指定测试人员后，微信推送通知
+				String Title = "任务待接收";
+				OAToDo(Title, task.getAssignedId(), task.getMemberId(), task.getTaskName());
 			}
 		}
 		if(b) {
@@ -966,6 +979,19 @@ public class TestApplyService extends GiantBaseService {
 			list.add(task);
 		}
 		boolean flag = super.saveUpdateOrDelete(list, null);
+		
+		//调用OA待办接口
+		//领取测试单的时候，指定测试人员后，微信推送通知
+		if (flag) {
+			for (Object object : list) {
+				if (object instanceof Task) {
+					Task task = (Task)object;
+					String Title = "任务待接收";
+					OAToDo(Title, task.getAssignedId(), task.getMemberId(), task.getTaskName());
+				}
+			}
+		}
+		
 		if(!flag) {
 			return false;
 		}

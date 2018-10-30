@@ -740,6 +740,10 @@ public class TeamTaskService extends GiantBaseService {
 				String a1 = JSONObject.fromObject(str).toString();
 				HttpUtils.weiXinSendPost(a1);
 			}
+			
+			//调用OA待办接口
+			String Title = "任务待接收";
+			OAToDo(Title, task.getAssignedId(), task.getMemberId(), task.getTaskName());
 		}
 		return b;
 	}
@@ -833,6 +837,10 @@ public class TeamTaskService extends GiantBaseService {
 				String a1 = JSONObject.fromObject(str).toString();
 				HttpUtils.weiXinSendPost(a1);
 			}
+			
+			//调用OA待办接口
+			String Title = "任务待接收";
+			OAToDo(Title, task.getAssignedId(), task.getMemberId(), task.getTaskName());
 		}
 		return b;
 	}
@@ -1202,6 +1210,10 @@ public class TeamTaskService extends GiantBaseService {
 					String a1 = JSONObject.fromObject(str).toString();
 					HttpUtils.weiXinSendPost(a1);
 				}
+				
+				//调用OA待办接口
+				String Title = "任务待审核";
+				OAToDo(Title, t.getCheckedId(), t.getAssignedId(), t.getTaskName());
 			}
 			return b;
 		}
@@ -1299,6 +1311,24 @@ public class TeamTaskService extends GiantBaseService {
 						}
 					}
 				}
+				
+				
+				if (b) {
+					//调用OA待办接口
+					//子模块下所有任务都审核完成后(状态为已完成)通知子模块负责人提交验收
+					if (t.getTaskType() == 1) {//开发任务
+						Integer needId = t.getNeedId();
+						TaskNeed need = (TaskNeed) getEntityByPrimaryKey(new TaskNeed(), needId);
+						String querySql = "select * from task where state != 4 and task_type = 1 and need_id = " + needId ;
+						List<Map<String, Object>> list = getMapListBySQL(querySql, null);
+						if (list == null || list.size() == 0) {
+							//调用OA待办接口
+							String Title = "模块需要提交验收";
+							OAToDo(Title, need.getAssignedId(), t.getAssignedId(), need.getNeedName());
+						}
+					}
+				}
+				
 				return b;
 			}
 		}

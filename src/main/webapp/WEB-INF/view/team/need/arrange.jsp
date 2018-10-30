@@ -159,6 +159,7 @@
 								<tr>
 									<td colspan="3" class="text-center form-actions">
 										<button id="submit" class="btn btn-wide btn-primary" data-loading="稍候...">保存</button>
+										<!-- <button id="reject" class="btn btn-wide btn-primary" data-loading="稍候...">驳回</button> -->
 										<a href="javascript:history.go(-1);" class="btn btn-back btn btn-wide">返回</a>
 									</td>
 								</tr>

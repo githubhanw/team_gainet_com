@@ -27,6 +27,7 @@ import com.zzidc.log.LogMethod;
 import com.zzidc.log.LogModule;
 import com.zzidc.log.PMLog;
 import com.zzidc.team.entity.TaskNeed;
+import com.zzidc.team.entity.TaskProduct;
 import com.zzidc.team.entity.TaskProject;
 import com.zzidc.team.service.FilemanageService;
 import com.zzidc.team.service.TeamNeedService;
@@ -717,6 +718,35 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		resultresponse(response,json);
 	}
+	
+	/**
+	 * 驳回产品模块
+	 */
+	@RequestMapping("/reject")
+	public void reject(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
+		JSONObject json=new JSONObject();
+		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
+			//获取对象
+			TaskNeed need = (TaskNeed) teamNeedService.dao.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			PMLog pmLog = new PMLog(LogModule.NEED, LogMethod.DISMISSAL, mvm.toString(), GiantUtil.stringOf(mvm.get("comment")));
+			TaskNeed oldT = new TaskNeed();
+			BeanUtils.copyProperties(need, oldT);
+			pmLog.add(need.getId(), oldT, need, "assigned_name");
+			teamNeedService.log(pmLog);
+			//调用OA待办接口
+			String Title = "模块被驳回";
+			teamNeedService.OAToDo(Title, need.getAssignedId(), need.getDepartmentId(), need.getNeedName());
+		}
+		boolean flag = teamNeedService.arrange(mvm);
+		if(flag){
+			json.put("code",0);
+			json.put("message", "操作成功");
+		}else{
+			json.put("code",1);
+			json.put("message", "操作失败");
+		}
+		resultresponse(response,json);
+	}
 
 	/**
 	 * 跳转变更模块页面
@@ -1283,9 +1313,10 @@ public class TeamNeedController extends GiantBaseController {
 	@RequestMapping("/confirmPrototypeFigure")
 	public void confirmPrototypeFigure(@RequestParam Map<String, String> mvm, Model model, HttpServletResponse response) {
 		JSONObject json=new JSONObject();
+		TaskNeed n = null;
 		List<TaskNeed> list = new ArrayList<TaskNeed>();
 		if(GiantUtil.intOf(mvm.get("id"), 0) != 0){
-			TaskNeed n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
+			n = (TaskNeed) teamNeedService.getEntityByPrimaryKey(new TaskNeed(), GiantUtil.intOf(mvm.get("id"), 0));
 			n.setPrototypeFigure((short)1);
 			list.add(n);
 			String querySql = "select * from task_need where state!=0 and parent_id = " + mvm.get("id");
@@ -1300,6 +1331,20 @@ public class TeamNeedController extends GiantBaseController {
 		}
 		boolean flag = teamNeedService.saveUpdateOrDelete(list, null);
 		if(flag){
+			//调用OA待办接口
+			//确认原型图之后通知所有子模块负责人去创建任务
+			Integer needId = n.getId();//父模块ID
+			Integer productId = n.getProductId();//产品ID
+			TaskProduct product = (TaskProduct)teamNeedService.getEntityByPrimaryKey(new TaskProduct(), productId);
+			String querySql = "select need_name, assigned_id from task_need where parent_id = " + needId;
+			List<Map<String, Object>> sonList = teamNeedService.getMapListBySQL(querySql, null);
+			String Title = "模块需要创建任务";
+			if (sonList != null && sonList.size() > 0) {
+				for (Map map : sonList) {
+					teamNeedService.OAToDo(Title, Integer.valueOf(map.get("assigned_id").toString()), product.getMemberId(), map.get("need_name").toString());
+				}
+			}
+			
 			json.put("code",0);
 			json.put("message", "操作成功");
 		}else{

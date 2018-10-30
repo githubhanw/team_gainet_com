@@ -30,6 +30,7 @@ import com.zzidc.team.entity.CodeReport;
 import com.zzidc.team.entity.Member;
 import com.zzidc.team.entity.Task;
 import com.zzidc.team.entity.TaskNeed;
+import com.zzidc.team.entity.TaskProduct;
 import com.zzidc.team.entity.TaskProject;
 
 import net.sf.json.JSONObject;
@@ -756,11 +757,8 @@ public class TeamNeedService extends GiantBaseService{
 			if (need.getParentId() == 0) {//部门负责人安排模块
 				String Title = "模块待安排";
 				OAToDo(Title, need.getDepartmentId(), need.getCreateId(), need.getNeedName());
-			} else {//模块负责人接收模块
-				String Title = "模块待接收";
-				OAToDo(Title, need.getAssignedId(), need.getCreateId(), need.getNeedName());
 			}
-			
+			//新建子模块不通知
 		}
 		return flag;
 	}
@@ -1221,7 +1219,7 @@ public class TeamNeedService extends GiantBaseService{
 				this.log(pmLog);
 				//调用OA待办接口
 				String Title = "模块待接收";
-				OAToDo(Title, need.getAssignedId(), need.getCreateId(), need.getNeedName());
+				OAToDo(Title, need.getAssignedId(), need.getDepartmentId(), need.getNeedName());
 			}
 			return b;
 		}
@@ -1615,6 +1613,21 @@ public class TeamNeedService extends GiantBaseService{
 			if (b) {
 				pmLog.add(n.getId(), oldT, n,"finished_name");
 				this.log(pmLog);
+				//调用OA待办接口
+				//模块提交验收后通知验收人（父模块责任人）验收模块
+				String Title = "模块需要验收";
+				if (n.getParentId() == 0 || n.getParentId() == null) {
+					if (n.getProjectId() == 0 || n.getProjectId() == null) {//产品的模块需要产品负责人验收
+						Integer productId = n.getProductId();//产品ID
+						TaskProduct product = (TaskProduct)getEntityByPrimaryKey(new TaskProduct(), productId);
+						OAToDo(Title, product.getMemberId(), n.getAssignedId(), n.getNeedName());
+					} else {//项目的模块
+						
+					}
+				} else {
+					OAToDo(Title, n.getCheckedId(), n.getAssignedId(), n.getNeedName());
+				}
+				
 			}
 			return b; 
 		}

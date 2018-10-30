@@ -232,16 +232,16 @@
 								</table>
 							</div>
 						</form>
+						<!--table-responsive end-->
+						<!--table-footer start-->
+						<div class="table-footer" style="left: 0px; bottom: 0px;">
+							<!--pager srtart-->
+							<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
+							<!-- <ul class="pager"></ul> -->
+							<!--pager end-->
+						</div>
+						<!--table-footer end-->
 					</div>
-					<!--table-responsive end-->
-					<!--table-footer start-->
-					<div class="table-footer" style="left: 0px; bottom: 0px;">
-						<!--pager srtart-->
-						<jsp:include page="/WEB-INF/view/comm/pagebar_conut.jsp"></jsp:include>
-						<!-- <ul class="pager"></ul> -->
-						<!--pager end-->
-					</div>
-					<!--table-footer end-->
 				</div>
 				<!--main-col end-->
 			</div>
